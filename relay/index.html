@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Реле и автоматика — лаборатория</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+.lamp{display:inline-block;width:22px;height:22px;border-radius:50%;border:3px solid var(--ink);vertical-align:middle}
+.plate{background:#e9e4d6;border:4px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:18px 22px;font-family:var(--label);letter-spacing:1px}
+.plate .pt{display:flex;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:10px;font-weight:700;font-size:20px}
+.plate .pg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 16px}
+.plate .pg div{border-bottom:1px dashed var(--muted);padding:4px 0}
+.plate .pg span{display:block;font-size:13px;color:var(--muted);text-transform:uppercase}
+.plate .pg b{font-size:22px}
+@media (max-width:560px){.plate .pg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="hand">Лаборатория</div>
+  <h1>Реле и автоматика</h1>
+  <p>Тема 2.4 и практическая работа № 9. Как реле срабатывает и отпускает, зачем автоматике «зазор» между включением и выключением и как Ардуино управляет реле по датчику.</p>
+</header>
+
+<nav aria-label="Разделы">
+  <a href="#relay" data-tab="relay">1 · Реле: срабатывание и отпускание</a>
+  <a href="#thermo" data-tab="thermo">2 · Терморегулятор</a>
+  <a href="#ard" data-tab="ard">3 · Ардуино и реле</a>
+  <a href="#quiz" data-tab="quiz">4 · Проверь себя</a>
+</nav>
+
+<section class="panel" data-panel="relay">
+  <p class="eyebrow">Опыт 1 · ПР № 9, часть 1</p>
+  <h2>Найдите напряжения срабатывания и отпускания</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-r" width="1000" height="620" aria-label="Реле: катушка, якорь, пружина и контакты с лампой; внизу график состояния контактов от напряжения на катушке с вашим следом"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="r-n">Вариант (номер в журнале)</label><input type="number" id="r-n" min="1" max="30" value="1" style="width:90px;font-size:20px;padding:4px"> <b id="r-type"></b></div>
+      <div><label class="ctl-label" for="r-u">Напряжение на катушке U = <b id="r-uv">0</b> В</label><input type="range" id="r-u" min="0" max="15" step="0.1" value="0"></div>
+      <div class="seg"><button type="button" id="r-dn">− 0,1 В</button><button type="button" id="r-up">+ 0,1 В</button><button type="button" id="r-clr">Стереть след</button></div>
+      <div class="readouts">
+        <div class="ro"><span>Ток катушки</span><b id="r-i">—</b></div>
+        <div class="ro"><span>Контакты НР</span><b id="r-st">—</b></div>
+        <div class="ro"><span>Сработало при</span><b id="r-up-v">—</b></div>
+        <div class="ro"><span>Отпустило при</span><b id="r-dn-v">—</b></div>
+      </div>
+      <p class="plaque" id="r-plq">—</p>
+      <p class="note" id="r-note">Поднимайте напряжение медленно, пока реле не щёлкнет. Потом опускайте, пока не отпустит.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="thermo" hidden>
+  <p class="eyebrow">Опыт 2</p>
+  <h2>Печь для сушки электродов: зачем «зазор»</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-t" width="1000" height="600" aria-label="График температуры печи во времени с порогами включения и выключения; снизу полосы — когда реле включало нагреватель"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="t-lo">Включить нагрев ниже <b id="t-lov">100</b> °C</label><input type="range" id="t-lo" min="80" max="120" step="1" value="100"></div>
+      <div><label class="ctl-label" for="t-gap">«Зазор» (гистерезис) = <b id="t-gapv">10</b> °C</label><input type="range" id="t-gap" min="0" max="20" step="1" value="10"></div>
+      <div class="readouts">
+        <div class="ro"><span>Температура</span><b id="t-t">—</b></div>
+        <div class="ro"><span>Нагреватель</span><b id="t-h">—</b></div>
+        <div class="ro"><span>Щелчков реле в минуту</span><b id="t-c">—</b></div>
+      </div>
+      <p class="plaque" id="t-plq">—</p>
+      <p class="note" id="t-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="ard" hidden>
+  <p class="eyebrow">Опыт 3 · ПР № 9, часть 2</p>
+  <h2>Ардуино включает вентилятор по датчику</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-a" width="1000" height="600" aria-label="Потенциометр-датчик, плата Ардуино, модуль реле и вентилятор; справа монитор порта с показаниями"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="a-n">Вариант</label><input type="number" id="a-n" min="1" max="30" value="1" style="width:90px;font-size:20px;padding:4px"> <b id="a-th"></b></div>
+      <div><label class="ctl-label" for="a-p">Потенциометр: analogRead(A0) = <b id="a-pv">300</b></label><input type="range" id="a-p" min="0" max="1023" step="1" value="300"></div>
+      <div class="readouts">
+        <div class="ro"><span>«Температура» t = A0 / 10</span><b id="a-t">—</b></div>
+        <div class="ro"><span>Реле (вывод D7)</span><b id="a-r">—</b></div>
+      </div>
+      <p class="plaque" id="a-plq">—</p>
+      <pre id="a-code" style="font-size:14px;line-height:1.35;background:#1B1A17;color:#F2EEE3;padding:12px;overflow:auto;margin:0"></pre>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="quiz" hidden>
+  <p class="eyebrow">Контрольные вопросы</p>
+  <h2>Проверь себя</h2>
+  <div id="quiz-box"></div>
+</section>
+
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">все лаборатории</a> · <a href="../konspekt/p24a.html">текст к теме</a> · <a href="../konspekt/p24b.html">текст к ПР № 9</a></footer>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const INK='#1B1A17',RED='#A3271F',PAP='#FAF8F2',MUT='#6E685C',OK='#2F6B3A',BLU='#4A6FA5',YEL='#E2B23A';
+const LBL="Oswald,'Arial Narrow',Arial,sans-serif",SER="'PT Serif',Georgia,serif";
+const fmt=(x,d)=>(Math.round(x*10**d)/10**d).toFixed(d).replace('.',',');
+function T(g,s,x,y,size,col,al,w){g.font=(w||'700')+' '+size+'px '+LBL;g.fillStyle=col||INK;g.textAlign=al||'left';g.fillText(s,x,y);}
+function S(g,s,x,y,size,col,al){g.font='400 '+size+'px '+SER;g.fillStyle=col||INK;g.textAlign=al||'left';g.fillText(s,x,y);}
+function L(g,x1,y1,x2,y2,w,c,d){g.strokeStyle=c||INK;g.lineWidth=w||3;g.setLineDash(d||[]);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.setLineDash([]);}
+function R(g,x,y,w,h,fill,lw){g.fillStyle=fill||PAP;g.fillRect(x,y,w,h);g.strokeStyle=INK;g.lineWidth=lw||3;g.strokeRect(x,y,w,h);}
+function lamp(g,x,y,on){g.fillStyle=on?'#F3D27A':PAP;g.beginPath();g.arc(x,y,32,0,7);g.fill();g.strokeStyle=INK;g.lineWidth=3;g.stroke();L(g,x-22,y-22,x+22,y+22,3);L(g,x+22,y-22,x-22,y+22,3);
+ if(on)for(let a=0;a<8;a++){const c=Math.cos(a*Math.PI/4),s=Math.sin(a*Math.PI/4);L(g,x+42*c,y+42*s,x+58*c,y+58*s,3,RED);}}
+/* variants (same model as the key of PR 9) */
+const TYPES=[[5,70],[12,400],[24,1600]];
+function V(n){n=Math.max(1,Math.min(30,n|0));const t=TYPES[(n-1)%3];const ks=0.55+0.02*Math.floor((n-1)/3),ko=0.18+0.03*((n*7)%10);
+ return{n,un:t[0],rk:t[1],usr:Math.round(ks*t[0]*10)/10,uot:Math.round(ko*t[0]*10)/10,ton:40+n,toff:40+n-(2+n%4)};}
+const q=new URLSearchParams(location.search).get('v');if(q){$('#r-n').value=q;$('#a-n').value=q;}
+
+/* ---------- relay ---------- */
+const rx=$('#cv-r').getContext('2d');let ron=false,trace=[],upV=null,dnV=null,arm=0;
+function vr(){return V(+$('#r-n').value);}
+function setRange(){const v=vr();const mx=Math.round(v.un*1.25);$('#r-u').max=mx;$('#r-type').textContent=` реле ${v.un} В, катушка ${v.rk} Ом`;$('#r-u').value=0;ron=false;trace=[[0,0]];upV=dnV=null;updR();}
+function updR(){const v=vr(),u=+$('#r-u').value;const prev=ron;
+ if(!ron&&u>=v.usr-1e-9){ron=true;upV=u;}else if(ron&&u<=v.uot+1e-9){ron=false;dnV=u;}
+ const last=trace[trace.length-1];if(!last||last[0]!==u||last[1]!==(ron?1:0)){if(prev!==ron)trace.push([u,prev?1:0]);trace.push([u,ron?1:0]);}
+ $('#r-uv').textContent=fmt(u,1);$('#r-i').textContent=fmt(u/v.rk*1000,1)+' мА';$('#r-st').textContent=ron?'замкнуты':'разомкнуты';
+ $('#r-up-v').textContent=upV===null?'—':fmt(upV,1)+' В';$('#r-dn-v').textContent=dnV===null?'—':fmt(dnV,1)+' В';
+ const pl=$('#r-plq');if(prev!==ron){pl.textContent=ron?'ЩЁЛК! СРАБОТАЛО':'ЩЁЛК! ОТПУСТИЛО';pl.style.background=ron?OK:RED;}
+ else if(pl.textContent==='—'){pl.textContent='РЕЛЕ ОТПУЩЕНО';pl.style.background=INK;}
+ $('#r-note').textContent=(upV!==null&&dnV!==null)?`Запишите: Uср = ${fmt(upV,1)} В, Uотп = ${fmt(dnV,1)} В. Коэффициент возврата kв = Uотп / Uср — посчитайте сами. Повторите опыт ещё два раза.`:
+  (ron?'Реле сработало. Теперь опускайте напряжение по 0,1 В, пока не отпустит.':'Поднимайте напряжение по 0,1 В, пока реле не щёлкнет.');}
+function drawR(){const g=rx,W=1000,H=620,v=vr(),u=+$('#r-u').value;arm+=((ron?1:0)-arm)*0.35;
+ g.clearRect(0,0,W,H);g.fillStyle=PAP;g.fillRect(0,0,W,H);
+ // relay body
+ R(g,100,230,200,30,'#d8d2c4');g.fillStyle='#e7dcc7';g.fillRect(150,110,80,120);g.strokeStyle=INK;g.lineWidth=3;g.strokeRect(150,110,80,120);
+ g.strokeStyle=ron?RED:INK;g.lineWidth=4;for(let i=0;i<6;i++){g.beginPath();g.arc(150,125+i*19,9,Math.PI/2,Math.PI*1.5,false);g.stroke();g.beginPath();g.arc(230,125+i*19,9,-Math.PI/2,Math.PI/2,false);g.stroke();}
+ const ay=95-(1-arm)*35+arm*8;L(g,90,100,330,ay,12,INK);g.fillStyle=INK;g.beginPath();g.arc(90,100,9,0,7);g.fill();
+ // spring
+ g.strokeStyle=INK;g.lineWidth=3;g.beginPath();g.moveTo(290,ay-4);for(let i=0;i<6;i++){g.lineTo(i%2?300:280,ay-10-i*((ay-30)/7));}g.lineTo(290,20);g.stroke();
+ // contacts
+ L(g,330,ay,420,ay,5);L(g,420,ay,500,67+arm*46,6,RED);
+ const nyo=113,nyc=67;L(g,500,nyc,600,nyc,4);L(g,500,nyo,600,nyo,4);S(g,'НЗ',610,nyc+8,22);S(g,'НР',610,nyo+8,22);
+ L(g,600,nyo,740,nyo,4);lamp(g,780,nyo,ron);L(g,812,nyo,880,nyo,4);L(g,880,nyo,880,200,4);L(g,880,200,420,200,4);L(g,420,200,420,ay,4);R(g,820,170,60,40);T(g,'5 В',850,198,20,INK,'center');
+ S(g,`U = ${fmt(u,1)} В`,40,300,26);S(g,`катушка ${v.un} В, ${v.rk} Ом`,40,330,22,MUT);
+ // graph
+ const x0=80,y0=580,gw=860,gh=180,um=+$('#r-u').max;L(g,x0,y0,x0+gw,y0,2);L(g,x0,y0,x0,y0-gh-20,2);
+ for(let k=0;k<=um;k+=(um>20?5:um>8?2:1)){const x=x0+k/um*gw;L(g,x,y0,x,y0+8,2);T(g,String(k),x,y0+28,18,INK,'center','400');}
+ S(g,'замкнуты',x0-8,y0-gh+6,18,INK,'right');S(g,'разомкн.',x0-8,y0+6,18,INK,'right');S(g,'U, В',x0+gw,y0-10,20,INK,'right');
+ g.strokeStyle=BLU;g.lineWidth=4;g.beginPath();trace.forEach(([uu,s],i)=>{const x=x0+uu/um*gw,y=y0-s*gh;i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();
+ const cx=x0+u/um*gw,cy=y0-(ron?1:0)*gh;g.fillStyle=RED;g.beginPath();g.arc(cx,cy,8,0,7);g.fill();}
+$('#r-u').oninput=updR;$('#r-up').onclick=()=>{const e=$('#r-u');e.value=Math.min(+e.max,(+e.value+0.1)).toFixed(1);updR();};$('#r-dn').onclick=()=>{const e=$('#r-u');e.value=Math.max(0,(+e.value-0.1)).toFixed(1);updR();};
+$('#r-clr').onclick=()=>{trace=[[+$('#r-u').value,ron?1:0]];upV=dnV=null;updR();};$('#r-n').onchange=setRange;
+
+/* ---------- thermostat ---------- */
+const tx=$('#cv-t').getContext('2d');let tt=95,heat=false,hist=[],clicks=[],tsim=0;
+function stepT(){const lo=+$('#t-lo').value,gap=+$('#t-gap').value,hi=lo+gap;const meas=tt+(Math.random()-0.5)*0.6;
+ const was=heat;if(!heat&&meas<lo)heat=true;else if(heat&&meas>hi)heat=false;if(gap===0){heat=meas<lo;}
+ if(was!==heat)clicks.push(tsim);tt+=heat?0.35:-0.22;tsim+=0.25;hist.push([tsim,tt,heat]);if(hist.length>800)hist.shift();clicks=clicks.filter(c=>c>tsim-60);}
+function updT(){const lo=+$('#t-lo').value,gap=+$('#t-gap').value;$('#t-lov').textContent=lo;$('#t-gapv').textContent=gap;}
+function drawT(){for(let i=0;i<4;i++)stepT();const g=tx,W=1000,H=600,lo=+$('#t-lo').value,gap=+$('#t-gap').value;g.clearRect(0,0,W,H);g.fillStyle=PAP;g.fillRect(0,0,W,H);
+ const x0=70,y0=470,gw=900,ty=v=>y0-(v-60)/(150-60)*420;L(g,x0,y0,x0+gw,y0,2);L(g,x0,y0,x0,40,2);
+ for(let v=60;v<=150;v+=10){T(g,String(v),x0-8,ty(v)+6,18,INK,'right','400');L(g,x0,ty(v),x0+gw,ty(v),1,'#e2ddd1');}
+ L(g,x0,ty(lo),x0+gw,ty(lo),2,BLU,[10,7]);L(g,x0,ty(lo+gap),x0+gw,ty(lo+gap),2,RED,[10,7]);S(g,'вкл',x0+gw-4,ty(lo)+22,18,BLU,'right');S(g,'выкл',x0+gw-4,ty(lo+gap)-8,18,RED,'right');
+ const t1=tsim,t0=t1-200;g.strokeStyle=INK;g.lineWidth=3;g.beginPath();let st=false;hist.forEach(([t,v,h])=>{if(t<t0)return;const x=x0+(t-t0)/200*gw,y=ty(v);st?g.lineTo(x,y):(g.moveTo(x,y),st=true);});g.stroke();
+ hist.forEach(([t,v,h])=>{if(t<t0||!h)return;const x=x0+(t-t0)/200*gw;g.fillStyle=RED;g.fillRect(x,y0+30,gw/800+1.5,24);});S(g,'нагреватель включён',x0,y0+85,20,RED);
+ $('#t-t').textContent=fmt(tt,1)+' °C';$('#t-h').textContent=heat?'включён':'выключен';const cpm=clicks.length;$('#t-c').textContent=cpm;
+ const pl=$('#t-plq');if(gap<=1){pl.textContent='РЕЛЕ ДРЕБЕЗЖИТ';pl.style.background=RED;$('#t-note').textContent='Без «зазора» датчик чуть дрожит около порога, и реле щёлкает без конца: контакты обгорят за несколько дней. Поэтому у реле и терморегуляторов включение и выключение всегда при разных значениях.';}
+ else{pl.textContent='РАБОТАЕТ СПОКОЙНО';pl.style.background=OK;$('#t-note').textContent=`Нагрев включается ниже ${lo} °C и выключается выше ${lo+gap} °C. Чем шире «зазор», тем реже щёлкает реле, но тем больше «гуляет» температура. Так же устроено реле: Uотп меньше Uср.`;}}
+$('#t-lo').oninput=updT;$('#t-gap').oninput=updT;
+
+/* ---------- Arduino ---------- */
+const ax=$('#cv-a').getContext('2d');let aon=false,ang=0,serial=[],lastLog=0;
+function va(){return V(+$('#a-n').value);}
+function code(v){return `const int RELAY = 7;      // модуль реле: вход IN
+const float T_ON  = ${v.ton};    // включить вентилятор
+const float T_OFF = ${v.toff};    // выключить вентилятор
+bool fanOn = false;
+
+void setup() {
+  pinMode(RELAY, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int raw = analogRead(A0);      // 0…1023
+  float t = raw / 10.0;          // «температура»
+  if (!fanOn && t >= T_ON)  fanOn = true;
+  if ( fanOn && t <= T_OFF) fanOn = false;
+  digitalWrite(RELAY, fanOn ? HIGH : LOW);
+  Serial.print(t); Serial.println(fanOn ? " ВКЛ" : " выкл");
+  delay(200);
+}`;}
+function updA(){const v=va(),raw=+$('#a-p').value,t=raw/10;const was=aon;if(!aon&&t>=v.ton)aon=true;if(aon&&t<=v.toff)aon=false;
+ $('#a-pv').textContent=raw;$('#a-t').textContent=fmt(t,1)+' °C';$('#a-r').textContent=aon?'HIGH — включено':'LOW — выключено';$('#a-th').textContent=` вкл при ${v.ton} °C, выкл при ${v.toff} °C`;
+ const pl=$('#a-plq');pl.textContent=aon?'ВЕНТИЛЯТОР РАБОТАЕТ':'ВЕНТИЛЯТОР СТОИТ';pl.style.background=aon?OK:INK;$('#a-code').textContent=code(v);}
+function drawA(){const g=ax,W=1000,H=600,v=va(),raw=+$('#a-p').value;g.clearRect(0,0,W,H);g.fillStyle=PAP;g.fillRect(0,0,W,H);
+ // pot
+ R(g,40,180,60,160);const wy=340-raw/1023*160;L(g,100,wy,150,wy,3,RED);g.fillStyle=RED;g.beginPath();g.moveTo(100,wy);g.lineTo(115,wy-8);g.lineTo(115,wy+8);g.fill();S(g,'датчик',70,380,20,INK,'center');
+ L(g,150,wy,150,230,3,RED);L(g,150,230,220,230,3,RED);
+ // arduino
+ R(g,220,160,260,220,'#2e6e9e');T(g,'Ардуино',350,280,28,'#F2EEE3','center');T(g,'A0',236,238,18,'#F2EEE3');T(g,'D7',448,238,18,'#F2EEE3','right');
+ L(g,480,230,560,230,3,aon?RED:INK);
+ // module
+ R(g,560,170,200,130,'#3a5f8a');R(g,620,190,90,80,'#a9c4e0');g.fillStyle=aon?'#e05040':'#5a2a2a';g.beginPath();g.arc(590,280,8,0,7);g.fill();T(g,'реле',665,238,20,INK,'center');
+ // fan
+ const fx=860,fy=235;g.fillStyle=PAP;g.beginPath();g.arc(fx,fy,70,0,7);g.fill();g.strokeStyle=INK;g.lineWidth=3;g.stroke();if(aon)ang+=0.35;
+ for(let i=0;i<3;i++){const a=ang+i*2.094;g.save();g.translate(fx,fy);g.rotate(a);g.fillStyle='#cfc6b2';g.beginPath();g.ellipse(32,0,32,14,0,0,7);g.fill();g.stroke();g.restore();}
+ L(g,760,220,790,220,3);S(g,'вентилятор 12 В',fx,335,20,INK,'center');
+ // serial monitor
+ R(g,40,410,920,170,'#10201a');T(g,'Монитор порта',56,436,18,'#9fc0ae');
+ const now=performance.now();if(now-lastLog>200){lastLog=now;serial.push(fmt(raw/10,1)+(aon?' ВКЛ':' выкл'));if(serial.length>6)serial.shift();}
+ g.font='18px monospace';g.fillStyle='#d6f5e3';g.textAlign='left';serial.forEach((s,i)=>g.fillText(s,56,462+i*19));
+ S(g,`пороги варианта ${v.n}: вкл ${v.ton} °C, выкл ${v.toff} °C`,600,470,20,'#d9a441','left');}
+$('#a-p').oninput=updA;$('#a-n').onchange=()=>{aon=false;updA();};
+
+/* ---------- quiz ---------- */
+const Q=[{q:'Из каких трёх частей состоит система автоматики?',o:['датчик — управляющее устройство — исполнительный элемент','генератор — провод — лампа','кнопка — предохранитель — розетка'],e:'Датчик измеряет, управляющее устройство решает, исполнительный элемент делает.'},
+ {q:'Что из этого — датчик?',o:['термопара','контактор','электромагнитный клапан'],e:'Контактор и клапан — исполнительные элементы.'},
+ {q:'Что из этого — исполнительный элемент?',o:['электромагнитный газовый клапан','фотодатчик','концевик'],e:'Клапан делает работу: открывает газ.'},
+ {q:'Что делает реле, когда по катушке пошёл достаточный ток?',o:['притягивает якорь и переключает контакты','нагревается и перегорает','выпрямляет ток'],e:'Катушка с сердечником — электромагнит.'},
+ {q:'Что такое напряжение срабатывания?',o:['наименьшее напряжение, при котором якорь притягивается','наибольшее напряжение катушки','напряжение на контактах'],e:'Поднимаем U — в какой-то момент щелчок.'},
+ {q:'Как соотносятся Uотп и Uср?',o:['Uотп меньше Uср','Uотп больше Uср','всегда равны'],e:'Притянутый якорь держится легче — зазор в магнитной цепи меньше.'},
+ {q:'Uср = 8 В, Uотп = 4 В. Чему равен kв?',o:['0,5','2','12'],e:'kв = Uотп / Uср = 4 / 8 = 0,5.'},
+ {q:'Зачем терморегулятору «зазор» между включением и выключением?',o:['чтобы реле не щёлкало без конца у порога','чтобы было теплее','чтобы экономить провод'],e:'Без зазора контакты быстро обгорят.'},
+ {q:'Какие контакты замкнуты, когда тока в катушке нет?',o:['нормально замкнутые (НЗ, NC)','нормально разомкнутые (НР, NO)','никакие'],e:'«Нормально» — значит без тока в катушке.'},
+ {q:'Что включается первым, когда сварщик нажал кнопку на горелке полуавтомата?',o:['газ','сварочный ток','ничего'],e:'Газ продувает зону, потом подача проволоки и ток.'},
+ {q:'Зачем модулю реле транзистор?',o:['вывод Ардуино даёт мало тока для катушки','чтобы реле светилось','чтобы выпрямлять ток'],e:'Транзистор — ключ из пары 23.'},
+ {q:'Зачем диод параллельно катушке реле?',o:['гасит выброс напряжения при отключении катушки','выпрямляет 220 В','чтобы реле работало от переменного тока'],e:'Катушка — индуктивность: при отключении даёт выброс (самоиндукция).'}];
+let qi=0,score=0,ord=[];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderQ(){const box=$('#quiz-box');
+  if(qi>=Q.length){const m=score>=11?'Отлично!':score>=9?'Хорошо! Повторите ошибки.':'Повторите опыты 1–3 и попробуйте ещё раз.';
+    box.innerHTML='<div class="qcard"><p class="score">'+score+' из '+Q.length+'</p><p class="qtext">'+m+'</p><div class="seg"><button class="big" type="button" id="qr">Пройти ещё раз</button></div></div>';$('#qr').onclick=()=>{qi=0;score=0;renderQ();};return;}
+  const q=Q[qi];ord=shuffle(q.o.map((t,i)=>({t,i})));
+  box.innerHTML='<div class="qcard"><p class="qtop"><span>Вопрос '+(qi+1)+' из '+Q.length+'</span><span>Верно: '+score+'</span></p><p class="qtext">'+q.q+'</p><div class="opts">'+ord.map((o,k)=>'<button class="opt" type="button" data-k="'+k+'">'+o.t+'</button>').join('')+'</div><p class="feedback" id="qfb" aria-live="polite"></p><p id="qex" style="margin:0"></p><div class="seg"><button class="big" type="button" id="qn" hidden>Дальше</button></div></div>';
+  $$('#quiz-box .opt').forEach(b=>b.onclick=()=>{const ok=ord[+b.dataset.k].i===0;if(ok)score++;$$('#quiz-box .opt').forEach(o=>{o.disabled=true;if(ord[+o.dataset.k].i===0)o.classList.add('right');});if(!ok)b.classList.add('wrong');
+    const f=$('#qfb');f.className='feedback '+(ok?'good':'bad');f.textContent=ok?'Верно!':'Не совсем.';$('#qex').textContent=q.e;const n=$('#qn');n.hidden=false;n.textContent=qi===Q.length-1?'Узнать результат':'Дальше';n.focus();});
+  $('#qn').onclick=()=>{qi++;renderQ();};}
+
+setRange();updT();updA();renderQ();
+const tabs=['relay','thermo','ard','quiz'];let cur='relay';
+function show(){const h=location.hash.replace('#','');cur=tabs.includes(h)?h:'relay';$$('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==cur);$$('nav a').forEach(a=>a.setAttribute('aria-current',String(a.dataset.tab===cur)));}
+window.addEventListener('hashchange',show);show();
+function loop(){if(cur==='relay')drawR();if(cur==='thermo')drawT();if(cur==='ard')drawA();requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
