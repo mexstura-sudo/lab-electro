@@ -9,6 +9,8 @@
 | Переменный ток | 1.4 «Цепи переменного тока» (пары 11–12 СП) | `ac-current/` |
 | Диод и выпрямитель | 21 «p-n-переход, диоды, обозначения», 22 «Выпрямители» | `diode-rectifier/` |
 
+Полный список интерактивов с прямыми ссылками на вкладки — в [INTERACTIVES.md](INTERACTIVES.md).
+
 ## Как включить сайт (GitHub Pages)
 
 Settings → Pages → Source: **Deploy from a branch**, Branch: **main**, папка **/ (root)** → Save.
