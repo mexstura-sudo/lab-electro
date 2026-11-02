@@ -17,6 +17,7 @@
 | 6 | Трансформатор (ПР №8) | 1.7, пары 18–19 | [Принцип](https://mexstura-sudo.github.io/lab-electro/transformer/#princ) · [Режимы](https://mexstura-sudo.github.io/lab-electro/transformer/#modes) · [Сварочный](https://mexstura-sudo.github.io/lab-electro/transformer/#weld) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/transformer/#quiz) |
 | 7 | Электрические машины | 1.8–1.9, пара 20 | [Вращающееся поле](https://mexstura-sudo.github.io/lab-electro/machines/#field) · [Пуск двигателя](https://mexstura-sudo.github.io/lab-electro/machines/#async) · [Постоянный ток](https://mexstura-sudo.github.io/lab-electro/machines/#dc) · [Шильдик](https://mexstura-sudo.github.io/lab-electro/machines/#plate) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/machines/#quiz) |
 | 8 | Электробезопасность | 1.10, пара 21 | [Ток через человека](https://mexstura-sudo.github.io/lab-electro/safety/#body) · [Что спасёт](https://mexstura-sudo.github.io/lab-electro/safety/#pe) · [Автомат и кабель](https://mexstura-sudo.github.io/lab-electro/safety/#brk) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/safety/#quiz) |
+| 9 | Транзистор и инвертор | 2.3, пара 23 | [Транзистор-ключ](https://mexstura-sudo.github.io/lab-electro/inverter/#key) · [Усилитель](https://mexstura-sudo.github.io/lab-electro/inverter/#amp) · [Сварочный инвертор](https://mexstura-sudo.github.io/lab-electro/inverter/#inv) · [Проверь себя (тест «Электроника»)](https://mexstura-sudo.github.io/lab-electro/inverter/#quiz) |
 
 **Варианты.** В лабораториях 3, 4, 5, 6 и 7 (вкладка «Шильдик») есть 30 вариантов (номер в журнале). Ссылку сразу на вариант можно дать так: `…/rl-circuit/?v=12#stand`, `…/measurements/?v=12#verify`, `…/three-phase/?v=12#star`, `…/transformer/?v=12#modes`, `…/machines/?v=12#plate`.
 
@@ -30,6 +31,7 @@
 6. **Трансформатор.** Сердечник с двумя обмотками: меняем витки и напряжение, переключаем на постоянный ток — трансформатор «молчит»; режимы ПР №8: холостой ход, короткое замыкание через ЛАТР, нагрузка с записью точек и графиками U2(I2) и КПД; сварочный трансформатор: падающая характеристика, прямая дуги, регулятор тока, касание электродом; тест из 12 вопросов.
 7. **Электрические машины.** Три обмотки статора и вращающееся поле, ротор-беличья клетка отстаёт (скольжение), реверс сменой двух фаз, число пар полюсов; пуск двигателя 4 кВт с графиками скорости и тока: прямой, звезда → треугольник, частотник, вентилятор или конвейер, лампа в цехе мигает; машина постоянного тока: двигатель и генератор, коллектор или кольца; шильдик: P1, ток, скольжение, звезда или треугольник, автомат, пусковой ток с проверкой; тест из 12 вопросов.
 8. **Электробезопасность.** Ток через человека: напряжение 12–380 В, путь (рука — рука, рука — ноги, нога — нога), кожа и обувь → ток в мА и зона опасности; пробой на корпус: без защиты, заземление (ползунок Rз), зануление, PE + УЗО, касание голой фазы — напряжение на корпусе, ток через человека, время отключения; подбор автомата (номинал, B/C/D) и кабеля для болгарки, полуавтомата и инверторов с проверкой броска при включении; тест из 12 вопросов.
+9. **Транзистор и инвертор.** Ключ на транзисторе с лампой 12 В: ток базы, ток лампы, напряжение и нагрев транзистора (закрыт, приоткрыт, открыт); усилитель на осциллографе: Uвх, K и срезание при выходе за питание; сварочный инвертор: блоки с осциллограммами, частота 50 Гц…100 кГц и вес сердечника, ширина импульсов и сварочный ток; тест из 12 вопросов.
 
 ## 2. Анимации внутри презентаций (идут сами, в режиме показа)
 
@@ -80,3 +82,4 @@
 - [Пара 20. Электрические машины и электропривод](https://mexstura-sudo.github.io/lab-electro/konspekt/p20.html)
 - [Пара 21. Электроснабжение и безопасность](https://mexstura-sudo.github.io/lab-electro/konspekt/p21.html)
 - [Пара 22. Полупроводники, диоды и выпрямители](https://mexstura-sudo.github.io/lab-electro/konspekt/p22.html)
+- [Пара 23. Транзисторы и сварочный инвертор](https://mexstura-sudo.github.io/lab-electro/konspekt/p23.html)

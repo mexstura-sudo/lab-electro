@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Транзистор и инвертор — лаборатория</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+.lamp{display:inline-block;width:22px;height:22px;border-radius:50%;border:3px solid var(--ink);vertical-align:middle}
+.plate{background:#e9e4d6;border:4px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:18px 22px;font-family:var(--label);letter-spacing:1px}
+.plate .pt{display:flex;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:10px;font-weight:700;font-size:20px}
+.plate .pg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 16px}
+.plate .pg div{border-bottom:1px dashed var(--muted);padding:4px 0}
+.plate .pg span{display:block;font-size:13px;color:var(--muted);text-transform:uppercase}
+.plate .pg b{font-size:22px}
+@media (max-width:560px){.plate .pg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="hand">Лаборатория</div>
+  <h1>Транзистор и инвертор</h1>
+  <p>Тема 2.3. Как маленький ток управляет большим, как транзистор работает ключом и усилителем и почему сварочный инвертор в десять раз легче трансформатора.</p>
+</header>
+
+<nav aria-label="Разделы">
+  <a href="#key" data-tab="key">1 · Транзистор-ключ</a>
+  <a href="#amp" data-tab="amp">2 · Усилитель</a>
+  <a href="#inv" data-tab="inv">3 · Сварочный инвертор</a>
+  <a href="#quiz" data-tab="quiz">4 · Проверь себя</a>
+</nav>
+
+<section class="panel" data-panel="key">
+  <p class="eyebrow">Опыт 1</p>
+  <h2>Маленький ток базы включает лампу 12 В</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-k" width="1000" height="600" aria-label="Схема: источник сигнала через резистор 220 Ом на базу транзистора, в цепи коллектора лампа 12 В; стрелки токов и нагрев транзистора"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="k-u">Напряжение на входе Uвх = <b id="k-uv">0</b> В</label><input type="range" id="k-u" min="0" max="5" step="0.1" value="0"></div>
+      <div class="seg" id="k-q"><button type="button" data-v="0">0 В</button><button type="button" data-v="1.5">1,5 В</button><button type="button" data-v="2">2 В</button><button type="button" data-v="5">5 В</button></div>
+      <div class="readouts">
+        <div class="ro"><span>Ток базы IБ</span><b id="k-ib">—</b></div>
+        <div class="ro"><span>Ток лампы IК</span><b id="k-ic">—</b></div>
+        <div class="ro"><span>Напряжение на транзисторе</span><b id="k-uce">—</b></div>
+        <div class="ro"><span>Нагрев транзистора</span><b id="k-p">—</b></div>
+      </div>
+      <p class="plaque" id="k-plq">—</p>
+      <p class="note" id="k-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="amp" hidden>
+  <p class="eyebrow">Опыт 2</p>
+  <h2>Усилитель: та же форма, только больше</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-a" width="1000" height="600" aria-label="Осциллограф: синим входной сигнал, красным выходной; пунктиром пределы питания"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="a-u">Входной сигнал Uвх = <b id="a-uv">0,10</b> В</label><input type="range" id="a-u" min="0.02" max="0.5" step="0.01" value="0.1"></div>
+      <div><label class="ctl-label" for="a-k">Коэффициент усиления K = <b id="a-kv">20</b></label><input type="range" id="a-k" min="5" max="60" step="1" value="20"></div>
+      <div class="readouts">
+        <div class="ro"><span>Uвых = K · Uвх</span><b id="a-out">—</b></div>
+        <div class="ro"><span>Питание усилителя</span><b>±9 В</b></div>
+      </div>
+      <p class="plaque" id="a-plq">—</p>
+      <p class="note" id="a-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="inv" hidden>
+  <p class="eyebrow">Опыт 3</p>
+  <h2>Частота, вес и ток сварочного инвертора</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-i" width="1000" height="600" aria-label="Цепочка блоков инвертора с осциллограммами; внизу сердечник трансформатора в масштабе и стрелочный амперметр сварочного тока"></canvas></div>
+    <div class="side">
+      <div><span class="ctl-label">Частота инвертора</span><div class="seg" id="i-f"><button type="button" data-v="50">50 Гц</button><button type="button" data-v="1000">1 кГц</button><button type="button" data-v="20000">20 кГц</button><button type="button" data-v="50000">50 кГц</button><button type="button" data-v="100000">100 кГц</button></div></div>
+      <div><label class="ctl-label" for="i-d">Ширина импульсов (ручка тока) = <b id="i-dv">50</b> %</label><input type="range" id="i-d" min="10" max="80" step="1" value="50"></div>
+      <div class="readouts">
+        <div class="ro"><span>Сердечник трансформатора</span><b id="i-m">—</b></div>
+        <div class="ro"><span>Весь аппарат</span><b id="i-w">—</b></div>
+        <div class="ro"><span>Сварочный ток</span><b id="i-a">—</b></div>
+      </div>
+      <p class="plaque" id="i-plq">—</p>
+      <p class="note" id="i-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="quiz" hidden>
+  <p class="eyebrow">Контрольные вопросы</p>
+  <h2>Проверь себя</h2>
+  <div id="quiz-box"></div>
+</section>
+
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">все лаборатории</a> · <a href="../konspekt/p23.html">текст к теме</a></footer>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const INK='#1B1A17',RED='#A3271F',PAP='#FAF8F2',MUT='#6E685C',OK='#2F6B3A',BLU='#4A6FA5',YEL='#E2B23A';
+const LBL="Oswald,'Arial Narrow',Arial,sans-serif",SER="'PT Serif',Georgia,serif";
+const fmt=(x,d)=>(Math.round(x*10**d)/10**d).toFixed(d).replace('.',',');
+function seg(id,cb){$$('#'+id+' button').forEach(b=>b.onclick=()=>{press(id,b.dataset.v);cb(b.dataset.v);});}
+function press(id,v){$$('#'+id+' button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===v)));}
+function val(id){const b=$('#'+id+' button[aria-pressed="true"]');return b?b.dataset.v:null;}
+function T(g,s,x,y,size,col,al,w){g.font=(w||'700')+' '+size+'px '+LBL;g.fillStyle=col||INK;g.textAlign=al||'left';g.fillText(s,x,y);}
+function S(g,s,x,y,size,col,al){g.font='400 '+size+'px '+SER;g.fillStyle=col||INK;g.textAlign=al||'left';g.fillText(s,x,y);}
+function L(g,x1,y1,x2,y2,w,c,d){g.strokeStyle=c||INK;g.lineWidth=w||3;g.setLineDash(d||[]);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.setLineDash([]);}
+function R(g,x,y,w,h,fill,lw){g.fillStyle=fill||PAP;g.fillRect(x,y,w,h);g.strokeStyle=INK;g.lineWidth=lw||3;g.strokeRect(x,y,w,h);}
+function arrow(g,x1,y1,x2,y2,w,c){L(g,x1,y1,x2,y2,w,c);const a=Math.atan2(y2-y1,x2-x1),s=8+w*2;g.fillStyle=c;g.beginPath();g.moveTo(x2,y2);g.lineTo(x2-s*Math.cos(a-0.45),y2-s*Math.sin(a-0.45));g.lineTo(x2-s*Math.cos(a+0.45),y2-s*Math.sin(a+0.45));g.fill();}
+function npn(g,x,y,sc){g.save();g.translate(x,y);g.scale(sc,sc);g.strokeStyle=INK;g.lineWidth=4;g.fillStyle=PAP;g.beginPath();g.arc(0,0,60,0,7);g.fill();g.stroke();
+ g.lineWidth=7;L(g,-20,-35,-20,35,7);L(g,-100,0,-20,0,4);L(g,-20,-15,28,-45,4);L(g,28,-45,28,-100,4);L(g,-20,15,28,45,4);L(g,28,45,28,100,4);
+ g.fillStyle=INK;g.beginPath();g.moveTo(28,45);g.lineTo(8,42);g.lineTo(18,28);g.fill();g.restore();}
+
+/* ---------- key ---------- */
+const kx=$('#cv-k').getContext('2d');const RB=220,BETA=100,RL=10,VCC=12;
+function calcK(){const u=+$('#k-u').value;const ib=Math.max(0,(u-0.7)/RB);let ic=Math.min(BETA*ib,VCC/RL*0.985);const uce=Math.max(0.18,VCC-ic*RL);if(uce===0.18)ic=(VCC-0.18)/RL;return{u,ib,ic,uce,p:uce*ic,sat:BETA*ib>=VCC/RL*0.985,off:ib<=0};}
+function updK(){const r=calcK();$('#k-uv').textContent=fmt(r.u,1);$('#k-ib').textContent=fmt(r.ib*1000,1)+' мА';$('#k-ic').textContent=fmt(r.ic,2)+' А';$('#k-uce').textContent=fmt(r.uce,1)+' В';$('#k-p').textContent=fmt(r.p,1)+' Вт';
+ let pl,col,n;if(r.off){pl='КЛЮЧ ЗАКРЫТ';col=INK;n='Меньше 0,7 В на базе — переход база–эмиттер закрыт, тока базы нет, лампа не горит. Транзистор не греется: тока нет.';}
+ else if(r.sat){pl='КЛЮЧ ОТКРЫТ';col=OK;n=`Ток базы ${fmt(r.ib*1000,0)} мА хватает, чтобы открыть транзистор полностью: лампа горит в полную силу, на транзисторе всего ${fmt(r.uce,1)} В — он почти не греется (${fmt(r.p,1)} Вт). Ток лампы в ${fmt(r.ic/r.ib,0)} раз больше тока базы.`;}
+ else{pl='ПРИОТКРЫТ — РЕЖИМ УСИЛИТЕЛЯ';col=RED;n=`IК = β · IБ = 100 · ${fmt(r.ib*1000,1)} мА = ${fmt(r.ic,2)} А. Лампа светит вполсилы, а транзистор греется: ${fmt(r.p,1)} Вт. Поэтому в инверторе транзисторы только «вкл/выкл» — так потерь меньше всего.`;}
+ $('#k-plq').textContent=pl;$('#k-plq').style.background=col;$('#k-note').textContent=n;press('k-q','');drawK(r);}
+function drawK(r){const g=kx;g.clearRect(0,0,1000,600);g.fillStyle=PAP;g.fillRect(0,0,1000,600);
+ L(g,560,70,900,70,5);T(g,'+12 В',900,58,26,INK,'right');L(g,640,70,640,130,5);
+ const br=Math.min(1,r.ic/1.2);g.fillStyle=br>0.02?`rgba(243,${200+40*(1-br)|0},90,${0.25+0.75*br})`:PAP;g.beginPath();g.arc(640,175,45,0,7);g.fill();g.strokeStyle=INK;g.lineWidth=4;g.stroke();
+ L(g,608,143,672,207,4);L(g,672,143,608,207,4);
+ if(br>0.05)for(let a=0;a<8;a++){const c=Math.cos(a*Math.PI/4),s=Math.sin(a*Math.PI/4);L(g,640+58*c,175+58*s,640+58*c+28*br*c,175+58*s+28*br*s,4,RED);}
+ S(g,'лампа 12 В',735,182,24);
+ L(g,640,220,640,262,5);npn(g,612,355,0.9);L(g,637,445,637,520,5);L(g,560,520,900,520,5);L(g,600,520,600,540,4);L(g,585,540,615,540,4);L(g,592,550,608,550,4);
+ R(g,300,340,120,30);T(g,'220 Ом',360,330,22,INK,'center');L(g,180,355,300,355,5);L(g,420,355,522,355,5);
+ R(g,60,300,120,110,'#FAF8F2');T(g,fmt(r.u,1)+' В',120,365,34,r.u>0.7?RED:INK,'center');S(g,'сигнал',120,435,22,MUT,'center');S(g,'(Ардуино)',120,460,22,MUT,'center');
+ if(r.ib>0){const w=Math.min(8,1+r.ib*600);arrow(g,440,320,500,320,w,RED);T(g,'IБ',470,305,24,RED,'center');}
+ if(r.ic>0.01){const w=1+r.ic*8;arrow(g,690,230,690,290,w,RED);T(g,'IК',712,268,24,RED);}
+ // heat bar
+ S(g,'нагрев транзистора',40,60,24);R(g,40,75,260,28,PAP,2);const hp=Math.min(1,r.p/3.6);g.fillStyle=hp>0.5?RED:YEL;g.fillRect(41,76,258*hp,26);T(g,fmt(r.p,1)+' Вт',315,98,24);}
+$('#k-u').oninput=updK;seg('k-q',v=>{$('#k-u').value=v;updK();press('k-q',v);});
+
+/* ---------- amp ---------- */
+const ax=$('#cv-a').getContext('2d');const VS=9;let at=0;
+function updA(){const u=+$('#a-u').value,k=+$('#a-k').value,o=u*k;$('#a-uv').textContent=fmt(u,2);$('#a-kv').textContent=k;$('#a-out').textContent=fmt(Math.min(o,VS),1)+' В';
+ const cl=o>VS;$('#a-plq').textContent=cl?'ИСКАЖЕНИЯ: УПЁРЛИСЬ В ПИТАНИЕ':'ФОРМА СОХРАНИЛАСЬ';$('#a-plq').style.background=cl?RED:OK;
+ $('#a-note').textContent=cl?`K · Uвх = ${k} · ${fmt(u,2)} = ${fmt(o,1)} В — больше, чем питание ±9 В. Верхушки синусоиды «срезаны»: колонка хрипит. Уменьшите громкость (Uвх) или K.`:`Uвых = K · Uвх = ${k} · ${fmt(u,2)} = ${fmt(o,1)} В. Выход повторяет форму входа, только в ${k} раз больше. Энергию для этого усилитель берёт из питания.`;}
+function drawA(){const g=ax,W=1000,H=600;g.clearRect(0,0,W,H);g.fillStyle='#10201a';g.fillRect(0,0,W,H);g.strokeStyle='#2c4a3c';g.lineWidth=1;
+ for(let x=0;x<=W;x+=100){g.beginPath();g.moveTo(x,0);g.lineTo(x,H);g.stroke();}for(let y=0;y<=H;y+=60){g.beginPath();g.moveTo(0,y);g.lineTo(W,y);g.stroke();}
+ const y0=300,sc=30;g.setLineDash([10,8]);g.strokeStyle='#d9a441';g.lineWidth=2;[-VS,VS].forEach(v=>{g.beginPath();g.moveTo(0,y0-v*sc);g.lineTo(W,y0-v*sc);g.stroke();});g.setLineDash([]);
+ T(g,'+9 В',10,y0-VS*sc-8,22,'#d9a441');T(g,'−9 В',10,y0+VS*sc+26,22,'#d9a441');
+ const u=+$('#a-u').value,k=+$('#a-k').value;
+ g.lineWidth=4;g.strokeStyle='#7fb2ff';g.beginPath();for(let x=0;x<=W;x+=3){const v=u*Math.sin((x/W)*4*Math.PI-at);const y=y0-v*sc;x?g.lineTo(x,y):g.moveTo(x,y);}g.stroke();
+ g.strokeStyle='#ff6b5e';g.beginPath();for(let x=0;x<=W;x+=3){let v=k*u*Math.sin((x/W)*4*Math.PI-at);v=Math.max(-VS,Math.min(VS,v));const y=y0-v*sc;x?g.lineTo(x,y):g.moveTo(x,y);}g.stroke();
+ g.fillStyle='#10201a';g.fillRect(W-120,H-110,110,70);T(g,'вход',W-110,H-80,24,'#7fb2ff');T(g,'выход',W-110,H-50,24,'#ff6b5e');S(g,'1 клетка = 2 В',60,H-16,22,'#9fc0ae');}
+$('#a-u').oninput=updA;$('#a-k').oninput=updA;
+
+/* ---------- inverter ---------- */
+const ix=$('#cv-i').getContext('2d');let it=0;
+function calcI(){const f=+val('i-f'),d=+$('#i-d').value/100;const m=20*Math.pow(50/f,0.61);return{f,d,m,w:2.5+m*1.3,a:200*d};}
+function updI(){const r=calcI();$('#i-dv').textContent=Math.round(r.d*100);$('#i-m').textContent=r.m>=1?fmt(r.m,1)+' кг':fmt(r.m*1000,0)+' г';$('#i-w').textContent='≈ '+fmt(r.w,r.w<10?1:0)+' кг';$('#i-a').textContent=fmt(r.a,0)+' А';
+ let pl,col,n;if(r.f<=50){pl='ОБЫЧНЫЙ ТРАНСФОРМАТОР';col=INK;n='На 50 Гц нужен большой сердечник: так устроен классический сварочный трансформатор, аппарат весит десятки килограммов.';}
+ else if(r.f<20000){pl='ПИЩИТ';col=RED;n='Частота ниже 20 кГц — человек её слышит: трансформатор пищит. Сердечник уже меньше, но инверторы делают на 20–100 кГц.';}
+ else{pl='СВАРОЧНЫЙ ИНВЕРТОР';col=OK;n=`На ${fmt(r.f/1000,0)} кГц сердечник весит ${r.m>=1?fmt(r.m,1)+' кг':fmt(r.m*1000,0)+' г'} — в ${fmt(20/r.m,0)} раз меньше, чем на 50 Гц. Ручка тока меняет ширину импульсов: ${Math.round(r.d*100)} % → ${fmt(r.a,0)} А.`;}
+ $('#i-plq').textContent=pl;$('#i-plq').style.background=col;$('#i-note').textContent=n;}
+function drawI(){const g=ix,W=1000,H=600,r=calcI();g.clearRect(0,0,W,H);g.fillStyle=PAP;g.fillRect(0,0,W,H);
+ const B=[['сеть','220 В ~'],['выпрям.','310 В ='],['IGBT','~ '+(r.f>=1000?fmt(r.f/1000,0)+' кГц':r.f+' Гц')],['трансф.','~ 70 В'],['выпрям.','='],['дуга',fmt(r.a,0)+' А']];
+ B.forEach((b,i)=>{const x=10+i*165;R(g,x,30,140,90,i===2?'#EFE3CF':PAP);T(g,b[0],x+70,68,24,INK,'center');T(g,b[1],x+70,102,22,RED,'center');if(i<5)arrow(g,x+142,75,x+163,75,3,INK);
+  const y0=200,xs=x+10,w=120;L(g,xs,y0,xs+w,y0,1,'#b9b3a6');g.strokeStyle=i===5?RED:INK;g.lineWidth=3;g.beginPath();
+  for(let k=0;k<=w;k+=1){let v;const ph=k/w;
+   if(i===0)v=Math.sin(ph*4*Math.PI-it*0.2);
+   else if(i===1||i===5)v=i===5?r.d*1.1:0.9;
+   else if(i===4)v=0.75+0.06*Math.sin(ph*40*Math.PI-it*3);
+   else{const per=r.f>=20000?0.1:r.f>=1000?0.25:1;const p=((ph-it*0.02*(r.f>=1000?1:0.2))%per+per)%per/per;const on=r.d/2;v=p<on?1:(p>=0.5&&p<0.5+on?-1:0);if(i===3)v*=0.7;}
+   const y=y0-v*40;k?g.lineTo(xs+k,y):g.moveTo(xs+k,y);}g.stroke();});
+ // core
+ S(g,'сердечник трансформатора в масштабе',30,300,24);const s=Math.max(8,Math.min(250,250*Math.pow(r.m/20,1/3)));
+ g.save();g.translate(40,320+(250-s));R(g,0,0,s*1.3,s,'#d8d2c4',3);g.fillStyle=PAP;g.fillRect(s*0.25,s*0.25,s*0.25,s*0.5);g.fillRect(s*0.8,s*0.25,s*0.25,s*0.5);g.fillStyle='#e2c9a6';g.fillRect(s*0.45,s*0.2,s*0.4,s*0.6);g.restore();
+ T(g,$('#i-m').textContent,40+s*1.3+20,560,30,INK);
+ // ammeter
+ const cx=780,cy=470,rr=110;g.fillStyle=PAP;g.beginPath();g.arc(cx,cy,rr,Math.PI,0);g.closePath();g.fill();g.strokeStyle=INK;g.lineWidth=3;g.stroke();
+ for(let v=0;v<=160;v+=40){const a=Math.PI+v/160*Math.PI;L(g,cx+(rr-18)*Math.cos(a),cy+(rr-18)*Math.sin(a),cx+rr*Math.cos(a),cy+rr*Math.sin(a),3);T(g,String(v),cx+(rr-40)*Math.cos(a),cy+(rr-40)*Math.sin(a)+8,20,INK,'center');}
+ const a=Math.PI+Math.min(r.a,160)/160*Math.PI;L(g,cx,cy,cx+(rr-10)*Math.cos(a),cy+(rr-10)*Math.sin(a),5,RED);T(g,'A',cx,cy-20,26,INK,'center');S(g,'сварочный ток',cx,cy+40,22,MUT,'center');
+ it++;}
+$('#i-d').oninput=updI;seg('i-f',updI);press('i-f','50000');
+
+/* ---------- quiz ---------- */
+const Q=[{q:'Что делает транзистор?',o:['маленький ток или напряжение управляет большим током','превращает переменный ток в постоянный','хранит заряд'],e:'Как кран: лёгкий поворот ручки — сильный поток.'},
+ {q:'Как называются выводы биполярного транзистора?',o:['база, коллектор, эмиттер','затвор, сток, исток','анод, катод'],e:'Затвор, сток, исток — у полевого.'},
+ {q:'Какой транзистор стоит в сварочных инверторах?',o:['IGBT','германиевый маломощный','фотодиод'],e:'IGBT выдерживает сотни ампер и сотни вольт.'},
+ {q:'Что такое режим ключа?',o:['транзистор либо полностью открыт, либо закрыт','транзистор плавно усиливает сигнал','транзистор выключен навсегда'],e:'Так меньше всего нагрев: в открытом состоянии на нём почти нет напряжения, в закрытом — нет тока.'},
+ {q:'Uвх = 0,1 В, Uвых = 3 В. Чему равен K?',o:['30','0,03','3,1'],e:'K = Uвых / Uвх = 3 / 0,1 = 30.'},
+ {q:'Почему верхушки синусоиды на выходе усилителя «срезаны»?',o:['выход упёрся в напряжение питания','K слишком маленький','сломался вход'],e:'Усилитель не может дать больше, чем его питание.'},
+ {q:'Какое постоянное напряжение получается в инверторе после сетевого выпрямителя?',o:['около 310 В','12 В','70 В'],e:'Амплитуда сетевых 220 В: 220 · 1,41 ≈ 310 В.'},
+ {q:'Зачем инвертору высокая частота?',o:['чтобы трансформатор был маленьким и лёгким','чтобы дуга светила ярче','чтобы меньше пищало'],e:'Чем выше частота, тем меньше витков и железа нужно.'},
+ {q:'Как в инверторе регулируют сварочный ток?',o:['меняют ширину импульсов (ШИМ)','меняют число витков вручную','двигают магнитный шунт'],e:'Шире импульсы — больше ток.'},
+ {q:'Что такое «антиприлипание»?',o:['при залипании электрода ток сбрасывается','бросок тока при поджиге','рост тока при короткой дуге'],e:'Бросок при поджиге — горячий старт, рост тока при короткой дуге — форсаж.'},
+ {q:'Чего боится инвертор?',o:['пыли, влаги и металлической стружки','холода в 15 °C','длинного кабеля «массы»'],e:'Стружка замыкает плату, влага — тоже.'},
+ {q:'Почему нельзя сразу лезть внутрь отключённого инвертора?',o:['конденсаторы ещё заряжены до 310 В','там горячо от дуги','там газ'],e:'Конденсаторы разряжаются минуты — см. П3.'}];
+let qi=0,score=0,ord=[];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderQ(){const box=$('#quiz-box');
+  if(qi>=Q.length){const m=score>=11?'Отлично!':score>=9?'Хорошо! Повторите ошибки.':'Повторите опыты 1–3 и попробуйте ещё раз.';
+    box.innerHTML='<div class="qcard"><p class="score">'+score+' из '+Q.length+'</p><p class="qtext">'+m+'</p><div class="seg"><button class="big" type="button" id="qr">Пройти ещё раз</button></div></div>';$('#qr').onclick=()=>{qi=0;score=0;renderQ();};return;}
+  const q=Q[qi];ord=shuffle(q.o.map((t,i)=>({t,i})));
+  box.innerHTML='<div class="qcard"><p class="qtop"><span>Вопрос '+(qi+1)+' из '+Q.length+'</span><span>Верно: '+score+'</span></p><p class="qtext">'+q.q+'</p><div class="opts">'+ord.map((o,k)=>'<button class="opt" type="button" data-k="'+k+'">'+o.t+'</button>').join('')+'</div><p class="feedback" id="qfb" aria-live="polite"></p><p id="qex" style="margin:0"></p><div class="seg"><button class="big" type="button" id="qn" hidden>Дальше</button></div></div>';
+  $$('#quiz-box .opt').forEach(b=>b.onclick=()=>{const ok=ord[+b.dataset.k].i===0;if(ok)score++;$$('#quiz-box .opt').forEach(o=>{o.disabled=true;if(ord[+o.dataset.k].i===0)o.classList.add('right');});if(!ok)b.classList.add('wrong');
+    const f=$('#qfb');f.className='feedback '+(ok?'good':'bad');f.textContent=ok?'Верно!':'Не совсем.';$('#qex').textContent=q.e;const n=$('#qn');n.hidden=false;n.textContent=qi===Q.length-1?'Узнать результат':'Дальше';n.focus();});
+  $('#qn').onclick=()=>{qi++;renderQ();};}
+
+updK();updA();updI();renderQ();
+const tabs=['key','amp','inv','quiz'];let cur='key';
+function show(){const h=location.hash.replace('#','');cur=tabs.includes(h)?h:'key';$$('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==cur);$$('nav a').forEach(a=>a.setAttribute('aria-current',String(a.dataset.tab===cur)));}
+window.addEventListener('hashchange',show);show();
+function loop(){if(cur==='amp'){at+=0.05;drawA();}if(cur==='inv')drawI();requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
