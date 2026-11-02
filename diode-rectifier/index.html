@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Лаборатория «Диод и выпрямитель»</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/* Layout: a workbench sheet — tabs on top, the drawing (canvas) left, the controls and the explanation right; stacks to one column on phones. */
+:root{
+  --paper:#F2EEE3; --card:#FAF8F2; --ink:#1B1A17; --text:#2E2B26; --muted:#6E685C; --red:#A3271F; --on-red:#FBF6EC; --lamp:#F6D77A; --ok:#2F6B3A;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;
+  --label:'Oswald', 'Arial Narrow', Arial, sans-serif;
+  --hand:'Caveat', 'Brush Script MT', cursive;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 48px}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0;text-wrap:balance}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:62ch}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--paper)}
+nav{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);
+  display:flex;gap:10px;overflow-x:auto;scrollbar-width:thin}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);
+  text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+nav a:focus-visible,button:focus-visible,.opt:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px;text-wrap:balance}
+.bench{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage canvas{display:block;width:100%;height:auto;cursor:pointer;touch-action:manipulation}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.big{font-family:var(--label);font-weight:700;font-size:22px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);
+  background:var(--red);color:var(--on-red);padding:16px 22px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.ro small{display:block;color:var(--text);font-size:15px;line-height:1.3}
+.schem{background:var(--card);border:3px solid var(--ink);padding:8px}
+.schem svg{display:block;width:100%;height:auto}
+.verdict{display:flex;flex-wrap:wrap;gap:8px}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+/* quiz */
+.quiz{max-width:900px}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0;text-wrap:balance}
+.qsym{max-width:360px;border:3px dashed var(--ink);padding:10px;background:var(--paper)}
+.qsym svg{display:block;width:100%;height:auto}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts{grid-template-columns:minmax(0,1fr)}.readouts{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.opt:disabled{cursor:default}
+.explain{margin:0;color:var(--text)}
+.qnav{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+/* video */
+.vid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:32px;align-items:start}
+@media (max-width:760px){.vid{grid-template-columns:minmax(0,1fr)}}
+.qr{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:16px;width:min(320px,100%)}
+.qr img{display:block;width:100%;height:auto;image-rendering:pixelated}
+.qr p{margin:8px 0 0;font-family:var(--label);letter-spacing:1.5px;text-transform:uppercase;font-size:15px;text-align:center}
+.link{display:inline-block;font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;background:var(--red);color:var(--on-red);
+  text-decoration:none;padding:14px 22px;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.url{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;word-break:break-all;color:var(--text);user-select:all}
+details{background:var(--card);border:3px solid var(--ink);padding:12px 16px}
+details+details{margin-top:12px}
+summary{cursor:pointer;font-weight:700;font-size:20px}
+details p{margin:10px 0 0;color:var(--text)}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+@media (prefers-reduced-motion: reduce){.big:active{transform:none}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+<header>
+  <div class="hand">Лаборатория</div>
+  <h1>Диод и выпрямитель</h1>
+  <p>Темы 21–22. Нажимайте на картинки и кнопки: переворачивайте батарейку, прозванивайте диод, собирайте выпрямитель. В конце проверьте себя.</p>
+</header>
+
+<nav aria-label="Опыты">
+  <a href="#pn" data-tab="pn">1 · Диод и батарейка</a>
+  <a href="#meter" data-tab="meter">2 · Прозвонка</a>
+  <a href="#rect" data-tab="rect">3 · Выпрямитель</a>
+  <a href="#quiz" data-tab="quiz">4 · Проверь себя</a>
+  <a href="#video" data-tab="video">5 · Видео</a>
+</nav>
+
+<!-- 1. p-n junction -->
+<section class="panel" id="p-pn" data-panel="pn">
+  <p class="eyebrow">Опыт 1</p>
+  <h2>Диод пропускает ток только в одну сторону</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-pn" width="1000" height="560" aria-label="p-n-переход, батарейка и лампа. Нажмите, чтобы перевернуть батарейку."></canvas></div>
+    <div class="side">
+      <button class="big" id="flip" type="button">Перевернуть батарейку</button>
+      <p class="plaque" id="pn-plaque">Плюс к p — лампа горит</p>
+      <p class="note" id="pn-text"></p>
+      <p class="note"><b>Запомните:</b> p — это анод, сюда «плюс». n — это катод, сюда «минус». Тогда диод открыт.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. multimeter -->
+<section class="panel" id="p-meter" data-panel="meter" hidden>
+  <p class="eyebrow">Опыт 2</p>
+  <h2>Проверяем диод мультиметром</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-meter" width="1000" height="560" aria-label="Мультиметр в режиме прозвонки диодов и диод с двумя щупами. Нажмите, чтобы поменять щупы."></canvas></div>
+    <div class="side">
+      <button class="big" id="swap" type="button">Поменять щупы местами</button>
+      <div>
+        <p class="ctl-label">Какой диод на столе</p>
+        <div class="seg" id="cond">
+          <button type="button" data-c="0" aria-pressed="true">Исправный</button>
+          <button type="button" data-c="1" aria-pressed="false">Пробитый</button>
+          <button type="button" data-c="2" aria-pressed="false">Оборванный</button>
+        </div>
+      </div>
+      <p class="note" id="meter-text"></p>
+      <button class="big" id="mystery" type="button" style="background:var(--ink);color:var(--paper)">Загадка: неизвестный диод</button>
+      <div id="mystery-box" hidden>
+        <p class="ctl-label">Прозвоните в обе стороны. Какой он?</p>
+        <div class="verdict">
+          <button class="opt" type="button" data-v="0">Исправен</button>
+          <button class="opt" type="button" data-v="1">Пробит</button>
+          <button class="opt" type="button" data-v="2">Оборван</button>
+        </div>
+        <p class="feedback" id="mystery-fb" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. rectifier -->
+<section class="panel" id="p-rect" data-panel="rect" hidden>
+  <p class="eyebrow">Опыт 3</p>
+  <h2>Собираем выпрямитель и смотрим на осциллограф</h2>
+  <div class="bench">
+    <div class="side" style="gap:20px">
+      <div class="stage"><canvas id="cv-rect" width="1000" height="560" aria-label="Осциллограф: пунктир — напряжение с трансформатора, красная линия — напряжение на нагрузке."></canvas></div>
+      <div class="readouts">
+        <div class="ro"><span>На нагрузке, среднее</span><b id="r-u">—</b><small id="r-u-note"></small></div>
+        <div class="ro"><span>Пульсации</span><b id="r-f">—</b><small id="r-f-note"></small></div>
+        <div class="ro"><span>Работают диоды</span><b id="r-d">—</b><small id="r-d-note"></small></div>
+        <div class="ro"><span>Обратное напряжение на диоде</span><b id="r-rev">—</b><small>диод выбирают с запасом</small></div>
+      </div>
+    </div>
+    <div class="side">
+      <div>
+        <p class="ctl-label">Схема</p>
+        <div class="seg" id="mode">
+          <button type="button" data-m="none" aria-pressed="false">Без диодов</button>
+          <button type="button" data-m="half" aria-pressed="false">Один диод</button>
+          <button type="button" data-m="bridge" aria-pressed="true">Мост</button>
+        </div>
+      </div>
+      <div>
+        <p class="ctl-label">Фильтр</p>
+        <div class="seg" id="cap">
+          <button type="button" data-cap="0" aria-pressed="true">Без конденсатора</button>
+          <button type="button" data-cap="1" aria-pressed="false">С конденсатором</button>
+        </div>
+      </div>
+      <div>
+        <p class="ctl-label">Нагрузка</p>
+        <div class="seg" id="load">
+          <button type="button" data-l="light" aria-pressed="true">Лёгкая (лампочка)</button>
+          <button type="button" data-l="heavy" aria-pressed="false">Тяжёлая (мотор)</button>
+        </div>
+      </div>
+      <div>
+        <p class="ctl-label">Напряжение с трансформатора U2</p>
+        <div class="seg" id="u2">
+          <button type="button" data-u="6" aria-pressed="false">6 В</button>
+          <button type="button" data-u="12" aria-pressed="true">12 В</button>
+          <button type="button" data-u="24" aria-pressed="false">24 В</button>
+        </div>
+      </div>
+      <div class="schem" id="schem" aria-label="Схема выбранного выпрямителя"></div>
+      <p class="note" id="rect-text"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. quiz -->
+<section class="panel" id="p-quiz" data-panel="quiz" hidden>
+  <p class="eyebrow">Проверь себя</p>
+  <h2>12 вопросов по диодам и выпрямителям</h2>
+  <div class="quiz" id="quiz-box"></div>
+</section>
+
+<!-- 5. video -->
+<section class="panel" id="p-video" data-panel="video" hidden>
+  <p class="eyebrow">Видео · 8 минут</p>
+  <h2>«Полупроводники. Как работают транзисторы и диоды»</h2>
+  <div class="vid">
+    <div class="qr"><img alt="QR-код ссылки на видео" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApAAAAKQCAIAAACn190HAAAPBklEQVR4Xu3dMaolSXdGUZWoyQhkav4jkCnQAMovo0Yg5P1Ov+aDOt2x+65lX4KTkRc2aZ1vv37++DcA4G3//vZ4AMD/E2wACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAj4HpjxS//xn/9Vf4Sn/O///PdT87z2fuv3s85fv//r+df7XF3P/2mu39c1X9gAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQkN+HvarvQ129tk/3ep76+72+n2vX97/ez/U8r/m0513/D3W+sAEgQLABIECwASBAsAEgQLABIECwASBAsAEgQLABIECwASBAsAEgQLABIECwASBAsAEgQLABIECwASDg4/Zhr17bt/ravtv1ftb51/NX6/mvzb/Os7o+f73/1Xr+9fO+Zr2fa592/ytf2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABBgHzZ/qXX/7rofdz3/2jr/a9b7XJ93/T18Ml/YABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAEGAfNhxa90lfW/dPr79frfezzrOef22dH/6VL2wACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIsA/7T9hf+/d6bZ/xtfr/bX1f6/Nen/9p1vvn7+ULGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAI+bh/2uk+X32vdv7u+r+vzX/Pa/Vzf/6edv1r/D7T4wgaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoCA/D7sdT8u/2zrPmD/n6+t97Pe/2o9/7X5V+v8/LP5wgaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoCA/D7sT9uPe23dv7v+/to6z/r/ec31867nr67PX63zXP9/rs9/zXr/n8YXNgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAR8+/XzR2DMP7bui73et7rOc2193vr8167vp/6+XnN9n+v5K/+33+v6fV3zhQ0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQAB+X3Yq3W/7PX+1Ot5rs+vW+/nNev/c33e9fzV9TzO/1r9fj6NL2wACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIyO/DXve5rtZ9wK/Ns3pt/nWe9X2t6vNc+7T7r1v/z9fW/886/3r+a3xhA0CAYANAgGADQIBgA0CAYANAgGADQIBgA0CAYANAgGADQIBgA0CAYANAgGADQIBgA0CAYANAgGADQEB+H/Zq3Z+6WvetXs+zWudfrc+7zrOev3ptntU6/2q9/+t5+Nr6vlbr+13nWc+v84UNAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAfl92K/tT31tnmvr866u992+Nv86z3o/6/mrdZ5r189b92nv67XnXfnCBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgIDvgRm/VN9veu16H/B6/+s86+/XeVbr+ev8q+vz1+etW5/3+v6vrfO/dj/rPHW+sAEgQLABIECwASBAsAEgQLABIECwASBAsAEgQLABIECwASBAsAEgQLABIECwASBAsAEgQLABIECwASAgvw/72rov9to6z7ovdj1//f06z2uun/f6/Gvr/Nfq/7dV/Xnr81/zhQ0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQAB3379/BEY84+t+3ev962u86zW+a/nWb02/2vz1K33eW39/6/zr+evXptntc6/Wu//ep5rvrABIECwASBAsAEgQLABIECwASBAsAEgQLABIECwASBAsAEgQLABIECwASBAsAEgQLABIECwASBAsAEgIL8Pe7XuT31NfZ/ra/d/fZ/r867zvHb+p7l+X9fq86/W532NL2wACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAI+B6Y8UvrPuDVuj91nef6/NfUn3d9v6vr86+t7/faep/r/Ov5q+t51vmv51nP/zS+sAEgQLABIECwASBAsAEgQLABIECwASBAsAEgQLABIECwASBAsAEgQLABIECwASBAsAEgQLABIECwASDg26+fPwJj/rF1n+trXtv/ut7nOv96/uq1eV6z3s/q+v2+Zr3P9X6uz/80632+xhc2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABNiH/Ztd71td9+m+Zr2f6+dd51l92vzrfa73s56/em2ea+vzrtb39do8r/GFDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAH2Yf/N1n2x19Z9tNfzX8/z2vmvWd+v+2xZ3+9rrv9vr/GFDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAHfAzP+Vq/tf133uV5b72edfz1//f1rXpt/fV+r6+e9Pv811+/r2vX8n/Z/8IUNAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAYINAAGCDQABgg0AAR+3D/taff/rOv+6j/b6/NdcP+/1+avreZzPv7r+P7zGFzYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAE2If9J+r7Vs3/z/baPvLX5rn+/6/nr67Pv7b+H/iaL2wACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAIEGwACBBsAAgQbAAI+Pbr54/AmLxq3de77sddz3/N+ryr6/tZ57+e59r1867nX1vf1zp//fzX+MIGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAgO+BGb+07lvla+u+2/X3r1nnv/6/ree/Nv/1PNfnr/d/bZ1nvZ+6T3teX9gAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQkN+Hvfq0/anrPt3Vev56/+vv13murfOsz3ttnf/aOs96n+v519b5r13fz/X5r93nyhc2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABHzcPuzV9X7WVX2f6+rT7v/6ea//P/X51/tZn3f9fd31fa7n1/nCBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgADBBoAAwQaAAMEGgAD7sPlLrfuA13236/nr79d5rl3Ps97Pap3/ep7XrPezWu9znWc9f7Wev87/Gl/YABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAEGAfNn+p63206/nrPt3XrPOv97O6Pv/aOv/1/a/nr66fd7XO82l8YQNAgGADQIBgA0CAYANAgGADQIBgA0CAYANAgGADQIBgA0CAYANAgGADQIBgA0CAYANAgGADQIBgA0CAfdh/wn7Wr633c73f9zXXz7veP19b39f1/V+ff/286/l8zRc2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABHz79fNHYMw/Zt/q77Xu313v/9POX633eW19X59mfV/rfa7nr67nee38Ol/YABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAEJDfhw0An8AXNgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAQINgAECDYABAg2AAT8H+5FClXhZxyBAAAAAElFTkSuQmCC"><p>Наведите камеру телефона</p></div>
+    <div class="side">
+      <p style="margin:0;color:var(--text)">Канал Hi Dev! – Электроника. Смотрите с вопросами ниже: после видео ответьте на них устно или в тетради, потом откройте ответ и сравните.</p>
+      <p style="margin:0"><a class="link" href="https://yandex.ru/video/preview/6881468527039676026" target="_blank" rel="noopener">Открыть видео</a></p>
+      <p class="url">https://yandex.ru/video/preview/6881468527039676026</p>
+      <div>
+        <details><summary>1. Почему из кремния можно сделать диод?</summary><p>В чистый кремний добавляют примеси. Одна часть кристалла получается n-типа (лишние электроны, «минус»), другая — p-типа (не хватает электронов, «дырки», «плюс»).</p></details>
+        <details><summary>2. Что такое p-n-переход?</summary><p>Граница между p- и n-частями кристалла. Там образуется тонкий запирающий слой. Он пропускает ток только в одну сторону, как ниппель в колесе.</p></details>
+        <details><summary>3. Почему электроны притягиваются к дыркам?</summary><p>Дырка — место, где не хватает электрона, поэтому она ведёт себя как плюс. Электрон — минус. Плюс и минус притягиваются, электрон «заполняет» дырку.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Электротехника и электроника · темы 21–22 · Иркутский техникум машиностроения им. Н.П. Трапезникова</footer>
+</div>
+
+<script>
+(function(){
+const INK='#1B1A17',PAP='#F2EEE3',CARD='#FAF8F2',RED='#A3271F',LAMP='#F6D77A',GREY='#8A857A';
+const SERIF="'PT Serif', Georgia, serif", LAB="'Oswald', 'Arial Narrow', Arial, sans-serif";
+const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+
+/* ---------- canvas helper: draw in a fixed 1000×560 space, scale to fit ---------- */
+function stage(id){
+  const c=document.getElementById(id),x=c.getContext('2d'),VW=1000,VH=560;const o={c,x,VW,VH};
+  function fit(){const w=c.clientWidth||VW;const dpr=window.devicePixelRatio||1;c.style.height=(w*VH/VW)+'px';c.width=Math.round(w*dpr);c.height=Math.round(w*VH/VW*dpr);const k=w/VW*dpr;x.setTransform(k,0,0,k,0,0);}
+  fit();if(window.ResizeObserver)new ResizeObserver(fit).observe(c);else window.addEventListener('resize',fit);
+  return o;
+}
+function api(x){
+  return{
+    L(x1,y1,x2,y2,w,c){x.strokeStyle=c||INK;x.lineWidth=w||4;x.lineCap='round';x.beginPath();x.moveTo(x1,y1);x.lineTo(x2,y2);x.stroke();},
+    C(cx,cy,r,fill,stroke,w){x.beginPath();x.arc(cx,cy,r,0,Math.PI*2);if(fill){x.fillStyle=fill;x.fill();}if(stroke){x.strokeStyle=stroke;x.lineWidth=w||3;x.stroke();}},
+    T(s,tx,ty,size,col,al,bold,font){x.font=(bold?'700 ':'400 ')+size+'px '+(font||SERIF);x.fillStyle=col||INK;x.textAlign=al||'left';x.textBaseline='alphabetic';x.fillText(s,tx,ty);},
+    P(s,tx,ty,size){x.font='700 '+size+'px '+LAB;const w=x.measureText(s).width;x.fillStyle=INK;x.fillRect(tx-14,ty-size*0.95-6,w+28,size*1.25+12);x.fillStyle=PAP;x.textAlign='left';x.fillText(s,tx,ty);},
+    D(x1,y1,x2,y2,on,sz){sz=sz||24;const a=Math.atan2(y2-y1,x2-x1),mx=(x1+x2)/2,my=(y1+y2)/2,col=on?RED:INK;this.L(x1,y1,x2,y2,on?7:4,col);
+      x.save();x.translate(mx,my);x.rotate(a);x.beginPath();x.moveTo(-sz,-sz);x.lineTo(-sz,sz);x.lineTo(sz*0.8,0);x.closePath();x.fillStyle=on?RED:CARD;x.fill();x.strokeStyle=col;x.lineWidth=4;x.stroke();
+      x.beginPath();x.moveTo(sz*0.8,-sz);x.lineTo(sz*0.8,sz);x.lineWidth=6;x.stroke();x.restore();}
+  };
+}
+
+/* ---------- 1. p-n junction with battery and lamp ---------- */
+const S1=stage('cv-pn'),g1=api(S1.x);let fwd=true,zw=30;
+const pL=170,nR=830,yT=140,yB=350,mid=(yT+yB)/2,yW=450,bx=400;
+const holes=[],els=[];for(let i=0;i<14;i++){holes.push({x:pL+15+Math.random()*300,y:yT+22+Math.random()*(yB-yT-44),ph:Math.random()*6});els.push({x:nR-15-Math.random()*300,y:yT+22+Math.random()*(yB-yT-44),ph:Math.random()*6});}
+let dash=0;
+function drawPN(dt,now){const x=S1.x,g=g1;x.clearRect(0,0,1000,560);
+  zw+=((fwd?24:110)-zw)*Math.min(1,dt*4);const zc=500,zL=zc-zw/2,zR=zc+zw/2;
+  const wc=fwd?RED:INK,ww=fwd?7:4;
+  g.L(pL,mid,pL-70,mid,ww,wc);g.L(pL-70,mid,pL-70,yW,ww,wc);g.L(pL-70,yW,bx-34,yW,ww,wc);
+  g.L(bx+34,yW,nR+70,yW,ww,wc);g.L(nR+70,yW,nR+70,mid,ww,wc);g.L(nR+70,mid,nR,mid,ww,wc);
+  // battery: long thin plate = plus
+  const xl=bx-14,xr=bx+14,plusL=fwd;x.fillStyle=CARD;x.fillRect(bx-34,yW-64,68,128);
+  g.L(plusL?xl:xr,yW-56,plusL?xl:xr,yW+56,6);g.L(plusL?xr:xl,yW-30,plusL?xr:xl,yW+30,16);
+  g.L(bx-34,yW,xl,yW,ww,wc);g.L(xr,yW,bx+34,yW,ww,wc);
+  g.T('+',plusL?xl-44:xr+20,yW-34,46,RED,'left',true);g.T('−',plusL?xr+20:xl-44,yW-34,46,INK,'left',true);
+  g.T('батарейка',bx,yW+96,24,INK,'center');
+  // lamp
+  const lx=680;g.C(lx,yW,36,fwd?LAMP:CARD,INK,4);g.L(lx-25,yW-25,lx+25,yW+25,3);g.L(lx+25,yW-25,lx-25,yW+25,3);g.T('лампа',lx,yW+96,24,INK,'center');
+  if(fwd){const k=reduce?1:0.6+0.4*Math.sin(now/180);for(let a=0;a<8;a++){const an=a*Math.PI/4;g.L(lx+Math.cos(an)*48,yW+Math.sin(an)*48,lx+Math.cos(an)*(62+14*k),yW+Math.sin(an)*(62+14*k),4,RED);}}
+  if(fwd&&!reduce){dash=(dash+dt*130)%42;x.save();x.setLineDash([14,28]);x.lineDashOffset=-dash;x.strokeStyle=PAP;x.lineWidth=3;
+    x.beginPath();x.moveTo(bx-34,yW);x.lineTo(pL-70,yW);x.lineTo(pL-70,mid);x.lineTo(pL,mid);x.stroke();
+    x.beginPath();x.moveTo(nR,mid);x.lineTo(nR+70,mid);x.lineTo(nR+70,yW);x.lineTo(bx+34,yW);x.stroke();x.restore();}
+  // crystal
+  x.fillStyle=CARD;x.fillRect(pL,yT,nR-pL,yB-yT);
+  x.save();x.beginPath();x.rect(zL,yT,zw,yB-yT);x.clip();for(let s=-300;s<400;s+=12)g.L(zL+s,yT,zL+s+220,yB,2);x.restore();
+  x.strokeStyle=INK;x.lineWidth=4;x.strokeRect(pL,yT,nR-pL,yB-yT);g.L(zL,yT,zL,yB,3);g.L(zR,yT,zR,yB,3);
+  g.T('p',(pL+zL)/2,yT-22,56,INK,'center',true);g.T('n',(zR+nR)/2,yT-22,56,INK,'center',true);
+  g.T('анод',pL-70,yT-22,22,INK,'center');g.T('катод',nR+70,yT-22,22,INK,'center');
+  // carriers
+  for(const h of holes){h.ph+=dt*3;if(fwd){if(!reduce)h.x+=dt*95;if(h.x>zc){h.x=pL+16;h.y=yT+22+Math.random()*(yB-yT-44);}}else{h.x+=Math.min(0,(zL-28)-h.x)*Math.min(1,dt*5);}
+    const j=fwd||reduce?0:Math.sin(h.ph)*3;g.C(h.x+j,h.y,15,CARD,INK,3);g.T('+',h.x+j,h.y+8,24,INK,'center',true);}
+  for(const e of els){e.ph+=dt*3;if(fwd){if(!reduce)e.x-=dt*95;if(e.x<zc){e.x=nR-16;e.y=yT+22+Math.random()*(yB-yT-44);}}else{e.x+=Math.max(0,(zR+28)-e.x)*Math.min(1,dt*5);}
+    const j=fwd||reduce?0:Math.sin(e.ph)*3;g.C(e.x+j,e.y,15,INK);g.T('−',e.x+j,e.y+8,24,PAP,'center',true);}
+  g.P(fwd?'ПЛЮС К p — ТОК ИДЁТ':'ПЛЮС К n — ТОКА НЕТ',40,60,32);
+  g.T('нажмите на картинку',960,60,22,GREY,'right',false);
+}
+function setPN(){ $('#pn-plaque').textContent=fwd?'Плюс к p — лампа горит':'Плюс к n — лампа не горит';
+  $('#pn-text').innerHTML=fwd
+   ?'<b>Прямое включение.</b> Плюс батарейки на p, минус на n. Запирающий слой стал тонким, «дырки» (+) и электроны (−) идут навстречу и встречаются. Ток идёт, лампа горит. На открытом кремниевом диоде теряется около 0,6–0,7 В.'
+   :'<b>Обратное включение.</b> Плюс батарейки на n. Электроны тянутся к плюсу, дырки к минусу, то есть все уходят от границы. Запирающий слой стал широким. Ток почти не идёт, лампа не горит.';}
+function flip(){fwd=!fwd;setPN();}
+$('#flip').addEventListener('click',flip);S1.c.addEventListener('click',flip);setPN();
+
+/* ---------- 2. multimeter ---------- */
+const S2=stage('cv-meter'),g2=api(S2.x);let swapped=false,cond=0,mystery=false,beepT=0;
+function reading(){const redOnA=!swapped;if(cond===0)return redOnA?'0,62':'1';if(cond===1)return '0,00';return '1';}
+function drawMeter(dt,now){const x=S2.x,g=g2;x.clearRect(0,0,1000,560);
+  // meter body
+  x.fillStyle=INK;x.fillRect(50,40,300,480);x.fillStyle='#E9E3D2';x.fillRect(80,75,240,120);
+  const r=reading();x.font='700 92px '+LAB;x.fillStyle=INK;x.textAlign='right';x.fillText(r,300,170);
+  if(cond===1&&!mystery){/* nothing extra */}
+  g.T('режим прозвонки',200,240,22,PAP,'center');
+  // dial
+  g.C(200,330,62,'#3A3833',PAP,4);const ang=-Math.PI/2+0.9;g.L(200,330,200+Math.cos(ang)*50,330+Math.sin(ang)*50,8,PAP);
+  // diode symbol near the dial
+  x.save();x.translate(296,286);x.scale(.7,.7);x.strokeStyle=PAP;x.fillStyle=PAP;x.lineWidth=4;x.beginPath();x.moveTo(-30,0);x.lineTo(30,0);x.stroke();x.beginPath();x.moveTo(-10,-14);x.lineTo(-10,14);x.lineTo(12,0);x.closePath();x.fill();x.beginPath();x.moveTo(12,-14);x.lineTo(12,14);x.stroke();x.restore();
+  // jacks
+  g.C(130,470,18,INK,PAP,4);g.C(270,470,18,RED,PAP,4);g.T('COM',130,435,18,PAP,'center',true,LAB);g.T('VΩ',270,435,18,PAP,'center',true,LAB);
+  // beep marks for short
+  if(cond===1){const k=reduce?1:(0.5+0.5*Math.sin(now/90));for(let i=0;i<3;i++){x.globalAlpha=k;x.strokeStyle=RED;x.lineWidth=4;x.beginPath();x.arc(350,130,22+i*16,-0.6,0.6);x.stroke();x.globalAlpha=1;}g.T('пиии!',420,70,26,RED,'left',true);}
+  // diode on the table
+  const dy=210,aX=540,kX=920;g.L(aX,dy,640,dy,6);g.L(800,dy,kX,dy,6);x.fillStyle=INK;x.fillRect(640,dy-36,160,72);x.fillStyle='#D9D2BF';x.fillRect(756,dy-36,22,72);
+  g.T('А',aX+10,dy-56,34,INK,'center',true);g.T('К',kX-10,dy-56,34,INK,'center',true);g.T('полоска = катод',767,dy+80,22,INK,'center');
+  // probes
+  const redX=swapped?kX-14:aX+14,blkX=swapped?aX+14:kX-14;
+  function probe(px,col,jx){x.lineCap='round';x.strokeStyle=col;x.lineWidth=7;x.beginPath();x.moveTo(px,330);x.bezierCurveTo(px,470,jx+120,540,jx,488);x.stroke();
+    g.L(px,dy+4,px,250,4,'#5A564E');x.fillStyle=col;x.fillRect(px-13,250,26,90);}
+  probe(blkX,INK,130);probe(redX,RED,270);
+  g.P(cond===1&&!mystery?'ПИЩИТ В ОБЕ СТОРОНЫ':(r==='1'?'НА ЭКРАНЕ «1» — ТОКА НЕТ':'НА ЭКРАНЕ '+r+' В'),400,520,28);
+}
+function setMeter(){
+  $$('#cond button').forEach(b=>b.setAttribute('aria-pressed',String(!mystery&&+b.dataset.c===cond)));
+  const where=swapped?'Красный щуп на катоде (К), чёрный на аноде (А).':'Красный щуп на аноде (А), чёрный на катоде (К).';
+  let t;
+  if(mystery)t='<b>'+where+'</b> Прибор показывает «'+reading()+'». Поменяйте щупы и посмотрите ещё раз.';
+  else if(cond===0)t='<b>'+where+'</b> '+(swapped?'Обратное направление: на экране «1» (или OL), ток не идёт.':'Прямое направление: на экране 0,5–0,7 В, ток идёт.')+' Исправный диод: в одну сторону число, в другую «1».';
+  else if(cond===1)t='<b>Пробитый диод.</b> В обе стороны около 0 и прибор пищит. Диод стал просто проводом, его меняют.';
+  else t='<b>Оборванный диод.</b> В обе стороны «1». Внутри обрыв, ток не идёт никуда, его меняют.';
+  $('#meter-text').innerHTML=t;
+}
+function swap(){swapped=!swapped;setMeter();}
+$('#swap').addEventListener('click',swap);S2.c.addEventListener('click',swap);
+$$('#cond button').forEach(b=>b.addEventListener('click',()=>{mystery=false;cond=+b.dataset.c;$('#mystery-box').hidden=true;setMeter();}));
+$('#mystery').addEventListener('click',()=>{mystery=true;cond=Math.floor(Math.random()*3);swapped=false;$('#mystery-box').hidden=false;$('#mystery-fb').textContent='';$('#mystery-fb').className='feedback';
+  $$('#mystery-box .opt').forEach(o=>{o.disabled=false;o.classList.remove('right','wrong');});setMeter();});
+$$('#mystery-box .opt').forEach(o=>o.addEventListener('click',()=>{const v=+o.dataset.v,ok=v===cond;const names=['исправен','пробит','оборван'];
+  $$('#mystery-box .opt').forEach(p=>{p.disabled=true;if(+p.dataset.v===cond)p.classList.add('right');});if(!ok)o.classList.add('wrong');
+  const fb=$('#mystery-fb');fb.className='feedback '+(ok?'good':'bad');fb.textContent=(ok?'Верно! ':'Нет. ')+'Диод '+names[cond]+'. '+['В одну сторону 0,6, в другую «1».','В обе стороны 0 и писк.','В обе стороны «1».'][cond]+' Нажмите «Загадка» ещё раз.';
+  mystery=false;setMeter();}));
+setMeter();
+
+/* ---------- 3. rectifier + scope ---------- */
+const S3=stage('cv-rect'),g3=api(S3.x);const R={mode:'bridge',cap:0,load:'light',u2:12};let wave=null,sweep0=performance.now();
+function fmt(v){return (Math.round(v*10)/10).toString().replace('.',',');}
+function compute(){
+  const Um=1.41*R.u2,N=800,per=0.02,dt=per*2/N,drop=R.mode==='half'?0.7:1.4;
+  const tau=R.load==='light'?0.2:0.02;const inp=[],out=[];
+  function rect(t){const s=Math.sin(2*Math.PI*t/per)*Um;if(R.mode==='none')return s;if(R.mode==='half')return Math.max(0,s-(R.cap?drop:0));return Math.max(0,Math.abs(s)-(R.cap?drop:0));}
+  let v=0;if(R.cap&&R.mode!=='none'){for(let i=0;i<N*6;i++){const t=i*dt;v=Math.max(rect(t),v*Math.exp(-dt/tau));}}
+  let sum=0,mn=1e9,mx=-1e9;
+  for(let i=0;i<=N;i++){const t=i*dt;const s=Math.sin(2*Math.PI*t/per)*Um;inp.push(s);let o;
+    if(R.cap&&R.mode!=='none'){v=Math.max(rect(t),v*Math.exp(-dt/tau));o=v;}else o=rect(t);
+    out.push(o);if(i<N){sum+=o;}mn=Math.min(mn,o);mx=Math.max(mx,o);}
+  wave={inp,out,Um,avg:sum/N,ripple:mx-mn};
+  // readouts
+  let u,un,f,fn,d,dn,rev;
+  if(R.mode==='none'){u='0 В';un='ток то туда, то обратно — постоянного нет';f='—';fn='это просто переменный ток';d='0';dn='выпрямлять нечем';rev='—';}
+  else{
+    if(!R.cap){const k=R.mode==='half'?0.45:0.9;u='≈ '+fmt(k*R.u2)+' В';un=(R.mode==='half'?'0,45':'0,9')+' · U2 (потери в диодах не считаем)';}
+    else{u='≈ '+fmt(wave.avg)+' В';un='почти 1,41 · U2 минус '+(R.mode==='half'?'0,7':'1,4')+' В на диодах; размах пульсаций '+fmt(wave.ripple)+' В';}
+    f=R.mode==='half'?'50 раз/с':'100 раз/с';fn=R.mode==='half'?'горбы через один, промежутки пустые':'горб на каждой половине волны';
+    d=R.mode==='half'?'1':'2 из 4';dn=R.mode==='half'?'работает полволны, вторую отдыхает':'по очереди: VD1+VD4, потом VD2+VD3';
+    rev='≈ '+fmt(R.mode==='half'&&R.cap?2*Um:Um)+' В';
+  }
+  $('#r-u').textContent=u;$('#r-u-note').textContent=un;$('#r-f').textContent=f;$('#r-f-note').textContent=fn;$('#r-d').textContent=d;$('#r-d-note').textContent=dn;$('#r-rev').textContent=rev;
+  const txt={none:'<b>Без диодов</b> на нагрузку идёт переменное напряжение: 50 раз в секунду в одну сторону и 50 раз в другую. Телефон так заряжать нельзя. Конденсатор здесь не поможет.',
+    half:'<b>Один диод</b> пропускает только верхние половины волны, нижние срезает. Половина времени тока нет, пульсации сильные. Так делают только очень простые и слабые устройства.',
+    bridge:'<b>Мост из 4 диодов</b> переворачивает нижнюю половину волны вверх. Работают обе половины, горбов вдвое больше, пульсаций меньше. Так устроены зарядки, блоки питания, а в трёхфазном варианте — генератор автомобиля и сварочный выпрямитель.'}[R.mode];
+  const capTxt=R.mode==='none'?'':(R.cap?' <b>Конденсатор</b> заряжается на вершине горба и отдаёт заряд в промежутке, поэтому линия почти ровная. Чем тяжелее нагрузка, тем быстрее он разряжается и тем больше пульсации.':' Добавьте конденсатор и посмотрите, как сгладится линия.');
+  $('#rect-text').innerHTML=txt+capTxt;
+  $('#schem').innerHTML=schemSVG();
+}
+function schemSVG(){
+  const cap=R.cap&&R.mode!=='none',I='#1B1A17',Rd='#A3271F',w='stroke="'+I+'" stroke-width="4" fill="none" stroke-linejoin="round"';
+  const txt=(x,y,t,a)=>'<text x="'+x+'" y="'+y+'" font-size="17" text-anchor="'+(a||'middle')+'" font-family="Georgia" fill="'+I+'">'+t+'</text>';
+  const dio=(x,y,rot)=>'<g transform="translate('+x+' '+y+') rotate('+rot+')"><path d="M-12 -12 L-12 12 L10 0 Z" fill="#FAF8F2" stroke="'+I+'" stroke-width="3.5"/><path d="M10 -12 V12" stroke="'+I+'" stroke-width="4.5"/></g>';
+  const src='<circle cx="50" cy="100" r="26" fill="#FAF8F2" stroke="'+I+'" stroke-width="4"/>'+txt(50,110,'~').replace('font-size="17"','font-size="30"')+txt(6,64,'U2','start');
+  const load='<rect x="333" y="68" width="34" height="64" fill="#FAF8F2" stroke="'+Rd+'" stroke-width="4"/>'+txt(350,160,'нагрузка');
+  const capS=cap?'<path d="M300 40 V106 M284 106 H316 M284 120 H316 M300 120 V185" '+w+'/>'+txt(322,118,'C','start'):'';
+  let body;
+  if(R.mode==='none')body='<path d="M50 74 V40 H350 V68 M350 132 V185 H50 V126" '+w+'/>';
+  else if(R.mode==='half')body='<path d="M50 74 V40 H350 V68 M350 132 V185 H50 V126" '+w+'/>'+dio(170,40,0)+txt(170,72,'VD');
+  else body='<path d="M125 100 L175 50 L225 100 L175 150 Z" '+w+'/>'+dio(150,75,-45)+dio(200,75,45)+dio(150,125,45)+dio(200,125,-45)+
+    '<path d="M50 74 V25 H175 V50 M50 126 V165 H175 V150 M225 100 H260 V40 H350 V68 M125 100 H100 V185 H350 V132" '+w+'/>'+txt(272,96,'+','start')+txt(112,92,'−','end');
+  return '<svg viewBox="0 0 400 200" role="img" aria-label="Схема выбранного выпрямителя">'+body+src+capS+load+'</svg>';
+}
+function drawScope(dt,now){const x=S3.x,g=g3;x.clearRect(0,0,1000,560);if(!wave)return;
+  const x0=70,w=900,y0=290,A=200,sc=A/wave.Um;
+  // grid
+  x.strokeStyle='#DDD6C4';x.lineWidth=1.5;for(let i=0;i<=10;i++){x.beginPath();x.moveTo(x0+i*w/10,60);x.lineTo(x0+i*w/10,520);x.stroke();}
+  for(let j=-4;j<=4;j++){x.beginPath();x.moveTo(x0,y0+j*55);x.lineTo(x0+w,y0+j*55);x.stroke();}
+  g.L(x0,y0,x0+w,y0,2.5,INK);g.T('0',x0-14,y0+8,24,INK,'right',true);g.T('+',x0-14,y0-A+8,30,INK,'right',true);g.T('−',x0-14,y0+A+8,30,INK,'right',true);
+  g.T('время →   два периода = 0,04 с',x0+w,548,20,GREY,'right');
+  const N=wave.out.length-1,frac=reduce?1:Math.min(1,((now-sweep0)%3200)/2600),n=Math.floor(frac*N);
+  // input dashed
+  x.save();x.setLineDash([10,8]);x.strokeStyle=GREY;x.lineWidth=3;x.beginPath();for(let i=0;i<=N;i++){const px=x0+i/N*w,py=y0-wave.inp[i]*sc;i?x.lineTo(px,py):x.moveTo(px,py);}x.stroke();x.restore();
+  // output
+  x.strokeStyle=RED;x.lineWidth=7;x.lineJoin='round';x.beginPath();for(let i=0;i<=n;i++){const px=x0+i/N*w,py=y0-wave.out[i]*sc;i?x.lineTo(px,py):x.moveTo(px,py);}x.stroke();
+  g.C(x0+n/N*w,y0-wave.out[n]*sc,9,RED);
+  // average line
+  if(R.mode!=='none'){const av=R.cap?wave.avg:(R.mode==='half'?0.45:0.9)*R.u2*(wave.Um/(1.41*R.u2));const ya=y0-av*sc;x.save();x.setLineDash([4,8]);g.L(x0,ya,x0+w,ya,3,INK);x.restore();g.T('среднее',x0+w-8,ya-10,22,INK,'right',true);}
+  g.P('ПУНКТИР — ВХОД  ·  КРАСНОЕ — НА НАГРУЗКЕ',x0+14,44,24);
+}
+function bindSeg(sel,key,attr,conv){$$(sel+' button').forEach(b=>b.addEventListener('click',()=>{R[key]=conv(b.dataset[attr]);$$(sel+' button').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));sweep0=performance.now();compute();}));}
+bindSeg('#mode','mode','m',v=>v);bindSeg('#cap','cap','cap',v=>+v);bindSeg('#load','load','l',v=>v);bindSeg('#u2','u2','u',v=>+v);
+compute();
+
+/* ---------- 4. quiz ---------- */
+const sym={
+ diode:'<svg viewBox="0 0 240 120"><path d="M20 60 H90 M150 60 H220" stroke="#1B1A17" stroke-width="5"/><path d="M90 30 V90 L150 60 Z" fill="#FAF8F2" stroke="#1B1A17" stroke-width="5" stroke-linejoin="round"/><path d="M150 28 V92" stroke="#1B1A17" stroke-width="7"/></svg>',
+ led:'<svg viewBox="0 0 240 120"><path d="M20 70 H90 M150 70 H220" stroke="#1B1A17" stroke-width="5"/><path d="M90 40 V100 L150 70 Z" fill="#FAF8F2" stroke="#1B1A17" stroke-width="5" stroke-linejoin="round"/><path d="M150 38 V102" stroke="#1B1A17" stroke-width="7"/><path d="M128 34 L156 8 M146 40 L174 14" stroke="#1B1A17" stroke-width="4"/><path d="M156 8 L143 10 L154 21 Z M174 14 L161 16 L172 27 Z" fill="#1B1A17"/></svg>',
+ zener:'<svg viewBox="0 0 240 120"><path d="M20 60 H90 M150 60 H220" stroke="#1B1A17" stroke-width="5"/><path d="M90 30 V90 L150 60 Z" fill="#FAF8F2" stroke="#1B1A17" stroke-width="5" stroke-linejoin="round"/><path d="M136 28 H150 V92 H164" stroke="#1B1A17" stroke-width="6" fill="none"/></svg>',
+ bridge:'<svg viewBox="0 0 240 200"><path d="M120 20 L200 100 L120 180 L40 100 Z" stroke="#1B1A17" stroke-width="4" fill="none"/>'+
+   [[80,60,-45],[160,60,-135],[80,140,-135],[160,140,-45]].map(a=>'<g transform="translate('+a[0]+' '+a[1]+') rotate('+a[2]+')"><path d="M-14 -14 V14 L12 0 Z" fill="#FAF8F2" stroke="#1B1A17" stroke-width="4"/><path d="M12 -14 V14" stroke="#1B1A17" stroke-width="5"/></g>').join('')+
+   '<path d="M10 100 H40 M200 100 H230" stroke="#1B1A17" stroke-width="4"/><text x="18" y="88" font-size="22" font-family="Georgia">~</text><text x="210" y="88" font-size="22" font-family="Georgia">~</text></svg>'
+};
+const Q=[
+ {s:'diode',q:'Что это за элемент?',o:['Диод','Стабилитрон','Светодиод','Резистор'],e:'Треугольник-стрелка и черта: обычный диод. Стрелка показывает, куда идёт ток.'},
+ {s:'led',q:'А это?',o:['Светодиод','Фотодиод','Диод','Тиристор'],e:'Стрелки направлены наружу: элемент сам излучает свет. Это светодиод.'},
+ {s:'zener',q:'Что за элемент с «загнутой» чертой?',o:['Стабилитрон','Светодиод','Диодный мост','Конденсатор'],e:'Черта с загибами: стабилитрон. Он держит напряжение постоянным.'},
+ {s:'bridge',q:'Как называется эта схема из четырёх диодов?',o:['Диодный мост','Однополупериодный выпрямитель','Транзистор','Делитель напряжения'],e:'Ромб из четырёх диодов: мост. Он выпрямляет обе половины волны.'},
+ {q:'Чтобы диод открылся, «плюс» источника подключают к…',o:['аноду (p-область)','катоду (n-область)','любому выводу'],e:'Плюс к p (аноду), минус к n (катоду). Это прямое включение.'},
+ {q:'Сколько вольт примерно «съедает» открытый кремниевый диод?',o:['0,6–0,7 В','6 В','0 В','220 В'],e:'Около 0,6–0,7 В. Это видно и на ВАХ, и на мультиметре.'},
+ {q:'Мультиметр показывает «1» в обе стороны. Диод…',o:['оборван','исправен','пробит'],e:'Ток не идёт ни туда, ни обратно: внутри обрыв.'},
+ {q:'Полоска на корпусе диода обозначает…',o:['катод','анод','мощность диода'],e:'Полоска = катод, как черта на схеме.'},
+ {q:'Зачем в выпрямителе конденсатор?',o:['сглаживать пульсации','менять направление тока','повышать напряжение сети'],e:'Он заряжается на горбах и отдаёт заряд в промежутках, линия становится ровнее.'},
+ {q:'Сколько диодов в однофазном мостовом выпрямителе?',o:['4','1','2','6'],e:'Четыре. В трёхфазном мосту их шесть.'},
+ {q:'Какой выпрямитель стоит в генераторе автомобиля и в мощном сварочном выпрямителе?',o:['трёхфазный мост','один диод','без диодов'],e:'Трёхфазный мост из 6 диодов: пульсаций очень мало.'},
+ {q:'Мост, U2 = 12 В, без конденсатора. Среднее напряжение на нагрузке примерно…',o:['10,8 В','5,4 В','12 В','17 В'],e:'0,9 · 12 = 10,8 В. Для одного диода было бы 0,45 · 12 = 5,4 В.'}
+];
+let qi=0,score=0,order=[];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderQ(){const box=$('#quiz-box');
+  if(qi>=Q.length){const msg=score>=11?'Отлично!':score>=9?'Хорошо!':score>=6?'Неплохо, повторите ошибки.':'Повторите опыты 1–3 и попробуйте ещё раз.';
+    box.innerHTML='<div class="qcard"><p class="qtop"><span>Готово</span></p><p class="score">'+score+' из '+Q.length+'</p><p class="qtext">'+msg+'</p><div class="qnav"><button class="big" type="button" id="qrestart">Пройти ещё раз</button></div></div>';
+    $('#qrestart').addEventListener('click',()=>{qi=0;score=0;renderQ();});return;}
+  const q=Q[qi];order=shuffle(q.o.map((t,i)=>({t,i})));
+  box.innerHTML='<div class="qcard"><p class="qtop"><span>Вопрос '+(qi+1)+' из '+Q.length+'</span><span>Верно: '+score+'</span></p>'+(q.s?'<div class="qsym">'+sym[q.s]+'</div>':'')+
+   '<p class="qtext">'+q.q+'</p><div class="opts">'+order.map((o,k)=>'<button class="opt" type="button" data-k="'+k+'">'+o.t+'</button>').join('')+'</div>'+
+   '<p class="feedback" id="qfb" aria-live="polite"></p><p class="explain" id="qex"></p><div class="qnav"><button class="big" type="button" id="qnext" hidden>Дальше</button></div></div>';
+  $$('#quiz-box .opt').forEach(b=>b.addEventListener('click',()=>{const pick=order[+b.dataset.k],ok=pick.i===0;if(ok)score++;
+    $$('#quiz-box .opt').forEach(o=>{o.disabled=true;if(order[+o.dataset.k].i===0)o.classList.add('right');});if(!ok)b.classList.add('wrong');
+    const fb=$('#qfb');fb.className='feedback '+(ok?'good':'bad');fb.textContent=ok?'Верно!':'Не совсем.';$('#qex').textContent=q.e;
+    const nx=$('#qnext');nx.hidden=false;nx.textContent=qi===Q.length-1?'Узнать результат':'Дальше';nx.focus();}));
+  $('#qnext').addEventListener('click',()=>{qi++;renderQ();});
+}
+renderQ();
+
+/* ---------- tabs (hash routing) ---------- */
+const tabs=['pn','meter','rect','quiz','video'];let cur='pn';
+function show(){const h=location.hash.replace('#','');cur=tabs.includes(h)?h:'pn';
+  $$('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==cur);$$('nav a').forEach(a=>a.setAttribute('aria-current',String(a.dataset.tab===cur)));
+  if(cur==='rect')sweep0=performance.now();}
+window.addEventListener('hashchange',show);show();
+
+/* ---------- one animation loop for the visible panel ---------- */
+let last=performance.now();
+function loop(now){const dt=Math.min(0.05,(now-last)/1000);last=now;
+  if(cur==='pn')drawPN(dt,now);else if(cur==='meter')drawMeter(dt,now);else if(cur==='rect')drawScope(dt,now);
+  requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+})();
+</script>
+
+</body>
+</html>
