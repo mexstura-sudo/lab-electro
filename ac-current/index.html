@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Лаборатория «Переменный ток»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/* Layout: a workbench sheet — tabs on top, the drawing (canvas) left, the controls and the explanation right; stacks to one column on phones. */
+:root{
+  --paper:#F2EEE3; --card:#FAF8F2; --ink:#1B1A17; --text:#2E2B26; --muted:#6E685C; --red:#A3271F; --on-red:#FBF6EC; --lamp:#F6D77A; --ok:#2F6B3A;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;
+  --label:'Oswald', 'Arial Narrow', Arial, sans-serif;
+  --hand:'Caveat', 'Brush Script MT', cursive;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 48px}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0;text-wrap:balance}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:62ch}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--paper)}
+nav{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);
+  display:flex;gap:10px;overflow-x:auto;scrollbar-width:thin}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);
+  text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+nav a:focus-visible,button:focus-visible,.opt:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px;text-wrap:balance}
+.bench{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage canvas{display:block;width:100%;height:auto;cursor:pointer;touch-action:manipulation}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.big{font-family:var(--label);font-weight:700;font-size:22px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);
+  background:var(--red);color:var(--on-red);padding:16px 22px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.ro small{display:block;color:var(--text);font-size:15px;line-height:1.3}
+.schem{background:var(--card);border:3px solid var(--ink);padding:8px}
+.schem svg{display:block;width:100%;height:auto}
+.verdict{display:flex;flex-wrap:wrap;gap:8px}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+/* quiz */
+.quiz{max-width:900px}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0;text-wrap:balance}
+.qsym{max-width:360px;border:3px dashed var(--ink);padding:10px;background:var(--paper)}
+.qsym svg{display:block;width:100%;height:auto}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts{grid-template-columns:minmax(0,1fr)}.readouts{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.opt:disabled{cursor:default}
+.explain{margin:0;color:var(--text)}
+.qnav{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+/* video */
+.vid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:32px;align-items:start}
+@media (max-width:760px){.vid{grid-template-columns:minmax(0,1fr)}}
+.qr{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:16px;width:min(320px,100%)}
+.qr img{display:block;width:100%;height:auto;image-rendering:pixelated}
+.qr p{margin:8px 0 0;font-family:var(--label);letter-spacing:1.5px;text-transform:uppercase;font-size:15px;text-align:center}
+.link{display:inline-block;font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;background:var(--red);color:var(--on-red);
+  text-decoration:none;padding:14px 22px;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.url{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;word-break:break-all;color:var(--text);user-select:all}
+details{background:var(--card);border:3px solid var(--ink);padding:12px 16px}
+details+details{margin-top:12px}
+summary{cursor:pointer;font-weight:700;font-size:20px}
+details p{margin:10px 0 0;color:var(--text)}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+@media (prefers-reduced-motion: reduce){.big:active{transform:none}}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+.ctl-label{display:block}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="hand">Лаборатория</div>
+  <h1>Переменный ток</h1>
+  <p>Тема 1.4. Крутите генератор, меняйте частоту, собирайте цепь из R, L и C, ищите резонанс. В конце проверьте себя.</p>
+</header>
+
+<nav aria-label="Опыты">
+  <a href="#gen" data-tab="gen">1 · Генератор</a>
+  <a href="#rlc" data-tab="rlc">2 · R, L, C</a>
+  <a href="#tri" data-tab="tri">3 · Треугольник и мощность</a>
+  <a href="#res" data-tab="res">4 · Резонанс</a>
+  <a href="#quiz" data-tab="quiz">5 · Проверь себя</a>
+</nav>
+
+<section class="panel" data-panel="gen">
+  <p class="eyebrow">Опыт 1</p>
+  <h2>Генератор: рамка крутится — ток меняет направление</h2>
+  <div class="bench">
+    <div class="side" style="gap:20px">
+      <div class="stage"><canvas id="cv-gen" aria-label="Рамка вращается между полюсами магнита, справа осциллограф рисует синусоиду"></canvas></div>
+      <div class="readouts">
+        <div class="ro"><span>Частота f</span><b id="g-f">50 Гц</b><small>сколько волн за секунду</small></div>
+        <div class="ro"><span>Период T</span><b id="g-t">0,02 с</b><small>T = 1 / f</small></div>
+        <div class="ro"><span>Амплитуда Um</span><b id="g-um">311 В</b><small>самое большое значение</small></div>
+        <div class="ro"><span>Действующее U</span><b id="g-u">220 В</b><small>U = Um / 1,41 — это показывает вольтметр</small></div>
+      </div>
+    </div>
+    <div class="side">
+      <div><label class="ctl-label" for="g-fs">Скорость вращения (частота), Гц</label><input type="range" id="g-fs" min="10" max="100" step="5" value="50"></div>
+      <div><label class="ctl-label" for="g-us">Амплитуда Um, В</label><input type="range" id="g-us" min="50" max="400" step="1" value="311"></div>
+      <button class="big" id="g-home" type="button">Как в розетке: 220 В, 50 Гц</button>
+      <p class="note" id="g-text"></p>
+      <p class="note"><b>Важно:</b> на экране всё замедлено в 50 раз, иначе глаз не успеет. В розетке за секунду 50 волн.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="rlc" hidden>
+  <p class="eyebrow">Опыт 2</p>
+  <h2>Резистор, катушка, конденсатор: кто как пропускает переменный ток</h2>
+  <div class="bench">
+    <div class="side" style="gap:20px">
+      <div class="stage"><canvas id="cv-rlc" aria-label="Осциллограф: напряжение и ток выбранного элемента"></canvas></div>
+      <div class="readouts">
+        <div class="ro"><span>Сопротивление</span><b id="r-x">—</b><small id="r-xn"></small></div>
+        <div class="ro"><span>Ток при 220 В</span><b id="r-i">—</b><small>I = U / X</small></div>
+        <div class="ro"><span>Сдвиг фаз</span><b id="r-ph">—</b><small id="r-phn"></small></div>
+        <div class="ro"><span>Частота</span><b id="r-f">50 Гц</b><small>двигайте ползунок</small></div>
+      </div>
+    </div>
+    <div class="side">
+      <div><p class="ctl-label">Элемент</p>
+        <div class="seg" id="r-el"><button type="button" data-e="R" aria-pressed="true">Резистор R</button><button type="button" data-e="L" aria-pressed="false">Катушка L</button><button type="button" data-e="C" aria-pressed="false">Конденсатор C</button></div></div>
+      <div><label class="ctl-label" for="r-fs">Частота, Гц</label><input type="range" id="r-fs" min="5" max="200" step="5" value="50"></div>
+      <div class="schem" id="r-graph" aria-label="Как сопротивление зависит от частоты"></div>
+      <p class="note" id="r-text"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="tri" hidden>
+  <p class="eyebrow">Опыт 3</p>
+  <h2>Резистор и катушка вместе: треугольник сопротивлений и мощность</h2>
+  <div class="bench">
+    <div class="side" style="gap:20px">
+      <div class="stage"><canvas id="cv-tri" aria-label="Треугольник сопротивлений и кружка кваса"></canvas></div>
+      <div class="readouts">
+        <div class="ro"><span>Полное Z</span><b id="t-z">—</b><small>Z = √(R² + XL²)</small></div>
+        <div class="ro"><span>Ток I</span><b id="t-i">—</b><small>I = 220 / Z</small></div>
+        <div class="ro"><span>cos φ</span><b id="t-c">—</b><small>cos φ = R / Z</small></div>
+        <div class="ro"><span>P · Q · S</span><b id="t-p">—</b><small id="t-pn"></small></div>
+      </div>
+    </div>
+    <div class="side">
+      <div><label class="ctl-label" for="t-r">R, Ом</label><input type="range" id="t-r" min="0" max="100" step="5" value="30"></div>
+      <div><label class="ctl-label" for="t-x">XL, Ом</label><input type="range" id="t-x" min="0" max="100" step="5" value="40"></div>
+      <button class="big" id="t-345" type="button">Пример 30 и 40 Ом</button>
+      <p class="note" id="t-text"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="res" hidden>
+  <p class="eyebrow">Опыт 4</p>
+  <h2>Ищем резонанс: катушка и конденсатор последовательно</h2>
+  <div class="bench">
+    <div class="side" style="gap:20px">
+      <div class="stage"><canvas id="cv-res" aria-label="Зависимость тока от частоты, точка — текущая частота"></canvas></div>
+      <div class="readouts">
+        <div class="ro"><span>XL и XC</span><b id="s-x">—</b><small>Ом</small></div>
+        <div class="ro"><span>Ток I</span><b id="s-i">—</b><small>U = 220 В, R = 10 Ом</small></div>
+        <div class="ro"><span>На катушке UL</span><b id="s-ul">—</b><small id="s-uln"></small></div>
+        <div class="ro"><span>Частота</span><b id="s-f">—</b><small>L = 0,1 Гн, C = 100 мкФ</small></div>
+      </div>
+    </div>
+    <div class="side">
+      <div><label class="ctl-label" for="s-fs">Частота, Гц</label><input type="range" id="s-fs" min="20" max="120" step="1" value="30"></div>
+      <p class="plaque" id="s-pl">Ищите резонанс</p>
+      <p class="note" id="s-text">Двигайте частоту и найдите, где ток самый большой. Там XL = XC — это резонанс.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="quiz" hidden>
+  <p class="eyebrow">Проверь себя</p>
+  <h2>12 вопросов по переменному току</h2>
+  <div class="quiz" id="quiz-box"></div>
+</section>
+
+<footer>Электротехника и электроника · тема 1.4 · Иркутский техникум машиностроения им. Н.П. Трапезникова · <a href="../">все лаборатории</a></footer>
+</div>
+
+<script>
+(function(){
+const INK='#1B1A17',PAP='#F2EEE3',CARD='#FAF8F2',RED='#A3271F',GREY='#8A857A',LAMP='#E9D9AE';
+const SERIF="'PT Serif', Georgia, serif", LAB="'Oswald', 'Arial Narrow', Arial, sans-serif";
+const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
+const fmt=(v,d)=>(Math.round(v*Math.pow(10,d||0))/Math.pow(10,d||0)).toString().replace('.',',');
+function stage(id){const c=document.getElementById(id),x=c.getContext('2d'),VW=1000,VH=560;
+  function fit(){const w=c.clientWidth||VW,dpr=window.devicePixelRatio||1;c.style.height=(w*VH/VW)+'px';c.width=Math.round(w*dpr);c.height=Math.round(w*VH/VW*dpr);const k=w/VW*dpr;x.setTransform(k,0,0,k,0,0);}
+  fit();if(window.ResizeObserver)new ResizeObserver(fit).observe(c);return x;}
+function api(x){return{
+  L(a,b,c,d,w,col){x.strokeStyle=col||INK;x.lineWidth=w||4;x.lineCap='round';x.beginPath();x.moveTo(a,b);x.lineTo(c,d);x.stroke();},
+  C(a,b,r,f,s,w){x.beginPath();x.arc(a,b,r,0,Math.PI*2);if(f){x.fillStyle=f;x.fill();}if(s){x.strokeStyle=s;x.lineWidth=w||3;x.stroke();}},
+  T(s,a,b,size,col,al,bold,font){x.font=(bold?'700 ':'400 ')+size+'px '+(font||SERIF);x.fillStyle=col||INK;x.textAlign=al||'left';x.fillText(s,a,b);},
+  P(s,a,b,size){x.font='700 '+size+'px '+LAB;const w=x.measureText(s).width;x.fillStyle=INK;x.fillRect(a-14,b-size*0.95-6,w+28,size*1.25+12);x.fillStyle=PAP;x.textAlign='left';x.fillText(s,a,b);},
+  wave(x0,y0,w,amp,periods,ph,col,lw,dash){x.save();if(dash)x.setLineDash(dash);x.strokeStyle=col;x.lineWidth=lw;x.beginPath();for(let i=0;i<=w;i+=2){const y=y0-amp*Math.sin(2*Math.PI*(periods*i/w+ph));i?x.lineTo(x0+i,y):x.moveTo(x0+i,y);}x.stroke();x.restore();}
+};}
+
+/* 1. generator */
+const X1=stage('cv-gen'),g1=api(X1);const G={f:50,um:311};let ang=0;
+function setGen(){G.f=+$('#g-fs').value;G.um=+$('#g-us').value;$('#g-f').textContent=G.f+' Гц';$('#g-t').textContent=fmt(1/G.f,3)+' с';$('#g-um').textContent=G.um+' В';$('#g-u').textContent=Math.round(G.um/Math.SQRT2)+' В';
+  $('#g-text').innerHTML='Рамка делает <b>'+G.f+'</b> оборотов в секунду — значит, '+G.f+' волн в секунду, и ток меняет направление <b>'+(2*G.f)+'</b> раз в секунду. Одна волна длится '+fmt(1/G.f,3)+' с.';}
+['#g-fs','#g-us'].forEach(s=>$(s).addEventListener('input',setGen));$('#g-home').addEventListener('click',()=>{$('#g-fs').value=50;$('#g-us').value=311;setGen();});setGen();
+const hist=[];
+function drawGen(dt){const x=X1,g=g1;x.clearRect(0,0,1000,560);if(!reduce)ang+=dt*2*Math.PI*G.f/50;
+  const cx0=210,cy0=280,R=130,s=Math.sin(ang),w=Math.max(6,R*Math.abs(s));
+  x.fillStyle=INK;x.fillRect(20,190,60,180);x.fillStyle=CARD;x.fillRect(340,190,60,180);x.strokeStyle=INK;x.lineWidth=4;x.strokeRect(340,190,60,180);
+  g.T('N',50,292,40,PAP,'center',true);g.T('S',370,292,40,INK,'center',true);
+  x.save();x.setLineDash([8,10]);for(let k=-2;k<=2;k++)g.L(80,cy0+k*32,340,cy0+k*32,2,GREY);x.restore();
+  x.strokeStyle=s>=0?RED:INK;x.lineWidth=8;x.strokeRect(cx0-w,cy0-100,2*w,200);g.L(cx0,cy0-100,cx0,cy0-150,4);
+  g.T('рамка',cx0,450,26,INK,'center');
+  const sx=450,sw=520,sy=280,A=200*G.um/400;x.strokeStyle=INK;x.lineWidth=3;x.strokeRect(sx,30,sw,500);g.L(sx,sy,sx+sw,sy,2,GREY);
+  hist.push(s);while(hist.length>sw/2)hist.shift();
+  x.strokeStyle=INK;x.lineWidth=6;x.beginPath();hist.forEach((v,i)=>{const px=sx+sw-(hist.length-i)*2,py=sy-A*v;i?x.lineTo(px,py):x.moveTo(px,py);});x.stroke();
+  g.C(sx+sw-2,sy-A*s,9,RED);g.T('u',sx+14,60,28,INK,'left',true);
+  x.save();x.setLineDash([6,8]);g.L(sx,sy-A,sx+sw,sy-A,2,RED);x.restore();g.T('Um = '+G.um+' В',sx+16,sy-A-10,24,RED,'left',true);
+  g.P(s>=0?'ТОК ТУДА':'ТОК ОБРАТНО',40,70,28);}
+
+/* 2. R L C */
+const X2=stage('cv-rlc'),g2=api(X2);const E={el:'R',f:50};const R0=50,L0=0.16,C0=64e-6;
+function X(el,f){return el==='R'?R0:el==='L'?2*Math.PI*f*L0:1/(2*Math.PI*f*C0);}
+function setRLC(){E.f=+$('#r-fs').value;const x=X(E.el,E.f),I=220/x;$('#r-x').textContent=fmt(x,1)+' Ом';$('#r-i').textContent=fmt(I,1)+' А';$('#r-f').textContent=E.f+' Гц';
+  $('#r-xn').textContent={R:'R не зависит от частоты',L:'XL = 2π·f·L, L = 0,16 Гн',C:'XC = 1/(2π·f·C), C = 64 мкФ'}[E.el];
+  $('#r-ph').textContent={R:'0°',L:'ток −90°',C:'ток +90°'}[E.el];$('#r-phn').textContent={R:'ток и напряжение в ногу',L:'ток отстаёт',C:'ток опережает'}[E.el];
+  $('#r-text').innerHTML={R:'<b>Резистор</b> одинаково мешает току при любой частоте. Энергия уходит в тепло: ТЭН, чайник, лампа накаливания.',
+   L:'<b>Катушка</b> мешает тем сильнее, чем выше частота. Поднимите частоту — ток упадёт. На постоянном токе (f = 0) катушка — просто провод.',
+   C:'<b>Конденсатор</b> наоборот: чем выше частота, тем легче пропускает. Опустите частоту — ток почти исчезнет. Постоянный ток он не пропускает совсем.'}[E.el];
+  // small graph
+  const pts=[];for(let f=5;f<=200;f+=5){pts.push([f,Math.min(400,X(E.el,f))]);}
+  const px=f=>20+(f-5)/195*360,py=v=>170-v/400*150;
+  $('#r-graph').innerHTML='<svg viewBox="0 0 400 200"><path d="M20 170 H390 M20 170 V10" stroke="#1B1A17" stroke-width="2" fill="none"/>'+
+   '<path d="'+pts.map((p,i)=>(i?'L':'M')+px(p[0]).toFixed(1)+' '+py(p[1]).toFixed(1)).join('')+'" stroke="#1B1A17" stroke-width="5" fill="none"/>'+
+   '<circle cx="'+px(E.f)+'" cy="'+py(Math.min(400,x))+'" r="8" fill="#A3271F"/><text x="370" y="195" font-size="18" font-family="Georgia">f</text><text x="28" y="22" font-size="18" font-family="Georgia">X</text></svg>';}
+$$('#r-el button').forEach(b=>b.addEventListener('click',()=>{E.el=b.dataset.e;$$('#r-el button').forEach(o=>o.setAttribute('aria-pressed',String(o===b)));setRLC();}));
+$('#r-fs').addEventListener('input',setRLC);setRLC();let sh2=0;
+function drawRLC(dt){const x=X2,g=g2;x.clearRect(0,0,1000,560);if(!reduce)sh2+=dt*0.4;
+  x.fillStyle=CARD;x.fillRect(20,20,960,520);x.strokeStyle=INK;x.lineWidth=3;x.strokeRect(20,20,960,520);g.L(20,280,980,280,2,GREY);
+  const ph={R:0,L:-0.25,C:0.25}[E.el];const I=220/X(E.el,E.f);const ai=Math.max(20,Math.min(220,I*25));
+  g.wave(20,280,960,200,2,-sh2,INK,7);g.wave(20,280,960,ai,2,-sh2+ph,RED,7,[16,10]);
+  g.P('СПЛОШНАЯ — НАПРЯЖЕНИЕ, КРАСНЫЙ ПУНКТИР — ТОК',40,520,24);}
+
+/* 3. triangle + power */
+const X3=stage('cv-tri'),g3=api(X3);const T={r:30,x:40};
+function setTri(){T.r=+$('#t-r').value;T.x=+$('#t-x').value;const z=Math.sqrt(T.r*T.r+T.x*T.x)||0.0001,I=220/z,c=T.r/z,s=T.x/z;
+  $('#t-z').textContent=fmt(z,1)+' Ом';$('#t-i').textContent=fmt(I,1)+' А';$('#t-c').textContent=fmt(c,2);
+  const P=220*I*c,Q=220*I*s,S=220*I;$('#t-p').textContent=Math.round(P)+' · '+Math.round(Q)+' · '+Math.round(S);$('#t-pn').textContent='Вт · вар · В·А';
+  $('#t-text').innerHTML='Сопротивления складываются <b>под прямым углом</b>: '+T.r+' и '+T.x+' Ом дают не '+(T.r+T.x)+', а '+fmt(z,1)+' Ом. '+(c<0.6?'cos φ маленький — много «пены»: ток большой, а полезной мощности мало.':c>0.95?'cos φ почти 1 — почти вся мощность полезная.':'Чем больше R по сравнению с XL, тем ближе cos φ к 1.');}
+['#t-r','#t-x'].forEach(s=>$(s).addEventListener('input',setTri));$('#t-345').addEventListener('click',()=>{$('#t-r').value=30;$('#t-x').value=40;setTri();});setTri();
+function drawTri(){const x=X3,g=g3;x.clearRect(0,0,1000,560);
+  const k=4.6,x0=110,y0=490,ax=x0+T.r*k,ay=y0-T.x*k;
+  x.fillStyle=CARD;x.beginPath();x.moveTo(x0,y0);x.lineTo(ax,y0);x.lineTo(ax,ay);x.closePath();x.fill();
+  g.L(x0,y0,ax,y0,8);g.L(ax,y0,ax,ay,8,RED);g.L(x0,y0,ax,ay,8);
+  g.T('R = '+T.r,x0+T.r*k/2,y0+40,28,INK,'center',true);g.T('XL = '+T.x,ax+14,y0-T.x*k/2,28,RED,'left',true);
+  const z=Math.sqrt(T.r*T.r+T.x*T.x);g.T('Z = '+fmt(z,1),(x0+ax)/2-40,(y0+ay)/2-20,28,INK,'center',true);
+  // mug
+  const mx=640,my=110,mw=220,mh=360,c=T.r/(z||1);x.fillStyle=CARD;x.fillRect(mx,my,mw,mh);
+  const lq=mh*c;x.fillStyle='#D9B871';x.fillRect(mx,my+mh-lq,mw,lq);x.fillStyle='#FFFDF6';x.fillRect(mx,my,mw,mh-lq);
+  x.strokeStyle=INK;x.lineWidth=7;x.strokeRect(mx,my,mw,mh);x.beginPath();x.moveTo(mx+mw,my+80);x.bezierCurveTo(mx+mw+80,my+80,mx+mw+80,my+260,mx+mw,my+260);x.stroke();
+  g.T('пена = Q',mx+mw/2,my+Math.max(30,(mh-lq)/2+10),26,INK,'center',true);if(lq>40)g.T('квас = P',mx+mw/2,my+mh-lq/2+10,26,INK,'center',true);
+  g.P('cos φ = '+fmt(c,2),mx,my-30,28);}
+
+/* 4. resonance */
+const X4=stage('cv-res'),g4=api(X4);const RS={R:10,L:0.1,C:100e-6,f:30};
+function resI(f){const xl=2*Math.PI*f*RS.L,xc=1/(2*Math.PI*f*RS.C);return 220/Math.sqrt(RS.R*RS.R+(xl-xc)*(xl-xc));}
+function setRes(){RS.f=+$('#s-fs').value;const xl=2*Math.PI*RS.f*RS.L,xc=1/(2*Math.PI*RS.f*RS.C),I=resI(RS.f),ul=I*xl;
+  $('#s-x').textContent=fmt(xl,1)+' и '+fmt(xc,1);$('#s-i').textContent=fmt(I,1)+' А';$('#s-ul').textContent=Math.round(ul)+' В';$('#s-f').textContent=RS.f+' Гц';
+  $('#s-uln').textContent=ul>220?'больше, чем в сети!':'меньше, чем в сети';
+  const near=Math.abs(xl-xc)<3;$('#s-pl').textContent=near?'Резонанс! XL = XC':(xl<xc?'XC больше XL — поднимите частоту':'XL больше XC — опустите частоту');
+  $('#s-text').innerHTML=near?'<b>Резонанс.</b> Катушка и конденсатор «гасят» друг друга, остаётся только R = 10 Ом. Ток самый большой, а на катушке почти 700 В при сети 220 В. Так пробивают изоляцию — это опасно.':'Двигайте частоту и найдите, где ток самый большой. Там XL = XC — это резонанс (около 50 Гц).';}
+$('#s-fs').addEventListener('input',setRes);setRes();
+function drawRes(){const x=X4,g=g4;x.clearRect(0,0,1000,560);const gx=80,gy=490,gw=860,gh=430,Imax=22;
+  g.L(gx,gy,gx+gw,gy,3);g.L(gx,gy,gx,gy-gh,3);g.T('f, Гц',gx+gw-60,gy+40,24,INK);g.T('I, А',gx+10,gy-gh-8,24,INK);
+  x.strokeStyle=INK;x.lineWidth=6;x.beginPath();for(let f=20;f<=120;f+=0.5){const px=gx+(f-20)/100*gw,py=gy-resI(f)/Imax*gh*0.95;f>20?x.lineTo(px,py):x.moveTo(px,py);}x.stroke();
+  [20,40,60,80,100,120].forEach(f=>g.T(String(f),gx+(f-20)/100*gw,gy+30,20,GREY,'center'));
+  const px=gx+(RS.f-20)/100*gw,py=gy-resI(RS.f)/Imax*gh*0.95;x.save();x.setLineDash([8,8]);g.L(px,gy,px,py,3,RED);x.restore();g.C(px,py,12,RED);}
+
+/* 5. quiz */
+const Q=[
+ {q:'Что значит «50 Гц» в розетке?',o:['50 волн в секунду','50 вольт','ток 50 ампер'],e:'Частота 50 Гц — 50 полных волн за секунду; направление тока меняется 100 раз в секунду.'},
+ {q:'Период тока 50 Гц равен…',o:['0,02 с','0,5 с','50 с'],e:'T = 1 / f = 1 / 50 = 0,02 с.'},
+ {q:'Вольтметр в розетке показывает 220 В. Какая амплитуда?',o:['≈ 311 В','220 В','≈ 156 В'],e:'Um = 1,41 · 220 ≈ 311 В. Вольтметр показывает действующее значение.'},
+ {q:'Действующее значение — это…',o:['постоянное напряжение, которое грело бы так же','самое большое значение','среднее за полволны'],e:'Чайник от 220 В переменного греется так же, как от 220 В постоянного.'},
+ {q:'Как сопротивление катушки зависит от частоты?',o:['растёт с частотой','падает с частотой','не зависит'],e:'XL = 2π·f·L — частота выше, сопротивление больше.'},
+ {q:'Какой элемент не пропускает постоянный ток?',o:['конденсатор','катушка','резистор'],e:'Между пластинами конденсатора изолятор: постоянный ток не идёт, XC при f = 0 бесконечно.'},
+ {q:'В катушке ток относительно напряжения…',o:['отстаёт на 90°','опережает на 90°','идёт в ногу'],e:'Катушка «ленивая»: ток опаздывает.'},
+ {q:'R = 30 Ом и XL = 40 Ом последовательно. Полное сопротивление Z?',o:['50 Ом','70 Ом','10 Ом'],e:'Z = √(30² + 40²) = 50 Ом. Складываются под прямым углом.'},
+ {q:'Пена в кружке кваса — это какая мощность?',o:['реактивная Q','активная P','полная S'],e:'Квас — полезная (активная), пена — реактивная, вся кружка — полная.'},
+ {q:'В каких единицах указывают мощность сварочного трансформатора?',o:['кВ·А','кВт·ч','вар'],e:'Полную мощность S указывают в киловольт-амперах.'},
+ {q:'Резонанс наступает, когда…',o:['XL = XC','R = 0','f = 0'],e:'Катушка и конденсатор «гасят» друг друга, остаётся только R.'},
+ {q:'Чем опасен резонанс напряжений?',o:['на L и C напряжение больше сетевого','ток исчезает','частота растёт'],e:'Напряжения на катушке и конденсаторе могут быть в разы больше сетевого и пробить изоляцию.'}];
+let qi=0,score=0,order=[];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderQ(){const box=$('#quiz-box');
+  if(qi>=Q.length){const m=score>=11?'Отлично!':score>=9?'Хорошо!':score>=6?'Неплохо, повторите ошибки.':'Повторите опыты 1–4 и попробуйте ещё раз.';
+    box.innerHTML='<div class="qcard"><p class="score">'+score+' из '+Q.length+'</p><p class="qtext">'+m+'</p><div class="qnav"><button class="big" type="button" id="qr">Пройти ещё раз</button></div></div>';$('#qr').addEventListener('click',()=>{qi=0;score=0;renderQ();});return;}
+  const q=Q[qi];order=shuffle(q.o.map((t,i)=>({t,i})));
+  box.innerHTML='<div class="qcard"><p class="qtop"><span>Вопрос '+(qi+1)+' из '+Q.length+'</span><span>Верно: '+score+'</span></p><p class="qtext">'+q.q+'</p><div class="opts">'+order.map((o,k)=>'<button class="opt" type="button" data-k="'+k+'">'+o.t+'</button>').join('')+'</div><p class="feedback" id="qfb" aria-live="polite"></p><p class="explain" id="qex"></p><div class="qnav"><button class="big" type="button" id="qn" hidden>Дальше</button></div></div>';
+  $$('#quiz-box .opt').forEach(b=>b.addEventListener('click',()=>{const ok=order[+b.dataset.k].i===0;if(ok)score++;$$('#quiz-box .opt').forEach(o=>{o.disabled=true;if(order[+o.dataset.k].i===0)o.classList.add('right');});if(!ok)b.classList.add('wrong');
+    const fb=$('#qfb');fb.className='feedback '+(ok?'good':'bad');fb.textContent=ok?'Верно!':'Не совсем.';$('#qex').textContent=q.e;const n=$('#qn');n.hidden=false;n.textContent=qi===Q.length-1?'Узнать результат':'Дальше';n.focus();}));
+  $('#qn').addEventListener('click',()=>{qi++;renderQ();});}
+renderQ();
+
+/* tabs + loop */
+const tabs=['gen','rlc','tri','res','quiz'];let cur='gen';
+function show(){const h=location.hash.replace('#','');cur=tabs.includes(h)?h:'gen';$$('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==cur);$$('nav a').forEach(a=>a.setAttribute('aria-current',String(a.dataset.tab===cur)));}
+window.addEventListener('hashchange',show);show();
+let last=performance.now();
+function loop(now){const dt=Math.min(0.05,(now-last)/1000);last=now;
+  if(cur==='gen')drawGen(dt);else if(cur==='rlc')drawRLC(dt);else if(cur==='tri')drawTri();else if(cur==='res')drawRes();
+  requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+})();
+</script>
+
+</body>
+</html>
