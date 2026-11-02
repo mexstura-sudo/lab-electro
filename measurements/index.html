@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Лаборатория «Электрические измерения»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="hand">Лаборатория</div>
+  <h1>Электрические измерения</h1>
+  <p>Тема 1.5 и практические работы №5 и №6. Читаем шкалу и класс точности, включаем приборы правильно, работаем мультиметром, поверяем амперметр и измеряем сопротивление тремя способами.</p>
+</header>
+
+<nav aria-label="Разделы">
+  <a href="#scale" data-tab="scale">1 · Шкала</a>
+  <a href="#connect" data-tab="connect">2 · Включение</a>
+  <a href="#multi" data-tab="multi">3 · Мультиметр</a>
+  <a href="#verify" data-tab="verify">4 · Поверка (ПР 5)</a>
+  <a href="#ohm" data-tab="ohm">5 · Сопротивление (ПР 6)</a>
+  <a href="#quiz" data-tab="quiz">6 · Проверь себя</a>
+</nav>
+
+<!-- 1 SCALE -->
+<section class="panel" data-panel="scale">
+  <p class="eyebrow">Опыт 1</p>
+  <h2>Прочитайте показание и найдите возможную ошибку</h2>
+  <div class="bench">
+    <div class="stage" id="sc-meter"></div>
+    <div class="side">
+      <p class="plaque" id="sc-plq">Задание 1 из ∞</p>
+      <p class="note" id="sc-task"></p>
+      <div class="row">
+        <div><label class="ctl-label" for="sc-div">Цена деления</label><input type="text" inputmode="decimal" id="sc-div" autocomplete="off"></div>
+        <div><label class="ctl-label" for="sc-val">Показание</label><input type="text" inputmode="decimal" id="sc-val" autocomplete="off"></div>
+        <div><label class="ctl-label" for="sc-err">Ошибка ± (по классу)</label><input type="text" inputmode="decimal" id="sc-err" autocomplete="off"></div>
+        <div><label class="ctl-label" for="sc-rel">Относительная, %</label><input type="text" inputmode="decimal" id="sc-rel" autocomplete="off"></div>
+      </div>
+      <div class="seg"><button class="big" type="button" id="sc-check">Проверить</button><button class="big alt" type="button" id="sc-next">Новый прибор</button></div>
+      <p class="feedback" id="sc-fb" aria-live="polite"></p>
+      <p class="note"><b>Формулы.</b> Цена деления = предел / число делений. Ошибка по классу: Δ = класс · предел / 100. Относительная: δ = Δ / показание · 100 %.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2 CONNECT -->
+<section class="panel" data-panel="connect" hidden>
+  <p class="eyebrow">Опыт 2</p>
+  <h2>Куда включить амперметр и вольтметр?</h2>
+  <div class="bench">
+    <div class="stage" id="cn-schem"></div>
+    <div class="side">
+      <div><span class="ctl-label">Амперметр</span><div class="seg" id="cn-a"><button type="button" data-v="s">Последовательно</button><button type="button" data-v="p">Параллельно лампе</button><button type="button" data-v="n">Убрать</button></div></div>
+      <div><span class="ctl-label">Вольтметр</span><div class="seg" id="cn-v"><button type="button" data-v="p">Параллельно лампе</button><button type="button" data-v="s">Последовательно</button><button type="button" data-v="n">Убрать</button></div></div>
+      <p class="plaque" id="cn-plq">—</p>
+      <p class="note" id="cn-note"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 MULTIMETER -->
+<section class="panel" data-panel="multi" hidden>
+  <p class="eyebrow">Опыт 3</p>
+  <h2>Мультиметр: режим, предел, гнёзда</h2>
+  <div class="bench">
+    <div class="stage" id="mm"></div>
+    <div class="side">
+      <div><span class="ctl-label">Что измеряем</span><div class="seg" id="mm-obj"></div></div>
+      <div><span class="ctl-label">Переключатель</span><div class="seg" id="mm-sw"></div></div>
+      <div><span class="ctl-label">Красный щуп в гнезде</span><div class="seg" id="mm-jack"><button type="button" data-v="v">VΩ</button><button type="button" data-v="a">10A</button></div></div>
+      <p class="plaque" id="mm-plq">—</p>
+      <p class="note" id="mm-note"></p>
+      <p class="note" id="mm-tasks"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 VERIFY -->
+<section class="panel" data-panel="verify" hidden>
+  <p class="eyebrow">ПР № 5</p>
+  <h2>Поверка амперметра методом сравнения</h2>
+  <div class="row" style="align-items:end;margin-bottom:16px">
+    <div><label class="ctl-label" for="vf-var">Вариант (номер в журнале)</label><select id="vf-var"></select></div>
+    <div><label class="ctl-label" for="vf-i">Ток в цепи (реостат)</label><input type="range" id="vf-i" min="0" max="1000" step="1" value="200"></div>
+  </div>
+  <div class="bench">
+    <div class="side" style="gap:12px">
+      <div class="stage" id="vf-meters"></div>
+      <p class="note">Слева — <b>поверяемый</b> стрелочный амперметр (предел 10 А, класс 1,5). Справа — <b>образцовый</b> цифровой. Ставьте стрелку точно на оцифрованные отметки 2, 4, 6, 8, 10 А и записывайте показание образцового.</p>
+    </div>
+    <div class="side">
+      <div class="scroll"><table class="calc" id="vf-tab"></table></div>
+      <div class="seg"><button class="big" type="button" id="vf-check">Проверить</button><button class="big alt" type="button" id="vf-snap">Стрелку на ближайшую отметку</button></div>
+      <p class="feedback" id="vf-fb" aria-live="polite"></p>
+      <p class="note"><b>Как считать:</b> Δ = Iпов − Iобр; γ = Δ / 10 А · 100 %. Прибор годен, если все |γ| ≤ 1,5 %.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 OHM -->
+<section class="panel" data-panel="ohm" hidden>
+  <p class="eyebrow">ПР № 6</p>
+  <h2>Измерение сопротивления тремя методами</h2>
+  <div class="row" style="align-items:end;margin-bottom:16px">
+    <div><label class="ctl-label" for="om-var">Вариант (номер в журнале)</label><select id="om-var"></select></div>
+    <div><span class="ctl-label">Резистор</span><div class="seg" id="om-rx"><button type="button" data-v="1">Rx1 (малое)</button><button type="button" data-v="2">Rx2 (большое)</button></div></div>
+  </div>
+  <div class="seg" id="om-m" style="margin-bottom:16px"><button type="button" data-v="a">А · амперметр–вольтметр</button><button type="button" data-v="o">Б · омметр</button><button type="button" data-v="b">В · мост</button></div>
+  <div class="bench">
+    <div class="stage" id="om-schem"></div>
+    <div class="side">
+      <div id="om-ctl"></div>
+      <p class="plaque" id="om-plq">—</p>
+      <p class="note" id="om-note"></p>
+      <div class="row"><div><label class="ctl-label" for="om-ans">Ваш результат Rx, Ом</label><input type="text" inputmode="decimal" id="om-ans" autocomplete="off"></div>
+      <div style="align-self:end"><button class="big" type="button" id="om-check">Проверить</button></div></div>
+      <p class="feedback" id="om-fb" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="quiz" hidden>
+  <p class="eyebrow">Контрольные вопросы</p>
+  <h2>Проверь себя</h2>
+  <div id="quiz-box"></div>
+</section>
+
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">все лаборатории</a></footer>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const INK='#1B1A17',RED='#A3271F',PAP='#FAF8F2',MUT='#6E685C',OK='#2F6B3A';
+const LBL="Oswald,'Arial Narrow',Arial,sans-serif",SER="'PT Serif',Georgia,serif";
+const fmt=(x,d)=>(Math.round(x*10**d)/10**d).toFixed(d).replace('.',',');
+const num=v=>parseFloat(String(v||'').trim().replace(',','.'));
+function seg(id,cb){$$('#'+id+' button').forEach(b=>b.onclick=()=>{$$('#'+id+' button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));cb(b.dataset.v);});}
+function press(id,v){$$('#'+id+' button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===v)));}
+function rnd(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+const fb=(id,ok,t)=>{const e=$(id);e.className='feedback '+(ok?'good':'bad');e.textContent=t;};
+
+/* ---------- analog meter svg ---------- */
+function meterSVG(o){// o: {lim,div,val,unit,letter,cls,acdc,pos,star,w,label}
+  const W=o.w||600,H=W*0.62,cx=W/2,cy=H*0.92,R=W*0.42,a0=-50,a1=50;
+  const ang=v=>(a0+(a1-a0)*Math.max(-0.02,Math.min(1.03,v/o.lim)))*Math.PI/180;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Стрелочный прибор ${o.letter}, предел ${o.lim} ${o.unit}"><rect x="6" y="6" width="${W-12}" height="${H-12}" rx="18" fill="${PAP}" stroke="${INK}" stroke-width="5"/>`;
+  s+=`<path d="M${cx+R*Math.sin(a0*Math.PI/180)} ${cy-R*Math.cos(a0*Math.PI/180)} A ${R} ${R} 0 0 1 ${cx+R*Math.sin(a1*Math.PI/180)} ${cy-R*Math.cos(a1*Math.PI/180)}" fill="none" stroke="${INK}" stroke-width="3"/>`;
+  for(let i=0;i<=o.div;i++){const a=(a0+(a1-a0)*i/o.div)*Math.PI/180;const major=i%(o.div/5)===0,mid=!major&&o.div%10===0&&i%(o.div/10)===0;const l=major?R*0.13:mid?R*0.09:R*0.055;
+    s+=`<line x1="${cx+R*Math.sin(a)}" y1="${cy-R*Math.cos(a)}" x2="${cx+(R+l)*Math.sin(a)}" y2="${cy-(R+l)*Math.cos(a)}" stroke="${INK}" stroke-width="${major?4:2}"/>`;
+    if(major){const v=o.lim*i/o.div;s+=`<text x="${cx+(R+R*0.25)*Math.sin(a)}" y="${cy-(R+R*0.25)*Math.cos(a)+8}" text-anchor="middle" font-family="${LBL}" font-weight="700" font-size="${W*0.042}">${fmt(v,Number.isInteger(v)?0:1)}</text>`;}}
+  s+=`<text x="${cx}" y="${cy-R*0.42}" text-anchor="middle" font-family="${SER}" font-weight="700" font-size="${W*0.11}">${o.letter}</text>`;
+  const sy=H*0.86;let sx=W*0.07;const sym=[];
+  sym.push(`<text x="${sx}" y="${sy}" font-family="${LBL}" font-weight="700" font-size="${W*0.05}">${o.acdc==='ac'?'~':'—'}</text>`);sx+=W*0.08;
+  sym.push(`<text x="${sx}" y="${sy}" font-family="${LBL}" font-weight="700" font-size="${W*0.045}">${fmt(o.cls,1)}</text>`);
+  s+=sym.join('');
+  const px=W*0.8;s+=o.pos==='h'?`<path d="M${px-16} ${sy} V ${sy-26} H ${px+16} V ${sy}" fill="none" stroke="${INK}" stroke-width="4"/>`:`<path d="M${px-16} ${sy} H ${px+16} M${px} ${sy} V ${sy-30}" stroke="${INK}" stroke-width="4"/>`;
+  s+=`<path d="M${W*0.9-14} ${sy} l14 -26 l14 26 z" fill="none" stroke="${INK}" stroke-width="3"/><text x="${W*0.9}" y="${sy-4}" text-anchor="middle" font-family="${LBL}" font-size="${W*0.03}">${o.star}</text>`;
+  if(o.label)s+=`<text x="${cx}" y="${cy-R*0.2}" text-anchor="middle" font-family="${LBL}" font-size="${W*0.04}" fill="${MUT}">${o.label}</text>`;
+  const a=ang(o.val);s+=`<line x1="${cx}" y1="${cy}" x2="${cx+R*1.06*Math.sin(a)}" y2="${cy-R*1.06*Math.cos(a)}" stroke="${RED}" stroke-width="4" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="${W*0.03}" fill="${INK}"/>`;
+  return s+'</svg>';}
+
+/* ---------- 1 scale ---------- */
+const SC=[{l:'A',u:'А',lims:[1,5,10,15,30],cls:[1.0,1.5,2.5]},{l:'V',u:'В',lims:[15,30,150,250,300],cls:[0.5,1.0,1.5,2.5]}];
+let sc=null,scn=0;
+function newScale(){scn++;const r=Math.random;const t=SC[r()<0.5?0:1];const lim=t.lims[Math.floor(r()*t.lims.length)];const div=[50,100,150].filter(d=>Number.isInteger(d/5))[Math.floor(r()*2)];
+  const cd=lim/div;const k=Math.floor(div*0.15+r()*div*0.8);const val=k*cd;const cls=t.cls[Math.floor(r()*t.cls.length)];
+  sc={t,lim,div,cd,val,cls,acdc:r()<0.5?'ac':'dc',pos:r()<0.5?'h':'v',star:r()<0.5?'2':''};
+  $('#sc-meter').innerHTML=meterSVG({lim,div,val,unit:t.u,letter:t.l,cls,acdc:sc.acdc,pos:sc.pos,star:sc.star||'',w:700,label:div+' делений'});
+  $('#sc-plq').textContent='Прибор '+scn;
+  $('#sc-task').innerHTML=`<b>${t.l==='A'?'Амперметр':'Вольтметр'}</b>, предел <b>${lim} ${t.u}</b>, шкала — ${div} делений, класс точности <b>${fmt(cls,1)}</b>. Знаки внизу: род тока (${sc.acdc==='ac'?'~ переменный':'— постоянный'}), класс, положение (${sc.pos==='h'?'горизонтально':'вертикально'}), звезда — проверка изоляции${sc.star?' '+sc.star+' кВ':' 0,5 кВ (без цифры)'}.`;
+  ['#sc-div','#sc-val','#sc-err','#sc-rel'].forEach(i=>$(i).value='');$('#sc-fb').textContent='';}
+$('#sc-next').onclick=newScale;
+$('#sc-check').onclick=()=>{const c=sc.cd,v=sc.val,d=sc.cls*sc.lim/100,rel=d/v*100;let ok=[],bad=[];
+  const t=(x,want,tol,n)=>{if(isNaN(x))return;(Math.abs(x-want)<=tol?ok:bad).push(n);};
+  t(num($('#sc-div').value),c,c*0.01,'цена деления');t(num($('#sc-val').value),v,c*0.51,'показание');t(num($('#sc-err').value),d,d*0.02,'ошибка');t(num($('#sc-rel').value),rel,Math.max(0.05,rel*0.05),'относительная');
+  if(!ok.length&&!bad.length)return fb('#sc-fb',false,'Заполните хотя бы одно поле.');
+  fb('#sc-fb',!bad.length,bad.length?'Проверьте: '+bad.join(', ')+'. Ответ: цена '+fmt(c,c<0.1?3:c<1?2:1)+', показание '+fmt(v,c<0.1?2:1)+', Δ = ±'+fmt(d,3)+', δ ≈ '+fmt(rel,1)+' %':'Всё верно!');};
+
+/* ---------- 2 connect ---------- */
+let ca='s',cvm='p';
+function drawConnect(){
+  const shortA=ca==='p',seriesV=cvm==='s';let I=0.5,UL=12,lamp=1,note='',plq='',bad=false;
+  if(shortA){lamp=0;I=Infinity;plq='КОРОТКОЕ ЗАМЫКАНИЕ ЛАМПЫ!';note='Амперметр параллельно лампе: его сопротивление почти ноль — весь ток идёт через него, ток огромный. Настоящий прибор сгорит, может сгореть и источник. <b>Амперметр — только последовательно!</b>';bad=true;}
+  else if(seriesV){lamp=0;I=0.0012;UL=0.01;plq='ЛАМПА НЕ ГОРИТ';note='Вольтметр последовательно: его сопротивление огромное, ток почти пропал. Вольтметр покажет почти всё напряжение источника (≈12 В), лампа не горит. Прибор цел, но измерение бессмысленно. <b>Вольтметр — параллельно!</b>';bad=true;}
+  else{plq=ca==='s'&&cvm==='p'?'ВСЁ ВЕРНО':'ЛАМПА ГОРИТ';note=ca==='s'&&cvm==='p'?'Амперметр последовательно (в разрыв), вольтметр параллельно лампе. Амперметр показывает ток лампы, вольтметр — напряжение на ней. Её сопротивление R = U / I = 24 Ом — это косвенное измерение.':'Добавьте второй прибор правильно.';}
+  const Ashow=ca!=='n',Vshow=cvm!=='n';
+  const m=(x,y,t,val,warn)=>`<circle cx="${x}" cy="${y}" r="30" fill="${warn?RED:PAP}" stroke="${INK}" stroke-width="4"/><text x="${x}" y="${y+11}" text-anchor="middle" font-family="${SER}" font-weight="700" font-size="32" fill="${warn?'#FBF6EC':INK}">${t}</text><text x="${x}" y="${y-42}" text-anchor="middle" font-family="${LBL}" font-weight="700" font-size="24" fill="${RED}">${val}</text>`;
+  let w=`<g fill="none" stroke="${INK}" stroke-width="5" stroke-linecap="round">`;
+  // battery left x=100, top y=100 bottom y=380; lamp at x=520 vertical between 170..310
+  w+=`<path d="M100 200 V 100 H ${ca==='s'?260:520} M ${ca==='s'?320:520} 100 H 520 V 170 M520 310 V 380 H 100 V 280"/>`;
+  if(seriesV) w=w.replace(`M520 310 V 380 H 100`,`M520 310 V 380 H 390 M 330 380 H 100`);
+  w+='</g>';
+  w+=`<line x1="70" y1="218" x2="130" y2="218" stroke="${INK}" stroke-width="5"/><line x1="85" y1="262" x2="115" y2="262" stroke="${INK}" stroke-width="9"/><text x="150" y="250" font-family="${LBL}" font-size="24">12 В</text>`;
+  w+=`<circle cx="520" cy="240" r="70" fill="${lamp?'#F6D77A':PAP}" stroke="${INK}" stroke-width="5"/><path d="M470 190 L570 290 M570 190 L470 290" stroke="${INK}" stroke-width="4"/>`;
+  if(Ashow){if(ca==='s')w+=m(290,100,'A',I===Infinity?'!!!':fmt(I,2)+' А');else w+=`<path d="M520 140 H 660 V 205 M660 275 V 340 H 520" fill="none" stroke="${INK}" stroke-width="4"/>`+m(660,240,'A','КЗ!',true);}
+  if(Vshow){if(cvm==='p')w+=`<path d="M520 140 H 400 V 205 M400 275 V 340 H 520" fill="none" stroke="${INK}" stroke-width="3"/>`+m(400,240,'V',shortA?'0 В':fmt(UL,1)+' В');else w+=m(360,380,'V','≈12 В');}
+  $('#cn-schem').innerHTML=`<svg viewBox="0 0 760 460" role="img" aria-label="Схема: батарейка 12 В, лампа и приборы">${w}${shortA?`<text x="380" y="440" text-anchor="middle" font-family="${LBL}" font-weight="700" font-size="30" fill="${RED}">ВЕСЬ ТОК ИДЁТ ЧЕРЕЗ АМПЕРМЕТР</text>`:''}</svg>`;
+  $('#cn-plq').textContent=plq;$('#cn-plq').style.background=bad?RED:(plq==='ВСЁ ВЕРНО'?OK:INK);$('#cn-note').innerHTML=note;}
+seg('cn-a',v=>{ca=v;drawConnect();});seg('cn-v',v=>{cvm=v;drawConnect();});press('cn-a','s');press('cn-v','p');
+
+/* ---------- 3 multimeter ---------- */
+const OBJ=[['bat','Батарейка 1,5 В'],['sock','Розетка 220 В'],['res','Резистор 1 кОм'],['wire','Провод целый'],['brk','Провод с обрывом'],['lamp','Ток лампы 0,45 А']];
+const SW=[['off','OFF'],['dcv','V⎓ 20'],['acv','V~ 750'],['a','A 10'],['ohm2','Ω 2k'],['ohm200','Ω 200k'],['beep','•))) прозвонка']];
+let mo='bat',ms='off',mj='v';const done=new Set();
+OBJ.forEach(([v,t])=>{const b=document.createElement('button');b.type='button';b.dataset.v=v;b.textContent=t;$('#mm-obj').appendChild(b);});
+SW.forEach(([v,t])=>{const b=document.createElement('button');b.type='button';b.dataset.v=v;b.textContent=t;$('#mm-sw').appendChild(b);});
+const GOOD={bat:'dcv',sock:'acv',res:'ohm2',wire:'beep',brk:'beep',lamp:'a'};
+function mmRead(){let d='',plq='',note='',bad=false,beep=false;const live=['bat','sock','lamp'].includes(mo);
+  if(ms==='off'){d='';plq='ПРИБОР ВЫКЛЮЧЕН';note='Сначала выберите режим и предел, потом подключайте щупы.';return{d,plq,note,bad};}
+  if(mj==='a'&&ms!=='a'){if(live&&mo!=='lamp'){bad=true;plq='ОПАСНО: КЗ ЧЕРЕЗ ПРИБОР';note='Красный щуп в гнезде 10A — внутри прибора почти нулевое сопротивление. Подключили к источнику напряжения — короткое замыкание. Гнездо 10A — только для тока, в разрыв цепи.';return{d:'—',plq,note,bad};}}
+  if(ms==='a'){if(mj!=='a'){d='0.00';plq='ЩУП НЕ В ТОМ ГНЕЗДЕ';note='Для тока красный щуп переставляют в гнездо 10A (или mA).';return{d,plq,note,bad:true};}
+    if(mo==='lamp'){d='0.45';plq='ВЕРНО: ТОК ЛАМПЫ';note='Мультиметр включён в разрыв цепи последовательно с лампой.';}
+    else if(mo==='bat'||mo==='sock'){bad=true;d='—';plq=mo==='sock'?'ОПАСНО! КЗ РОЗЕТКИ':'КЗ БАТАРЕЙКИ';note='Режим тока — это амперметр. Подключили прямо к '+(mo==='sock'?'розетке':'батарейке')+' — короткое замыкание, вспышка, сгорает предохранитель прибора. Ток меряют только в разрыв цепи с нагрузкой!';}
+    else{d='0.00';plq='ТОКА НЕТ';note='В обесточенной цепи тока нет.';}
+    return{d,plq,note,bad};}
+  if(ms==='dcv'){if(mo==='bat'){d='1.52';plq='ВЕРНО';}else if(mo==='sock'){d='0.0';plq='НЕ ТОТ РОД ТОКА';note='В розетке переменное напряжение: в режиме V⎓ прибор показывает около нуля или «скачет». Нужен V~.';bad=true;}else if(mo==='lamp'){d='12.0';plq='ЭТО НАПРЯЖЕНИЕ, А НЕ ТОК';note='Нужен режим A и подключение в разрыв.';bad=true;}else{d='0.00';plq='НАПРЯЖЕНИЯ НЕТ';note='Цепь обесточена.';}}
+  if(ms==='acv'){if(mo==='sock'){d='224';plq='ВЕРНО: СЕТЬ';note='V~ на пределе 750 — правильно для розетки. Держите щупы за изолированную часть!';}else if(mo==='bat'){d='0';plq='НЕ ТОТ РОД ТОКА';note='Батарейка даёт постоянное напряжение — нужен V⎓.';bad=true;}else if(mo==='lamp'){d='12.0';plq='ЭТО НАПРЯЖЕНИЕ, А НЕ ТОК';bad=true;}else{d='0';plq='НАПРЯЖЕНИЯ НЕТ';}}
+  if(ms==='ohm2'||ms==='ohm200'||ms==='beep'){if(live){bad=true;d='—';plq=mo==='sock'?'ОПАСНО! ПРИБОР ПОД 220 В':'ЦЕПЬ ПОД НАПРЯЖЕНИЕМ';note='Сопротивление и прозвонку — только на обесточенной цепи! Под напряжением прибор врёт или сгорает.';return{d,plq,note,bad};}
+    if(ms==='beep'){if(mo==='wire'){d='0.3';beep=true;plq='ПИЩИТ — ПРОВОД ЦЕЛЫЙ';}else if(mo==='brk'){d='1';plq='МОЛЧИТ — ОБРЫВ';note='«1» в левом разряде — бесконечность, цепь разорвана.';}else{d='1.000';plq='НЕ ПИЩИТ';note='1 кОм — слишком много для прозвонки. Сопротивление меряют в режиме Ω.';}}
+    else{const lim=ms==='ohm2'?2000:200000;const R=mo==='res'?1000:mo==='wire'?0.3:Infinity;if(R===Infinity){d='1';plq='ОБРЫВ: «1»';}else if(R>lim){d='1';plq='ПРЕДЕЛ МАЛ';}else{d=ms==='ohm2'?(R>=1000?'1.000':fmt(R,1).replace(',','.')):(R/1000).toFixed(1);plq=mo==='res'?'ВЕРНО: '+(ms==='ohm2'?'1,000 кОм':'1,0 кОм (грубее)'):'ПОЧТИ НОЛЬ — ЦЕЛЫЙ';if(mo==='res'&&ms==='ohm200')note='Работает, но предел 200k груб: всего один знак после запятой. Ближайший больший предел (2k) точнее.';}}}
+  return{d,plq,note,bad,beep};}
+function drawMM(){const r=mmRead();if(!r.bad&&GOOD[mo]===ms&&(ms==='a')===(mj==='a'))done.add(mo);
+  const ang={off:-90,dcv:-60,acv:-30,a:0,ohm2:30,ohm200:60,beep:90}[ms];
+  let s=`<svg viewBox="0 0 520 640" role="img" aria-label="Мультиметр: дисплей ${r.d||'пусто'}, переключатель ${ms}"><rect x="40" y="20" width="440" height="600" rx="40" fill="${PAP}" stroke="${INK}" stroke-width="6"/><rect x="80" y="60" width="360" height="130" fill="#d7dccb" stroke="${INK}" stroke-width="5"/>`;
+  s+=`<text x="420" y="160" text-anchor="end" font-family="'DejaVu Sans Mono',monospace" font-weight="700" font-size="84" fill="${INK}">${r.d||''}</text>`;
+  if(r.beep)s+=`<text x="100" y="100" font-family="${LBL}" font-size="30">•)))</text>`;
+  s+=`<circle cx="260" cy="350" r="110" fill="${PAP}" stroke="${INK}" stroke-width="5"/>`;
+  SW.forEach(([v,t],i)=>{const a=(-90+30*i)*Math.PI/180;const x=260+150*Math.sin(a),y=350-150*Math.cos(a);s+=`<text x="${x}" y="${y+8}" text-anchor="middle" font-family="${LBL}" font-weight="${v===ms?700:500}" font-size="22" fill="${v===ms?RED:INK}">${t.split(' ')[0]}</text>`;});
+  const a=ang*Math.PI/180;s+=`<line x1="260" y1="350" x2="${260+95*Math.sin(a)}" y2="${350-95*Math.cos(a)}" stroke="${INK}" stroke-width="18" stroke-linecap="round"/>`;
+  [['10A',130,'a'],['COM',260,'c'],['VΩ',390,'v']].forEach(([t,x,k])=>{const on=k==='c'||k===mj;s+=`<circle cx="${x}" cy="550" r="22" fill="${on?(k==='c'?INK:RED):PAP}" stroke="${INK}" stroke-width="4"/><text x="${x}" y="600" text-anchor="middle" font-family="${LBL}" font-size="22">${t}</text>`;});
+  $('#mm').innerHTML=s+'</svg>';$('#mm-plq').textContent=r.plq;$('#mm-plq').style.background=r.bad?RED:(r.plq.startsWith('ВЕРНО')||r.plq.startsWith('ПИЩИТ')||r.plq.startsWith('МОЛЧИТ')?OK:INK);$('#mm-note').innerHTML=r.note||'Пробуйте разные режимы — прибор виртуальный, его не жалко.';
+  $('#mm-tasks').innerHTML='<b>Задания ('+done.size+' из 6):</b> '+OBJ.map(([v,t])=>(done.has(v)?'✓ ':'○ ')+t).join(' · ');}
+seg('mm-obj',v=>{mo=v;drawMM();});seg('mm-sw',v=>{ms=v;drawMM();});seg('mm-jack',v=>{mj=v;drawMM();});press('mm-obj','bat');press('mm-sw','off');press('mm-jack','v');
+
+/* ---------- 4 verify ---------- */
+const PTS=[2,4,6,8,10];
+['#vf-var','#om-var'].forEach(id=>{for(let n=1;n<=30;n++){const o=document.createElement('option');o.value=n;o.textContent='Вариант '+n;$(id).appendChild(o);}});
+function vfErr(N){const r=rnd(N+7);const a=(r()-0.5)*0.16,b=(r()-0.5)*0.22,c=(r()-0.5)*0.12,bad=N%3===0;const base=x=>a+b*x/10+c*Math.sin(Math.PI*x/10);
+  const m=Math.max(...[2,4,6,8,10].map(x=>Math.abs(base(x))))||1;const t=bad?0.2+r()*0.1:0.04+r()*0.07;return x=>base(x)*t/m;}
+// e(x) = Iпов - Iобр
+let vfN=1;
+function vfDraw(){const I=+$('#vf-i').value/100;const e=vfErr(vfN);// find needle reading x such that x - e(x) = I
+  let x=I;for(let k=0;k<20;k++)x=I+e(x);const ref=I;
+  $('#vf-meters').innerHTML=`<div style="display:grid;grid-template-columns:1.3fr 1fr;align-items:center;gap:8px;padding:8px">${meterSVG({lim:10,div:50,val:x,unit:'А',letter:'A',cls:1.5,acdc:'dc',pos:'h',star:'2',w:520,label:'поверяемый'})}
+   <svg viewBox="0 0 340 260" role="img" aria-label="Образцовый амперметр ${fmt(ref,2)} А"><rect x="6" y="6" width="328" height="248" rx="18" fill="${PAP}" stroke="${INK}" stroke-width="5"/><rect x="30" y="50" width="280" height="110" fill="#d7dccb" stroke="${INK}" stroke-width="4"/><text x="296" y="132" text-anchor="end" font-family="'DejaVu Sans Mono',monospace" font-weight="700" font-size="66">${ref.toFixed(2)}</text><text x="170" y="215" text-anchor="middle" font-family="${LBL}" font-size="26">образцовый, класс 0,2 · А</text></svg></div>`;}
+function vfTable(){$('#vf-tab').innerHTML='<thead><tr><th>Iпов, А</th><th>Iобр, А</th><th>Δ, А</th><th>γ, %</th><th></th></tr></thead><tbody>'+PTS.map(p=>`<tr><td><b>${p}</b></td><td><input id="vo${p}" inputmode="decimal" autocomplete="off" size="5"></td><td><input id="vd${p}" inputmode="decimal" autocomplete="off" size="5"></td><td><input id="vg${p}" inputmode="decimal" autocomplete="off" size="5"></td><td class="mark" id="vm${p}"></td></tr>`).join('')+
+ '</tbody><tfoot><tr><td colspan="3">Вывод: прибор</td><td colspan="2"><select id="vf-ok"><option value="">—</option><option value="1">годен</option><option value="0">не годен</option></select></td></tr></tfoot>';}
+function vfTrue(p){const e=vfErr(vfN);const ref=p-e(p);return{ref,d:p-ref,g:(p-ref)/10*100};}
+$('#vf-snap').onclick=()=>{const e=vfErr(vfN);const I=+$('#vf-i').value/100;let x=I;for(let k=0;k<20;k++)x=I+e(x);const p=Math.min(10,Math.max(2,Math.round(x/2)*2));const ref=p-e(p);$('#vf-i').value=Math.round(ref*100);vfDraw();};
+$('#vf-check').onclick=()=>{let ok=0,tot=0,allGood=true;PTS.forEach(p=>{const t=vfTrue(p);if(Math.abs(t.g)>1.5)allGood=false;const o=num($('#vo'+p).value),d=num($('#vd'+p).value),g=num($('#vg'+p).value);const mk=$('#vm'+p);mk.className='mark';mk.textContent='';
+  if(isNaN(o)&&isNaN(d)&&isNaN(g))return;tot++;const good=(isNaN(o)||Math.abs(o-t.ref)<=0.015)&&(isNaN(d)||Math.abs(d-t.d)<=0.015)&&(isNaN(g)||Math.abs(g-t.g)<=0.15);if(good)ok++;mk.textContent=good?'✓':'✗';mk.classList.add(good?'good':'bad');mk.title=good?'':'Iобр ≈ '+fmt(t.ref,2)+'; Δ ≈ '+fmt(t.d,2)+'; γ ≈ '+fmt(t.g,1)+' %';});
+  const v=$('#vf-ok').value;let msg=`Строки: верно ${ok} из ${tot}.`;let good=ok===tot&&tot>0;if(v!==''){const vg=(v==='1')===allGood;msg+=vg?' Вывод верный.':' Вывод неверный: посмотрите на самую большую |γ|.';good=good&&vg;}
+  fb('#vf-fb',good,tot?msg:'Заполните таблицу.');};
+$('#vf-i').oninput=vfDraw;$('#vf-var').onchange=()=>{vfN=+$('#vf-var').value;vfTable();vfDraw();$('#vf-fb').textContent='';};
+
+/* ---------- 5 ohm ---------- */
+let omN=1,omR='1',omM='a',omS='a',omR2=100,omK=1;const RA=0.5,RV=5000,E=12;
+const rx=()=>omR==='1'?5+omN:1200+100*omN;
+function omDraw(keep){const R=rx();let svg='',ctl='',plq='',note='';
+  const m=(x,y,t,val)=>`<circle cx="${x}" cy="${y}" r="28" fill="${PAP}" stroke="${INK}" stroke-width="4"/><text x="${x}" y="${y+10}" text-anchor="middle" font-family="${SER}" font-weight="700" font-size="30">${t}</text><text x="${x}" y="${y-40}" text-anchor="middle" font-family="${LBL}" font-weight="700" font-size="24" fill="${RED}">${val}</text>`;
+  const rxBox=(x,y)=>`<rect x="${x-50}" y="${y-18}" width="100" height="36" fill="${PAP}" stroke="${INK}" stroke-width="4"/><text x="${x}" y="${y+54}" text-anchor="middle" font-family="${SER}" font-weight="700" font-size="28">Rx</text>`;
+  if(omM==='a'){let U,I;if(omS==='a'){const Rp=R*RV/(R+RV);I=E/(RA+Rp);U=I*Rp;}else{I=E/(RA+R);U=E;}
+    const Iw=I<1?fmt(I*1000,1)+' мА':fmt(I,3)+' А';
+    svg=`<g fill="none" stroke="${INK}" stroke-width="5"><path d="M80 300 V 240 M80 190 V 120 H 200 M260 120 H 450 M550 120 H 640 V 300 H 80"/></g><line x1="50" y1="200" x2="110" y2="200" stroke="${INK}" stroke-width="5"/><line x1="65" y1="230" x2="95" y2="230" stroke="${INK}" stroke-width="9"/><text x="120" y="225" font-family="${LBL}" font-size="24">12 В</text>`+m(230,120,'A',Iw)+rxBox(500,120)+
+      (omS==='a'?`<path d="M455 120 V 210 H 472 M528 210 H 545 V 120" fill="none" stroke="${INK}" stroke-width="3"/>`+m(500,210,'V',fmt(U,2)+' В'):`<path d="M170 120 V 220 H 402 M458 220 H 590 V 120" fill="none" stroke="${INK}" stroke-width="3"/>`+m(430,220,'V',fmt(U,2)+' В'));
+    ctl=`<span class="ctl-label">Схема включения вольтметра</span><div class="seg" id="om-s"><button type="button" data-v="a">а · только на Rx</button><button type="button" data-v="b">б · на Rx и амперметр</button></div>`;
+    plq='Rx = U / I';note=`Вольтметр R<sub>V</sub> = 5 кОм, амперметр R<sub>A</sub> = 0,5 Ом. Посчитайте Rx = U / I по показаниям. Затем переключите схему и сравните. <b>Правило:</b> малое Rx — схема «а», большое Rx — схема «б».`;}
+  else if(omM==='o'){const lim=R<200?200:R<2000?2000:20000;const d=lim===200?R.toFixed(1):lim===2000?R.toFixed(0):(R/1000).toFixed(2);
+    svg=`<rect x="250" y="40" width="260" height="330" rx="30" fill="${PAP}" stroke="${INK}" stroke-width="5"/><rect x="280" y="70" width="200" height="80" fill="#d7dccb" stroke="${INK}" stroke-width="4"/><text x="470" y="132" text-anchor="end" font-family="'DejaVu Sans Mono',monospace" font-weight="700" font-size="50">${d}</text><text x="380" y="220" text-anchor="middle" font-family="${LBL}" font-size="30">Ω ${lim>=2000?(lim/1000)+'k':lim}</text>`+
+      `<path d="M330 370 C 300 420, 200 420, 150 420 M430 370 C 460 420, 560 420, 610 420" fill="none" stroke="${INK}" stroke-width="4"/>`+rxBox(380,420).replace(`y="${420+54}"`,`y="${420+54}"`);
+    plq='ЦЕПЬ ОБЕСТОЧЕНА';note=`Омметр (мультиметр в режиме Ω) меряет сопротивление сразу — это прямое измерение. Только на обесточенной цепи! Предел выбран ближайший больший: ${lim>=2000?(lim/1000)+' кОм':lim+' Ом'}${lim===20000?' — показание в кОм':''}.`;}
+  else{const R3=1000,R4=1000/omK;const Rb=omR2;// bridge: Rx/R2? Rx = R2 * R3/R4 = R2*omK
+    const bal=R/(R+Rb*omK);const g=Math.max(-1,Math.min(1,(bal-0.5)*8));const ga=g*55*Math.PI/180;
+    svg=`<g fill="none" stroke="${INK}" stroke-width="5"><path d="M380 40 L 180 210 L 380 380 L 580 210 Z"/><path d="M380 40 V 0 M380 380 V 420"/></g>`+
+      `<rect x="250" y="95" width="70" height="30" transform="rotate(-40 285 110)" fill="${PAP}" stroke="${INK}" stroke-width="4"/><text x="230" y="95" font-family="${SER}" font-weight="700" font-size="26">Rx</text>`+
+      `<rect x="440" y="95" width="70" height="30" transform="rotate(40 475 110)" fill="${PAP}" stroke="${INK}" stroke-width="4"/><text x="520" y="95" font-family="${SER}" font-weight="700" font-size="26">R2</text>`+
+      `<rect x="250" y="295" width="70" height="30" transform="rotate(40 285 310)" fill="${PAP}" stroke="${INK}" stroke-width="4"/><text x="200" y="350" font-family="${SER}" font-weight="700" font-size="26">R3</text>`+
+      `<rect x="440" y="295" width="70" height="30" transform="rotate(-40 475 310)" fill="${PAP}" stroke="${INK}" stroke-width="4"/><text x="530" y="350" font-family="${SER}" font-weight="700" font-size="26">R4</text>`+
+      `<path d="M180 210 H 330 M430 210 H 580" stroke="${INK}" stroke-width="3"/><circle cx="380" cy="210" r="50" fill="${PAP}" stroke="${INK}" stroke-width="4"/><line x1="380" y1="240" x2="${380+44*Math.sin(ga)}" y2="${240-44*Math.cos(ga)}" stroke="${Math.abs(g)<0.03?OK:RED}" stroke-width="5" stroke-linecap="round"/><text x="380" y="285" text-anchor="middle" font-family="${LBL}" font-size="22">G</text>`+
+      `<text x="400" y="20" font-family="${LBL}" font-size="22">+ 12 В</text>`;
+    ctl=`<label class="ctl-label" for="om-r2">Магазин сопротивлений R2: <b id="om-r2v">${omR2}</b> Ом</label><input type="range" id="om-r2" min="1" max="9999" step="1" value="${omR2}"><div class="seg" style="margin-top:8px"><button type="button" class="big alt" id="om-dn" style="padding:8px 14px">−1</button><button type="button" class="big alt" id="om-up" style="padding:8px 14px">+1</button></div><span class="ctl-label" style="margin-top:12px">Отношение плеч R3 / R4</span><div class="seg" id="om-k"><button type="button" data-v="0.01">0,01</button><button type="button" data-v="0.1">0,1</button><button type="button" data-v="1">1</button><button type="button" data-v="10">10</button></div>`;
+    plq=Math.abs(g)<0.03?'РАВНОВЕСИЕ: G = 0':'ГАЛЬВАНОМЕТР ОТКЛОНЁН';note='Двигайте R2, пока стрелка гальванометра G не встанет на ноль. Тогда <b>Rx = R2 · R3 / R4</b>. Подберите отношение плеч, чтобы R2 был в середине магазина — так точнее.';}
+  $('#om-schem').innerHTML=`<svg viewBox="0 0 760 480" role="img" aria-label="Схема измерения сопротивления">${svg}</svg>`;$('#om-plq').textContent=plq;$('#om-note').innerHTML=note;
+  if(keep){const e=$('#om-r2v');if(e)e.textContent=omR2;const s=$('#om-r2');if(s&&+s.value!==omR2)s.value=omR2;return;}
+  $('#om-ctl').innerHTML=ctl;
+  if(omM==='a'){press('om-s',omS);seg('om-s',v=>{omS=v;omDraw();});}
+  if(omM==='b'){press('om-k',String(omK));seg('om-k',v=>{omK=+v;omDraw();});const sl=$('#om-r2');sl.oninput=()=>{omR2=+sl.value;omDraw(true);};$('#om-dn').onclick=()=>{omR2=Math.max(1,omR2-1);omDraw(true);};$('#om-up').onclick=()=>{omR2=Math.min(9999,omR2+1);omDraw(true);};}}
+$('#om-check').onclick=()=>{const R=rx();const v=num($('#om-ans').value);if(isNaN(v))return fb('#om-fb',false,'Введите результат.');
+  let want=R,tol=0.02;let extra='';if(omM==='a'){let U,I;if(omS==='a'){const Rp=R*RV/(R+RV);I=E/(RA+Rp);U=I*Rp;}else{I=E/(RA+R);U=E;}want=U/I;tol=0.01;const err=(want-R)/R*100;extra=` Ошибка метода в этой схеме: ${err>0?'+':''}${fmt(err,1)} % (истинное Rx = ${fmt(R,0)} Ом).`;}
+  if(omM==='b'){const bal=Math.abs(omR2*omK-R)/R<0.01;tol=0.01;extra=bal?' Мост уравновешен.':' Мост ещё не уравновешен: стрелка G не на нуле. Ваш R2 · R3 / R4 = '+fmt(omR2*omK,omK<1?2:0)+' Ом.';}
+  const ok=Math.abs(v-want)<=Math.max(tol*want,0.05);fb('#om-fb',ok,(ok?'Верно: Rx ≈ '+fmt(want,want<100?1:0)+' Ом.':'Пересчитайте: должно получиться около '+fmt(want,want<100?1:0)+' Ом.')+extra);};
+seg('om-rx',v=>{omR=v;omDraw();});seg('om-m',v=>{omM=v;omDraw();$('#om-fb').textContent='';});$('#om-var').onchange=()=>{omN=+$('#om-var').value;omDraw();};
+press('om-rx','1');press('om-m','a');
+
+/* ---------- quiz ---------- */
+const Q=[{q:'Как включают амперметр?',o:['последовательно, в разрыв цепи','параллельно нагрузке','к любым двум точкам'],e:'Через амперметр должен пройти весь ток цепи.'},
+ {q:'Как включают вольтметр?',o:['параллельно участку','последовательно','только к источнику'],e:'Вольтметр «сравнивает» две точки — подключается к ним параллельно.'},
+ {q:'Что будет, если амперметр включить параллельно лампе?',o:['короткое замыкание, прибор сгорит','лампа загорится ярче','ничего'],e:'Сопротивление амперметра почти ноль.'},
+ {q:'R = U / I по показаниям приборов — какое это измерение?',o:['косвенное','прямое','приведённое'],e:'Величину считают по формуле из других измерений.'},
+ {q:'Амперметр на 10 А, класс 1,5. Наибольшая ошибка?',o:['±0,15 А','±1,5 А','±0,015 А'],e:'Δ = 1,5 · 10 / 100 = 0,15 А.'},
+ {q:'Где на шкале относительная ошибка меньше?',o:['во второй половине шкалы','в начале шкалы','везде одинаковая'],e:'Δ постоянна, а показание больше — процент меньше.'},
+ {q:'Знак «~» на шкале означает…',o:['прибор для переменного тока','прибор для постоянного тока','класс точности'],e:'— постоянный, ~ переменный.'},
+ {q:'Сопротивление мультиметром меряют…',o:['только на обесточенной цепи','под напряжением','в режиме A'],e:'Иначе прибор врёт или сгорает.'},
+ {q:'Чем меряют сварочный ток без разрыва кабеля?',o:['токоизмерительными клещами','вольтметром','мегаомметром'],e:'Клещами обхватывают один провод.'},
+ {q:'Зачем шунт?',o:['чтобы амперметром мерить большой ток','чтобы вольтметром мерить большое напряжение','для проверки изоляции'],e:'Шунт — параллельно амперметру, через него идёт основная часть тока.'},
+ {q:'Чем проверяют изоляцию проводки?',o:['мегаомметром','омметром мультиметра','амперметром'],e:'Мегаомметр даёт повышенное напряжение (500–2500 В).'},
+ {q:'Мост постоянного тока уравновешен, когда…',o:['ток гальванометра равен нулю','R2 = 0','ток максимальный'],e:'Тогда Rx = R2 · R3 / R4.'}];
+let qi=0,score=0,ord=[];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderQ(){const box=$('#quiz-box');
+  if(qi>=Q.length){const m=score>=11?'Отлично!':score>=9?'Хорошо! Повторите ошибки.':'Повторите опыты 1–3 и попробуйте ещё раз.';
+    box.innerHTML='<div class="qcard"><p class="score">'+score+' из '+Q.length+'</p><p class="qtext">'+m+'</p><div class="seg"><button class="big" type="button" id="qr">Пройти ещё раз</button></div></div>';$('#qr').onclick=()=>{qi=0;score=0;renderQ();};return;}
+  const q=Q[qi];ord=shuffle(q.o.map((t,i)=>({t,i})));
+  box.innerHTML='<div class="qcard"><p class="qtop"><span>Вопрос '+(qi+1)+' из '+Q.length+'</span><span>Верно: '+score+'</span></p><p class="qtext">'+q.q+'</p><div class="opts">'+ord.map((o,k)=>'<button class="opt" type="button" data-k="'+k+'">'+o.t+'</button>').join('')+'</div><p class="feedback" id="qfb" aria-live="polite"></p><p id="qex" style="margin:0"></p><div class="seg"><button class="big" type="button" id="qn" hidden>Дальше</button></div></div>';
+  $$('#quiz-box .opt').forEach(b=>b.onclick=()=>{const ok=ord[+b.dataset.k].i===0;if(ok)score++;$$('#quiz-box .opt').forEach(o=>{o.disabled=true;if(ord[+o.dataset.k].i===0)o.classList.add('right');});if(!ok)b.classList.add('wrong');
+    const f=$('#qfb');f.className='feedback '+(ok?'good':'bad');f.textContent=ok?'Верно!':'Не совсем.';$('#qex').textContent=q.e;const n=$('#qn');n.hidden=false;n.textContent=qi===Q.length-1?'Узнать результат':'Дальше';n.focus();});
+  $('#qn').onclick=()=>{qi++;renderQ();};}
+
+/* ---------- init ---------- */
+try{const p=new URLSearchParams(location.search);const v=+p.get('v');if(v>=1&&v<=30){vfN=omN=v;$('#vf-var').value=v;$('#om-var').value=v;}}catch(e){}
+newScale();drawConnect();drawMM();vfTable();vfDraw();omDraw();renderQ();
+const tabs=['scale','connect','multi','verify','ohm','quiz'];
+function show(){const h=location.hash.replace('#','');const c=tabs.includes(h)?h:'scale';$$('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==c);$$('nav a').forEach(a=>a.setAttribute('aria-current',String(a.dataset.tab===c)));}
+window.addEventListener('hashchange',show);show();
+})();
+</script>
+</body>
+</html>
