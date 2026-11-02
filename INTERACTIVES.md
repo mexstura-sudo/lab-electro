@@ -16,6 +16,7 @@
 | 5 | Трёхфазный ток (ПР №7) | 1.6, пары 16–17 | [Генератор](https://mexstura-sudo.github.io/lab-electro/three-phase/#gen) · [Звезда](https://mexstura-sudo.github.io/lab-electro/three-phase/#star) · [Треугольник](https://mexstura-sudo.github.io/lab-electro/three-phase/#delta) · [Мощность](https://mexstura-sudo.github.io/lab-electro/three-phase/#power) · [Онлайн-тест](https://mexstura-sudo.github.io/lab-electro/three-phase/#quiz) |
 | 6 | Трансформатор (ПР №8) | 1.7, пары 18–19 | [Принцип](https://mexstura-sudo.github.io/lab-electro/transformer/#princ) · [Режимы](https://mexstura-sudo.github.io/lab-electro/transformer/#modes) · [Сварочный](https://mexstura-sudo.github.io/lab-electro/transformer/#weld) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/transformer/#quiz) |
 | 7 | Электрические машины | 1.8–1.9, пара 20 | [Вращающееся поле](https://mexstura-sudo.github.io/lab-electro/machines/#field) · [Пуск двигателя](https://mexstura-sudo.github.io/lab-electro/machines/#async) · [Постоянный ток](https://mexstura-sudo.github.io/lab-electro/machines/#dc) · [Шильдик](https://mexstura-sudo.github.io/lab-electro/machines/#plate) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/machines/#quiz) |
+| 8 | Электробезопасность | 1.10, пара 21 | [Ток через человека](https://mexstura-sudo.github.io/lab-electro/safety/#body) · [Что спасёт](https://mexstura-sudo.github.io/lab-electro/safety/#pe) · [Автомат и кабель](https://mexstura-sudo.github.io/lab-electro/safety/#brk) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/safety/#quiz) |
 
 **Варианты.** В лабораториях 3, 4, 5, 6 и 7 (вкладка «Шильдик») есть 30 вариантов (номер в журнале). Ссылку сразу на вариант можно дать так: `…/rl-circuit/?v=12#stand`, `…/measurements/?v=12#verify`, `…/three-phase/?v=12#star`, `…/transformer/?v=12#modes`, `…/machines/?v=12#plate`.
 
@@ -28,6 +29,7 @@
 5. **Трёхфазный ток.** Генератор с тремя обмотками и тремя синусоидами (пауза, замедление, сумма = 0); звезда с выключателем нуля, симметричной и несимметричной нагрузкой и векторной диаграммой смещения нейтрали; треугольник с обрывом провода L1 и проверкой Iл = 1,73·Iф; три ТЭНа звездой и треугольником, калькулятор мощности; онлайн-тест «Переменный и трёхфазный ток».
 6. **Трансформатор.** Сердечник с двумя обмотками: меняем витки и напряжение, переключаем на постоянный ток — трансформатор «молчит»; режимы ПР №8: холостой ход, короткое замыкание через ЛАТР, нагрузка с записью точек и графиками U2(I2) и КПД; сварочный трансформатор: падающая характеристика, прямая дуги, регулятор тока, касание электродом; тест из 12 вопросов.
 7. **Электрические машины.** Три обмотки статора и вращающееся поле, ротор-беличья клетка отстаёт (скольжение), реверс сменой двух фаз, число пар полюсов; пуск двигателя 4 кВт с графиками скорости и тока: прямой, звезда → треугольник, частотник, вентилятор или конвейер, лампа в цехе мигает; машина постоянного тока: двигатель и генератор, коллектор или кольца; шильдик: P1, ток, скольжение, звезда или треугольник, автомат, пусковой ток с проверкой; тест из 12 вопросов.
+8. **Электробезопасность.** Ток через человека: напряжение 12–380 В, путь (рука — рука, рука — ноги, нога — нога), кожа и обувь → ток в мА и зона опасности; пробой на корпус: без защиты, заземление (ползунок Rз), зануление, PE + УЗО, касание голой фазы — напряжение на корпусе, ток через человека, время отключения; подбор автомата (номинал, B/C/D) и кабеля для болгарки, полуавтомата и инверторов с проверкой броска при включении; тест из 12 вопросов.
 
 ## 2. Анимации внутри презентаций (идут сами, в режиме показа)
 
@@ -58,3 +60,23 @@
 - На доске: откройте нужную вкладку по прямой ссылке до пары.
 - Студентам: QR-код на слайде с лабораторией открывает нужную вкладку на телефоне.
 - Нет интернета: в лекции для педагога к каждой паре есть раздел «Если что-то пошло не так» — всё можно сделать на доске.
+
+## 5. Тексты для студентов (самостоятельная работа дома)
+
+К каждой паре — страница простым языком: объяснение с рисунками, эталоны в тетрадь по билетам, словарик, «Проверь себя» с ответами по щелчку и ссылки на лабораторию. Кнопка «Печать / PDF» на странице сохраняет текст в PDF (ответы — в конце). Все тексты: https://mexstura-sudo.github.io/lab-electro/konspekt/
+
+- [Пара 9. Электрическое поле и магнетизм](https://mexstura-sudo.github.io/lab-electro/konspekt/p09.html)
+- [Пара 10. ПР № 1 и № 2. Расчёт цепи и потери в проводах](https://mexstura-sudo.github.io/lab-electro/konspekt/p10.html)
+- [Пара 11. Переменный ток](https://mexstura-sudo.github.io/lab-electro/konspekt/p11.html)
+- [Пара 12. Цепь R и L, мощность и резонанс](https://mexstura-sudo.github.io/lab-electro/konspekt/p12.html)
+- [Пара 13. ПР № 4. Цепь с резистором и катушкой](https://mexstura-sudo.github.io/lab-electro/konspekt/p13.html)
+- [Пара 14. Электрические измерения](https://mexstura-sudo.github.io/lab-electro/konspekt/p14.html)
+- [Пара 15. ПР № 5. Поверка амперметра](https://mexstura-sudo.github.io/lab-electro/konspekt/p15a.html)
+- [Пара 15. ПР № 6. Измерение сопротивлений](https://mexstura-sudo.github.io/lab-electro/konspekt/p15b.html)
+- [Пара 16. Трёхфазные цепи](https://mexstura-sudo.github.io/lab-electro/konspekt/p16.html)
+- [Пара 17. ПР № 7. Звезда и треугольник](https://mexstura-sudo.github.io/lab-electro/konspekt/p17.html)
+- [Пара 18. Трансформаторы](https://mexstura-sudo.github.io/lab-electro/konspekt/p18.html)
+- [Пара 19. ПР № 8. Режимы трансформатора](https://mexstura-sudo.github.io/lab-electro/konspekt/p19.html)
+- [Пара 20. Электрические машины и электропривод](https://mexstura-sudo.github.io/lab-electro/konspekt/p20.html)
+- [Пара 21. Электроснабжение и безопасность](https://mexstura-sudo.github.io/lab-electro/konspekt/p21.html)
+- [Пара 22. Полупроводники, диоды и выпрямители](https://mexstura-sudo.github.io/lab-electro/konspekt/p22.html)

@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 15. ПР № 6. Измерение сопротивлений — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 15 · тема 1.5 (практическая работа)</p>
+<header class="hero">
+<div class="hand">Пара 15</div>
+<h1>ПР № 6. Измерение сопротивлений</h1>
+<p class="lead">Одно и то же сопротивление тремя способами: амперметр с вольтметром, омметр и мост. Какой точнее и почему схема решает всё.</p>
+<div class="meta"><span>Тема 1.5 (практическая работа)</span><span>Чтение: 35–45 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>как измерить сопротивление амперметром и вольтметром</li><li>почему для малых и больших сопротивлений нужны разные схемы</li><li>как найти границу между ними</li><li>как работают омметр и мост</li><li>как посчитать ошибку и выбрать метод</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Задача</a><a href="#s2">2. Метод амперметра и вольтметра</a><a href="#s3">3. Омметр</a><a href="#s4">4. Мост</a><a href="#s5">5. Образец расчёта (вариант 10)</a><a href="#s6">6. Выводы — шаблон</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a><a href="#lab">Попробуйте в лаборатории</a></nav>
+<article>
+<h2 id="s1">1. Задача</h2>
+<p>Нужно измерить два сопротивления — <strong>малое Rx1</strong> и <strong>большое Rx2</strong> — тремя методами и сравнить, какой точнее.</p>
+<p>В браузере (вкладка «Сопротивление»): Rx1 = 5 + N Ом, Rx2 = 1200 + 100·N Ом, где N — номер в журнале. Источник 12 В, сопротивление амперметра RA = 0,5 Ом, вольтметра RV = 5 кОм. Вживую — резисторы, которые даст преподаватель.</p>
+<h2 id="s2">2. Метод амперметра и вольтметра</h2>
+<p>Это <strong>косвенное</strong> измерение: меряем U и I и считаем</p>
+<div class="box formula">
+<p>Rx = U / I</p>
+</div>
+<p>Но приборы неидеальны: через вольтметр тоже течёт немного тока, а на амперметре тоже падает немного напряжения. Поэтому есть <strong>две схемы</strong>, и у каждой своя ошибка.</p>
+<figure><img src="img/pr56_f_va.png" alt="Схема «а»: вольтметр прямо на Rx, амперметр перед ними. Схема «б»: вольтметр на Rx вместе с амперметром"><figcaption>Схема «а»: вольтметр прямо на Rx, амперметр перед ними. Схема «б»: вольтметр на Rx вместе с амперметром</figcaption></figure>
+<ul>
+<li><strong>Схема «а»</strong> — вольтметр стоит <strong>прямо на Rx</strong>. Он видит точное напряжение, но амперметр считает и ток вольтметра. Результат получается <strong>меньше</strong> настоящего. Ошибка мала, когда <strong>Rx намного меньше RV</strong> — для <strong>малых</strong> сопротивлений.</li>
+<li><strong>Схема «б»</strong> — вольтметр стоит на Rx <strong>вместе с амперметром</strong>. Амперметр считает точный ток, но вольтметр видит и падение на амперметре. Результат <strong>больше</strong> настоящего. Ошибка мала, когда <strong>Rx намного больше RA</strong> — для <strong>больших</strong> сопротивлений.</li>
+</ul>
+<figure><img src="img/pr56_f_err.png" alt="Почему ошибаются схемы: «а» — амперметр считает и ток вольтметра; «б» — вольтметр видит и напряжение амперметра"><figcaption>Почему ошибаются схемы: «а» — амперметр считает и ток вольтметра; «б» — вольтметр видит и напряжение амперметра</figcaption></figure>
+<p><strong>Граница</strong> между схемами:</p>
+<div class="box formula">
+<p>Rгр = √(RA · RV)</p>
+</div>
+<div class="box example">
+<p>RA = 0,5 Ом, RV = 5000 Ом: Rгр = √(0,5 · 5000) = √2500 = <strong>50 Ом</strong>.
+Rx меньше 50 Ом — схема «а». Rx больше 50 Ом — схема «б».</p>
+</div>
+<h2 id="s3">3. Омметр</h2>
+<figure><img src="img/pr56_f_ohm.png" alt="Мультиметр в режиме Ω на пределе 20k показывает 2,20 кОм; цепь обесточена, пальцами выводы не держать"><figcaption>Мультиметр в режиме Ω на пределе 20k показывает 2,20 кОм; цепь обесточена, пальцами выводы не держать</figcaption></figure>
+<p><strong>Омметр</strong> (режим Ω мультиметра) меряет сопротивление <strong>прямо</strong>. Это быстро, но точность средняя — несколько процентов.</p>
+<ul>
+<li>Цепь обязательно <strong>обесточена</strong>.</li>
+<li>Не держите оба вывода пальцами — прибор добавит сопротивление вашего тела.</li>
+<li>Выбирайте предел чуть больше ожидаемого значения.</li>
+</ul>
+<h2 id="s4">4. Мост</h2>
+<figure><img src="img/pr56_f_bridge.png" alt="Мост: Rx, R2, R3, R4 и гальванометр G в середине; равновесие — стрелка G на нуле, тогда Rx = R2 · R3 / R4"><figcaption>Мост: Rx, R2, R3, R4 и гальванометр G в середине; равновесие — стрелка G на нуле, тогда Rx = R2 · R3 / R4</figcaption></figure>
+<p><strong>Мост</strong> — самый точный метод. Четыре резистора соединены ромбом, в середине — чувствительный прибор <strong>гальванометр G</strong>. Магазином сопротивлений R2 добиваются, чтобы стрелка G встала <strong>на ноль</strong> (равновесие). Тогда:</p>
+<div class="box formula">
+<p>Rx = R2 · R3 / R4</p>
+</div>
+<p>Это как старинные весы: подбираем гири R2, пока чаши не уравновесятся.</p>
+<p><strong>Порядок:</strong> оцените Rx омметром → выберите отношение плеч R3 / R4 (0,01; 0,1; 1; 10) → крупными шагами R2 уберите отклонение G → мелкими доведите до нуля.</p>
+<div class="box example">
+<p>R2 = 1500 Ом, R3 / R4 = 0,01 → Rx = 1500 · 0,01 = <strong>15 Ом</strong>.</p>
+</div>
+<h2 id="s5">5. Образец расчёта (вариант 10)</h2>
+<p>Rx1 = 15 Ом, Rx2 = 2200 Ом.</p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Схема</th>
+<th>U</th>
+<th>I</th>
+<th>Rx = U / I</th>
+<th>Ошибка</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rx1 · «а»</td>
+<td>11,61 В</td>
+<td>0,776 А</td>
+<td>14,96 Ом</td>
+<td>−0,3 %</td>
+</tr>
+<tr>
+<td>Rx1 · «б»</td>
+<td>12,00 В</td>
+<td>0,774 А</td>
+<td>15,50 Ом</td>
+<td>+3,3 %</td>
+</tr>
+<tr>
+<td>Rx2 · «а»</td>
+<td>12,00 В</td>
+<td>7,85 мА</td>
+<td>1528 Ом</td>
+<td>−30,6 %</td>
+</tr>
+<tr>
+<td>Rx2 · «б»</td>
+<td>12,00 В</td>
+<td>5,45 мА</td>
+<td>2200 Ом</td>
+<td>0,0 %</td>
+</tr>
+</tbody>
+</table></div>
+<div class="box formula">
+<p>Ошибка = (Rизм − Rист) / Rист · 100 %</p>
+</div>
+<p>Видно главное: для малого Rx1 точна схема «а», для большого Rx2 — схема «б». Неправильная схема для большого сопротивления даёт ошибку <strong>30 %</strong>!</p>
+<h2 id="s6">6. Выводы — шаблон</h2>
+<ol>
+<li>Для малого Rx1 = … Ом точнее схема «…»: ошибка … %, а в другой схеме … %.</li>
+<li>Для большого Rx2 = … Ом точнее схема «…», потому что …</li>
+<li>Омметр показал … и …, мост — … и …</li>
+<li>Самый точный метод — …, самый быстрый — …</li>
+</ol>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>Косвенное измерение</strong> — величину считают по формуле из показаний приборов.</li>
+<li><strong>Схема «а»</strong> — вольтметр прямо на Rx; для малых сопротивлений.</li>
+<li><strong>Схема «б»</strong> — вольтметр на Rx вместе с амперметром; для больших сопротивлений.</li>
+<li><strong>Граничное сопротивление</strong> — Rгр = √(RA · RV).</li>
+<li><strong>Омметр</strong> — прибор для прямого измерения сопротивления.</li>
+<li><strong>Мост</strong> — схема из четырёх плеч и гальванометра; самый точный метод.</li>
+<li><strong>Гальванометр</strong> — очень чувствительный прибор, показывает ноль при равновесии моста.</li>
+<li><strong>Магазин сопротивлений</strong> — набор точных резисторов с переключателями.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · И1 · БИЛЕТ 24</span><h3>Виды измерений и приборов</h3><p class="q">Прямые и косвенные измерения. Классификация электроизмерительных приборов, обозначения на шкале.</p><ol><li>Прямое измерение — прибор сразу показывает нужную величину (вольтметр — напряжение). Косвенное — считаем по формуле (R = U / I по показаниям вольтметра и амперметра).</li><li>По тому, что меряют: амперметр, вольтметр, омметр, ваттметр, счётчик энергии.</li><li>По виду: стрелочные (аналоговые) и цифровые. По роду тока: постоянного (—), переменного (~).</li><li>На шкале указаны: род тока (— или ~), класс точности (число, например 1,5), положение прибора (вертикально / горизонтально), звёздочка с цифрой — напряжение проверки изоляции.</li><li>Примеры: счётчик в квартире, амперметр на панели сварочного аппарата.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · И3 · БИЛЕТ 5</span><h3>Как включать амперметр и вольтметр</h3><p class="q">Измерение тока и напряжения: схемы включения, шунт и добавочный резистор, токоизмерительные клещи.</p><ol><li>Амперметр — последовательно, в разрыв цепи: весь ток идёт через него. Его сопротивление очень маленькое. (Схема.)</li><li>Вольтметр — параллельно, к двум точкам. Его сопротивление очень большое. (Схема.)</li><li>Ошибка: амперметр, включённый параллельно, создаёт короткое замыкание и сгорает.</li><li>Шунт — резистор параллельно амперметру, чтобы мерить большой ток. Добавочный резистор — последовательно с вольтметром, чтобы мерить большое напряжение.</li><li>Токоизмерительные клещи меряют ток без разрыва цепи: ими обхватывают один провод. Так проверяют сварочный ток.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · И4 · БИЛЕТ 20</span><h3>Мультиметр и мегаомметр</h3><p class="q">Мультиметр: режимы и правила работы. Измерение сопротивления, прозвонка, проверка изоляции мегаомметром.</p><ol><li>Мультиметр — несколько приборов в одном: V (напряжение постоянное и переменное), A (ток), Ω (сопротивление), прозвонка (пищит).</li><li>Правила: сначала выбрать режим и предел, потом подключать; держать щупы за изолированную часть; для измерения тока переставить красный щуп в гнездо A.</li><li>Сопротивление и прозвонка — только на обесточенной цепи. Прозвонкой ищут обрыв провода: пищит — целый.</li><li>Мегаомметр проверяет изоляцию повышенным напряжением. Для электропроводки до 1000 В берут мегаомметр на 1000 В, сопротивление изоляции должно быть не меньше 0,5 МОм. Так проверяют и сварочное оборудование.</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>Почему схема «а» подходит для малых сопротивлений?</summary><p>Ток через вольтметр очень мал по сравнению с током через малое Rx, поэтому амперметр почти не ошибается.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>RA = 1 Ом, RV = 10 кОм. Найдите границу между схемами.</summary><p>Rгр = √(1 · 10 000) = 100 Ом.</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>Rx = 5 кОм. Какую схему выбрать при границе 50 Ом?</summary><p>Схему «б»: Rx больше границы.</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>Почему омметром нельзя мерить на включённой цепи?</summary><p>Чужое напряжение исказит показание и может сжечь прибор.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>Мост уравновешен: R2 = 470 Ом, R3 / R4 = 10. Чему равно Rx?</summary><p>Rx = 470 · 10 = 4700 Ом.</p></details>
+
+<details class="qa"><summary><span class="qn">6</span>Какой метод самый точный и почему?</summary><p>Мост: он сравнивает Rx с точными образцовыми резисторами, а гальванометр показывает только ноль.</p></details>
+<h2 id="lab">Попробуйте в лаборатории</h2><p>Откройте на телефоне или компьютере — ничего устанавливать не нужно.</p><div class="labs"><a href="https://mexstura-sudo.github.io/lab-electro/measurements/#ohm"><span>Лаборатория</span>Сопротивление — две схемы, омметр и мост (30 вариантов)</a><a href="https://mexstura-sudo.github.io/lab-electro/measurements/#multi"><span>Лаборатория</span>Мультиметр — 6 заданий</a><a href="https://mexstura-sudo.github.io/lab-electro/measurements/#quiz"><span>Лаборатория</span>Проверь себя — тест из 12 вопросов</a></div>
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>Ток через вольтметр очень мал по сравнению с током через малое Rx, поэтому амперметр почти не ошибается.</li><li>Rгр = √(1 · 10 000) = 100 Ом.</li><li>Схему «б»: Rx больше границы.</li><li>Чужое напряжение исказит показание и может сжечь прибор.</li><li>Rx = 470 · 10 = 4700 Ом.</li><li>Мост: он сравнивает Rx с точными образцовыми резисторами, а гальванометр показывает только ноль.</li></ol></section>
+</article>
+<nav class="pager"><a href="p15a.html">← Пара 15. ПР № 5. Поверка амперметра</a><a href="p16.html">Пара 16. Трёхфазные цепи →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

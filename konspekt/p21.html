@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 21. Электроснабжение и безопасность — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 21 · тема 1.10</p>
+<header class="hero">
+<div class="hand">Пара 21</div>
+<h1>Электроснабжение и безопасность</h1>
+<p class="lead">Как энергия доходит от ГЭС до вашего сварочного поста — и что сделать, чтобы ток не прошёл через вас.</p>
+<div class="meta"><span>Тема 1.10</span><span>Чтение: 40–50 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>как энергия идёт от станции к цеху и зачем ЛЭП высокое напряжение</li><li>какой ток опасен для человека и почему важен путь тока</li><li>какие напряжения считаются безопасными</li><li>что делать, если человека ударило током</li><li>чем заземление отличается от зануления и как заземляют сварочный пост</li><li>как работают предохранитель, автомат и УЗО и как выбрать автомат для сварочного аппарата</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Путь энергии: от станции до цеха</a><a href="#s2">2. Зачем ЛЭП высокое напряжение</a><a href="#s3">3. Электроснабжение цеха</a><a href="#s4">4. Что ток делает с человеком</a><a href="#s5">5. От чего зависит опасность</a><a href="#s6">6. Безопасные напряжения</a><a href="#s7">7. Первая помощь</a><a href="#s8">8. Пробой на корпус</a><a href="#s9">9. Защитное заземление</a><a href="#s10">10. Зануление</a><a href="#s11">11. Заземление сварочного поста</a><a href="#s12">12. Защитные аппараты</a><a href="#s13">13. Буква на автомате: B, C, D</a><a href="#s14">14. УЗО</a><a href="#s15">15. Как выбрать автомат для сварочного аппарата</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a><a href="#lab">Попробуйте в лаборатории</a></nav>
+<article>
+<h2 id="s1">1. Путь энергии: от станции до цеха</h2>
+<figure><img src="img/p21_s_chain.png" alt="Станция (10–20 кВ) → повышающая подстанция (110–500 кВ) → ЛЭП → понижающая подстанция (10 кВ) → ТП у цеха (10 → 0,4 кВ) → цех, дом (380/220 В)"><figcaption>Станция (10–20 кВ) → повышающая подстанция (110–500 кВ) → ЛЭП → понижающая подстанция (10 кВ) → ТП у цеха (10 → 0,4 кВ) → цех, дом (380/220 В)</figcaption></figure>
+<p>Электроэнергию производят на <strong>электростанциях</strong>. В Иркутской области это прежде всего ГЭС — Иркутская, Братская, Усть-Илимская. Ещё бывают ТЭЦ (они же греют город), АЭС, солнечные и ветровые станции.</p>
+<p>Генератор станции даёт 10–20 тысяч вольт. Дальше энергия проходит цепочку:</p>
+<ol>
+<li><strong>Повышающая подстанция</strong> поднимает напряжение до 110–500 кВ.</li>
+<li><strong>ЛЭП</strong> несёт энергию на сотни километров.</li>
+<li><strong>Понижающая подстанция</strong> у города снижает до 10 кВ.</li>
+<li><strong>Трансформаторная подстанция (ТП) 10/0,4 кВ</strong> у цеха или во дворе даёт привычные 380/220 В.</li>
+</ol>
+<p>Во всех подстанциях работают трансформаторы — те самые, из пары 18.</p>
+<h2 id="s2">2. Зачем ЛЭП высокое напряжение</h2>
+<p>Мощность трёхфазной сети P = √3 · U · I. Если поднять напряжение, то при той же мощности ток станет меньше. А провода греет именно ток.</p>
+<div class="box formula">
+<p>ΔP = I² · R</p>
+</div>
+<div class="box example">
+<p>Цеху нужно 100 кВт.
+При 0,4 кВ: I = 100 000 / (1,73 · 400) ≈ <strong>144 А</strong>.
+При 10 кВ: I ≈ <strong>5,8 А</strong> — в 25 раз меньше.
+Потери ΔP = I²·R меньше в 25² = <strong>625 раз</strong>.</p>
+</div>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>Чем выше напряжение, тем меньше ток при той же мощности и тем меньше потерь в проводах. Поэтому передают высоким напряжением, а пользуются низким.</p>
+</div>
+<h2 id="s3">3. Электроснабжение цеха</h2>
+<figure><img src="img/p21_s_cex.png" alt="ТП 10/0,4 кВ → главный щит (ГРЩ) с автоматами QF1–QF3 → через рубильники к станку и двум сварочным постам"><figcaption>ТП 10/0,4 кВ → главный щит (ГРЩ) с автоматами QF1–QF3 → через рубильники к станку и двум сварочным постам</figcaption></figure>
+<p>От ТП кабель приходит в <strong>главный распределительный щит (ГРЩ)</strong>. В щите стоят автоматы — каждый защищает свою линию. От них кабели идут к станкам и сварочным постам. У каждого поста — <strong>свой автомат и рубильник</strong>, чтобы сварщик мог сам отключить аппарат.</p>
+<p>Подключает аппарат к сети электрик, а не сварщик. Узнайте, где в вашей мастерской щит и рубильник вашего поста, — при аварии это пригодится.</p>
+<h2 id="s4">4. Что ток делает с человеком</h2>
+<p>Ток действует на организм четырьмя способами:</p>
+<ul>
+<li><strong>тепловое</strong> — ожоги;</li>
+<li><strong>химическое</strong> — разлагает кровь и ткани;</li>
+<li><strong>механическое</strong> — судороги, разрывы мышц;</li>
+<li><strong>биологическое</strong> — останавливает сердце и дыхание.</li>
+</ul>
+<figure><img src="img/p21_s_thr.png" alt="Шкала: 0,6–1,5 мА — ощутимый; 10–15 мА — неотпускающий; 50 мА — опасный; около 100 мА — смертельный, фибрилляция сердца"><figcaption>Шкала: 0,6–1,5 мА — ощутимый; 10–15 мА — неотпускающий; 50 мА — опасный; около 100 мА — смертельный, фибрилляция сердца</figcaption></figure>
+<p>Убивает <strong>ток</strong>, а не напряжение. Пороги считают в миллиамперах (1 мА = 0,001 А):</p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Ток через тело</th>
+<th>Что происходит</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0,6–1,5 мА</td>
+<td>ощущается: покалывание</td>
+</tr>
+<tr>
+<td>10–15 мА</td>
+<td><strong>неотпускающий</strong>: мышцы сводит, провод не разжать</td>
+</tr>
+<tr>
+<td>около 50 мА</td>
+<td>нарушается дыхание</td>
+</tr>
+<tr>
+<td>около 100 мА</td>
+<td><strong>фибрилляция</strong>: сердце дрожит и не качает кровь — смерть</td>
+</tr>
+</tbody>
+</table></div>
+<p>Самое коварное — неотпускающий ток: человек сам себя не освободит.</p>
+<h2 id="s5">5. От чего зависит опасность</h2>
+<figure><img src="img/p21_s_body.png" alt="Три пути тока: рука — рука и рука — ноги идут через сердце (самые опасные); нога — нога — шаговое напряжение у упавшего провода"><figcaption>Три пути тока: рука — рука и рука — ноги идут через сердце (самые опасные); нога — нога — шаговое напряжение у упавшего провода</figcaption></figure>
+<ul>
+<li><strong>Сила тока</strong> — см. таблицу выше.</li>
+<li><strong>Путь тока.</strong> Рука — рука и рука — ноги идут <strong>через сердце</strong> — самые опасные.</li>
+<li><strong>Время.</strong> Секунда под током хуже, чем доля секунды.</li>
+<li><strong>Кожа и помещение.</strong> Сухая кожа — тысячи ом, мокрая или с ссадиной — сотни. Сырость, металлический пол, мокрая роба — опаснее.</li>
+</ul>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p><strong>Шаговое напряжение.</strong> Упал провод ЛЭП — земля вокруг под напряжением. Не подходите ближе 8 метров. Выходите «гусиным шагом»: пятка к носку, ноги не отрывать от земли.</p>
+</div>
+<h2 id="s6">6. Безопасные напряжения</h2>
+<p>Почему переносная лампа в цехе на 12 или 36 вольт? Посчитаем ток через мокрую руку (около 1000 Ом):</p>
+<div class="box example">
+<p>220 В → 220 мА — смертельно.
+50 В → 50 мА — опасно, но это предел для помещений с повышенной опасностью.
+12 В → 12 мА — внутри котла, где вы со всех сторон касаетесь металла.</p>
+</div>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>Переносные светильники и инструмент: в помещениях с повышенной опасностью — <strong>не выше 50 В</strong>; в тесноте, внутри котлов и металлических ёмкостей — <strong>не выше 12 В</strong>.</p>
+</div>
+<p>У сварочного аппарата на холостом ходу — до 80 В. В сырости и внутри ёмкостей это опасно, поэтому там нужен аппарат с <strong>устройством отключения холостого хода</strong>.</p>
+<h2 id="s7">7. Первая помощь</h2>
+<figure><img src="img/p21_s_aid.png" alt="Четыре шага: обесточить; не трогать человека, пока он под током; вызвать скорую 103 или 112; если не дышит — массаж сердца до приезда врачей"><figcaption>Четыре шага: обесточить; не трогать человека, пока он под током; вызвать скорую 103 или 112; если не дышит — массаж сердца до приезда врачей</figcaption></figure>
+<ol>
+<li><strong>Обесточить:</strong> выключить рубильник поста или автомат в щите. Если быстро не получается — отбросить провод сухой палкой или доской.</li>
+<li><strong>Не трогать человека голыми руками</strong>, пока он под током: ток пойдёт через вас. Оттаскивать — за сухую одежду, одной рукой, стоя на сухой доске или резиновом коврике.</li>
+<li><strong>Вызвать скорую:</strong> 103 или 112.</li>
+<li>Если не дышит — <strong>сердечно-лёгочная реанимация</strong> до приезда врачей.</li>
+</ol>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p>Сначала своя безопасность, потом помощь. Даже если всё обошлось — после удара током обязательно к врачу: сбой ритма сердца может проявиться через несколько часов.</p>
+</div>
+<h2 id="s8">8. Пробой на корпус</h2>
+<figure><img src="img/p21_s_fault.png" alt="Без защиты: фаза пробила на корпус, корпус ни с чем не соединён; человек касается — ток идёт через него в землю"><figcaption>Без защиты: фаза пробила на корпус, корпус ни с чем не соединён; человек касается — ток идёт через него в землю</figcaption></figure>
+<p>Изоляция внутри аппарата может пробиться — фаза окажется на металлическом корпусе. Снаружи этого не видно, аппарат может даже работать. Нейтраль подстанции заземлена, поэтому земля — это обратный провод. Человек коснулся корпуса — цепь замкнулась через него: около 220 мА.</p>
+<p>Автомату на 16 А такой ток — ничто, он не отключит. Нужна защита.</p>
+<h2 id="s9">9. Защитное заземление</h2>
+<figure><img src="img/p21_s_ground.png" alt="Корпус соединён с заземлителем 4 Ом; при пробое ток идёт в землю; на корпусе около 110 В — снизили, но не до безопасного"><figcaption>Корпус соединён с заземлителем 4 Ом; при пробое ток идёт в землю; на корпусе около 110 В — снизили, но не до безопасного</figcaption></figure>
+<p><strong>Защитное заземление</strong> — корпус соединяют с <strong>заземлителем</strong> (металлическими электродами в земле). При пробое ток уходит в землю, и напряжение на корпусе <strong>снижается</strong>.</p>
+<p>Но в обычной сети 380/220 В одного заземления мало: на корпусе может остаться около 110 В, а автомат отключит не сразу. Поэтому заземление дополняют занулением и УЗО.</p>
+<h2 id="s10">10. Зануление</h2>
+<figure><img src="img/p21_s_tn.png" alt="Три провода L, N и PE; корпус соединён с PE; пробой — это КЗ «фаза — PE»; автомат отключает за 0,02 с"><figcaption>Три провода L, N и PE; корпус соединён с PE; пробой — это КЗ «фаза — PE»; автомат отключает за 0,02 с</figcaption></figure>
+<p><strong>Зануление</strong> — корпус соединяют с <strong>защитным проводом PE</strong> (жёлто-зелёный), который идёт к нейтрали подстанции. Теперь пробой — это <strong>короткое замыкание</strong>: ток огромный, и автомат отключает питание за доли секунды.</p>
+<p>В розетке с заземлением металлические «усики» по краям — это контакт PE. Жёлто-зелёный провод в кабеле — всегда PE и только PE.</p>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>Заземление снижает напряжение на корпусе. Зануление превращает пробой в КЗ, и автомат отключает питание.</p>
+</div>
+<h2 id="s11">11. Заземление сварочного поста</h2>
+<figure><img src="img/p21_s_weldpost.png" alt="Корпус сварочного аппарата — к PE; изделие подключено отдельным обратным проводом («масса»); нельзя вместо «массы»: трубы, конструкции здания, провода заземления, рельсы"><figcaption>Корпус сварочного аппарата — к PE; изделие подключено отдельным обратным проводом («масса»); нельзя вместо «массы»: трубы, конструкции здания, провода заземления, рельсы</figcaption></figure>
+<p>Две разные вещи — не путайте:</p>
+<ul>
+<li><strong>Корпус аппарата</strong> обязательно заземляют (соединяют с PE) — это защита от пробоя.</li>
+<li><strong>Изделие</strong> подключают <strong>отдельным обратным проводом</strong> («масса»), зажим — рядом с местом сварки.</li>
+</ul>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p>Вместо обратного провода <strong>нельзя</strong> использовать провода заземления, водопровод, газопровод, вентиляцию, конструкции здания и технологическое оборудование. Сварочный ток — сотни ампер: он нагреет трубы, может прожечь газопровод и вызвать пожар.</p>
+</div>
+<p>При сварке внутри ёмкостей и колодцев — аппарат с устройством отключения холостого хода, работа вдвоём, диэлектрические коврик и перчатки.</p>
+<h2 id="s12">12. Защитные аппараты</h2>
+<figure><img src="img/p21_s_prot.png" alt="Предохранитель — перегорает при КЗ; автомат — перегрузка и КЗ, включают снова; УЗО — утечка 10–30 мА через человека; дифавтомат — автомат и УЗО в одном корпусе"><figcaption>Предохранитель — перегорает при КЗ; автомат — перегрузка и КЗ, включают снова; УЗО — утечка 10–30 мА через человека; дифавтомат — автомат и УЗО в одном корпусе</figcaption></figure>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Аппарат</th>
+<th>От чего защищает</th>
+<th>Особенность</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Предохранитель</td>
+<td>КЗ</td>
+<td>плавкая вставка перегорает, одноразовый</td>
+</tr>
+<tr>
+<td>Автомат</td>
+<td>перегрузка и КЗ</td>
+<td>после устранения причины включают снова</td>
+</tr>
+<tr>
+<td>УЗО</td>
+<td>утечка 10–30 мА (через человека)</td>
+<td>от КЗ <strong>не</strong> защищает</td>
+</tr>
+<tr>
+<td>Дифавтомат</td>
+<td>всё вместе</td>
+<td>автомат + УЗО в одном корпусе</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="s13">13. Буква на автомате: B, C, D</h2>
+<figure><img src="img/p21_s_curve.png" alt="Шкала тока в долях номинала: перегрузка — секунды и минуты; мгновенное отключение: B — 3–5 номиналов, C — 5–10, D — 10–20"><figcaption>Шкала тока в долях номинала: перегрузка — секунды и минуты; мгновенное отключение: B — 3–5 номиналов, C — 5–10, D — 10–20</figcaption></figure>
+<p>На автомате написано, например, <strong>C25</strong>. Число — номинальный ток: столько автомат держит сколько угодно. Буква — при каком токе он отключает <strong>мгновенно</strong>:</p>
+<ul>
+<li><strong>B</strong> — при 3–5 номиналах (освещение, розетки);</li>
+<li><strong>C</strong> — при 5–10 (обычная нагрузка с двигателями);</li>
+<li><strong>D</strong> — при 10–20 (тяжёлый пуск, сварочные трансформаторы).</li>
+</ul>
+<p>Двигатели и сварочные аппараты при включении дают <strong>бросок тока</strong>. Автомат B примет его за КЗ и будет выбивать.</p>
+<h2 id="s14">14. УЗО</h2>
+<figure><img src="img/p21_s_rcd.png" alt="Через кольцо проходят фаза (10,03 А) и ноль (10,00 А); 30 мА утекают через человека; разница 30 мА — отключение за 0,03 с"><figcaption>Через кольцо проходят фаза (10,03 А) и ноль (10,00 А); 30 мА утекают через человека; разница 30 мА — отключение за 0,03 с</figcaption></figure>
+<p>Через кольцо-датчик УЗО проходят фаза и ноль. В норме ток «туда» равен току «обратно». Если часть тока ушла через человека в землю, токи не равны. Разница <strong>30 мА</strong> — УЗО отключает за <strong>0,03 с</strong>, раньше, чем остановится сердце.</p>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>УЗО — единственный аппарат, который спасает при касании голого провода фазы. Автомату 30 мА — ничто.</p>
+</div>
+<h2 id="s15">15. Как выбрать автомат для сварочного аппарата</h2>
+<div class="box example">
+<p>Инвертор берёт <strong>из сети</strong> 25 А (смотрим в паспорте — не сварочный ток!).
+<strong>Номинал:</strong> ближайший больший с запасом — <strong>32 А</strong>.
+<strong>Буква:</strong> при включении бросок ≈ 4 · 25 = 100 А. B32 мгновенно отключает уже от 3 · 32 = 96 А — будет выбивать. C32 — от 160 А, держит. Берём <strong>C32</strong> (или D32).
+<strong>Кабель:</strong> должен выдерживать ток автомата. 2,5 мм² — около 25 А, мало. Нужен <strong>4 мм²</strong> (≈ 32 А).</p>
+</div>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>Ток аппарата из сети ≤ номинал автомата ≤ допустимый ток кабеля.</p>
+</div>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>ЛЭП</strong> — линия электропередачи, 110–500 кВ.</li>
+<li><strong>ТП</strong> — трансформаторная подстанция 10/0,4 кВ.</li>
+<li><strong>ГРЩ</strong> — главный распределительный щит цеха.</li>
+<li><strong>Неотпускающий ток</strong> — 10–15 мА: провод не разжать.</li>
+<li><strong>Фибрилляция</strong> — сердце дрожит вместо того, чтобы сокращаться.</li>
+<li><strong>Шаговое напряжение</strong> — напряжение между ногами у упавшего провода.</li>
+<li><strong>Защитное заземление</strong> — соединение корпуса с землёй.</li>
+<li><strong>Зануление</strong> — соединение корпуса с защитным проводом PE.</li>
+<li><strong>PE</strong> — защитный провод, жёлто-зелёный.</li>
+<li><strong>«Масса»</strong> — обратный провод от аппарата к изделию.</li>
+<li><strong>Автомат</strong> — отключает при перегрузке и КЗ.</li>
+<li><strong>УЗО</strong> — отключает при утечке тока через человека.</li>
+<li><strong>Дифавтомат</strong> — автомат и УЗО в одном корпусе.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · С1 · БИЛЕТ 8</span><h3>Производство и передача электроэнергии</h3><p class="q">Производство, передача и распределение электроэнергии. Почему ЛЭП работают на высоком напряжении. Электроснабжение цеха.</p><ol><li>Производят на электростанциях: ГЭС (Иркутская, Братская), ТЭЦ, АЭС, солнечные и ветровые.</li><li>Передают по ЛЭП при высоком напряжении (110–500 кВ). Чем выше напряжение, тем меньше ток при той же мощности, а значит меньше потери на нагрев проводов (ΔP = I²·R).</li><li>Схема: электростанция → повышающая подстанция → ЛЭП → понижающая подстанция → трансформаторная подстанция 10/0,4 кВ → цех или дом. (Нарисуйте блоками.)</li><li>В цехе: распределительные щиты, от них кабели к станкам и сварочным постам; у каждого поста — свой автомат и рубильник.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · С2 · БИЛЕТ 1</span><h3>Действие тока на человека, первая помощь</h3><p class="q">Действие электрического тока на организм человека, факторы опасности поражения. Первая помощь.</p><ol><li>Действие тока: тепловое (ожоги), химическое (разлагает кровь), механическое (судороги мышц), биологическое (остановка сердца и дыхания).</li><li>Опасность зависит от: силы тока (0,6–1,5 мА — уже ощущается; 10–15 мА — неотпускающий, руки не разжать; около 100 мА — фибрилляция сердца, смертельно), пути тока (через сердце: рука–рука, рука–ноги), времени, влажности кожи и помещения.</li><li>Переносные светильники в помещениях с повышенной опасностью — не выше 50 В; при работе в тесноте, внутри металлических ёмкостей и котлов — не выше 12 В.</li><li>Первая помощь: сначала обесточить (выключить автомат, отбросить провод сухой палкой), не трогать человека голыми руками. Вызвать скорую (103 или 112). Если не дышит — сердечно-лёгочная реанимация до приезда врачей.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · С3 · БИЛЕТ 12</span><h3>Заземление и зануление</h3><p class="q">Защитное заземление и зануление: назначение и принцип действия. Заземление сварочного поста.</p><ol><li>Защитное заземление — корпус оборудования соединяют с землёй (заземлителем). При пробое изоляции ток уходит в землю, а напряжение на корпусе становится неопасным.</li><li>Зануление — корпус соединяют с защитным нулевым проводом PE. При пробое возникает короткое замыкание, и автомат сразу отключает питание.</li><li>Пример: в розетке с заземлением есть металлические «усики» — это контакт PE.</li><li>Сварочный пост: корпус аппарата обязательно заземляют. Изделие подключают отдельным обратным проводом («масса»). Вместо обратного провода запрещено использовать провода заземления, водопровод, газопровод, вентиляцию, металлоконструкции здания и технологическое оборудование. При сварке внутри ёмкостей и колодцев аппарат должен иметь устройство отключения холостого хода.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · С4 · БИЛЕТ 23</span><h3>Защитные аппараты</h3><p class="q">Предохранитель, автоматический выключатель, УЗО. Как выбирают автомат для сварочного аппарата.</p><ol><li>Предохранитель — плавкая вставка перегорает при коротком замыкании. Одноразовый (старые «пробки»).</li><li>Автоматический выключатель (автомат) отключает при перегрузке и при КЗ. После устранения причины его снова включают.</li><li>УЗО отключает при утечке тока на землю (например, через человека) уже при 10–30 мА. Спасает от поражения током, но от КЗ не защищает. Дифавтомат = автомат + УЗО.</li><li>Автомат для сварки выбирают по току, который аппарат берёт из сети (смотрят в паспорте), с небольшим запасом. Пример: аппарат берёт 25 А → автомат 32 А, характеристика C или D (выдерживает пусковые броски). Кабель должен выдерживать ток автомата.</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>Зачем ЛЭП работают на высоком напряжении?</summary><p>При той же мощности ток меньше, а потери на нагрев проводов ΔP = I²·R — намного меньше.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>Напряжение подняли в 10 раз. Во сколько раз уменьшились потери в проводах?</summary><p>В 100 раз: ток меньше в 10 раз, а потери зависят от квадрата тока.</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>Какой ток называют неотпускающим?</summary><p>10–15 мА: мышцы сводит судорогой, провод не разжать.</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>Какое напряжение допустимо для переносного светильника внутри металлического котла?</summary><p>Не выше 12 В.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>Товарищ держит провод под током. Ваше первое действие?</summary><p>Обесточить: выключить рубильник или автомат. Не трогать его голыми руками.</p></details>
+
+<details class="qa"><summary><span class="qn">6</span>Чем зануление отличается от заземления?</summary><p>Заземление соединяет корпус с землёй и снижает напряжение на нём. Зануление соединяет корпус с PE: пробой становится КЗ, и автомат отключает питание.</p></details>
+
+<details class="qa"><summary><span class="qn">7</span>Можно ли подключить «массу» к водопроводной трубе?</summary><p>Нельзя. Обратный провод подключают прямо к изделию; трубы, конструкции здания и провода заземления вместо него использовать запрещено.</p></details>
+
+<details class="qa"><summary><span class="qn">8</span>От чего защищает УЗО и от чего не защищает?</summary><p>Защищает от утечки тока через человека (10–30 мА). От КЗ и перегрузки не защищает.</p></details>
+
+<details class="qa"><summary><span class="qn">9</span>Аппарат берёт из сети 25 А. Какой автомат поставить?</summary><p>32 А, характеристика C или D; кабель — не меньше 4 мм².</p></details>
+<h2 id="lab">Попробуйте в лаборатории</h2><p>Откройте на телефоне или компьютере — ничего устанавливать не нужно.</p><div class="labs"><a href="https://mexstura-sudo.github.io/lab-electro/safety/#body"><span>Лаборатория</span>Ток через человека — напряжение, путь, кожа, обувь</a><a href="https://mexstura-sudo.github.io/lab-electro/safety/#pe"><span>Лаборатория</span>Что спасёт — пробой на корпус и четыре вида защиты</a><a href="https://mexstura-sudo.github.io/lab-electro/safety/#brk"><span>Лаборатория</span>Автомат и кабель — подбор для сварочного аппарата</a><a href="https://mexstura-sudo.github.io/lab-electro/safety/#quiz"><span>Лаборатория</span>Проверь себя — тест из 12 вопросов</a></div>
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>При той же мощности ток меньше, а потери на нагрев проводов ΔP = I²·R — намного меньше.</li><li>В 100 раз: ток меньше в 10 раз, а потери зависят от квадрата тока.</li><li>10–15 мА: мышцы сводит судорогой, провод не разжать.</li><li>Не выше 12 В.</li><li>Обесточить: выключить рубильник или автомат. Не трогать его голыми руками.</li><li>Заземление соединяет корпус с землёй и снижает напряжение на нём. Зануление соединяет корпус с PE: пробой становится КЗ, и автомат отключает питание.</li><li>Нельзя. Обратный провод подключают прямо к изделию; трубы, конструкции здания и провода заземления вместо него использовать запрещено.</li><li>Защищает от утечки тока через человека (10–30 мА). От КЗ и перегрузки не защищает.</li><li>32 А, характеристика C или D; кабель — не меньше 4 мм².</li></ol></section>
+</article>
+<nav class="pager"><a href="p20.html">← Пара 20. Электрические машины и электропривод</a><a href="p22.html">Пара 22. Полупроводники, диоды и выпрямители →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

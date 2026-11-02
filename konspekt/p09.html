@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 9. Электрическое поле и магнетизм — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 9 · тема 1.1, 1.3</p>
+<header class="hero">
+<div class="hand">Пара 9</div>
+<h1>Электрическое поле и магнетизм</h1>
+<p class="lead">Почему расчёска притягивает бумажки, чем опасен отключённый инвертор и почему дуга иногда «уходит вбок».</p>
+<div class="meta"><span>Тема 1.1, 1.3</span><span>Чтение: 45–55 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>что такое электрическое поле, напряжённость и пробой изоляции</li><li>как устроен конденсатор и почему он опасен даже после отключения</li><li>откуда берётся магнитное поле и как найти его направление</li><li>что такое сила Ампера и магнитное дутьё дуги</li><li>зачем сердечники делают из пластин и где польза от вихревых токов</li><li>как работают электромагнит, электромагнитная индукция и дроссель</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Электрическое поле</a><a href="#s2">2. Пробой изоляции</a><a href="#s3">3. Конденсатор</a><a href="#s4">4. Соединение конденсаторов и энергия</a><a href="#s5">5. Магнитное поле тока</a><a href="#s6">6. Сила Ампера и магнитное дутьё</a><a href="#s7">7. Магнитные материалы и вихревые токи</a><a href="#s8">8. Электромагнит</a><a href="#s9">9. Электромагнитная индукция</a><a href="#s10">10. Самоиндукция и дроссель</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a></nav>
+<article>
+<h2 id="s1">1. Электрическое поле</h2>
+<figure><img src="img/p9s_d_comb.png" alt="Заряженная расчёска притягивает кусочки бумаги"><figcaption>Заряженная расчёска притягивает кусочки бумаги</figcaption></figure>
+<p>Потрите пластиковую расчёску о волосы — она начнёт притягивать мелкие бумажки. Расчёска получила заряд, а вокруг заряженного тела всегда есть <strong>электрическое поле</strong>. Его не видно, но оно действует на другие заряды с силой.</p>
+<p>Насколько поле сильное, показывает <strong>напряжённость E</strong>. Между двумя пластинами, на которые подано напряжение U, напряжённость:</p>
+<div class="box formula">
+<p>E = U / d,   [В/м]</p>
+</div>
+<p>где d — расстояние между пластинами. Чем ближе пластины и чем больше напряжение — тем сильнее поле.</p>
+<p><strong>Напряжение U</strong> — это разность потенциалов между двумя точками, его измеряют в вольтах. Потенциал можно представить как «высоту» точки: ток течёт с высокого потенциала на низкий, как вода с горки.</p>
+<h3>Проводники и диэлектрики</h3>
+<ul>
+<li><strong>Проводники</strong> хорошо пропускают ток: медь, алюминий, сталь, вода с солью.</li>
+<li><strong>Диэлектрики</strong> (изоляторы) ток не пропускают: резина, пластик, стекло, сухой воздух.</li>
+</ul>
+<h2 id="s2">2. Пробой изоляции</h2>
+<figure><img src="img/p9s_d_break.png" alt="Молния, свеча зажигания, протёртый сварочный кабель на металлическом столе — примеры пробоя"><figcaption>Молния, свеча зажигания, протёртый сварочный кабель на металлическом столе — примеры пробоя</figcaption></figure>
+<p>Любой диэлектрик выдерживает поле только до определённого предела. Если поле слишком сильное, изолятор вдруг начинает пропускать ток — это <strong>пробой</strong>. Примеры:</p>
+<ul>
+<li><strong>Молния</strong> — пробой воздуха между тучей и землёй.</li>
+<li><strong>Свеча зажигания</strong> — пробой воздуха в зазоре, искра поджигает топливо.</li>
+<li><strong>Протёртый сварочный кабель</strong> — изоляция истончилась, ток пробивает её на металлический стол или корпус.</li>
+</ul>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p>Кабели с повреждённой изоляцией — частая причина поражения током и пожаров. Протёртое место нельзя просто «замотать изолентой» на сварочном кабеле: его ремонтируют специальными муфтами или меняют кабель.</p>
+</div>
+<h2 id="s3">3. Конденсатор</h2>
+<figure><img src="img/p9s_d_tank.png" alt="Бак с водой и конденсатор: вода — заряд, давление — напряжение, размер бака — ёмкость"><figcaption>Бак с водой и конденсатор: вода — заряд, давление — напряжение, размер бака — ёмкость</figcaption></figure>
+<p><strong>Конденсатор</strong> — это две металлические пластины, разделённые изолятором. Он накапливает заряд, как бак накапливает воду. На схеме его рисуют как две короткие параллельные чёрточки: —| |—.</p>
+<p>Главная характеристика — <strong>ёмкость C</strong>: сколько заряда q конденсатор принимает на каждый вольт напряжения.</p>
+<div class="box formula">
+<p>C = q / U,   [Ф]</p>
+</div>
+<p>Фарад — очень большая единица, поэтому на корпусах пишут микрофарады: 1 мкФ = 0,000001 Ф.</p>
+<p>Ёмкость <strong>больше</strong>, если пластины <strong>больше</strong> по площади и <strong>ближе</strong> друг к другу.</p>
+<p><strong>Где применяют:</strong> вспышка фотоаппарата, блоки питания и зарядки, пуск двигателя насоса или кондиционера, сварочный инвертор.</p>
+<h2 id="s4">4. Соединение конденсаторов и энергия</h2>
+<figure><img src="img/p9s_d_conn.png" alt="Последовательно — ёмкость уменьшается; параллельно — ёмкости складываются"><figcaption>Последовательно — ёмкость уменьшается; параллельно — ёмкости складываются</figcaption></figure>
+<ul>
+<li><strong>Параллельно</strong> (рядом): ёмкости складываются, C = C1 + C2. Площадь пластин как будто выросла.</li>
+<li><strong>Последовательно</strong> (в линию): 1/C = 1/C1 + 1/C2 — ёмкость уменьшается. Два одинаковых конденсатора дают половину ёмкости одного.</li>
+</ul>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>У конденсаторов всё <strong>наоборот</strong>, чем у резисторов: у резисторов последовательно сопротивления складываются, а у конденсаторов складываются ёмкости при параллельном соединении.</p>
+</div>
+<p>Заряженный конденсатор хранит энергию:</p>
+<div class="box formula">
+<p>W = C · U² / 2,   [Дж]</p>
+</div>
+<div class="box example">
+<p><strong>Пример.</strong> Конденсатор инвертора: C = 1000 мкФ = 0,001 Ф, U = 310 В.
+W = 0,001 · 310² / 2 = 0,001 · 96 100 / 2 ≈ <strong>48 Дж</strong>. Этого хватает для сильного удара и ожога.</p>
+</div>
+<figure><img src="img/p9s_d_inv.png" alt="Порядок безопасной работы: вилку из розетки, подождать, проверить мультиметром — 0 В"><figcaption>Порядок безопасной работы: вилку из розетки, подождать, проверить мультиметром — 0 В</figcaption></figure>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p><strong>Почему опасно касаться выводов отключённого инвертора.</strong> Конденсаторы внутри заряжены примерно до 310 В и держат заряд и после отключения. Перед ремонтом: вынуть вилку, подождать несколько минут, проверить напряжение мультиметром. Только когда 0 В — можно работать.</p>
+</div>
+<h2 id="s5">5. Магнитное поле тока</h2>
+<figure><img src="img/p9s_d_wire.png" alt="Вокруг провода с током — кольца магнитного поля; катушка с током ведёт себя как магнит"><figcaption>Вокруг провода с током — кольца магнитного поля; катушка с током ведёт себя как магнит</figcaption></figure>
+<p>Вокруг <strong>любого провода с током</strong> есть магнитное поле. Его линии — кольца вокруг провода. Положите компас рядом с проводом аккумулятора автомобиля и включите стартер — стрелка отклонится.</p>
+<p><strong>Правило буравчика (штопора):</strong> если вкручивать штопор по направлению тока, ручка покажет, куда направлены линии поля.</p>
+<p>Свернём провод в катушку — поля витков сложатся, и катушка станет похожа на магнит с полюсами N и S. «Сила» катушки (магнитодвижущая сила, МДС):</p>
+<div class="box formula">
+<p>F = I · w</p>
+</div>
+<p>где I — ток, w — число витков. Больше витков или больше ток — сильнее магнит.</p>
+<p>Для расчётов есть две величины: <strong>магнитная индукция B</strong> — сила поля в точке, в теслах [Тл]; <strong>магнитный поток Ф = B · S</strong> — сколько поля проходит через площадку S, в веберах [Вб].</p>
+<h2 id="s6">6. Сила Ампера и магнитное дутьё</h2>
+<figure><img src="img/p9s_d_amp.png" alt="Провод с током между полюсами N и S: сила F выталкивает его вверх"><figcaption>Провод с током между полюсами N и S: сила F выталкивает его вверх</figcaption></figure>
+<p>На провод с током в магнитном поле действует <strong>сила Ампера</strong>:</p>
+<div class="box formula">
+<p>F = B · I · l,   [Н]</p>
+</div>
+<p>где l — длина провода в поле. Направление силы находят <strong>правилом левой руки</strong>: линии поля входят в ладонь, четыре пальца — по току, отогнутый большой палец покажет, куда толкает провод.</p>
+<p>Сила Ампера крутит <strong>все электродвигатели</strong>: вентилятор, дрель, стиральную машину, механизм подачи проволоки сварочного полуавтомата. Она же двигает диффузор динамика.</p>
+<figure><img src="img/p9s_d_blow.png" alt="Магнитное поле тока отклоняет дугу вбок, она уходит от того места, где должна быть"><figcaption>Магнитное поле тока отклоняет дугу вбок, она уходит от того места, где должна быть</figcaption></figure>
+<p><strong>Магнитное дутьё</strong> — та же сила Ампера, но вредная для сварщика. Сварочный ток создаёт вокруг детали магнитное поле, и оно отклоняет дугу вбок. Чаще бывает на постоянном токе, у края детали, рядом с «массой».</p>
+<p>Что помогает:</p>
+<ul>
+<li>переставить «массу» или подключить её с двух сторон;</li>
+<li>варить короткой дугой и на меньшем токе;</li>
+<li>наклонить электрод в сторону дутья;</li>
+<li>перейти на переменный ток.</li>
+</ul>
+<h2 id="s7">7. Магнитные материалы и вихревые токи</h2>
+<p><strong>Ферромагнетики</strong> — железо, сталь, никель — сильно намагничиваются. Их делят на два вида:</p>
+<ul>
+<li><strong>Магнитомягкие</strong> легко намагничиваются и легко размагничиваются. Из них делают сердечники трансформаторов и двигателей.</li>
+<li><strong>Магнитотвёрдые</strong> остаются магнитами надолго: магнит на холодильнике, магнитный угольник сварщика.</li>
+</ul>
+<p><strong>Гистерезис</strong> — сталь «помнит» намагниченность и не сразу её теряет. Отвёртка, которую подержали у магнита, сама начинает притягивать шурупы.</p>
+<figure><img src="img/p9s_d_eddy.png" alt="Индукционная плита греет кастрюлю вихревыми токами; сплошной сердечник греется, сердечник из пластин — нет"><figcaption>Индукционная плита греет кастрюлю вихревыми токами; сплошной сердечник греется, сердечник из пластин — нет</figcaption></figure>
+<p><strong>Вихревые токи</strong> — круговые токи, которые меняющееся магнитное поле наводит внутри сплошного куска металла.</p>
+<ul>
+<li><strong>Вред:</strong> греют сердечники трансформаторов и двигателей. Поэтому сердечники набирают из тонких изолированных пластин.</li>
+<li><strong>Польза:</strong> индукционная плита, индукционный нагрев и закалка, подогрев сварных швов.</li>
+</ul>
+<h2 id="s8">8. Электромагнит</h2>
+<figure><img src="img/p9s_d_nail.png" alt="Гвоздь, обмотанный проводом и подключённый к батарейке, притягивает скрепки"><figcaption>Гвоздь, обмотанный проводом и подключённый к батарейке, притягивает скрепки</figcaption></figure>
+<p><strong>Электромагнит</strong> — катушка со стальным сердечником. Есть ток — притягивает, нет тока — отпускает. Сделайте сами: обмотайте гвоздь проводом в 30–50 витков, подключите к батарейке — гвоздь начнёт притягивать скрепки.</p>
+<p>Магнит сильнее, если больше витков или больше ток.</p>
+<figure><img src="img/p9s_d_btn.png" alt="В сварочном полуавтомате кнопка горелки включает электромагниты: газовый клапан, контактор и мотор подачи"><figcaption>В сварочном полуавтомате кнопка горелки включает электромагниты: газовый клапан, контактор и мотор подачи</figcaption></figure>
+<p><strong>Где работают электромагниты:</strong> электрозамок домофона, кран-магнит на металлобазе, реле и контакторы. В сварочном полуавтомате нажатие кнопки на горелке включает три устройства: электромагнитный газовый клапан (пошёл газ), контактор (пошёл ток) и мотор подачи (пошла проволока).</p>
+<h2 id="s9">9. Электромагнитная индукция</h2>
+<figure><img src="img/p9s_d_ind.png" alt="Двигаем магнит в катушке — стрелка прибора отклоняется"><figcaption>Двигаем магнит в катушке — стрелка прибора отклоняется</figcaption></figure>
+<p>В 1831 году Майкл Фарадей открыл: если <strong>магнитный поток через катушку меняется</strong>, в ней появляется ЭДС. Это <strong>электромагнитная индукция</strong>. Двигаете магнит в катушке — стрелка прибора отклоняется. Магнит остановился — тока нет.</p>
+<div class="box formula">
+<p>e = w · ΔФ / Δt</p>
+</div>
+<p>ЭДС тем больше, чем больше витков w и чем <strong>быстрее</strong> меняется поток.</p>
+<p><strong>Правило Ленца:</strong> индукционный ток всегда мешает тому, что его вызвало. <strong>Правило правой руки</strong> показывает направление тока в проводе, который движется в поле.</p>
+<p><strong>Примеры:</strong> динамо-фара велосипеда, генераторы Иркутской ГЭС, трансформатор, беспроводная зарядка телефона.</p>
+<h2 id="s10">10. Самоиндукция и дроссель</h2>
+<figure><img src="img/p9s_d_self.png" alt="Выдернули вилку работающего пылесоса — искра; сварочный ток без дросселя и с дросселем"><figcaption>Выдернули вилку работающего пылесоса — искра; сварочный ток без дросселя и с дросселем</figcaption></figure>
+<p><strong>Самоиндукция</strong> — катушка мешает резкому изменению собственного тока. Когда ток пытается резко исчезнуть, катушка создаёт ЭДС, которая старается его поддержать:</p>
+<div class="box formula">
+<p>e = L · ΔI / Δt</p>
+</div>
+<p>L — <strong>индуктивность</strong> катушки, в генри [Гн]. Пример: если выдернуть вилку работающего пылесоса, между вилкой и розеткой проскакивает искра — это ЭДС самоиндукции обмоток двигателя.</p>
+<p><strong>Взаимоиндукция</strong> — ток одной катушки наводит ЭДС в соседней. На этом работает трансформатор.</p>
+<p><strong>Дроссель</strong> в сварочной цепи — катушка, которая сглаживает сварочный ток: она не даёт току резко скакать. Дуга горит стабильнее, брызг меньше.</p>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>Электрическое поле</strong> — особый вид материи вокруг заряженных тел; действует на заряды с силой.</li>
+<li><strong>Напряжённость E</strong> — сила поля, E = U / d, в В/м.</li>
+<li><strong>Диэлектрик</strong> — материал, который не пропускает ток.</li>
+<li><strong>Пробой</strong> — диэлектрик под действием сильного поля начинает пропускать ток.</li>
+<li><strong>Конденсатор</strong> — две пластины и изолятор между ними; накапливает заряд.</li>
+<li><strong>Ёмкость C</strong> — сколько заряда принимает конденсатор на 1 В, в фарадах.</li>
+<li><strong>Магнитная индукция B</strong> — сила магнитного поля, в теслах.</li>
+<li><strong>Сила Ампера</strong> — сила, с которой поле действует на провод с током.</li>
+<li><strong>Магнитное дутьё</strong> — отклонение сварочной дуги магнитным полем.</li>
+<li><strong>Вихревые токи</strong> — круговые токи внутри сплошного металла в меняющемся поле.</li>
+<li><strong>Электромагнит</strong> — катушка со стальным сердечником.</li>
+<li><strong>Электромагнитная индукция</strong> — появление ЭДС при изменении магнитного потока.</li>
+<li><strong>Индуктивность L</strong> — способность катушки противиться изменению тока, в генри.</li>
+<li><strong>Дроссель</strong> — катушка, которая сглаживает ток.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · П1 · БИЛЕТ 10</span><h3>Электрическое поле</h3><p class="q">Электрическое поле: напряжённость, потенциал, напряжение. Проводники и диэлектрики, пробой изоляции.</p><ol><li>Электрическое поле — особый вид материи вокруг заряженных тел. Оно действует на заряды с силой. Пример: наэлектризованная расчёска притягивает бумажки.</li><li>Напряжённость E показывает, насколько сильное поле: E = U / d, [В/м].</li><li>Напряжение U — разность потенциалов между двумя точками, [В].</li><li>Проводники пропускают ток (медь, алюминий, сталь). Диэлектрики не пропускают (резина, пластик, воздух, стекло).</li><li>Пробой — когда поле слишком сильное и диэлектрик начинает пропускать ток. Примеры: молния, свеча зажигания, пробой протёртой изоляции сварочного кабеля.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · П2 · БИЛЕТ 11</span><h3>Конденсатор</h3><p class="q">Конденсатор: устройство, ёмкость и единицы, от чего зависит ёмкость. Применение.</p><ol><li>Конденсатор — две металлические пластины и изолятор между ними. Накапливает заряд, как бак — воду. (Нарисуйте обозначение —| |—.)</li><li>Ёмкость C = q / U, измеряется в фарадах [Ф]. На практике — в микрофарадах: 1 мкФ = 0,000001 Ф.</li><li>Ёмкость больше, если пластины больше и ближе друг к другу.</li><li>Где применяют: вспышка фотоаппарата, блоки питания, пуск двигателя насоса, сварочный инвертор.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · П3 · БИЛЕТ 12</span><h3>Соединение конденсаторов и энергия</h3><p class="q">Последовательное и параллельное соединение конденсаторов. Энергия конденсатора. Почему опасно касаться выводов отключённого инвертора.</p><ol><li>Параллельно (рядом): C = C₁ + C₂. (Схема.)</li><li>Последовательно (в линию): 1/C = 1/C₁ + 1/C₂ — ёмкость уменьшается. Два одинаковых дают половину. (Схема.) У резисторов — наоборот.</li><li>Энергия конденсатора: W = C·U² / 2, [Дж].</li><li>Безопасность: конденсаторы инвертора (≈ 310 В) держат заряд после отключения. Перед ремонтом — подождать несколько минут и проверить напряжение мультиметром.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · М1 · БИЛЕТ 13</span><h3>Магнитное поле тока</h3><p class="q">Магнитное поле тока. Правило буравчика. Поле катушки. Магнитная индукция и поток.</p><ol><li>Вокруг провода с током есть магнитное поле. Его линии — кольца вокруг провода. Компас рядом с таким проводом отклоняется.</li><li>Правило буравчика (штопора): если вкручивать штопор по направлению тока, ручка покажет, куда идут линии поля.</li><li>Катушка с током ведёт себя как магнит: у неё есть полюса N и S. Её «сила» (МДС) — F = I·w (ток × число витков).</li><li>Магнитная индукция B — сила поля, в теслах [Тл]. Магнитный поток Ф = B·S, в веберах [Вб].</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · М2 · БИЛЕТ 14</span><h3>Сила Ампера, магнитное дутьё</h3><p class="q">Сила Ампера, правило левой руки. Где используется. Магнитное дутьё дуги.</p><ol><li>На провод с током в магнитном поле действует сила Ампера: F = B·I·l, [Н].</li><li>Правило левой руки: линии поля входят в ладонь, 4 пальца по току — большой палец покажет, куда толкает провод.</li><li>Где работает: все электромоторы (вентилятор, дрель, стиральная машина, подача проволоки), динамики колонок.</li><li>Магнитное дутьё — сила Ампера отклоняет сварочную дугу, чаще на постоянном токе. Меры: переставить «массу» или подключить её с двух сторон, короткая дуга, меньше ток, наклон электрода против направления дутья, переменный ток.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · М3 · БИЛЕТ 15</span><h3>Магнитные материалы и вихревые токи</h3><p class="q">Ферромагнитные материалы, гистерезис, магнитомягкие и магнитотвёрдые. Вихревые токи.</p><ol><li>Ферромагнетики (железо, сталь, никель) сильно намагничиваются.</li><li>Магнитомягкие легко намагничиваются и размагничиваются — сердечники трансформаторов и моторов. Магнитотвёрдые остаются магнитами — магнит на холодильнике, магнитный угольник сварщика.</li><li>Гистерезис — сталь «помнит» намагниченность и не сразу её теряет (как намагниченная отвёртка). Перерисуйте петлю гистерезиса из лекции.</li><li>Вихревые токи — токи внутри сплошного металла. Вред: греют сердечник, поэтому его делают из тонких пластин. Польза: индукционная плита, индукционный подогрев сварных швов.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · М4 · БИЛЕТ 16</span><h3>Электромагнит</h3><p class="q">Электромагнит: устройство и применение.</p><ol><li>Электромагнит = катушка + стальной сердечник. Есть ток — притягивает, нет тока — отпускает. (Рисунок «гвоздь + провод + батарейка».)</li><li>Магнит сильнее, если больше витков или больше ток.</li><li>Примеры: электрозамок домофона, кран-магнит, реле, контактор и газовый клапан сварочного полуавтомата.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · М5 · БИЛЕТ 17</span><h3>Электромагнитная индукция</h3><p class="q">Явление и закон электромагнитной индукции, правило Ленца, правило правой руки. Генераторы.</p><ol><li>Электромагнитная индукция: если магнитный поток через катушку меняется, в ней появляется ЭДС (Фарадей, 1831).</li><li>Формула: e = w·ΔФ / Δt — чем больше витков и чем быстрее меняется поле, тем больше ЭДС.</li><li>Правило Ленца: индукционный ток мешает тому, что его вызвало. Правило правой руки показывает направление тока.</li><li>Примеры: динамо-фара велосипеда, генераторы Иркутской ГЭС, трансформатор, беспроводная зарядка телефона.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · М6 · БИЛЕТ 18</span><h3>Самоиндукция и дроссель</h3><p class="q">Самоиндукция и взаимоиндукция, индуктивность. Назначение дросселя в сварочной цепи.</p><ol><li>Самоиндукция — катушка мешает резкому изменению своего тока: e = L·ΔI / Δt. Индуктивность L измеряется в генри [Гн].</li><li>Пример: искра, когда выдёргиваешь вилку работающего пылесоса.</li><li>Взаимоиндукция — ток в одной катушке создаёт ЭДС в соседней. На этом работает трансформатор.</li><li>Дроссель в сварке — катушка, которая сглаживает сварочный ток: дуга стабильнее, брызг меньше.</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>Почему пробивает изоляцию протёртого сварочного кабеля?</summary><p>Изоляция стала тонкой, поле в ней слишком сильное — диэлектрик начинает пропускать ток.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>От чего зависит ёмкость конденсатора?</summary><p>От площади пластин (больше — ёмкость больше) и расстояния между ними (ближе — больше).</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>Два конденсатора по 10 мкФ соединили последовательно. Какая общая ёмкость?</summary><p>5 мкФ: при последовательном соединении двух одинаковых ёмкость вдвое меньше.</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>Почему нельзя сразу лезть в отключённый сварочный инвертор?</summary><p>Конденсаторы внутри заряжены примерно до 310 В и хранят заряд. Нужно подождать и проверить мультиметром, что напряжение 0 В.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>Как сделать электромагнит сильнее?</summary><p>Увеличить число витков или ток, использовать стальной сердечник.</p></details>
+
+<details class="qa"><summary><span class="qn">6</span>Что такое магнитное дутьё и как с ним бороться?</summary><p>Отклонение дуги силой Ампера. Переставить «массу» или подключить её с двух сторон, короткая дуга, меньше ток, наклон электрода, переменный ток.</p></details>
+
+<details class="qa"><summary><span class="qn">7</span>Зачем сердечник трансформатора набирают из пластин?</summary><p>Чтобы уменьшить вихревые токи и нагрев.</p></details>
+
+<details class="qa"><summary><span class="qn">8</span>Когда в катушке появляется ЭДС индукции?</summary><p>Только когда меняется магнитный поток через неё — например, когда двигают магнит.</p></details>
+
+<details class="qa"><summary><span class="qn">9</span>Почему искрит вилка, если выдернуть её из розетки при работающем пылесосе?</summary><p>Самоиндукция: обмотки двигателя стараются поддержать ток и создают ЭДС.</p></details>
+
+<details class="qa"><summary><span class="qn">10</span>Зачем в сварочной цепи дроссель?</summary><p>Сглаживает сварочный ток: дуга стабильнее, меньше брызг.</p></details>
+
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>Изоляция стала тонкой, поле в ней слишком сильное — диэлектрик начинает пропускать ток.</li><li>От площади пластин (больше — ёмкость больше) и расстояния между ними (ближе — больше).</li><li>5 мкФ: при последовательном соединении двух одинаковых ёмкость вдвое меньше.</li><li>Конденсаторы внутри заряжены примерно до 310 В и хранят заряд. Нужно подождать и проверить мультиметром, что напряжение 0 В.</li><li>Увеличить число витков или ток, использовать стальной сердечник.</li><li>Отклонение дуги силой Ампера. Переставить «массу» или подключить её с двух сторон, короткая дуга, меньше ток, наклон электрода, переменный ток.</li><li>Чтобы уменьшить вихревые токи и нагрев.</li><li>Только когда меняется магнитный поток через неё — например, когда двигают магнит.</li><li>Самоиндукция: обмотки двигателя стараются поддержать ток и создают ЭДС.</li><li>Сглаживает сварочный ток: дуга стабильнее, меньше брызг.</li></ol></section>
+</article>
+<nav class="pager"><span></span><a href="p10.html">Пара 10. ПР № 1 и № 2 →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

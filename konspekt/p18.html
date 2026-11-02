@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 18. Трансформаторы — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 18 · тема 1.7</p>
+<header class="hero">
+<div class="hand">Пара 18</div>
+<h1>Трансформаторы</h1>
+<p class="lead">Как из 220 вольт получить 60 вольт и 150 ампер — и почему сварщику это нужно.</p>
+<div class="meta"><span>Тема 1.7</span><span>Чтение: 35–45 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>как устроен трансформатор и почему он работает только на переменном токе</li><li>как посчитать напряжение и ток по числу витков</li><li>что такое холостой ход, нагрузка и короткое замыкание</li><li>куда теряется энергия и почему трансформатор гудит</li><li>чем сварочный трансформатор отличается от обычного и как в нём регулируют ток</li><li>что такое ЛАТР и трансформатор тока</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Зачем нужен трансформатор</a><a href="#s2">2. Устройство: сердечник и две обмотки</a><a href="#s3">3. Как он работает</a><a href="#s4">4. Коэффициент трансформации</a><a href="#s5">5. Три режима работы</a><a href="#s6">6. Потери, КПД и почему трансформатор гудит</a><a href="#s7">7. Сварочный трансформатор</a><a href="#s8">8. Особые трансформаторы</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a><a href="#lab">Попробуйте в лаборатории</a></nav>
+<article>
+<h2 id="s1">1. Зачем нужен трансформатор</h2>
+<p>Трансформатор меняет <strong>переменное напряжение</strong>: повышает его или понижает. Частота при этом остаётся той же — 50 Гц.</p>
+<p>Вы встречаете трансформаторы каждый день:</p>
+<ul>
+<li><strong>Будка во дворе</strong> с табличкой «Опасно для жизни» — трансформаторная подстанция. В неё по кабелю приходит 10 000 В, а в дома уходит 380/220 В.</li>
+<li><strong>Старый блок питания</strong> — тяжёлый, потому что внутри трансформатор: 220 В превращаются в 5–12 В.</li>
+<li><strong>Сварочный трансформатор</strong> — из 220 или 380 В делает 60–80 В и ток в сотни ампер.</li>
+</ul>
+<p>Зачем вообще высокое напряжение в проводах? Для той же мощности при высоком напряжении нужен маленький ток. Маленький ток меньше греет провода — меньше потерь, провода тоньше. Трансформатор позволяет <strong>передавать</strong> энергию высоким напряжением, а <strong>пользоваться</strong> ею — низким.</p>
+<h2 id="s2">2. Устройство: сердечник и две обмотки</h2>
+<figure><img src="img/t_device.png" alt="Трансформатор: сердечник из пластин, первичная обмотка подключена к сети, вторичная — к нагрузке"><figcaption>Трансформатор: сердечник из пластин, первичная обмотка подключена к сети, вторичная — к нагрузке</figcaption></figure>
+<p>У трансформатора нет ни одной движущейся детали. Только железо и медь:</p>
+<ul>
+<li><strong>Сердечник</strong> (магнитопровод) — замкнутая рамка из тонких листов электротехнической стали. Листы покрыты лаком и изолированы друг от друга.</li>
+<li><strong>Первичная обмотка</strong> — подключается к сети, получает энергию.</li>
+<li><strong>Вторичная обмотка</strong> — подключается к нагрузке, отдаёт энергию.</li>
+</ul>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>Провода первичной и вторичной обмоток <strong>не соединены</strong> между собой. Энергия переходит из одной обмотки в другую через магнитный поток в сердечнике.</p>
+</div>
+<h2 id="s3">3. Как он работает</h2>
+<figure><img src="img/t_flux.png" alt="Переменный ток в первичной обмотке создаёт переменный магнитный поток; поток наводит ЭДС во вторичной"><figcaption>Переменный ток в первичной обмотке создаёт переменный магнитный поток; поток наводит ЭДС во вторичной</figcaption></figure>
+<ol>
+<li>По первичной обмотке течёт <strong>переменный</strong> ток.</li>
+<li>Он создаёт в сердечнике магнитный поток. Сталь проводит поток по кругу, как труба — воду.</li>
+<li>Поток проходит и сквозь вторичную обмотку. Он всё время меняется: 50 раз в секунду туда и обратно.</li>
+<li>Меняющийся поток наводит во вторичной обмотке ЭДС. Это <strong>взаимоиндукция</strong> (вспомните тему 1.3, эталон М6).</li>
+</ol>
+<p>Посмотрите анимацию. Сначала ток переменный — стрелки потока растут, уменьшаются и разворачиваются, лампа горит. Через 9 секунд источник переключается на постоянный ток.</p>
+<div class="emb" data-w="1664" data-h="540"><iframe title="Анимация" srcdoc="&lt;style&gt;html,body{margin:0;height:100%;background:transparent;overflow:hidden}canvas{width:100%;height:100%;display:block}&lt;/style&gt;&lt;canvas id=&quot;c&quot;&gt;&lt;/canvas&gt;&lt;script&gt;const cv=document.getElementById(&#x27;c&#x27;),cx=cv.getContext(&#x27;2d&#x27;);const W=cv.clientWidth,H=cv.clientHeight,dpr=window.devicePixelRatio||1;cv.width=W*dpr;cv.height=H*dpr;cx.scale(dpr,dpr);
+const INK=&#x27;#1B1A17&#x27;,PAP=&#x27;#F2EEE3&#x27;,RED=&#x27;#A3271F&#x27;,F=&quot;Georgia,&#x27;PT Serif&#x27;,&#x27;Times New Roman&#x27;,serif&quot;;
+function L(x1,y1,x2,y2,w,c){cx.strokeStyle=c||INK;cx.lineWidth=w||4;cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);cx.stroke();}
+function C(x,y,r,fill,stroke,w){cx.beginPath();cx.arc(x,y,r,0,7);if(fill){cx.fillStyle=fill;cx.fill();}if(stroke){cx.strokeStyle=stroke;cx.lineWidth=w||3;cx.stroke();}}
+function TX(s,x,y,size,col,al,bold){cx.font=(bold?&#x27;bold &#x27;:&#x27;&#x27;)+size+&#x27;px &#x27;+F;cx.fillStyle=col||INK;cx.textAlign=al||&#x27;left&#x27;;cx.fillText(s,x,y);}
+function PL(s,x,y,size){cx.font=&#x27;bold &#x27;+(size||26)+&quot;px &#x27;Arial Narrow&#x27;,Arial,sans-serif&quot;;const w=cx.measureText(s).width;cx.fillStyle=INK;cx.fillRect(x-12,y-size*0.85-8,w+24,size*1.2+12);cx.fillStyle=PAP;cx.textAlign=&#x27;left&#x27;;cx.fillText(s,x,y);}
+function DIODE(x1,y1,x2,y2,on,sz){sz=sz||26;const a=Math.atan2(y2-y1,x2-x1),mx=(x1+x2)/2,my=(y1+y2)/2;const col=on?RED:INK,w=on?7:4;L(x1,y1,x2,y2,w,col);
+ cx.save();cx.translate(mx,my);cx.rotate(a);cx.beginPath();cx.moveTo(-sz,-sz);cx.lineTo(-sz,sz);cx.lineTo(sz*0.8,0);cx.closePath();cx.fillStyle=on?RED:PAP;cx.fill();cx.strokeStyle=col;cx.lineWidth=4;cx.stroke();
+ cx.beginPath();cx.moveTo(sz*0.8,-sz);cx.lineTo(sz*0.8,sz);cx.lineWidth=6;cx.stroke();cx.restore();}
+function ARROW(x1,y1,x2,y2,c,w){L(x1,y1,x2,y2,w||4,c);const a=Math.atan2(y2-y1,x2-x1);cx.fillStyle=c||INK;cx.beginPath();cx.moveTo(x2,y2);cx.lineTo(x2-18*Math.cos(a-0.4),y2-18*Math.sin(a-0.4));cx.lineTo(x2-18*Math.cos(a+0.4),y2-18*Math.sin(a+0.4));cx.closePath();cx.fill();}
+
+let t0=performance.now();const CYC=14,ACD=9,FQ=0.45;
+function md(t){return (t%CYC)&lt;ACD?0:1;}
+function i1(t){return md(t)?0.8:Math.sin(2*Math.PI*FQ*t);}
+function e2(t){return md(t)?0:Math.cos(2*Math.PI*FQ*t);}
+function coil(x,y0,y1,n,col,w){const st=(y1-y0)/n;cx.strokeStyle=col;cx.lineWidth=w;for(let i=0;i&lt;n;i++){cx.beginPath();cx.ellipse(x,y0+st*(i+0.5),w*4+26,st*0.36,0,0,7);cx.stroke();}}
+function frame(now){cx.clearRect(0,0,W,H);const t=Math.max(0,now-t0)/1000;const m=md(t),ph=i1(t),ee=e2(t);
+ const X=120,Y=70,CW=500,CH=H-140,T=80;
+ // core
+ cx.fillStyle=&#x27;#E4DFD2&#x27;;cx.fillRect(X,Y,CW,CH);cx.strokeStyle=INK;cx.lineWidth=5;cx.strokeRect(X,Y,CW,CH);cx.fillStyle=PAP;cx.fillRect(X+T,Y+T,CW-2*T,CH-2*T);cx.strokeRect(X+T,Y+T,CW-2*T,CH-2*T);
+ // flux arrows around loop, size by |ph|, direction by sign
+ const a=Math.abs(ph),dir=ph&gt;=0?1:-1;const pts=[];const xl=X+T/2,xr=X+CW-T/2,yt=Y+T/2,yb=Y+CH-T/2;const per=2*(xr-xl)+2*(yb-yt);
+ const sh=m?0:((t*FQ*0.0)%1);
+ for(let k=0;k&lt;14;k++){let s=((k+0.5)/14)*per;let x,y,ang;
+  if(s&lt;xr-xl){x=xl+s;y=yt;ang=0;}else if((s-=xr-xl)&lt;yb-yt){x=xr;y=yt+s;ang=Math.PI/2;}else if((s-=yb-yt)&lt;xr-xl){x=xr-s;y=yb;ang=Math.PI;}else{s-=xr-xl;x=xl;y=yb-s;ang=-Math.PI/2;}
+  if(Math.abs(Math.sin(ang))&gt;0.5)continue;if(dir&lt;0)ang+=Math.PI;const sz=8+22*a;if(a&lt;0.05)continue;
+  cx.save();cx.translate(x,y);cx.rotate(ang);cx.fillStyle=RED;cx.globalAlpha=0.35+0.65*a;cx.beginPath();cx.moveTo(sz,0);cx.lineTo(-sz*0.7,-sz*0.7);cx.lineTo(-sz*0.7,sz*0.7);cx.closePath();cx.fill();cx.restore();}
+ cx.globalAlpha=1;
+ coil(X+T/2,Y+T+10,Y+CH-T-10,9,INK,5);coil(X+CW-T/2,Y+T+10,Y+CH-T-10,5,RED,5);
+ // source
+ const sx=X+T/2-80;L(sx,Y+T+20,X+T/2-40,Y+T+20,3);L(sx,Y+CH-T-20,X+T/2-40,Y+CH-T-20,3);L(sx,Y+T+20,sx,Y+CH/2-30,3);L(sx,Y+CH-T-20,sx,Y+CH/2+30,3);
+ C(sx,Y+CH/2,30,PAP,INK,3);TX(m?&#x27;=&#x27;:&#x27;~&#x27;,sx,Y+CH/2+12,m?40:44,INK,&#x27;center&#x27;,true);
+ // lamp on secondary
+ const lx=X+CW+40,ly=Y+CH/2;L(X+CW-T/2+40,Y+T+40,lx,Y+T+40,3);L(lx,Y+T+40,lx,ly-30,3);L(X+CW-T/2+40,Y+CH-T-40,lx,Y+CH-T-40,3);L(lx,Y+CH-T-40,lx,ly+30,3);
+ const br=m?0:Math.min(1,Math.abs(ee)*0.4+0.6);C(lx,ly,30,m?PAP:&#x27;rgba(163,39,31,&#x27;+(0.25+0.6*br*Math.abs(ee))+&#x27;)&#x27;,INK,3);L(lx-21,ly-21,lx+21,ly+21,3);L(lx-21,ly+21,lx+21,ly-21,3);
+ PL(m?&#x27;ПОСТОЯННЫЙ ТОК&#x27;:&#x27;ПЕРЕМЕННЫЙ ТОК&#x27;,X-80,40,26);
+ TX(m?&#x27;поток стоит — ЭДС нет, лампа не горит&#x27;:&#x27;поток меняется — во вторичной есть ЭДС&#x27;,X-80,H-22,25,m?RED:INK,&#x27;left&#x27;,!m?false:true);
+ // graphs
+ const gx=X+CW+120,gw=W-gx-30,g1=H*0.32,g2=H*0.72,A=H*0.15,Ts=5;
+ L(gx,g1,gx+gw,g1,2,&#x27;#8a97a3&#x27;);L(gx,g2,gx+gw,g2,2,&#x27;#8a97a3&#x27;);L(gx,g1-A-14,gx,g1+A+14,2,&#x27;#8a97a3&#x27;);L(gx,g2-A-14,gx,g2+A+14,2,&#x27;#8a97a3&#x27;);
+ const plot=(f,y0,col)=&gt;{cx.strokeStyle=col;cx.lineWidth=5;cx.beginPath();let first=true;for(let i=0;i&lt;=gw;i+=2){const tt=t-Ts+i/gw*Ts;if(tt&lt;0)continue;const y=y0-A*f(tt);first?cx.moveTo(gx+i,y):cx.lineTo(gx+i,y);first=false;}cx.stroke();};
+ plot(i1,g1,INK);plot(e2,g2,RED);C(gx+gw,g1-A*ph,8,INK);C(gx+gw,g2-A*ee,8,RED);
+ TX(&#x27;ток в первичной i1&#x27;,gx+10,g1-A-24,26,INK,&#x27;left&#x27;,true);TX(&#x27;ЭДС во вторичной e2&#x27;,gx+10,g2-A-24,26,RED,&#x27;left&#x27;,true);
+ requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+&lt;/script&gt;" width="1664" height="540" loading="lazy"></iframe></div>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p><strong>На постоянном токе трансформатор не работает.</strong> Постоянный ток создаёт постоянный поток, а ЭДС наводится только при <em>изменении</em> потока. Хуже того: первичная обмотка на постоянном токе — просто провод с маленьким сопротивлением. Ток будет огромным, и обмотка сгорит.</p>
+</div>
+<h2 id="s4">4. Коэффициент трансформации</h2>
+<figure><img src="img/t_ratio.png" alt="Первичная обмотка 1000 витков, вторичная 50; k = 20; из 220 В получается 11 В"><figcaption>Первичная обмотка 1000 витков, вторичная 50; k = 20; из 220 В получается 11 В</figcaption></figure>
+<p>Один и тот же поток проходит через каждый виток обеих обмоток и наводит в каждом витке одинаковое напряжение. Значит, напряжение обмотки пропорционально числу её витков:</p>
+<div class="box formula">
+<p>k = U1 / U2 = w1 / w2</p>
+</div>
+<p>Здесь w1 и w2 — число витков первичной и вторичной обмоток, k — <strong>коэффициент трансформации</strong>. Если k больше 1 — трансформатор понижающий, если меньше 1 — повышающий.</p>
+<div class="box example">
+<p><strong>Пример.</strong> w1 = 1000, w2 = 50, U1 = 220 В.
+k = 1000 / 50 = 20. U2 = 220 / 20 = <strong>11 В</strong>.</p>
+</div>
+<p><strong>С током — наоборот.</strong> Мощность на входе и на выходе почти одинакова: U1·I1 ≈ U2·I2. Напряжение уменьшили в 20 раз — ток во вторичной обмотке в 20 раз больше. Поэтому у сварочного трансформатора вторичная обмотка из толстой медной шины, а первичная — из тонкого провода.</p>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>Где меньше витков — там меньше напряжение, но больше ток и толще провод.</p>
+</div>
+<h2 id="s5">5. Три режима работы</h2>
+<figure><img src="img/t_modes.png" alt="Холостой ход — вторичная разомкнута; нагрузка — подключён резистор; короткое замыкание — вторичная закорочена"><figcaption>Холостой ход — вторичная разомкнута; нагрузка — подключён резистор; короткое замыкание — вторичная закорочена</figcaption></figure>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Режим</th>
+<th>Что на выходе</th>
+<th>Что происходит</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Холостой ход</td>
+<td>ничего не подключено</td>
+<td>ток в первичной маленький (несколько процентов) — он только намагничивает сердечник. Так измеряют k и потери в стали</td>
+</tr>
+<tr>
+<td>Нагрузка</td>
+<td>подключён потребитель</td>
+<td>рабочий режим. Чем больше ток, тем немного ниже напряжение на выходе</td>
+</tr>
+<tr>
+<td>Короткое замыкание</td>
+<td>выход закорочен</td>
+<td>для обычного трансформатора — <strong>авария</strong>: токи огромные, обмотки горят</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Опыт короткого замыкания</strong> на заводе делают специально, но при сильно пониженном напряжении — около 5–10 % от номинального. Его поднимают ЛАТРом с нуля, пока ток не станет номинальным. Это напряжение называют <strong>напряжением КЗ</strong> (uк) и пишут на табличке трансформатора в процентах. Так измеряют потери в меди.</p>
+<h2 id="s6">6. Потери, КПД и почему трансформатор гудит</h2>
+<figure><img src="img/t_loss.png" alt="Сплошной сердечник: большие вихревые токи; сердечник из пластин: вихревые токи малы; потери в стали и меди; КПД 95–99 %"><figcaption>Сплошной сердечник: большие вихревые токи; сердечник из пластин: вихревые токи малы; потери в стали и меди; КПД 95–99 %</figcaption></figure>
+<p>Часть энергии теряется и превращается в тепло:</p>
+<ul>
+<li><strong>Потери в стали.</strong> Сердечник 50 раз в секунду перемагничивается, и в самом железе наводятся круговые <strong>вихревые токи</strong>. Если бы сердечник был сплошным, он бы раскалился. Поэтому его набирают из тонких изолированных пластин: каждый вихревой ток заперт в узкой пластине. Эти потери есть всегда, даже без нагрузки.</li>
+<li><strong>Потери в меди.</strong> Ток греет провод обмоток. Чем больше ток, тем больше нагрев — пропорционально квадрату тока.</li>
+</ul>
+<div class="box formula">
+<p>КПД η = P2 / P1 · 100 %</p>
+</div>
+<p>У больших трансформаторов КПД 95–99 % — это одна из самых экономичных машин. У маленьких меньше.</p>
+<p><strong>Почему трансформатор гудит?</strong> Это не ток жужжит — вибрирует железо. Магнитное поле сжимает пластины сердечника. За один период поле дважды достигает максимума, поэтому при 50 Гц пластины сжимаются <strong>100 раз в секунду</strong>. Отсюда низкое «у-у-у». Если трансформатор вдруг загудел громче обычного — это перегрузка или замыкание.</p>
+<p><strong>Почему зарядка телефона тёплая, а розетка — нет?</strong> Внутри зарядки преобразователь с потерями — они уходят в тепло. А в розетке только контакты, ей нечему греться. Если розетка греется — там плохой контакт, это опасно.</p>
+<h2 id="s7">7. Сварочный трансформатор</h2>
+<p>Сварочный трансформатор устроен как обычный, но работает в режиме, который для обычного — авария: постоянные короткие замыкания (касание электродом).</p>
+<p><strong>Четыре требования к нему:</strong></p>
+<ol>
+<li><strong>Напряжение холостого хода U0 = 60–80 В</strong>, по ГОСТ 95-77 — не больше 80 В. Меньше — дуга плохо зажигается, больше — опасно для сварщика.</li>
+<li><strong>Выдерживает короткое замыкание.</strong> Электрод прилип — ток ограничен, обмотки не горят.</li>
+<li><strong>Падающая характеристика:</strong> чем больше ток, тем меньше напряжение.</li>
+<li><strong>Регулирование тока</strong> — под диаметр электрода и толщину металла.</li>
+</ol>
+<figure><img src="img/t_char.png" alt="График: падающая характеристика от 70 В, прямая дуги, рабочая точка на пересечении; пунктир — меньший ток; серые точки — жёсткая характеристика"><figcaption>График: падающая характеристика от 70 В, прямая дуги, рабочая точка на пересечении; пунктир — меньший ток; серые точки — жёсткая характеристика</figcaption></figure>
+<p><strong>Зачем падающая характеристика.</strong> Чёрная кривая — сам трансформатор: без нагрузки 70 В, чем больше ток — тем ниже напряжение. Красная линия — дуга: ей нужно около 20–30 В почти при любом токе. Где линии пересеклись — там и работаем.</p>
+<p>Рука сварщика дрожит, дуга то длиннее, то короче — красная линия чуть поднимается и опускается. Кривая трансформатора крутая, поэтому ток почти не меняется, и шов получается ровным. При жёсткой характеристике, как у сети, ток прыгал бы в разы.</p>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>У силового трансформатора задача — держать <strong>напряжение</strong> постоянным. У сварочного — <strong>ограничивать ток</strong>.</p>
+</div>
+<figure><img src="img/t_weld.png" alt="Сварочный трансформатор с подвижной обмоткой: первичная неподвижна, вторичная двигается винтом; ближе — ток больше, дальше — меньше"><figcaption>Сварочный трансформатор с подвижной обмоткой: первичная неподвижна, вторичная двигается винтом; ближе — ток больше, дальше — меньше</figcaption></figure>
+<p><strong>Как регулируют ток.</strong> Самый распространённый способ — <strong>подвижная обмотка</strong>. Первичная обмотка закреплена, вторичная ездит по сердечнику на винте: крутите ручку сверху аппарата.</p>
+<ul>
+<li>Обмотки ближе — магнитная связь сильнее, ток <strong>больше</strong>.</li>
+<li>Обмотки дальше — больше потока «уходит мимо» вторичной обмотки, ток <strong>меньше</strong>.</li>
+</ul>
+<p>Другие способы: <strong>магнитный шунт</strong> (стальная вставка между обмотками) и <strong>переключение витков</strong> (ступенями: «малые токи / большие токи»).</p>
+<div class="box example">
+<p><strong>На практике.</strong> Ток грубо подбирают по диаметру электрода: 30–40 А на 1 мм. Электрод 3 мм — около 90–120 А.</p>
+</div>
+<p><strong>Шильдик сварочного трансформатора.</strong> Найдите на табличке:</p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Надпись</th>
+<th>Пример</th>
+<th>Что значит</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>U1</td>
+<td>380 В, 2 фазы</td>
+<td>от какой сети работает</td>
+</tr>
+<tr>
+<td>U0</td>
+<td>65 В</td>
+<td>напряжение холостого хода</td>
+</tr>
+<tr>
+<td>I2</td>
+<td>90–250 А</td>
+<td>пределы сварочного тока</td>
+</tr>
+<tr>
+<td>ПВ</td>
+<td>35 % при 250 А</td>
+<td>сколько можно варить без перерыва</td>
+</tr>
+<tr>
+<td>S</td>
+<td>18 кВ·А</td>
+<td>мощность из сети</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>ПВ</strong> — продолжительность включения: какую часть цикла можно варить на этом токе, чтобы аппарат не перегрелся. ПВ 35 % — примерно треть времени варим, остальное — отдыхаем. На меньшем токе ПВ больше. Длительность цикла написана в паспорте аппарата.</p>
+<h2 id="s8">8. Особые трансформаторы</h2>
+<figure><img src="img/t_auto.png" alt="ЛАТР: одна обмотка на кольце, по ней скользит контакт; на выходе от 0 до 250 В"><figcaption>ЛАТР: одна обмотка на кольце, по ней скользит контакт; на выходе от 0 до 250 В</figcaption></figure>
+<p><strong>Автотрансформатор</strong> — трансформатор с одной обмоткой: часть витков общая для входа и выхода. Он легче и дешевле обычного. Пример — стабилизатор напряжения на даче.</p>
+<p><strong>ЛАТР</strong> (лабораторный автотрансформатор) — автотрансформатор с ручкой: плавно даёт напряжение от 0 до примерно 250 В. На ПР № 8 им поднимают напряжение в опыте короткого замыкания.</p>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p>У автотрансформатора сеть и нагрузка соединены электрически. Даже при 10 В на выходе один из проводов может быть под фазой 220 В относительно земли. Поэтому для переносных ламп и инструмента на 12–42 В применяют только обычные трансформаторы с отдельными обмотками.</p>
+</div>
+<figure><img src="img/t_ct.png" alt="Трансформатор тока 600/5: через кольцо проходит шина с током 600 А, к вторичной обмотке подключён амперметр на 5 А"><figcaption>Трансформатор тока 600/5: через кольцо проходит шина с током 600 А, к вторичной обмотке подключён амперметр на 5 А</figcaption></figure>
+<p><strong>Трансформатор тока</strong> нужен, чтобы измерить большой ток обычным амперметром на 5 А. Шину пропускают через кольцо: шина — это первичная обмотка из одного витка, на кольце — много витков вторичной. Ток 600 А превращается в 5 А, шкалу прибора сразу рисуют в «600 А».</p>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p><strong>Вторичную обмотку трансформатора тока нельзя размыкать</strong>, пока по шине течёт ток. Разомкнули — на выводах появляются сотни и тысячи вольт: опасно для жизни и для изоляции. Снимаете прибор — сначала закоротите выводы перемычкой.</p>
+</div>
+<p><strong>Трансформатор напряжения</strong> понижает высокое напряжение (6–10 кВ) до 100 В для обычного вольтметра. Его, наоборот, нельзя закорачивать.</p>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>Первичная обмотка</strong> — обмотка, подключённая к сети.</li>
+<li><strong>Вторичная обмотка</strong> — обмотка, подключённая к нагрузке.</li>
+<li><strong>Магнитопровод (сердечник)</strong> — замкнутая рамка из тонких изолированных пластин стали.</li>
+<li><strong>Взаимоиндукция</strong> — наведение ЭДС в одной катушке меняющимся магнитным полем другой.</li>
+<li><strong>Коэффициент трансформации k</strong> — во сколько раз трансформатор меняет напряжение: k = U1 / U2 = w1 / w2.</li>
+<li><strong>Холостой ход</strong> — режим, когда вторичная обмотка разомкнута.</li>
+<li><strong>Напряжение КЗ, uк</strong> — напряжение, при котором в опыте КЗ течёт номинальный ток, в процентах от номинального.</li>
+<li><strong>Вихревые токи</strong> — круговые токи внутри металла сердечника; греют его.</li>
+<li><strong>U0</strong> — напряжение холостого хода сварочного трансформатора.</li>
+<li><strong>Падающая характеристика</strong> — чем больше ток, тем меньше напряжение на выходе.</li>
+<li><strong>ПВ, %</strong> — продолжительность включения: доля цикла, когда можно работать на этом токе.</li>
+<li><strong>ЛАТР</strong> — лабораторный автотрансформатор с плавной регулировкой.</li>
+<li><strong>Трансформатор тока</strong> — понижает большой ток до 5 А для амперметра.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · Тр1 · БИЛЕТ 14</span><h3>Трансформатор</h3><p class="q">Трансформатор: назначение, устройство, принцип действия, коэффициент трансформации.</p><ol><li>Трансформатор повышает или понижает переменное напряжение. Частота при этом не меняется.</li><li>Устройство: стальной сердечник из тонких пластин и две обмотки — первичная (к сети) и вторичная (к нагрузке). (Рисунок.)</li><li>Принцип: переменный ток в первичной обмотке создаёт переменный магнитный поток в сердечнике, а он наводит ЭДС во вторичной (взаимоиндукция). На постоянном токе не работает.</li><li>Коэффициент трансформации: k = U₁ / U₂ = w₁ / w₂. Где меньше витков — там меньше напряжение, но больше ток.</li><li>Примеры: трансформаторная будка во дворе (10 кВ → 380/220 В), сварочный трансформатор.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Тр2 · БИЛЕТ 21</span><h3>Режимы работы, потери и КПД</h3><p class="q">Режимы работы трансформатора: холостой ход, нагрузка, короткое замыкание. Потери и КПД.</p><ol><li>Холостой ход — нагрузка не подключена, ток маленький. Так измеряют k и потери в стали.</li><li>Рабочий режим (нагрузка) — с ростом тока напряжение на вторичной обмотке немного падает.</li><li>Короткое замыкание — для обычного трансформатора авария. Опыт КЗ делают при пониженном напряжении, чтобы измерить потери в меди.</li><li>Потери: в стали (вихревые токи, перемагничивание) и в меди (нагрев обмоток). КПД η = P₂ / P₁ · 100 %, у больших трансформаторов 95–99 %.</li><li>Почему трансформатор гудит: пластины сердечника вибрируют от переменного магнитного поля (100 раз в секунду).</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Тр3 · БИЛЕТ 3</span><h3>Сварочный трансформатор</h3><p class="q">Сварочный трансформатор: требования к нему, способы регулирования сварочного тока.</p><ol><li>Понижает сетевые 220/380 В до 60–80 В на холостом ходу (по ГОСТ 95-77 — не более 80 В) — этого хватает, чтобы зажечь дугу, и это ещё относительно безопасно.</li><li>Выдерживает короткое замыкание (касание электродом) — для него это рабочий режим, ток КЗ ограничен.</li><li>Падающая характеристика: чем больше ток, тем меньше напряжение. Дуга горит устойчиво, ток не «улетает» при изменении длины дуги.</li><li>Регулирование тока: изменяют расстояние между обмотками (подвижная обмотка), двигают магнитный шунт или переключают число витков.</li><li>Сварка идёт на переменном токе. Отличие от силового трансформатора: силовой держит напряжение постоянным, а сварочный — ограничивает ток.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Тр4 · БИЛЕТ 16</span><h3>Специальные трансформаторы</h3><p class="q">Автотрансформатор, ЛАТР, измерительные трансформаторы тока и напряжения.</p><ol><li>Автотрансформатор — одна обмотка с отводом, часть витков общая. Легче и дешевле, но сеть и нагрузка связаны напрямую — опаснее. Пример: стабилизатор напряжения на даче.</li><li>ЛАТР — лабораторный автотрансформатор: плавно меняет напряжение ручкой (от 0 до ≈ 250 В).</li><li>Трансформатор тока — чтобы измерять большие токи обычным амперметром на 5 А. Вторичную обмотку нельзя размыкать под током — на ней появится опасное напряжение.</li><li>Трансформатор напряжения — чтобы измерять высокие напряжения (6–10 кВ) обычным вольтметром на 100 В.</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>Почему трансформатор не работает на постоянном токе?</summary><p>Постоянный ток создаёт постоянный магнитный поток, а ЭДС во вторичной обмотке наводится только при изменении потока.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>w1 = 500, w2 = 50, U1 = 220 В. Найдите k и U2.</summary><p>k = 500 / 50 = 10; U2 = 220 / 10 = 22 В.</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>U1 = 220 В, U2 = 11 В, ток первичной I1 = 0,5 А. Какой ток во вторичной?</summary><p>k = 220 / 11 = 20; I2 ≈ 20 · 0,5 = 10 А. Где напряжение меньше — там ток больше.</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>Зачем сердечник набирают из тонких пластин?</summary><p>Чтобы уменьшить вихревые токи и нагрев сердечника (потери в стали).</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>Почему опыт короткого замыкания делают при пониженном напряжении?</summary><p>При полном напряжении ток КЗ в 10–20 раз больше номинального — обмотки сгорят. Напряжение поднимают с нуля только до номинального тока.</p></details>
+
+<details class="qa"><summary><span class="qn">6</span>Почему трансформатор гудит и с какой частотой?</summary><p>Пластины сердечника сжимаются в магнитном поле дважды за период — 100 раз в секунду при 50 Гц.</p></details>
+
+<details class="qa"><summary><span class="qn">7</span>Какое напряжение холостого хода допустимо у сварочного трансформатора?</summary><p>60–80 В, не более 80 В по ГОСТ 95-77.</p></details>
+
+<details class="qa"><summary><span class="qn">8</span>Зачем сварочному трансформатору падающая характеристика?</summary><p>Чтобы ток почти не менялся, когда меняется длина дуги: дуга горит устойчиво, шов ровный.</p></details>
+
+<details class="qa"><summary><span class="qn">9</span>Обмотки сварочного трансформатора раздвинули. Ток стал больше или меньше?</summary><p>Меньше: больше магнитного потока проходит мимо вторичной обмотки (рассеяние).</p></details>
+
+<details class="qa"><summary><span class="qn">10</span>Что нельзя делать со вторичной обмоткой трансформатора тока?</summary><p>Размыкать её, пока по шине течёт ток: на выводах появится опасное высокое напряжение.</p></details>
+
+<details class="qa"><summary><span class="qn">11</span>Сварочный трансформатор: U1 = 380 В, U0 = 70 В. Найдите k.</summary><p>k = 380 / 70 ≈ 5,4. Ток вторичной примерно в 5,4 раза больше тока первичной.</p></details>
+<h2 id="lab">Попробуйте в лаборатории</h2><p>Откройте на телефоне или компьютере — ничего устанавливать не нужно.</p><div class="labs"><a href="https://mexstura-sudo.github.io/lab-electro/transformer/#princ"><span>Лаборатория</span>Принцип — меняем витки, переключаем на постоянный ток</a><a href="https://mexstura-sudo.github.io/lab-electro/transformer/#modes"><span>Лаборатория</span>Режимы — холостой ход, КЗ и нагрузка (это ПР № 8)</a><a href="https://mexstura-sudo.github.io/lab-electro/transformer/#weld"><span>Лаборатория</span>Сварочный — падающая характеристика и регулятор тока</a><a href="https://mexstura-sudo.github.io/lab-electro/transformer/#quiz"><span>Лаборатория</span>Проверь себя — тест из 12 вопросов</a></div>
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>Постоянный ток создаёт постоянный магнитный поток, а ЭДС во вторичной обмотке наводится только при изменении потока.</li><li>k = 500 / 50 = 10; U2 = 220 / 10 = 22 В.</li><li>k = 220 / 11 = 20; I2 ≈ 20 · 0,5 = 10 А. Где напряжение меньше — там ток больше.</li><li>Чтобы уменьшить вихревые токи и нагрев сердечника (потери в стали).</li><li>При полном напряжении ток КЗ в 10–20 раз больше номинального — обмотки сгорят. Напряжение поднимают с нуля только до номинального тока.</li><li>Пластины сердечника сжимаются в магнитном поле дважды за период — 100 раз в секунду при 50 Гц.</li><li>60–80 В, не более 80 В по ГОСТ 95-77.</li><li>Чтобы ток почти не менялся, когда меняется длина дуги: дуга горит устойчиво, шов ровный.</li><li>Меньше: больше магнитного потока проходит мимо вторичной обмотки (рассеяние).</li><li>Размыкать её, пока по шине течёт ток: на выводах появится опасное высокое напряжение.</li><li>k = 380 / 70 ≈ 5,4. Ток вторичной примерно в 5,4 раза больше тока первичной.</li></ol></section>
+</article>
+<nav class="pager"><a href="p17.html">← ПР № 7. Звезда и треугольник</a><a href="p19.html">ПР № 8. Режимы трансформатора →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

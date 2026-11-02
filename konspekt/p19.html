@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 19. ПР № 8. Режимы трансформатора — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 19 · тема 1.7 (практическая работа)</p>
+<header class="hero">
+<div class="hand">Пара 19</div>
+<h1>ПР № 8. Режимы трансформатора</h1>
+<p class="lead">Снимаем холостой ход, короткое замыкание и нагрузку, находим потери и считаем КПД двумя способами.</p>
+<div class="meta"><span>Тема 1.7 (практическая работа)</span><span>Чтение: 35–45 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>как по опыту холостого хода найти k и потери в стали</li><li>как правильно провести опыт КЗ и найти потери в меди</li><li>как снять внешнюю характеристику и график КПД</li><li>как посчитать КПД без нагрузки — по двум опытам</li><li>почему максимум КПД не при полной нагрузке</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Цель и варианты</a><a href="#s2">2. Схема</a><a href="#s3">3. Опыт 1. Холостой ход</a><a href="#s4">4. Опыт 2. Короткое замыкание</a><a href="#s5">5. Опыт 3. Нагрузка</a><a href="#s6">6. КПД вторым способом</a><a href="#s7">7. Выводы — шаблон</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a><a href="#lab">Попробуйте в лаборатории</a></nav>
+<article>
+<h2 id="s1">1. Цель и варианты</h2>
+<p><strong>Цель:</strong> опытами холостого хода, короткого замыкания и нагрузки найти коэффициент трансформации, потери в стали и в меди, напряжение КЗ, построить внешнюю характеристику и график КПД.</p>
+<p>Вариант N — номер в журнале:</p>
+<div class="box formula">
+<p>U20 = 24 + N, В      S = 100 + 10·N, В·А</p>
+</div>
+<p>Трансформатор 220 / U20 В. Номинальные токи: I1н = S / 220, I2н = S / U20. Для N = 10: трансформатор 220/34 В, 200 В·А, I1н = 0,91 А, I2н = 5,88 А.</p>
+<p>Способы выполнения:</p>
+<ul>
+<li><strong>А — Proteus:</strong> трансформатор TRAN-2P2S, параметры — из таблицы вариантов в бланке.</li>
+<li><strong>Б — вживую:</strong> стенд с маленьким трансформатором и ЛАТРом, под присмотром преподавателя.</li>
+<li><strong>В — браузер:</strong> лаборатория «Трансформатор», вкладка «Режимы».</li>
+</ul>
+<h2 id="s2">2. Схема</h2>
+<figure><img src="img/p19_p_scheme.png" alt="ЛАТР, амперметр A1, ваттметр W, вольтметр V1 на первичной обмотке; амперметр A2 и вольтметр V2 на вторичной; на выходе — пусто, перемычка или реостат"><figcaption>ЛАТР, амперметр A1, ваттметр W, вольтметр V1 на первичной обмотке; амперметр A2 и вольтметр V2 на вторичной; на выходе — пусто, перемычка или реостат</figcaption></figure>
+<p>Схема одна на все опыты. ЛАТРом задаём U1. На первичной стороне — A1, ваттметр W (мощность из сети P1) и V1. На вторичной — A2 и V2. На выходе меняем: <strong>ничего</strong> (холостой ход), <strong>перемычка</strong> (КЗ), <strong>реостат</strong> (нагрузка).</p>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p><strong>ЛАТР — всегда с нуля.</strong> Перед опытом КЗ ручка ЛАТРа — на ноль, поднимать плавно, следить за амперметром. Ток не больше номинального. При полном напряжении КЗ — авария: ток в 12 раз больше номинального.</p>
+</div>
+<figure><img src="img/p19_p_proteus.png" alt="Proteus: VSINE, амперметр, вольтметр и резистор Rст параллельно первичной обмотке TRAN-2P2S; на вторичной — амперметр, вольтметр и нагрузка RES"><figcaption>Proteus: VSINE, амперметр, вольтметр и резистор Rст параллельно первичной обмотке TRAN-2P2S; на вторичной — амперметр, вольтметр и нагрузка RES</figcaption></figure>
+<p><strong>В Proteus:</strong> VSINE — Amplitude 311 (это 220 В действующих), 50 Гц. TRAN-2P2S — L1, L2, R1, R2 и Coupling Factor 0,998 из таблицы. Резистор <strong>Rст</strong> параллельно первичной изображает потери в стали. Ваттметра нет — мощность считаем по формулам.</p>
+<h2 id="s3">3. Опыт 1. Холостой ход</h2>
+<p>U1 = 220 В, выход разомкнут. Записываем U1, I0, P0, U20.</p>
+<div class="box example">
+<p><strong>Вариант 10:</strong> U1 = 220 В, I0 = 0,081 А, P0 = 8,0 Вт, U20 = 34,0 В.
+k = U1 / U20 = 220 / 34 = <strong>6,47</strong>.
+I0 / I1н = 0,081 / 0,91 = <strong>8,9 %</strong> — ток холостого хода всего несколько процентов: он только намагничивает сердечник.
+P0 = 8 Вт — это <strong>потери в стали</strong>: столько трансформатор греет сам себя, даже когда ничего не делает.</p>
+</div>
+<h2 id="s4">4. Опыт 2. Короткое замыкание</h2>
+<p>Перемычка на выходе. ЛАТР — с нуля плавно вверх, пока I2 не станет номинальным.</p>
+<div class="box example">
+<p><strong>Вариант 10:</strong> U1к = 17,6 В, I1к = 0,92 А, I2к = 5,88 А, Pк = 12,1 Вт.
+uк = U1к / U1н · 100 = 17,6 / 220 · 100 = <strong>8 %</strong>.
+Pк = 12 Вт — <strong>потери в меди</strong> при номинальном токе (сталь почти не греется: напряжение маленькое).
+При полных 220 В ток КЗ был бы в 100 / 8 = <strong>12,5 раза</strong> больше номинального.</p>
+</div>
+<p>Напряжение КЗ пишут на табличке каждого силового трансформатора в процентах.</p>
+<h2 id="s5">5. Опыт 3. Нагрузка</h2>
+<p>U1 = 220 В. Реостатом ставим нагрузку β = 0,25; 0,5; 0,75; 1 (β — доля от номинального тока).</p>
+<div class="box example">
+<p><strong>Вариант 10.</strong></p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>β</th>
+<th>I2, А</th>
+<th>U2, В</th>
+<th>P2 = U2·I2, Вт</th>
+<th>P1, Вт</th>
+<th>η, %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>34,0</td>
+<td>0</td>
+<td>8,0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0,25</td>
+<td>1,45</td>
+<td>33,5</td>
+<td>48,5</td>
+<td>57,3</td>
+<td>84,8</td>
+</tr>
+<tr>
+<td>0,5</td>
+<td>2,85</td>
+<td>33,0</td>
+<td>94,2</td>
+<td>105,0</td>
+<td>89,7</td>
+</tr>
+<tr>
+<td>0,75</td>
+<td>4,22</td>
+<td>32,5</td>
+<td>137,2</td>
+<td>151,3</td>
+<td>90,6</td>
+</tr>
+<tr>
+<td>1</td>
+<td>5,54</td>
+<td>32,0</td>
+<td>177,6</td>
+<td>196,2</td>
+<td>90,5</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>С ростом тока U2 падает: от 34 до 32 В, <strong>ΔU = 5,8 %</strong> — ток создаёт падение напряжения на сопротивлении обмоток.</p>
+<figure><img src="img/p19_p_graph.png" alt="Слева U2 от I2 — почти прямая, падает; справа КПД от β — быстро растёт, максимум около β = 0,82"><figcaption>Слева U2 от I2 — почти прямая, падает; справа КПД от β — быстро растёт, максимум около β = 0,82</figcaption></figure>
+<h2 id="s6">6. КПД вторым способом</h2>
+<p>КПД можно не мерить под нагрузкой, а <strong>посчитать по двум простым опытам</strong>: холостой ход дал потери в стали P0, КЗ — потери в меди Pк.</p>
+<div class="box formula">
+<p>η = β·S / (β·S + P0 + β²·Pк) · 100 %</p>
+</div>
+<div class="box example">
+<p>Вариант 10, β = 1: η = 200 / (200 + 8 + 12) · 100 = <strong>90,9 %</strong>. Прямое измерение — 90,5 %. Совпало.
+Максимум КПД — когда потери в меди равны потерям в стали: β²·Pк = P0 → β = √(8 / 12) = <strong>0,82</strong>.</p>
+</div>
+<p>Так на заводе испытывают большие трансформаторы: нагрузить трансформатор на тысячу киловатт в цехе нечем, а опыты ХХ и КЗ сделать легко.</p>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>Трансформатор выгоднее всего работает при нагрузке 70–90 % от номинальной. Сильно недогруженный трансформатор зря тратит энергию на потери в стали.</p>
+</div>
+<h2 id="s7">7. Выводы — шаблон</h2>
+<ol>
+<li>Коэффициент трансформации k = …; ток холостого хода … % от номинального; потери в стали P0 = … Вт.</li>
+<li>Напряжение КЗ uк = … %; потери в меди Pк = … Вт. При полном напряжении ток КЗ был бы в … раз больше номинального.</li>
+<li>При росте нагрузки U2 уменьшилось на … %, потому что …</li>
+<li>КПД максимален при β ≈ …, потому что …; КПД по формуле … % и по измерениям … % совпадают.</li>
+</ol>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>ЛАТР</strong> — лабораторный автотрансформатор, плавно меняет напряжение.</li>
+<li><strong>Ваттметр</strong> — прибор для измерения активной мощности.</li>
+<li><strong>Ток холостого хода I0</strong> — ток первичной обмотки без нагрузки.</li>
+<li><strong>Потери в стали P0</strong> — мощность холостого хода.</li>
+<li><strong>Напряжение КЗ uк</strong> — U1, при котором течёт номинальный ток, в процентах.</li>
+<li><strong>Потери в меди Pк</strong> — мощность опыта КЗ при номинальном токе.</li>
+<li><strong>Коэффициент нагрузки β</strong> — доля тока от номинального.</li>
+<li><strong>Внешняя характеристика</strong> — график U2 от I2.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · Тр1 · БИЛЕТ 14</span><h3>Трансформатор</h3><p class="q">Трансформатор: назначение, устройство, принцип действия, коэффициент трансформации.</p><ol><li>Трансформатор повышает или понижает переменное напряжение. Частота при этом не меняется.</li><li>Устройство: стальной сердечник из тонких пластин и две обмотки — первичная (к сети) и вторичная (к нагрузке). (Рисунок.)</li><li>Принцип: переменный ток в первичной обмотке создаёт переменный магнитный поток в сердечнике, а он наводит ЭДС во вторичной (взаимоиндукция). На постоянном токе не работает.</li><li>Коэффициент трансформации: k = U₁ / U₂ = w₁ / w₂. Где меньше витков — там меньше напряжение, но больше ток.</li><li>Примеры: трансформаторная будка во дворе (10 кВ → 380/220 В), сварочный трансформатор.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Тр2 · БИЛЕТ 21</span><h3>Режимы работы, потери и КПД</h3><p class="q">Режимы работы трансформатора: холостой ход, нагрузка, короткое замыкание. Потери и КПД.</p><ol><li>Холостой ход — нагрузка не подключена, ток маленький. Так измеряют k и потери в стали.</li><li>Рабочий режим (нагрузка) — с ростом тока напряжение на вторичной обмотке немного падает.</li><li>Короткое замыкание — для обычного трансформатора авария. Опыт КЗ делают при пониженном напряжении, чтобы измерить потери в меди.</li><li>Потери: в стали (вихревые токи, перемагничивание) и в меди (нагрев обмоток). КПД η = P₂ / P₁ · 100 %, у больших трансформаторов 95–99 %.</li><li>Почему трансформатор гудит: пластины сердечника вибрируют от переменного магнитного поля (100 раз в секунду).</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>Какой опыт даёт потери в стали?</summary><p>Холостой ход: тока нагрузки нет, ваттметр показывает почти только потери в стали.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>Почему опыт КЗ начинают с нуля?</summary><p>При полном напряжении ток КЗ в 100 / uк ≈ 12 раз больше номинального — обмотки сгорят.</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>U1 = 220 В, U20 = 44 В. Найдите k.</summary><p>k = 220 / 44 = 5.</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>Почему при росте нагрузки U2 падает?</summary><p>Ток создаёт падение напряжения на сопротивлении обмоток.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>P0 = 10 Вт, Pк = 40 Вт. При каком β КПД максимален?</summary><p>β = √(10 / 40) = 0,5.</p></details>
+
+<details class="qa"><summary><span class="qn">6</span>Как в Proteus задать коэффициент трансформации?</summary><p>Отношением индуктивностей: L1 / L2 = k².</p></details>
+
+<details class="qa"><summary><span class="qn">7</span>Зачем считать КПД по опытам ХХ и КЗ, если можно измерить?</summary><p>Большие трансформаторы нечем нагрузить в цехе, а опыты ХХ и КЗ сделать легко.</p></details>
+<h2 id="lab">Попробуйте в лаборатории</h2><p>Откройте на телефоне или компьютере — ничего устанавливать не нужно.</p><div class="labs"><a href="https://mexstura-sudo.github.io/lab-electro/transformer/#modes"><span>Лаборатория</span>Режимы — стенд для ПР № 8 (30 вариантов)</a><a href="https://mexstura-sudo.github.io/lab-electro/transformer/#princ"><span>Лаборатория</span>Принцип — витки и напряжение</a><a href="https://mexstura-sudo.github.io/lab-electro/transformer/#quiz"><span>Лаборатория</span>Проверь себя — тест из 12 вопросов</a></div>
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>Холостой ход: тока нагрузки нет, ваттметр показывает почти только потери в стали.</li><li>При полном напряжении ток КЗ в 100 / uк ≈ 12 раз больше номинального — обмотки сгорят.</li><li>k = 220 / 44 = 5.</li><li>Ток создаёт падение напряжения на сопротивлении обмоток.</li><li>β = √(10 / 40) = 0,5.</li><li>Отношением индуктивностей: L1 / L2 = k².</li><li>Большие трансформаторы нечем нагрузить в цехе, а опыты ХХ и КЗ сделать легко.</li></ol></section>
+</article>
+<nav class="pager"><a href="p18.html">← Пара 18. Трансформаторы</a><a href="p20.html">Пара 20. Электрические машины и электропривод →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 12. Цепь R и L, мощность и резонанс — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 12 · тема 1.4</p>
+<header class="hero">
+<div class="hand">Пара 12</div>
+<h1>Цепь R и L, мощность и резонанс</h1>
+<p class="lead">Почему 132 В плюс 176 В дают 220 В, что такое «пена» в кружке мощности и как в сети 220 В на катушке появляется почти 700 вольт.</p>
+<div class="meta"><span>Тема 1.4</span><span>Чтение: 40–50 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>как складываются сопротивления резистора и катушки</li><li>что такое треугольник сопротивлений и векторная диаграмма</li><li>чем активная мощность отличается от реактивной и полной</li><li>что такое cos φ и почему его стараются повысить</li><li>что такое резонанс напряжений и токов, где он полезен и чем опасен</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Резистор и катушка в одной цепи</a><a href="#s2">2. Треугольник сопротивлений</a><a href="#s3">3. Векторная диаграмма: почему 132 + 176 ≠ 220</a><a href="#s4">4. Три мощности</a><a href="#s5">5. Коэффициент мощности cos φ</a><a href="#s6">6. Резонанс</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a><a href="#lab">Попробуйте в лаборатории</a></nav>
+<article>
+<h2 id="s1">1. Резистор и катушка в одной цепи</h2>
+<p>На прошлой паре мы узнали: у резистора ток и напряжение «в ногу», у катушки ток отстаёт на 90°. А что будет, если включить их <strong>последовательно</strong>? Так устроен почти любой реальный потребитель: двигатель, сварочный трансформатор, дроссель — у их обмоток есть и сопротивление провода R, и индуктивность L.</p>
+<p>Ток в последовательной цепи один и тот же. Но напряжение на резисторе совпадает с током по фазе, а на катушке — опережает его на 90°. Их вершины приходят в разное время, поэтому <strong>просто сложить их нельзя</strong>.</p>
+<h2 id="s2">2. Треугольник сопротивлений</h2>
+<figure><img src="img/ac_b_tri.png" alt="Прямоугольный треугольник: катеты R = 30 Ом и XL = 40 Ом, гипотенуза Z = 50 Ом"><figcaption>Прямоугольный треугольник: катеты R = 30 Ом и XL = 40 Ом, гипотенуза Z = 50 Ом</figcaption></figure>
+<p>Сопротивления R и XL складываются <strong>«под прямым углом»</strong> — как катеты прямоугольного треугольника. Гипотенуза — <strong>полное сопротивление Z</strong>:</p>
+<div class="box formula">
+<p>Z = √(R² + XL²)</p>
+</div>
+<div class="box example">
+<p><strong>Пример.</strong> R = 30 Ом, XL = 40 Ом.
+Z = √(900 + 1600) = √2500 = <strong>50 Ом</strong> — не 70! Это «египетский треугольник» 3–4–5.</p>
+</div>
+<p>Если в цепи есть ещё и конденсатор, его XC вычитается из XL:</p>
+<div class="box formula">
+<p>Z = √(R² + (XL − XC)²)</p>
+</div>
+<p>Дальше всё как обычно — закон Ома: <strong>I = U / Z</strong>.</p>
+<h2 id="s3">3. Векторная диаграмма: почему 132 + 176 ≠ 220</h2>
+<figure><img src="img/ac_b_vec.png" alt="Цепь R и L в сети 220 В: вольтметр на R показывает 132 В, на L — 176 В; на диаграмме UR и UL — катеты, U = 220 В — гипотенуза"><figcaption>Цепь R и L в сети 220 В: вольтметр на R показывает 132 В, на L — 176 В; на диаграмме UR и UL — катеты, U = 220 В — гипотенуза</figcaption></figure>
+<p>Поставьте вольтметры на резистор и на катушку. Один покажет 132 В, другой — 176 В. В сумме 308 В, а в сети всего 220 В! Ошибки нет: напряжения сдвинуты на 90° и складываются как катеты:</p>
+<div class="box formula">
+<p>U = √(UR² + UL²) = √(132² + 176²) = 220 В</p>
+</div>
+<p><strong>Векторная диаграмма</strong> — это рисунок, где каждое напряжение — стрелка. UR рисуют вдоль тока, UL — вверх под 90°, U — их сумма (гипотенуза). Угол между U и током — <strong>сдвиг фаз φ</strong>.</p>
+<h2 id="s4">4. Три мощности</h2>
+<figure><img src="img/ac_b_pow.png" alt="Треугольник мощностей: P — активная (катет), Q — реактивная (катет), S — полная (гипотенуза); формулы P = U·I·cos φ, Q = U·I·sin φ, S = U·I"><figcaption>Треугольник мощностей: P — активная (катет), Q — реактивная (катет), S — полная (гипотенуза); формулы P = U·I·cos φ, Q = U·I·sin φ, S = U·I</figcaption></figure>
+<p>В цепи с катушкой энергия ведёт себя двояко. Часть превращается в тепло и работу — это <strong>полезная</strong> мощность. А часть «гуляет» туда-обратно: катушка набирает энергию в магнитное поле и тут же отдаёт её обратно в сеть.</p>
+<ul>
+<li><strong>Активная мощность P = U · I · cos φ</strong>, в ваттах [Вт] — полезная: тепло, вращение вала.</li>
+<li><strong>Реактивная мощность Q = U · I · sin φ</strong>, в вольт-амперах реактивных [вар] — «гуляет» между сетью и катушками, работы не совершает, но <strong>греет провода</strong>.</li>
+<li><strong>Полная мощность S = U · I</strong>, в вольт-амперах [В·А] — то, на что рассчитаны провода и трансформаторы.</li>
+</ul>
+<div class="box formula">
+<p>S² = P² + Q²</p>
+</div>
+<figure><img src="img/ac_b_kvas.png" alt="Кружка кваса с пеной: вся кружка — полная мощность S, квас — активная P, пена — реактивная Q"><figcaption>Кружка кваса с пеной: вся кружка — полная мощность S, квас — активная P, пена — реактивная Q</figcaption></figure>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p><strong>Кружка кваса.</strong> Вся кружка — полная мощность S. Квас — активная P, её вы пьёте. Пена — реактивная Q: место в кружке занимает, а напиться ею нельзя. Платите за всю кружку.</p>
+</div>
+<p>Поэтому мощность сварочных аппаратов и трансформаторов пишут в <strong>кВ·А</strong>: важно, какой ток пойдёт по проводам, а не только сколько энергии станет полезной работой.</p>
+<h2 id="s5">5. Коэффициент мощности cos φ</h2>
+<div class="box formula">
+<p>cos φ = P / S = R / Z</p>
+</div>
+<p>cos φ показывает, какая доля полной мощности полезная. У чайника cos φ = 1 (только резистор). У двигателя — 0,8–0,9. У сварочного трансформатора на холостом ходу — очень низкий.</p>
+<figure><img src="img/ac_b_cos.png" alt="Два двигателя по 5 кВт: при cos φ = 1 ток 23 А, при cos φ = 0,5 — 45 А"><figcaption>Два двигателя по 5 кВт: при cos φ = 1 ток 23 А, при cos φ = 0,5 — 45 А</figcaption></figure>
+<div class="box example">
+<p><strong>Пример.</strong> Двигатель 5 кВт при 220 В.
+При cos φ = 1: I = 5000 / 220 ≈ <strong>23 А</strong>.
+При cos φ = 0,5: I = 5000 / (220 · 0,5) ≈ <strong>45 А</strong> — вдвое больше! Та же работа, а провода греются в 4 раза сильнее.</p>
+</div>
+<p><strong>Как повышают cos φ:</strong></p>
+<ul>
+<li>ставят <strong>конденсаторные установки</strong> — конденсаторы компенсируют реактивную мощность катушек;</li>
+<li>не держат двигатели и сварочные трансформаторы <strong>на холостом ходу</strong>: без нагрузки у них очень низкий cos φ.</li>
+</ul>
+<h2 id="s6">6. Резонанс</h2>
+<figure><img src="img/ac_b_res.png" alt="Кривая тока от частоты: ток максимален на резонансной частоте f0, где XL = XC и Z = R"><figcaption>Кривая тока от частоты: ток максимален на резонансной частоте f0, где XL = XC и Z = R</figcaption></figure>
+<p>Катушка и конденсатор действуют противоположно: у одной ток отстаёт, у другого опережает. Если их сопротивления равны, они <strong>гасят друг друга</strong>. Это <strong>резонанс</strong>:</p>
+<div class="box formula">
+<p>XL = XC</p>
+</div>
+<p>Аналогия — качели: если толкать их точно в такт, они раскачиваются очень сильно даже от слабых толчков.</p>
+<p>Посмотрите, как меняется ток, когда частота проходит через резонанс:</p>
+<div class="emb" data-w="1664" data-h="540"><iframe title="Анимация" srcdoc="&lt;style&gt;html,body{margin:0;height:100%;background:transparent;overflow:hidden}canvas{width:100%;height:100%;display:block}&lt;/style&gt;&lt;canvas id=&quot;c&quot;&gt;&lt;/canvas&gt;&lt;script&gt;const cv=document.getElementById(&#x27;c&#x27;),cx=cv.getContext(&#x27;2d&#x27;);const W=cv.clientWidth,H=cv.clientHeight,dpr=window.devicePixelRatio||1;cv.width=W*dpr;cv.height=H*dpr;cx.scale(dpr,dpr);
+const INK=&#x27;#1B1A17&#x27;,PAP=&#x27;#F2EEE3&#x27;,RED=&#x27;#A3271F&#x27;,F=&quot;Georgia,&#x27;PT Serif&#x27;,&#x27;Times New Roman&#x27;,serif&quot;;
+function L(x1,y1,x2,y2,w,c){cx.strokeStyle=c||INK;cx.lineWidth=w||4;cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);cx.stroke();}
+function C(x,y,r,fill,stroke,w){cx.beginPath();cx.arc(x,y,r,0,7);if(fill){cx.fillStyle=fill;cx.fill();}if(stroke){cx.strokeStyle=stroke;cx.lineWidth=w||3;cx.stroke();}}
+function TX(s,x,y,size,col,al,bold){cx.font=(bold?&#x27;bold &#x27;:&#x27;&#x27;)+size+&#x27;px &#x27;+F;cx.fillStyle=col||INK;cx.textAlign=al||&#x27;left&#x27;;cx.fillText(s,x,y);}
+function PL(s,x,y,size){cx.font=&#x27;bold &#x27;+(size||26)+&quot;px &#x27;Arial Narrow&#x27;,Arial,sans-serif&quot;;const w=cx.measureText(s).width;cx.fillStyle=INK;cx.fillRect(x-12,y-size*0.85-8,w+24,size*1.2+12);cx.fillStyle=PAP;cx.textAlign=&#x27;left&#x27;;cx.fillText(s,x,y);}
+function DIODE(x1,y1,x2,y2,on,sz){sz=sz||26;const a=Math.atan2(y2-y1,x2-x1),mx=(x1+x2)/2,my=(y1+y2)/2;const col=on?RED:INK,w=on?7:4;L(x1,y1,x2,y2,w,col);
+ cx.save();cx.translate(mx,my);cx.rotate(a);cx.beginPath();cx.moveTo(-sz,-sz);cx.lineTo(-sz,sz);cx.lineTo(sz*0.8,0);cx.closePath();cx.fillStyle=on?RED:PAP;cx.fill();cx.strokeStyle=col;cx.lineWidth=4;cx.stroke();
+ cx.beginPath();cx.moveTo(sz*0.8,-sz);cx.lineTo(sz*0.8,sz);cx.lineWidth=6;cx.stroke();cx.restore();}
+function ARROW(x1,y1,x2,y2,c,w){L(x1,y1,x2,y2,w||4,c);const a=Math.atan2(y2-y1,x2-x1);cx.fillStyle=c||INK;cx.beginPath();cx.moveTo(x2,y2);cx.lineTo(x2-18*Math.cos(a-0.4),y2-18*Math.sin(a-0.4));cx.lineTo(x2-18*Math.cos(a+0.4),y2-18*Math.sin(a+0.4));cx.closePath();cx.fill();}
+
+const gx=60,gy=H-60,gw=W*0.55,gh=H-110;let t0=performance.now();
+function I(f){const X=f-1/f,R=0.18;return R/Math.sqrt(R*R+X*X);}
+function frame(now){cx.clearRect(0,0,W,H);const u=((now-t0)%9000)/9000;const k=u&lt;0.5?u*2:2-u*2;const f=0.3+k*1.4;
+ L(gx,gy,gx+gw,gy,3);L(gx,gy,gx,gy-gh,3);TX(&#x27;f&#x27;,gx+gw-10,gy+36,28,INK);TX(&#x27;I&#x27;,gx+12,gy-gh+10,28,INK);
+ cx.lineWidth=6;cx.strokeStyle=INK;cx.beginPath();for(let i=0;i&lt;=gw;i++){const ff=0.3+i/gw*1.4;const y=gy-I(ff)*gh*0.95;i?cx.lineTo(gx+i,y):cx.moveTo(gx+i,y);}cx.stroke();
+ const px=gx+(f-0.3)/1.4*gw,py=gy-I(f)*gh*0.95;cx.setLineDash([8,8]);L(px,gy,px,py,3,RED);cx.setLineDash([]);C(px,py,12,RED);
+ const fx=gx+(1-0.3)/1.4*gw;TX(&#x27;f₀&#x27;,fx,gy+36,28,INK,&#x27;center&#x27;,true);
+ // current meter bar
+ const bx=W*0.7,bw=W*0.24,bh=60,by=H*0.35;cx.strokeStyle=INK;cx.lineWidth=4;cx.strokeRect(bx,by,bw,bh);cx.fillStyle=RED;cx.fillRect(bx+4,by+4,(bw-8)*I(f),bh-8);
+ TX(&#x27;ток в цепи&#x27;,bx,by-16,28,INK);
+ TX(&#x27;частота: &#x27;+Math.round(f*50)+&#x27; Гц&#x27;,bx,by+bh+56,30,INK,&#x27;left&#x27;,true);
+ PL(Math.abs(f-1)&lt;0.06?&#x27;РЕЗОНАНС! XL = XC&#x27;:(f&lt;1?&#x27;XC БОЛЬШЕ XL&#x27;:&#x27;XL БОЛЬШЕ XC&#x27;),bx,by+bh+130,28);
+ requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+&lt;/script&gt;" width="1664" height="540" loading="lazy"></iframe></div>
+<figure><img src="img/ac_b_two.png" alt="Последовательно: в сети 220 В на катушке и конденсаторе по 691 В — опасно; параллельно: общий ток мал, а токи в ветвях большие"><figcaption>Последовательно: в сети 220 В на катушке и конденсаторе по 691 В — опасно; параллельно: общий ток мал, а токи в ветвях большие</figcaption></figure>
+<p><strong>Резонанс напряжений</strong> — L и C включены <strong>последовательно</strong>. Сопротивление минимально (Z = R), ток максимален. Напряжения на катушке и конденсаторе могут быть <strong>во много раз больше</strong> сетевого: в сети 220 В — 691 В на катушке!</p>
+<p><strong>Резонанс токов</strong> — L и C включены <strong>параллельно</strong>. Общий ток из сети минимален, а внутри, между катушкой и конденсатором, «качаются» большие токи.</p>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p>При резонансе напряжений изоляция катушек и конденсаторов может не выдержать — пробой. Конденсаторы ставят только с запасом по напряжению.</p>
+</div>
+<p><strong>Где резонанс полезен:</strong></p>
+<ul>
+<li>настройка радиоприёмника на станцию — вращая ручку, мы меняем C, пока не наступит резонанс на частоте станции;</li>
+<li>компенсация реактивной мощности на заводах — по сути это резонанс токов: конденсаторы «качают» реактивный ток с двигателями, а из сети берётся только активный.</li>
+</ul>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>Полное сопротивление Z</strong> — общее сопротивление цепи переменного тока, Z = √(R² + XL²).</li>
+<li><strong>Треугольник сопротивлений</strong> — катеты R и XL, гипотенуза Z.</li>
+<li><strong>Векторная диаграмма</strong> — рисунок, где напряжения и токи — стрелки с углами между ними.</li>
+<li><strong>Активная мощность P</strong> — полезная, в ваттах.</li>
+<li><strong>Реактивная мощность Q</strong> — «гуляет» между сетью и катушками, в варах.</li>
+<li><strong>Полная мощность S</strong> — U · I, в вольт-амперах.</li>
+<li><strong>cos φ</strong> — коэффициент мощности: доля полезной мощности.</li>
+<li><strong>Резонанс</strong> — состояние, когда XL = XC.</li>
+<li><strong>Резонанс напряжений</strong> — при последовательном соединении L и C.</li>
+<li><strong>Резонанс токов</strong> — при параллельном соединении L и C.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · А3 · БИЛЕТ 21</span><h3>Цепь с R и L, треугольник сопротивлений</h3><p class="q">Неразветвлённая цепь с R и L (RLC): полное сопротивление, треугольник сопротивлений, векторная диаграмма.</p><ol><li>Резистор и катушка включены последовательно. Их сопротивления нельзя просто сложить — они складываются «под прямым углом».</li><li>Полное сопротивление: Z = √(R² + XL²). Если есть и конденсатор: Z = √(R² + (XL – XC)²).</li><li>Треугольник сопротивлений: катеты R и XL, гипотенуза Z. Пример: R = 30 Ом, XL = 40 Ом → Z = 50 Ом (египетский треугольник 3–4–5). (Нарисуйте.)</li><li>Закон Ома: I = U / Z. Коэффициент мощности: cos φ = R / Z.</li><li>Векторная диаграмма: UR — вдоль тока, UL — вверх под 90°, U — их сумма (гипотенуза). Поэтому вольтметры покажут UR + UL больше, чем U.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · А4 · БИЛЕТ 22</span><h3>Активная, реактивная и полная мощность</h3><p class="q">Активная, реактивная и полная мощность. Коэффициент мощности cos φ и способы его повышения.</p><ol><li>Активная P = U·I·cos φ, [Вт] — полезная мощность (тепло, работа двигателя).</li><li>Реактивная Q = U·I·sin φ, [вар] — «гуляет» между сетью и катушками, работы не совершает, но греет провода.</li><li>Полная S = U·I, [В·А]; S² = P² + Q². В кВ·А указывают мощность трансформаторов и сварочных аппаратов.</li><li>Аналогия: кружка кваса с пеной. Квас — активная мощность, пена — реактивная, вся кружка — полная.</li><li>cos φ = P / S — какая доля мощности полезная. Низкий cos φ = лишний ток. Повышают: конденсаторные установки, не держать двигатели и сварочные трансформаторы на холостом ходу.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · А5 · БИЛЕТ 23</span><h3>Резонанс</h3><p class="q">Резонанс напряжений и резонанс токов: условия, проявления, применение и опасность.</p><ol><li>Резонанс наступает, когда XL = XC: катушка и конденсатор «гасят» друг друга. Аналогия: качели, которые раскачивают точно в такт.</li><li>Резонанс напряжений — L и C включены последовательно. Сопротивление минимально (Z = R), ток максимален. Напряжения на L и C могут быть намного больше сетевого — опасно для изоляции.</li><li>Резонанс токов — L и C включены параллельно. Общий ток минимален, а токи в ветвях большие.</li><li>Применение: настройка радиоприёмника на станцию, компенсация реактивной мощности на предприятиях (резонанс токов).</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>R = 6 Ом, XL = 8 Ом. Найдите Z.</summary><p>Z = √(36 + 64) = √100 = 10 Ом.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>Вольтметр на резисторе показывает 132 В, на катушке — 176 В. Каково напряжение сети?</summary><p>√(132² + 176²) = 220 В. Напряжения складываются под прямым углом.</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>Чем отличается активная мощность от реактивной?</summary><p>Активная превращается в тепло и работу. Реактивная «гуляет» между сетью и катушками и работы не совершает, но греет провода.</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>S = 10 кВ·А, P = 8 кВт. Найдите cos φ и Q.</summary><p>cos φ = 8 / 10 = 0,8; Q = √(100 − 64) = 6 квар.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>Почему низкий cos φ — плохо?</summary><p>Для той же полезной мощности нужен больший ток — провода и трансформаторы перегружаются и греются.</p></details>
+
+<details class="qa"><summary><span class="qn">6</span>Как повысить cos φ на предприятии?</summary><p>Поставить конденсаторные установки и не держать двигатели и сварочные трансформаторы на холостом ходу.</p></details>
+
+<details class="qa"><summary><span class="qn">7</span>Когда наступает резонанс?</summary><p>Когда индуктивное сопротивление равно ёмкостному: XL = XC.</p></details>
+
+<details class="qa"><summary><span class="qn">8</span>Чем опасен резонанс напряжений?</summary><p>Напряжения на катушке и конденсаторе могут быть во много раз больше сетевого — пробой изоляции.</p></details>
+<h2 id="lab">Попробуйте в лаборатории</h2><p>Откройте на телефоне или компьютере — ничего устанавливать не нужно.</p><div class="labs"><a href="https://mexstura-sudo.github.io/lab-electro/ac-current/#tri"><span>Лаборатория</span>Треугольник и мощность — «кружка кваса»</a><a href="https://mexstura-sudo.github.io/lab-electro/ac-current/#res"><span>Лаборатория</span>Резонанс — кривая тока</a><a href="https://mexstura-sudo.github.io/lab-electro/ac-current/#quiz"><span>Лаборатория</span>Проверь себя — тест из 12 вопросов</a></div>
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>Z = √(36 + 64) = √100 = 10 Ом.</li><li>√(132² + 176²) = 220 В. Напряжения складываются под прямым углом.</li><li>Активная превращается в тепло и работу. Реактивная «гуляет» между сетью и катушками и работы не совершает, но греет провода.</li><li>cos φ = 8 / 10 = 0,8; Q = √(100 − 64) = 6 квар.</li><li>Для той же полезной мощности нужен больший ток — провода и трансформаторы перегружаются и греются.</li><li>Поставить конденсаторные установки и не держать двигатели и сварочные трансформаторы на холостом ходу.</li><li>Когда индуктивное сопротивление равно ёмкостному: XL = XC.</li><li>Напряжения на катушке и конденсаторе могут быть во много раз больше сетевого — пробой изоляции.</li></ol></section>
+</article>
+<nav class="pager"><a href="p11.html">← Пара 11. Переменный ток</a><a href="p13.html">Пара 13. ПР № 4. Цепь R и L →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

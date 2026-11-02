@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 16. Трёхфазные цепи — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 16 · тема 1.6</p>
+<header class="hero">
+<div class="hand">Пара 16</div>
+<h1>Трёхфазные цепи</h1>
+<p class="lead">Почему у розетки в мастерской пять контактов, откуда берутся 380 вольт и что будет в доме, если оборвётся ноль.</p>
+<div class="meta"><span>Тема 1.6</span><span>Чтение: 40–50 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>что такое три фазы и почему их сдвигают на 120°</li><li>как называются провода L1, L2, L3, N, PE</li><li>откуда 220 и 380 В и что значит 1,73</li><li>как работают звезда и треугольник</li><li>чем опасен обрыв нулевого провода</li><li>как считать мощность и как подключают сварочное оборудование</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Где вы видите три фазы</a><a href="#s2">2. Три волны через 120°</a><a href="#s3">3. Пять проводов</a><a href="#s4">4. Соединение звездой</a><a href="#s5">5. Обрыв нуля</a><a href="#s6">6. Соединение треугольником</a><a href="#s7">7. Мощность</a><a href="#s8">8. Как подключают сварочное оборудование</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a><a href="#lab">Попробуйте в лаборатории</a></nav>
+<article>
+<h2 id="s1">1. Где вы видите три фазы</h2>
+<p>Дома почти всё работает от 220 В: вилка с двумя штырями. А в мастерской у станков, компрессора, сварочных выпрямителей и полуавтоматов вилки большие, с четырьмя-пятью контактами, и там 380 В. Это <strong>трёхфазная сеть</strong>.</p>
+<ul>
+<li><strong>Мастерская:</strong> станки, компрессор, сварочные выпрямители и полуавтоматы.</li>
+<li><strong>Дом:</strong> в подъезд приходят три фазы, каждая квартира подключена к одной фазе и нулю.</li>
+<li><strong>Энергосистема:</strong> генераторы электростанций, линии и трансформаторы — всё трёхфазное. Посмотрите на опору высоковольтной линии: проводов 3 или 6.</li>
+</ul>
+<h2 id="s2">2. Три волны через 120°</h2>
+<figure><img src="img/p16_g_cover.png" alt="Генератор с тремя обмотками по кругу; три синусоиды L1, L2, L3 сдвинуты на 120°; провода L1, L2, L3 и N"><figcaption>Генератор с тремя обмотками по кругу; три синусоиды L1, L2, L3 сдвинуты на 120°; провода L1, L2, L3 и N</figcaption></figure>
+<p>В генераторе не одна обмотка, а <strong>три</strong>. Они расположены по кругу через 120°, внутри вращается магнит. Он по очереди проходит мимо каждой обмотки — и в каждой появляется своё напряжение. Получаются <strong>три одинаковые волны, сдвинутые на треть периода — на 120°</strong>.</p>
+<figure><img src="img/p16_g_waves.png" alt="Три синусоиды — сплошная, штриховая и пунктирная — сдвинуты на 120°; справа три вектора через 120°"><figcaption>Три синусоиды — сплошная, штриховая и пунктирная — сдвинуты на 120°; справа три вектора через 120°</figcaption></figure>
+<p>Посмотрите: три вектора вращаются вместе, их проекции рисуют три синусоиды, а сумма мгновенных значений всё время равна нулю.</p>
+<div class="emb" data-w="1664" data-h="540"><iframe title="Анимация" srcdoc="&lt;style&gt;html,body{margin:0;height:100%;background:transparent;overflow:hidden}canvas{width:100%;height:100%;display:block}&lt;/style&gt;&lt;canvas id=&quot;c&quot;&gt;&lt;/canvas&gt;&lt;script&gt;const cv=document.getElementById(&#x27;c&#x27;),cx=cv.getContext(&#x27;2d&#x27;);const W=cv.clientWidth,H=cv.clientHeight,dpr=window.devicePixelRatio||1;cv.width=W*dpr;cv.height=H*dpr;cx.scale(dpr,dpr);
+const INK=&#x27;#1B1A17&#x27;,PAP=&#x27;#F2EEE3&#x27;,RED=&#x27;#A3271F&#x27;,F=&quot;Georgia,&#x27;PT Serif&#x27;,&#x27;Times New Roman&#x27;,serif&quot;;
+function L(x1,y1,x2,y2,w,c){cx.strokeStyle=c||INK;cx.lineWidth=w||4;cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);cx.stroke();}
+function C(x,y,r,fill,stroke,w){cx.beginPath();cx.arc(x,y,r,0,7);if(fill){cx.fillStyle=fill;cx.fill();}if(stroke){cx.strokeStyle=stroke;cx.lineWidth=w||3;cx.stroke();}}
+function TX(s,x,y,size,col,al,bold){cx.font=(bold?&#x27;bold &#x27;:&#x27;&#x27;)+size+&#x27;px &#x27;+F;cx.fillStyle=col||INK;cx.textAlign=al||&#x27;left&#x27;;cx.fillText(s,x,y);}
+function PL(s,x,y,size){cx.font=&#x27;bold &#x27;+(size||26)+&quot;px &#x27;Arial Narrow&#x27;,Arial,sans-serif&quot;;const w=cx.measureText(s).width;cx.fillStyle=INK;cx.fillRect(x-12,y-size*0.85-8,w+24,size*1.2+12);cx.fillStyle=PAP;cx.textAlign=&#x27;left&#x27;;cx.fillText(s,x,y);}
+function DIODE(x1,y1,x2,y2,on,sz){sz=sz||26;const a=Math.atan2(y2-y1,x2-x1),mx=(x1+x2)/2,my=(y1+y2)/2;const col=on?RED:INK,w=on?7:4;L(x1,y1,x2,y2,w,col);
+ cx.save();cx.translate(mx,my);cx.rotate(a);cx.beginPath();cx.moveTo(-sz,-sz);cx.lineTo(-sz,sz);cx.lineTo(sz*0.8,0);cx.closePath();cx.fillStyle=on?RED:PAP;cx.fill();cx.strokeStyle=col;cx.lineWidth=4;cx.stroke();
+ cx.beginPath();cx.moveTo(sz*0.8,-sz);cx.lineTo(sz*0.8,sz);cx.lineWidth=6;cx.stroke();cx.restore();}
+function ARROW(x1,y1,x2,y2,c,w){L(x1,y1,x2,y2,w||4,c);const a=Math.atan2(y2-y1,x2-x1);cx.fillStyle=c||INK;cx.beginPath();cx.moveTo(x2,y2);cx.lineTo(x2-18*Math.cos(a-0.4),y2-18*Math.sin(a-0.4));cx.lineTo(x2-18*Math.cos(a+0.4),y2-18*Math.sin(a+0.4));cx.closePath();cx.fill();}
+
+const DS=[[],[16,10],[3,9]];let t0=performance.now();
+function frame(now){cx.clearRect(0,0,W,H);const t=Math.max(0,now-t0)/1000*0.22;const th=2*Math.PI*t;
+ const pcx=H*0.5,pcy=H*0.5,R=H*0.38;cx.strokeStyle=&#x27;#8a97a3&#x27;;cx.lineWidth=2;cx.beginPath();cx.arc(pcx,pcy,R,0,7);cx.stroke();
+ const v=[];for(let k=0;k&lt;3;k++){const a=th-k*2*Math.PI/3;const x=pcx+R*Math.cos(a),y=pcy-R*Math.sin(a);v.push(Math.sin(a));
+  cx.setLineDash(DS[k]);cx.strokeStyle=k===2?RED:INK;cx.lineWidth=6;cx.beginPath();cx.moveTo(pcx,pcy);cx.lineTo(x,y);cx.stroke();cx.setLineDash([]);
+  C(x,y,9,k===2?RED:INK);cx.setLineDash([4,6]);L(x,y,pcx+R*1.25+10,y,1.5,&#x27;#8a97a3&#x27;);cx.setLineDash([]);
+  TX(String(k+1),pcx+(R+30)*Math.cos(a),pcy-(R+30)*Math.sin(a)+10,28,k===2?RED:INK,&#x27;center&#x27;,true);}
+ const x0=pcx+R*1.25+10,w=W-x0-260,y0=pcy,A=R;L(x0,y0,x0+w,y0,2,&#x27;#8a97a3&#x27;);L(x0,y0-A-10,x0,y0+A+10,2,&#x27;#8a97a3&#x27;);
+ for(let k=0;k&lt;3;k++){cx.setLineDash(DS[k]);cx.strokeStyle=k===2?RED:INK;cx.lineWidth=5;cx.beginPath();for(let i=0;i&lt;=w;i+=2){const a=th-k*2*Math.PI/3-i/w*4*Math.PI;const y=y0-A*Math.sin(a);i?cx.lineTo(x0+i,y):cx.moveTo(x0+i,y);}cx.stroke();}cx.setLineDash([]);
+ const xr=W-240;TX(&#x27;u1 = &#x27;+Math.round(311*v[0]),xr,H*0.25,30,INK,&#x27;left&#x27;,true);TX(&#x27;u2 = &#x27;+Math.round(311*v[1]),xr,H*0.38,30,INK,&#x27;left&#x27;,true);TX(&#x27;u3 = &#x27;+Math.round(311*v[2]),xr,H*0.51,30,RED,&#x27;left&#x27;,true);
+ const s=Math.round(311*(v[0]+v[1]+v[2]));PL(&#x27;СУММА = &#x27;+(Math.abs(s)&lt;1?0:s),xr,H*0.7,28);TX(&#x27;120° между&#x27;,xr,H*0.86,26,INK,&#x27;left&#x27;);TX(&#x27;соседями&#x27;,xr,H*0.93,26,INK,&#x27;left&#x27;);
+ requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+&lt;/script&gt;" width="1664" height="540" loading="lazy"></iframe></div>
+<figure><img src="img/p16_g_sum.png" alt="В любой момент сумма трёх фаз — ноль: +311 − 156 − 156 = 0"><figcaption>В любой момент сумма трёх фаз — ноль: +311 − 156 − 156 = 0</figcaption></figure>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p><strong>Главное свойство трёх фаз:</strong> в любой момент сумма трёх напряжений (и токов при одинаковой нагрузке) равна нулю. Когда одна фаза на максимуме +311 В, две другие — по −156 В. Ток уходит по одной фазе и возвращается по двум другим — обратный провод почти не нужен.</p>
+</div>
+<h2 id="s3">3. Пять проводов</h2>
+<figure><img src="img/p16_g_wires.png" alt="От подстанции к дому идут L1, L2, L3, N и PE; между фазами 380 В, между фазой и нулём 220 В"><figcaption>От подстанции к дому идут L1, L2, L3, N и PE; между фазами 380 В, между фазой и нулём 220 В</figcaption></figure>
+<ul>
+<li><strong>L1, L2, L3</strong> — фазы. Цвета: коричневый, чёрный, серый.</li>
+<li><strong>N</strong> — нулевой рабочий провод. Голубой.</li>
+<li><strong>PE</strong> — защитный провод, идёт к корпусам приборов. Жёлто-зелёный. В работе не участвует — он спасает при пробое изоляции.</li>
+</ul>
+<p>Между фазой и нулём — <strong>220 В</strong>. Между двумя фазами — <strong>380 В</strong>. Одна сеть даёт сразу два напряжения.</p>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p>380 В намного опаснее 220 В. Работы с трёхфазной сетью — только электрикам с допуском.</p>
+</div>
+<p><strong>Зачем три фазы?</strong></p>
+<ol>
+<li><strong>Меньше проводов</strong> — ток возвращается по соседним фазам: 3–4 провода вместо 6.</li>
+<li><strong>Вращающееся поле</strong> — три обмотки двигателя создают поле, которое само вращается. Отсюда простые и надёжные асинхронные двигатели.</li>
+<li><strong>Два напряжения</strong> — 220 В для квартир и 380 В для станков и сварки.</li>
+</ol>
+<h2 id="s4">4. Соединение звездой</h2>
+<figure><img src="img/p16_g_star.png" alt="Звезда: концы трёх обмоток сходятся в точку N, от начал — L1, L2, L3; Uф = 220 В, Uл = 380 В"><figcaption>Звезда: концы трёх обмоток сходятся в точку N, от начал — L1, L2, L3; Uф = 220 В, Uл = 380 В</figcaption></figure>
+<p><strong>Звезда (Y):</strong> концы трёх обмоток соединяют в одну точку — <strong>нейтраль</strong> N. От неё идёт нулевой провод, от начал обмоток — фазы.</p>
+<ul>
+<li><strong>Фазное напряжение</strong> Uф — между фазой и нулём, 220 В.</li>
+<li><strong>Линейное напряжение</strong> Uл — между двумя фазами, 380 В.</li>
+</ul>
+<div class="box formula">
+<p>Uл = 1,73 · Uф      Iл = Iф</p>
+</div>
+<figure><img src="img/p16_g_vec.png" alt="Почему 380, а не 440: напряжения вычитаются под углом 120°; сторона треугольника больше вектора в 1,73 раза"><figcaption>Почему 380, а не 440: напряжения вычитаются под углом 120°; сторона треугольника больше вектора в 1,73 раза</figcaption></figure>
+<p><strong>Почему 380, а не 440?</strong> Между двумя фазами напряжения вычитаются, но не как числа, а под углом 120°. Сторона получившегося треугольника длиннее вектора в √3 = 1,73 раза: 220 · 1,73 = 380 В.</p>
+<h2 id="s5">5. Обрыв нуля</h2>
+<figure><img src="img/p16_g_house.png" alt="Ноль цел — в каждой квартире 220 В; обрыв нуля — в одной квартире 90 В, в другой 200 В, в третьей 330 В, телевизор сгорел"><figcaption>Ноль цел — в каждой квартире 220 В; обрыв нуля — в одной квартире 90 В, в другой 200 В, в третьей 330 В, телевизор сгорел</figcaption></figure>
+<p>В подъезде квартиры разбросаны по фазам, и нагрузка на фазах всегда разная: у кого-то плита, у кого-то одна лампочка. <strong>Нулевой провод выравнивает</strong> напряжения: пока он цел, в каждой квартире 220 В.</p>
+<p>Если ноль <strong>оборвался</strong>, точка звезды «уезжает»: где нагрузка большая, напряжение падает (лампы тусклые), где маленькая — растёт почти до 380 В. Горят телевизоры, зарядки, холодильники.</p>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p>Поэтому <strong>в нулевой провод не ставят предохранители и выключатели</strong> — их срабатывание и есть обрыв нуля.</p>
+</div>
+<h2 id="s6">6. Соединение треугольником</h2>
+<figure><img src="img/p16_g_delta.png" alt="Треугольник: три нагрузки по сторонам, вершины — к L1, L2, L3; Uл = Uф = 380 В, Iл = 1,73 · Iф, нуля нет"><figcaption>Треугольник: три нагрузки по сторонам, вершины — к L1, L2, L3; Uл = Uф = 380 В, Iл = 1,73 · Iф, нуля нет</figcaption></figure>
+<p><strong>Треугольник (Δ):</strong> нагрузки соединены по кругу, конец одной — с началом следующей. Каждая сторона стоит между двумя фазами и получает <strong>полные 380 В</strong>. Нулевого провода нет.</p>
+<div class="box formula">
+<p>Uл = Uф      Iл = 1,73 · Iф</p>
+</div>
+<p><strong>Что выбрать:</strong> нагрузка рассчитана на 220 В и нужен ноль — <strong>звезда</strong> (квартиры, освещение). Нагрузка на 380 В — <strong>треугольник</strong> (мощные двигатели, печи).</p>
+<figure><img src="img/p16_g_motor.png" alt="Клеммник двигателя: звезда — одна перемычка через три вывода; треугольник — три вертикальные перемычки"><figcaption>Клеммник двигателя: звезда — одна перемычка через три вывода; треугольник — три вертикальные перемычки</figcaption></figure>
+<p><strong>Клеммник двигателя.</strong> В коробке выводов шесть болтов — начала и концы трёх обмоток. Перемычками собирают звезду или треугольник. Смотрят на шильдик: «Δ/Y 220/380 В» — обмотка на 220 В, в сети 380 В ставим <strong>звезду</strong>. «Δ/Y 380/660 В» — ставим <strong>треугольник</strong>.</p>
+<h2 id="s7">7. Мощность</h2>
+<div class="box formula">
+<p>P = 1,73 · Uл · Iл · cos φ</p>
+</div>
+<figure><img src="img/p16_g_power.png" alt="Три ТЭНа по 1 кВт: звездой — 3 кВт, треугольником — 9 кВт"><figcaption>Три ТЭНа по 1 кВт: звездой — 3 кВт, треугольником — 9 кВт</figcaption></figure>
+<div class="box example">
+<p><strong>Пример.</strong> Двигатель: Uл = 380 В, Iл = 10 А, cos φ = 0,85.
+P = 1,73 · 380 · 10 · 0,85 ≈ <strong>5,6 кВт</strong>.</p>
+</div>
+<p>Одни и те же ТЭНы в треугольнике дают <strong>в 3 раза</strong> больше мощности, чем в звезде: напряжение на каждом в 1,73 раза больше, а мощность растёт как квадрат напряжения.</p>
+<h2 id="s8">8. Как подключают сварочное оборудование</h2>
+<figure><img src="img/p16_g_weld.png" alt="Шины L1, L2, L3, N: инвертор — фаза и ноль, 220 В; трансформатор — две фазы, 380 В; выпрямитель и полуавтомат — три фазы"><figcaption>Шины L1, L2, L3, N: инвертор — фаза и ноль, 220 В; трансформатор — две фазы, 380 В; выпрямитель и полуавтомат — три фазы</figcaption></figure>
+<ul>
+<li><strong>Бытовой инвертор</strong> — фаза и ноль, 220 В.</li>
+<li><strong>Сварочный трансформатор</strong> — две фазы, 380 В. Нагружает только две фазы — перекос.</li>
+<li><strong>Выпрямители и полуавтоматы</strong> — три фазы, 380 В: сеть нагружается равномерно.</li>
+</ul>
+<p>Если в цехе несколько сварочных трансформаторов, их подключают к <strong>разным парам</strong> фаз (L1–L2, L2–L3, L3–L1), чтобы фазы были нагружены одинаково.</p>
+<p>Подключают через <strong>автомат</strong> и разъём или рубильник; сечение кабеля — по току; корпус аппарата — обязательно к <strong>защитному проводу PE</strong>.</p>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>Фаза</strong> — один из трёх проводов под напряжением (L1, L2, L3); также одна из обмоток генератора.</li>
+<li><strong>Нейтраль, ноль N</strong> — общая точка звезды и нулевой рабочий провод.</li>
+<li><strong>PE</strong> — защитный провод к корпусам, жёлто-зелёный.</li>
+<li><strong>Фазное напряжение Uф</strong> — между фазой и нулём, 220 В.</li>
+<li><strong>Линейное напряжение Uл</strong> — между двумя фазами, 380 В.</li>
+<li><strong>Звезда Y</strong> — концы обмоток (нагрузок) в одну точку.</li>
+<li><strong>Треугольник Δ</strong> — обмотки (нагрузки) по кругу, каждая между двумя фазами.</li>
+<li><strong>Симметричная нагрузка</strong> — одинаковая на всех трёх фазах.</li>
+<li><strong>Перекос фаз</strong> — разная нагрузка на фазах.</li>
+<li><strong>1,73 (√3)</strong> — коэффициент между линейными и фазными величинами.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · Ф1 · БИЛЕТ 22</span><h3>Трёхфазная система</h3><p class="q">Трёхфазная система: получение, трёхфазный генератор, сдвиг фаз 120°. Преимущества.</p><ol><li>Трёхфазная система — три переменных напряжения одинаковой частоты, сдвинутые друг относительно друга на 120° (на треть периода). (Нарисуйте три синусоиды.)</li><li>Получают трёхфазным генератором: три обмотки расположены по кругу через 120°, внутри вращается магнит.</li><li>Провода: L1, L2, L3 — фазы; N — ноль; PE — защитный провод.</li><li>Преимущества: экономия проводов; легко получить вращающееся поле для двигателей; сразу два напряжения — 220 и 380 В.</li><li>Пример: в жилой дом приходят три фазы, квартиры подключены к разным фазам; станки в мастерской работают от трёх фаз.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Ф2 · БИЛЕТ 13</span><h3>Соединение «звездой»</h3><p class="q">Соединение «звездой»: фазные и линейные напряжения и токи, роль нулевого провода. Обрыв нуля.</p><ol><li>Звезда (Y): концы трёх обмоток соединены в одну точку (нейтраль), от начал идут фазные провода. (Схема.)</li><li>Фазное напряжение — между фазой и нулём (220 В). Линейное — между двумя фазами (380 В). Uл = 1,73·Uф.</li><li>Токи: Iл = Iф.</li><li>Нулевой провод выравнивает напряжения, когда нагрузка на фазах разная (в одной квартире включена плита, в другой — только лампочка).</li><li>Обрыв нуля: в одних квартирах напряжение падает, в других растёт почти до 380 В — сгорает техника. Поэтому в нулевой провод не ставят предохранители.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Ф3 · БИЛЕТ 25</span><h3>Соединение «треугольником»</h3><p class="q">Соединение «треугольником»: соотношения токов и напряжений. Когда звезда, когда треугольник.</p><ol><li>Треугольник (Δ): конец одной обмотки соединён с началом следующей, нулевого провода нет. (Схема.)</li><li>Напряжения: Uл = Uф — на каждой нагрузке 380 В.</li><li>Токи: Iл = 1,73·Iф (при одинаковой нагрузке).</li><li>Звезда — когда нагрузка рассчитана на 220 В и нужен ноль (квартиры, освещение). Треугольник — когда нагрузка рассчитана на 380 В (мощные двигатели, печи).</li><li>На клеммнике двигателя перемычки ставят «звездой» или «треугольником» — смотрят по шильдику (например, Δ/Y 220/380 В).</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Ф4 · БИЛЕТ 9</span><h3>Мощность трёхфазной цепи, подключение сварки</h3><p class="q">Мощность трёхфазной цепи. Подключение сварочного оборудования к трёхфазной сети.</p><ol><li>Мощность при одинаковой нагрузке фаз: P = 3·Pф = 1,73·Uл·Iл·cos φ.</li><li>Одни и те же нагреватели в «треугольнике» дают в 3 раза больше мощности, чем в «звезде».</li><li>Сварочное оборудование: бытовые инверторы — от 220 В (фаза и ноль); промышленные трансформаторы — от 380 В (две фазы); выпрямители и полуавтоматы — от трёх фаз, они нагружают сеть равномерно.</li><li>Подключают через автомат и разъём (рубильник). Корпус аппарата обязательно заземляют.</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>На сколько градусов сдвинуты фазы?</summary><p>На 120° — треть периода.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>Чему равна сумма напряжений трёх фаз в любой момент?</summary><p>Нулю.</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>Какое напряжение между двумя фазами, если фазное 220 В?</summary><p>220 · 1,73 ≈ 380 В.</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>В каком соединении на каждой нагрузке 380 В?</summary><p>В треугольнике.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>Почему в нулевой провод не ставят предохранитель?</summary><p>Его срабатывание — это обрыв нуля: напряжения на фазах разъедутся, техника сгорит.</p></details>
+
+<details class="qa"><summary><span class="qn">6</span>Шильдик двигателя «Δ/Y 220/380 В», сеть 380 В. Как соединить обмотки?</summary><p>Звездой: обмотка рассчитана на 220 В.</p></details>
+
+<details class="qa"><summary><span class="qn">7</span>Uл = 380 В, Iл = 5 А, cos φ = 0,8. Найдите мощность.</summary><p>P = 1,73 · 380 · 5 · 0,8 ≈ 2,6 кВт.</p></details>
+
+<details class="qa"><summary><span class="qn">8</span>Три ТЭНа в звезде дают 3 кВт. Сколько дадут в треугольнике (если рассчитаны на 380 В)?</summary><p>9 кВт — в 3 раза больше.</p></details>
+
+<details class="qa"><summary><span class="qn">9</span>Как подключают сварочный трансформатор и почему его лучше «раскидывать» по разным парам фаз?</summary><p>К двум фазам, 380 В. Разные пары фаз — чтобы нагрузка на фазах была одинаковой.</p></details>
+<h2 id="lab">Попробуйте в лаборатории</h2><p>Откройте на телефоне или компьютере — ничего устанавливать не нужно.</p><div class="labs"><a href="https://mexstura-sudo.github.io/lab-electro/three-phase/#gen"><span>Лаборатория</span>Генератор — три синусоиды, сумма = 0</a><a href="https://mexstura-sudo.github.io/lab-electro/three-phase/#star"><span>Лаборатория</span>Звезда — обрыв нуля и смещение нейтрали</a><a href="https://mexstura-sudo.github.io/lab-electro/three-phase/#delta"><span>Лаборатория</span>Треугольник — обрыв фазы</a><a href="https://mexstura-sudo.github.io/lab-electro/three-phase/#power"><span>Лаборатория</span>Мощность — ТЭНы звездой и треугольником</a><a href="https://mexstura-sudo.github.io/lab-electro/three-phase/#quiz"><span>Лаборатория</span>Онлайн-тест «Переменный и трёхфазный ток»</a></div>
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>На 120° — треть периода.</li><li>Нулю.</li><li>220 · 1,73 ≈ 380 В.</li><li>В треугольнике.</li><li>Его срабатывание — это обрыв нуля: напряжения на фазах разъедутся, техника сгорит.</li><li>Звездой: обмотка рассчитана на 220 В.</li><li>P = 1,73 · 380 · 5 · 0,8 ≈ 2,6 кВт.</li><li>9 кВт — в 3 раза больше.</li><li>К двум фазам, 380 В. Разные пары фаз — чтобы нагрузка на фазах была одинаковой.</li></ol></section>
+</article>
+<nav class="pager"><a href="p15b.html">← Пара 15. ПР № 6. Измерение сопротивлений</a><a href="p17.html">Пара 17. ПР № 7. Звезда и треугольник →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 10. ПР № 1 и № 2. Расчёт цепи и потери в проводах — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 10 · тема 1.2 (практические работы)</p>
+<header class="hero">
+<div class="hand">Пара 10</div>
+<h1>ПР № 1 и № 2. Расчёт цепи и потери в проводах</h1>
+<p class="lead">Как «свернуть» смешанную цепь в один резистор, проверить себя законами Кирхгофа и понять, куда пропадают вольты в длинных кабелях.</p>
+<div class="meta"><span>Тема 1.2 (практические работы)</span><span>Чтение: 50–60 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>как найти общее сопротивление смешанной цепи</li><li>как по шагам найти все токи и напряжения</li><li>как проверить ответ законами Кирхгофа и балансом мощностей</li><li>как посчитать сопротивление провода по длине и сечению</li><li>сколько вольт и ватт теряется в линии и в сварочных кабелях</li><li>как решить, годятся ли сварочные кабели</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Что нужно сделать</a><a href="#s2">2. ПР № 1. Смешанная цепь</a><a href="#s3">3. ПР № 2. Куда пропадают вольты</a><a href="#s4">4. Как оформить и защитить работы</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a></nav>
+<article>
+<h2 id="s1">1. Что нужно сделать</h2>
+<p>На паре две практические работы. Вариант — ваш номер в журнале. Таблицы вариантов раздаёт преподаватель.</p>
+<ul>
+<li><strong>ПР № 1.</strong> Смешанная цепь из трёх резисторов: найти все токи и напряжения и проверить ответ.</li>
+<li><strong>ПР № 2.</strong> Линия питания сварочного аппарата и сварочные кабели: сколько напряжения и мощности теряется в проводах.</li>
+</ul>
+<p>Понадобятся только калькулятор и четыре правила из тетради по билетам: Т2, Т4, Т5–Т7.</p>
+<h2 id="s2">2. ПР № 1. Смешанная цепь</h2>
+<figure><img src="img/p10_s_pr1.png" alt="Схема: источник U, резистор R1 последовательно, дальше два резистора R2 и R3 параллельно между точками А и Б"><figcaption>Схема: источник U, резистор R1 последовательно, дальше два резистора R2 и R3 параллельно между точками А и Б</figcaption></figure>
+<p>Резистор R1 стоит <strong>в линию</strong> (последовательно) с источником. Резисторы R2 и R3 стоят <strong>рядом</strong> (параллельно) — между одними и теми же точками А и Б.</p>
+<figure><img src="img/p10_s_fold.png" alt="Сворачиваем цепь: R2 и R3 заменяем одним R23, потом R1 и R23 — одним R"><figcaption>Сворачиваем цепь: R2 и R3 заменяем одним R23, потом R1 и R23 — одним R</figcaption></figure>
+<p><strong>Сначала сворачиваем</strong> цепь в один резистор, <strong>потом разворачиваем</strong> обратно и находим всё по закону Ома.</p>
+<div class="box example">
+<p><strong>Образец. Дано:</strong> U = 34 В, R1 = 5 Ом, R2 = 20 Ом, R3 = 30 Ом.</p>
+<ol>
+<li>Параллельные R2 и R3: R23 = R2 · R3 / (R2 + R3) = 20 · 30 / 50 = 600 / 50 = <strong>12 Ом</strong>. Проверка: 12 меньше и 20, и 30 — верно.</li>
+<li>Вся цепь: R = R1 + R23 = 5 + 12 = <strong>17 Ом</strong>.</li>
+<li>Общий ток: I = U / R = 34 / 17 = <strong>2 А</strong>.</li>
+<li>Напряжения: U1 = I · R1 = 2 · 5 = <strong>10 В</strong>; U23 = I · R23 = 2 · 12 = <strong>24 В</strong>.</li>
+<li>Токи ветвей: I2 = U23 / R2 = 24 / 20 = <strong>1,2 А</strong>; I3 = U23 / R3 = 24 / 30 = <strong>0,8 А</strong>.</li>
+</ol>
+</div>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>Сопротивление двух параллельных резисторов всегда <strong>меньше</strong> самого маленького из них. Если получилось больше — ошибка.</p>
+</div>
+<h3>Три проверки</h3>
+<figure><img src="img/p10_s_node.png" alt="Узел: втекает 2 А, вытекает 1,2 А и 0,8 А — как вода в разветвлении трубы"><figcaption>Узел: втекает 2 А, вытекает 1,2 А и 0,8 А — как вода в разветвлении трубы</figcaption></figure>
+<ol>
+<li><strong>Первый закон Кирхгофа</strong> (для узла): сколько тока втекло, столько и вытекло. I2 + I3 = 1,2 + 0,8 = 2 А = I. Совпало.</li>
+</ol>
+<figure><img src="img/p10_s_loop.png" alt="Контур: 10 В на R1 и 24 В на R23 вместе дают 34 В источника"><figcaption>Контур: 10 В на R1 и 24 В на R23 вместе дают 34 В источника</figcaption></figure>
+<ol start="2">
+<li><strong>Второй закон Кирхгофа</strong> (для контура): напряжения на резисторах в сумме равны напряжению источника. U1 + U23 = 10 + 24 = 34 В = U. Совпало.</li>
+</ol>
+<figure><img src="img/p10_s_bal.png" alt="Источник отдал 68 Вт — резисторы вместе выделили 68 Вт тепла"><figcaption>Источник отдал 68 Вт — резисторы вместе выделили 68 Вт тепла</figcaption></figure>
+<ol start="3">
+<li><strong>Баланс мощностей:</strong> сколько отдал источник, столько ушло в тепло.
+   Источник: P = U · I = 34 · 2 = 68 Вт.
+   Резисторы: 2² · 5 + 1,2² · 20 + 0,8² · 30 = 20 + 28,8 + 19,2 = 68 Вт. Совпало.</li>
+</ol>
+<p><strong>Вывод для отчёта:</strong> проверки сошлись, токи найдены верно. Через R2 идёт больший ток, потому что его сопротивление меньше.</p>
+<h3>Задача со звёздочкой</h3>
+<figure><img src="img/p10_s_car.png" alt="Генератор 14 В, аккумулятор 12,6 В и фары автомобиля соединены параллельно"><figcaption>Генератор 14 В, аккумулятор 12,6 В и фары автомобиля соединены параллельно</figcaption></figure>
+<p>В автомобиле генератор, аккумулятор и фары включены параллельно. Если генератор даёт больше, чем аккумулятор, ток идёт <strong>в</strong> аккумулятор — он заряжается. Ток аккумулятора при этом получается со знаком «минус». Так законы Кирхгофа показывают, кто кого заряжает.</p>
+<h2 id="s3">3. ПР № 2. Куда пропадают вольты</h2>
+<figure><img src="img/p10_s_kettle.png" alt="Удлинитель 30 м сечением 1,5 мм² и чайник 2 кВт: в розетке 220 В, на чайнике 214 В — 6 В остались в проводе"><figcaption>Удлинитель 30 м сечением 1,5 мм² и чайник 2 кВт: в розетке 220 В, на чайнике 214 В — 6 В остались в проводе</figcaption></figure>
+<p>Провод — тоже резистор. Чем он длиннее и тоньше, тем больше сопротивление, тем больше вольт «съедает» он по дороге и тем сильнее греется.</p>
+<figure><img src="img/p10_s_wire.png" alt="Длинный и тонкий провод — сопротивление больше; короткий и толстый — меньше"><figcaption>Длинный и тонкий провод — сопротивление больше; короткий и толстый — меньше</figcaption></figure>
+<div class="box formula">
+<p>R = ρ · L / S</p>
+</div>
+<ul>
+<li>ρ — удельное сопротивление: медь <strong>0,0175</strong>, алюминий <strong>0,028</strong> Ом·мм²/м (готовое число из таблицы);</li>
+<li>L — длина провода в метрах;</li>
+<li>S — сечение в мм².</li>
+</ul>
+<figure><img src="img/p10_s_two.png" alt="Ток идёт к нагрузке по одному проводу и возвращается по другому: длина провода — два расстояния"><figcaption>Ток идёт к нагрузке по одному проводу и возвращается по другому: длина провода — два расстояния</figcaption></figure>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>Ток идёт <strong>туда и обратно</strong>. Если аппарат стоит в 25 м от щитка, длина провода L = 2 · 25 = 50 м. Забыли умножить на 2 — ответ вдвое меньше правильного.</p>
+</div>
+<p>Потери в проводе:</p>
+<div class="box formula">
+<p>ΔU = I · R      ΔP = I² · R</p>
+</div>
+<figure><img src="img/p10_s_post.png" alt="Сварочный пост: щиток 220 В, линия питания с током 16–32 А, аппарат, сварочные кабели с током 120–250 А"><figcaption>Сварочный пост: щиток 220 В, линия питания с током 16–32 А, аппарат, сварочные кабели с током 120–250 А</figcaption></figure>
+<p>На сварочном посту <strong>две разные линии</strong>:</p>
+<ul>
+<li><strong>Линия питания</strong> — от щитка до аппарата, ток 16–32 А при 220 В.</li>
+<li><strong>Сварочные кабели</strong> — от аппарата к электрододержателю и к «массе», ток 120–250 А, но напряжение дуги всего 20–35 В.</li>
+</ul>
+<div class="box example">
+<p><strong>Образец, часть А — линия питания.</strong> Медь, S = 4 мм², расстояние 25 м, I = 20 А, в щитке 220 В.</p>
+<ol>
+<li>R = 0,0175 · 2 · 25 / 4 = 0,0175 · 50 / 4 = <strong>0,219 Ом</strong>.</li>
+<li>ΔU = 20 · 0,219 = <strong>4,4 В</strong>.</li>
+<li>На аппарате: 220 − 4,4 = <strong>215,6 В</strong>.</li>
+<li>ΔP = 20² · 0,219 = 400 · 0,219 = <strong>88 Вт</strong>.</li>
+<li>КПД линии = 215,6 / 220 · 100 % = <strong>98 %</strong> — линия в порядке.</li>
+</ol>
+</div>
+<div class="box example">
+<p><strong>Образец, часть Б — сварочные кабели.</strong> Медь, S = 25 мм², каждый кабель 15 м, сварочный ток I = 160 А.</p>
+<ol>
+<li>R = 0,0175 · 2 · 15 / 25 = 0,0175 · 30 / 25 = <strong>0,021 Ом</strong>.</li>
+<li>ΔU = 160 · 0,021 = <strong>3,4 В</strong>.</li>
+<li>ΔP = 160² · 0,021 = 25 600 · 0,021 = <strong>538 Вт</strong> — кабели греются, как половина чайника.</li>
+<li>Напряжение дуги: Uд = 20 + 0,04 · I = 20 + 0,04 · 160 = <strong>26,4 В</strong>.</li>
+<li>Доля потерь: 3,4 / 26,4 · 100 % = <strong>13 %</strong> — больше 10 %.</li>
+</ol>
+</div>
+<figure><img src="img/p10_s_arc.png" alt="Напряжение дуги 26,4 В и потери в кабелях 3,4 В"><figcaption>Напряжение дуги 26,4 В и потери в кабелях 3,4 В</figcaption></figure>
+<p><strong>Вывод:</strong> линия питания в порядке, а сварочные кабели теряют слишком много. Нужен кабель толще (35 мм²) или короче.</p>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>В части Б процент потерь считают <strong>от напряжения дуги</strong>, а не от 220 В. Учебное правило: потери в кабелях — не больше 10 % от напряжения дуги.</p>
+</div>
+<figure><img src="img/p10_s_lep.png" alt="ЛЭП: при 220 В ток 100 А, при 10 000 В ток 2,2 А для той же мощности 22 кВт — потери в 2000 раз меньше"><figcaption>ЛЭП: при 220 В ток 100 А, при 10 000 В ток 2,2 А для той же мощности 22 кВт — потери в 2000 раз меньше</figcaption></figure>
+<p><strong>Почему ЛЭП работают на высоком напряжении.</strong> Для мощности 22 кВт при 220 В нужен ток 100 А, а при 10 000 В — всего 2,2 А. Потери ΔP = I² · R зависят от квадрата тока, поэтому при высоком напряжении они меньше примерно в 2000 раз. Подробнее — в теме «Трансформаторы».</p>
+<h2 id="s4">4. Как оформить и защитить работы</h2>
+<p>В отчёте по каждой работе: схема, «Дано» из своего варианта, все шаги с формулами и числами, три проверки (в ПР № 1), вывод.</p>
+<p><strong>Типичные ошибки:</strong></p>
+<ul>
+<li>R23 получилось больше R2 или R3 — неверно посчитали параллельное соединение.</li>
+<li>В ПР № 2 не умножили длину на 2 — сопротивление и ΔU вдвое меньше нужного.</li>
+<li>Процент потерь в кабелях посчитали от 220 В вместо напряжения дуги.</li>
+<li>Дробь в калькуляторе набирается через точку: 0,0175 → 0.0175.</li>
+</ul>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>Последовательное соединение</strong> — резисторы «в линию», ток одинаковый, сопротивления складываются.</li>
+<li><strong>Параллельное соединение</strong> — резисторы «рядом», напряжение одинаковое, токи складываются.</li>
+<li><strong>Узел</strong> — точка, где сходятся три провода и больше.</li>
+<li><strong>Контур</strong> — замкнутый путь по цепи.</li>
+<li><strong>Баланс мощностей</strong> — мощность источника равна сумме мощностей всех резисторов.</li>
+<li><strong>Удельное сопротивление ρ</strong> — сопротивление провода длиной 1 м и сечением 1 мм².</li>
+<li><strong>Сечение S</strong> — площадь среза жилы провода, в мм².</li>
+<li><strong>Потеря напряжения ΔU</strong> — сколько вольт «съел» провод по дороге.</li>
+<li><strong>КПД линии</strong> — какая доля напряжения дошла до потребителя.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · Т2 · БИЛЕТ 2</span><h3>Сопротивление проводника</h3><p class="q">Электрическое сопротивление проводника: от чего зависит. Почему сварочные кабели делают медными и большого сечения.</p><ol><li>Сопротивление R — насколько проводник мешает току, в омах [Ом].</li><li>R = ρ·l / S: сопротивление больше у длинного и тонкого провода. Медь проводит лучше алюминия.</li><li>При нагреве сопротивление металла растёт. Поэтому лампа накаливания чаще перегорает в момент включения: холодная нить пропускает большой ток.</li><li>В сварке: кабель делают медным и толстым, чтобы он не грелся и не «съедал» напряжение.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Т4 · БИЛЕТ 4</span><h3>Работа и мощность тока</h3><p class="q">Работа и мощность электрического тока. Закон Джоуля–Ленца. Единицы: Дж, Вт, кВт·ч.</p><ol><li>Мощность: P = U·I, в ваттах [Вт]. Чайник — 2000 Вт, светодиодная лампочка — 10 Вт.</li><li>Работа (энергия): A = P·t, [Дж]. Счётчик считает в кВт·ч: чайник 2 кВт за полчаса = 1 кВт·ч.</li><li>Закон Джоуля–Ленца: ток нагревает проводник: Q = I²·R·t.</li><li>Примеры: чайник, утюг, обогреватель; в сварке — нагрев кабеля и контактная (точечная) сварка.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Т5 · БИЛЕТ 5</span><h3>Последовательное соединение</h3><p class="q">Последовательное соединение резисторов: ток, напряжения, общее сопротивление. Пример.</p><ol><li>Резисторы идут один за другим, «в линию». (Нарисуйте схему.)</li><li>Ток везде одинаковый. Напряжения складываются: U = U₁ + U₂.</li><li>Общее сопротивление: R = R₁ + R₂ + R₃.</li><li>Пример: старая ёлочная гирлянда — перегорела одна лампочка, и гаснут все.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Т6 · БИЛЕТ 6</span><h3>Параллельное соединение</h3><p class="q">Параллельное соединение резисторов: токи, напряжение, общее сопротивление. Почему потребители в сети включают параллельно.</p><ol><li>Резисторы подключены «рядом», к одним и тем же точкам. (Нарисуйте схему.)</li><li>Напряжение везде одинаковое. Токи складываются: I = I₁ + I₂.</li><li>Общее сопротивление меньше самого маленького. Для двух: R = R₁·R₂ / (R₁ + R₂).</li><li>Пример: все розетки в квартире. Каждый прибор получает свои 220 В и работает независимо от других.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Т7 · БИЛЕТ 7</span><h3>Законы Кирхгофа</h3><p class="q">Первый и второй законы Кирхгофа. Пример для узла и контура.</p><ol><li>Первый закон: сколько тока втекло в узел, столько и вытекло (как вода в разветвлении труб). ΣI = 0.</li><li>Пример: втекает 5 А, в одну ветку уходит 3 А → в другую 2 А. (Рисунок узла.)</li><li>Второй закон: в замкнутом контуре сумма ЭДС равна сумме напряжений на резисторах: ΣE = ΣI·R.</li><li>Пример: батарейка 12 В и две лампы последовательно → напряжения на лампах в сумме дают 12 В.</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>R2 = 20 Ом и R3 = 30 Ом включены параллельно. Чему равно R23?</summary><p>20 · 30 / (20 + 30) = 12 Ом.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>В узел втекает 5 А, в одну ветку уходит 3 А. Сколько уходит в другую?</summary><p>2 А (первый закон Кирхгофа).</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>Источник 34 В, на R1 падает 10 В. Какое напряжение на остальной части цепи?</summary><p>24 В (второй закон Кирхгофа).</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>Как проверить, что все токи найдены правильно?</summary><p>Тремя проверками: первый закон Кирхгофа для узла, второй — для контура, баланс мощностей.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>Аппарат стоит в 20 м от щитка. Какую длину провода подставлять в формулу?</summary><p>40 м: ток идёт туда и обратно.</p></details>
+
+<details class="qa"><summary><span class="qn">6</span>Медный провод 50 м, сечение 2,5 мм². Найдите сопротивление.</summary><p>R = 0,0175 · 50 / 2,5 = 0,35 Ом.</p></details>
+
+<details class="qa"><summary><span class="qn">7</span>Почему у сварочных кабелей потеря 3 В — это много, а у линии 220 В — мало?</summary><p>Потерю сравнивают с напряжением дуги (20–35 В): 3 В — это около 10 %. Для 220 В те же 3 В — чуть больше 1 %.</p></details>
+
+<details class="qa"><summary><span class="qn">8</span>Что сделать, если сварочные кабели теряют больше 10 %?</summary><p>Взять кабель большего сечения или укоротить его.</p></details>
+
+<details class="qa"><summary><span class="qn">9</span>Почему ЛЭП работают на высоком напряжении?</summary><p>При той же мощности ток меньше, а потери на нагрев пропорциональны квадрату тока.</p></details>
+
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>20 · 30 / (20 + 30) = 12 Ом.</li><li>2 А (первый закон Кирхгофа).</li><li>24 В (второй закон Кирхгофа).</li><li>Тремя проверками: первый закон Кирхгофа для узла, второй — для контура, баланс мощностей.</li><li>40 м: ток идёт туда и обратно.</li><li>R = 0,0175 · 50 / 2,5 = 0,35 Ом.</li><li>Потерю сравнивают с напряжением дуги (20–35 В): 3 В — это около 10 %. Для 220 В те же 3 В — чуть больше 1 %.</li><li>Взять кабель большего сечения или укоротить его.</li><li>При той же мощности ток меньше, а потери на нагрев пропорциональны квадрату тока.</li></ol></section>
+</article>
+<nav class="pager"><a href="p09.html">← Пара 9. Электрическое поле и магнетизм</a><a href="p11.html">Пара 11. Переменный ток →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

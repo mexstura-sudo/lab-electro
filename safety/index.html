@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Лаборатория «Электробезопасность»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+.lamp{display:inline-block;width:22px;height:22px;border-radius:50%;border:3px solid var(--ink);vertical-align:middle}
+.plate{background:#e9e4d6;border:4px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:18px 22px;font-family:var(--label);letter-spacing:1px}
+.plate .pt{display:flex;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:10px;font-weight:700;font-size:20px}
+.plate .pg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 16px}
+.plate .pg div{border-bottom:1px dashed var(--muted);padding:4px 0}
+.plate .pg span{display:block;font-size:13px;color:var(--muted);text-transform:uppercase}
+.plate .pg b{font-size:22px}
+@media (max-width:560px){.plate .pg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="hand">Лаборатория</div>
+  <h1>Электробезопасность</h1>
+  <p>Тема 1.10. Какой ток опасен для человека и от чего он зависит, как спасают заземление, зануление и УЗО, как выбрать автомат и кабель для сварочного аппарата. Всё — безопасно, в модели.</p>
+</header>
+
+<nav aria-label="Разделы">
+  <a href="#body" data-tab="body">1 · Ток через человека</a>
+  <a href="#pe" data-tab="pe">2 · Заземление и УЗО</a>
+  <a href="#brk" data-tab="brk">3 · Автомат для сварки</a>
+  <a href="#quiz" data-tab="quiz">4 · Проверь себя</a>
+</nav>
+
+<section class="panel" data-panel="body">
+  <p class="eyebrow">Опыт 1</p>
+  <h2>Сколько тока пройдёт через человека</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-b" width="1000" height="620" aria-label="Фигура человека, красной линией показан путь тока; справа шкала тока с опасными зонами"></canvas></div>
+    <div class="side">
+      <div><span class="ctl-label">Напряжение прикосновения</span><div class="seg" id="b-u"><button type="button" data-v="12">12 В</button><button type="button" data-v="36">36 В</button><button type="button" data-v="50">50 В</button><button type="button" data-v="220">220 В</button><button type="button" data-v="380">380 В</button></div></div>
+      <div><span class="ctl-label">Путь тока</span><div class="seg" id="b-p"><button type="button" data-v="hh">Рука — рука</button><button type="button" data-v="hf">Рука — ноги</button><button type="button" data-v="ff">Нога — нога</button></div></div>
+      <div><span class="ctl-label">Кожа (примерно)</span><div class="seg" id="b-s"><button type="button" data-v="6000">Сухая</button><button type="button" data-v="1000">Влажная</button><button type="button" data-v="600">Мокрая, ссадина</button></div></div>
+      <div><span class="ctl-label">Обувь и пол</span><div class="seg" id="b-f"><button type="button" data-v="0">Мокрый пол, босиком</button><button type="button" data-v="50000">Ботинки, сухой пол</button><button type="button" data-v="1000000">Диэлектрический коврик</button></div></div>
+      <div class="readouts">
+        <div class="ro"><span>Сопротивление цепи</span><b id="b-r">—</b></div>
+        <div class="ro"><span>Ток через тело</span><b id="b-i">—</b></div>
+      </div>
+      <p class="plaque" id="b-plq">—</p>
+      <p class="note" id="b-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="pe" hidden>
+  <p class="eyebrow">Опыт 2</p>
+  <h2>Пробой изоляции на корпус: что спасёт</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-p" width="1000" height="600" aria-label="Подстанция, провода L, N, PE, аппарат с пробоем на корпус, человек касается корпуса; путь тока аварии и ток через человека"></canvas></div>
+    <div class="side">
+      <div><span class="ctl-label">Защита</span><div class="seg" id="p-m"><button type="button" data-v="none">Нет защиты</button><button type="button" data-v="tt">Заземление</button><button type="button" data-v="tn">Зануление (PE)</button><button type="button" data-v="rcd">PE + УЗО 30 мА</button></div></div>
+      <div><span class="ctl-label">Что случилось</span><div class="seg" id="p-f"><button type="button" data-v="case">Пробой на корпус</button><button type="button" data-v="wire">Касание голого провода фазы</button></div></div>
+      <div id="p-rz"><label class="ctl-label" for="p-r">Сопротивление заземлителя Rз = <b id="p-rv">4</b> Ом</label><input type="range" id="p-r" min="1" max="30" step="1" value="4"></div>
+      <div class="seg"><button class="big" type="button" id="p-go">Случилось!</button><button class="big alt" type="button" id="p-reset">Сначала</button></div>
+      <div class="readouts">
+        <div class="ro"><span>Напряжение на корпусе / проводе</span><b id="p-u">—</b></div>
+        <div class="ro"><span>Ток через человека</span><b id="p-i">—</b></div>
+        <div class="ro"><span>Ток аварии</span><b id="p-k">—</b></div>
+        <div class="ro"><span>Отключение</span><b id="p-t">—</b></div>
+      </div>
+      <p class="plaque" id="p-plq">—</p>
+      <p class="note" id="p-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="brk" hidden>
+  <p class="eyebrow">Опыт 3</p>
+  <h2>Подберите автомат и кабель для сварочного аппарата</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-k" width="1000" height="560" aria-label="Шкала тока: рабочий ток аппарата, номинал автомата, допустимый ток кабеля и бросок при включении относительно зоны мгновенного срабатывания"></canvas></div>
+    <div class="side">
+      <div><span class="ctl-label">Аппарат (ток из сети по паспорту)</span><div class="seg" id="k-d"><button type="button" data-v="9">Болгарка 2 кВт · 9 А</button><button type="button" data-v="20">Полуавтомат · 20 А</button><button type="button" data-v="25">Инвертор 160 А · 25 А</button><button type="button" data-v="32">Инвертор 200 А · 32 А</button></div></div>
+      <div><span class="ctl-label">Автомат, номинал</span><div class="seg" id="k-n"><button type="button" data-v="10">10 А</button><button type="button" data-v="16">16 А</button><button type="button" data-v="25">25 А</button><button type="button" data-v="32">32 А</button><button type="button" data-v="40">40 А</button><button type="button" data-v="50">50 А</button></div></div>
+      <div><span class="ctl-label">Характеристика</span><div class="seg" id="k-c"><button type="button" data-v="B">B (3–5 In)</button><button type="button" data-v="C">C (5–10 In)</button><button type="button" data-v="D">D (10–20 In)</button></div></div>
+      <div><span class="ctl-label">Кабель (медь)</span><div class="seg" id="k-w"><button type="button" data-v="1.5">1,5 мм²</button><button type="button" data-v="2.5">2,5 мм²</button><button type="button" data-v="4">4 мм²</button><button type="button" data-v="6">6 мм²</button></div></div>
+      <p class="plaque" id="k-plq">—</p>
+      <p class="note" id="k-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="quiz" hidden>
+  <p class="eyebrow">Контрольные вопросы</p>
+  <h2>Проверь себя</h2>
+  <div id="quiz-box"></div>
+</section>
+
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">все лаборатории</a> · <a href="../konspekt/p21.html">текст к теме</a></footer>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const INK='#1B1A17',RED='#A3271F',PAP='#FAF8F2',MUT='#6E685C',OK='#2F6B3A',GRID='#b9c6d2',YEL='#E2B23A';
+const LBL="Oswald,'Arial Narrow',Arial,sans-serif",SER="'PT Serif',Georgia,serif";
+const fmt=(x,d)=>(Math.round(x*10**d)/10**d).toFixed(d).replace('.',',');
+function seg(id,cb){$$('#'+id+' button').forEach(b=>b.onclick=()=>{press(id,b.dataset.v);cb(b.dataset.v);});}
+function press(id,v){$$('#'+id+' button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===v)));}
+function val(id){const b=$('#'+id+' button[aria-pressed="true"]');return b?b.dataset.v:null;}
+function T(g,s,x,y,size,col,al,w){g.font=(w||'700')+' '+size+'px '+LBL;g.fillStyle=col||INK;g.textAlign=al||'left';g.fillText(s,x,y);}
+function S(g,s,x,y,size,col,al){g.font='400 '+size+'px '+SER;g.fillStyle=col||INK;g.textAlign=al||'left';g.fillText(s,x,y);}
+function L(g,x1,y1,x2,y2,w,c,d){g.strokeStyle=c||INK;g.lineWidth=w||3;g.setLineDash(d||[]);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.setLineDash([]);}
+function person(g,x,y,sc,col){g.save();g.translate(x,y);g.scale(sc,sc);g.strokeStyle=col||INK;g.lineWidth=7;g.lineCap='round';
+ g.beginPath();g.arc(0,-150,28,0,7);g.fillStyle=PAP;g.fill();g.stroke();
+ g.beginPath();g.moveTo(0,-120);g.lineTo(0,10);g.moveTo(0,-95);g.lineTo(-70,-40);g.moveTo(0,-95);g.lineTo(70,-40);g.moveTo(0,10);g.lineTo(-35,110);g.moveTo(0,10);g.lineTo(35,110);g.stroke();g.restore();}
+function zone(mA){if(mA<0.6)return['НЕ ОЩУЩАЕТСЯ',OK,'Меньше 0,6 мА человек ток не чувствует.'];if(mA<10)return['ОЩУТИМЫЙ ТОК',INK,'0,6–10 мА: покалывание, дрожь, боль. Руку ещё можно отдёрнуть.'];
+ if(mA<50)return['НЕОТПУСКАЮЩИЙ ТОК',RED,'Больше 10–15 мА мышцы сводит судорогой: разжать руку с проводом невозможно. Чем дольше — тем опаснее.'];
+ if(mA<100)return['ОПАСНО ДЛЯ ЖИЗНИ',RED,'50–100 мА: нарушается дыхание, может остановиться сердце, если ток идёт долго.'];return['СМЕРТЕЛЬНО',RED,'Около 100 мА и больше: фибрилляция сердца — оно трепещет и перестаёт качать кровь. Нужна немедленная реанимация.'];}
+
+/* ---------- 1 body ---------- */
+const cb=$('#cv-b'),bx=cb.getContext('2d');
+['b-u','b-p','b-s','b-f'].forEach(id=>seg(id,updB));press('b-u','220');press('b-p','hf');press('b-s','1000');press('b-f','0');
+function calcB(){const U=+val('b-u'),p=val('b-p'),Rs=+val('b-s'),Rf=+val('b-f');const feet=p!=='hh';const R=(p==='ff'?Rs*0.9:Rs)+(feet?Rf:0);return{U,p,R,I:U/R*1000,feet};}
+function updB(){const r=calcB();$('#b-r').textContent=r.R>=1e6?fmt(r.R/1e6,2)+' МОм':fmt(r.R/1000,r.R<10000?1:0)+' кОм';$('#b-i').textContent=r.I<1?fmt(r.I,2)+' мА':fmt(r.I,0)+' мА';
+ const z=zone(r.I);$('#b-plq').textContent=z[0];$('#b-plq').style.background=z[1];
+ let n=z[2];if(r.p!=='ff')n+=' Путь '+(r.p==='hh'?'«рука — рука»':'«рука — ноги»')+' проходит через сердце — самый опасный.';else n+=' Путь «нога — нога» — шаговое напряжение у упавшего провода: через сердце не идёт, но судорога ног роняет человека, и путь тока становится опаснее.';
+ if(r.U<=50&&r.I>=10)n+=' Даже малое напряжение опасно на мокрой коже!';if(r.feet&&+val('b-f')>=1e6)n+=' Диэлектрический коврик и боты — средство защиты: ток через ноги почти перекрыт.';
+ n+=' Расчёт условный: сопротивление тела сильно меняется, по нормам берут 1 кОм.';$('#b-note').textContent=n;drawB(r);}
+function drawB(r){const g=bx,W=1000,H=620;g.clearRect(0,0,W,H);g.fillStyle=PAP;g.fillRect(0,0,W,H);
+ g.fillStyle=r.feet&&+val('b-f')>=1e6?'#3a3a3a':(+val('b-f')===0?'#9fb4c8':'#d9d4c6');g.fillRect(60,520,520,30);S(g,+val('b-f')===0?'мокрый пол':(+val('b-f')>=1e6?'диэлектрический коврик':'сухой пол'),70,580,22,MUT);
+ person(g,320,410,1.1);
+ // source
+ if(r.p!=='ff'){g.fillStyle='#d9d4c6';g.fillRect(430,250,110,80);g.strokeStyle=INK;g.lineWidth=3;g.strokeRect(430,250,110,80);T(g,r.U+' В',485,300,26,RED,'center');}
+ if(r.p==='hh'){g.fillStyle='#d9d4c6';g.fillRect(100,250,110,80);g.strokeRect(100,250,110,80);T(g,'0 В',155,300,26,INK,'center');}
+ // path
+ const Ipath=Math.min(1,r.I/100);g.strokeStyle=RED;g.lineWidth=4+8*Ipath;g.setLineDash([16,10]);g.lineDashOffset=-(performance.now()/40%26);g.beginPath();
+ if(r.p==='hh'){g.moveTo(430,300);g.lineTo(397,366);g.lineTo(320,305);g.lineTo(243,366);g.lineTo(210,300);}
+ else if(r.p==='hf'){g.moveTo(430,300);g.lineTo(397,366);g.lineTo(320,305);g.lineTo(320,421);g.lineTo(281,531);g.moveTo(320,421);g.lineTo(359,531);}
+ else{g.moveTo(240,531);g.lineTo(281,531);g.lineTo(320,421);g.lineTo(359,531);g.lineTo(400,531);T(g,'упавший провод',420,500,22,RED);L(g,420,535,560,535,6,RED);}
+ g.stroke();g.setLineDash([]);
+ if(r.p!=='ff'){g.fillStyle=RED;g.beginPath();g.arc(328,320,12,0,7);g.fill();S(g,'сердце',250,330,20,RED,'right');}
+ // scale
+ const x0=650,y0=560,h=500,lg=v=>y0-Math.max(0,Math.min(1,(Math.log10(v)+1)/4))*h;
+ [[0.1,0.6,OK,'не ощущается'],[0.6,10,'#c9c2b0','ощутимый'],[10,50,'#d9886f','неотпускающий'],[50,100,'#b95a4a','опасный'],[100,1000,RED,'смертельный']].forEach(([a,b,c,t])=>{g.fillStyle=c;g.fillRect(x0,lg(b),60,lg(a)-lg(b));S(g,t,x0+75,(lg(a)+lg(b))/2+7,20,INK);});
+ g.strokeStyle=INK;g.lineWidth=3;g.strokeRect(x0,lg(1000),60,lg(0.1)-lg(1000));
+ [0.1,1,10,100,1000].forEach(v=>{T(g,(v<1?'0,1':v)+'',x0-8,lg(v)+7,18,INK,'right');});T(g,'мА',x0+30,40,20,INK,'center');
+ const yi=lg(Math.max(0.1,Math.min(999,r.I)));L(g,x0-30,yi,x0+70,yi,6,INK);g.fillStyle=INK;g.beginPath();g.moveTo(x0-30,yi-12);g.lineTo(x0-6,yi);g.lineTo(x0-30,yi+12);g.fill();}
+
+/* ---------- 2 PE ---------- */
+const cp=$('#cv-p'),px=cp.getContext('2d');let pm='none',pf='case',pState=0,pT0=0;
+seg('p-m',v=>{pm=v;pState=0;updP();});press('p-m','none');seg('p-f',v=>{pf=v;pState=0;updP();});press('p-f','case');
+$('#p-r').oninput=()=>{$('#p-rv').textContent=$('#p-r').value;updP();};$('#p-go').onclick=()=>{pState=1;pT0=performance.now();updP();};$('#p-reset').onclick=()=>{pState=0;updP();};
+const RH=1000,RN=4,ZL=0.5;
+function calcP(){const Rz=+$('#p-r').value;let Uc=0,Ih=0,Ik=0,trip='нет',tripS=null,col=RED,pl,note;
+ if(pf==='wire'){Uc=220;Ih=220/(RH+RN)*1000;Ik=Ih/1000;
+  if(pm==='rcd'){trip='УЗО, 0,03 с';tripS=0.03;pl='УЗО СПАСЛО';col=OK;note='Человек коснулся голого провода фазы. Автомат тут бессилен: ток 0,2 А для него ничто. А УЗО видит, что ток «ушёл» мимо нуля через человека, и отключает за 0,03 с — раньше, чем остановится сердце. Это единственная защита от прямого прикосновения.';}
+  else{pl='СМЕРТЕЛЬНО';note='Прямое прикосновение к фазе: ток около 220 мА идёт через тело в землю. Ни заземление, ни зануление не помогут — они защищают только при пробое на корпус. Помогает только УЗО и, главное, — не работать под напряжением.';}}
+ else if(pm==='none'){Uc=220;Ih=220/(RH+RN)*1000;Ik=Ih/1000;pl='СМЕРТЕЛЬНО';note='Корпус ни с чем не соединён. При пробое на нём все 220 В относительно земли. Пока никто не трогает, ничего не происходит — аппарат даже работает. Первый, кто коснётся, получит около 220 мА.';}
+ else if(pm==='tt'){Ik=220/(Rz+RN);Uc=Ik*Rz;Ih=Uc/RH*1000;const m=Ik/16;trip=m>=5?'за 0,1 с':m>1.45?'≈ '+(m>3?'5–20 с':'1–3 мин'):'нет';tripS=m>=5?0.1:null;
+  pl=Uc<=50?'НАПРЯЖЕНИЕ СНИЖЕНО':'ВСЁ ЕЩЁ ОПАСНО';col=Uc<=50?OK:RED;note=`Корпус соединён с заземлителем Rз = ${Rz} Ом. Ток аварии ${fmt(Ik,1)} А идёт в землю и возвращается к подстанции через её заземление (4 Ом). Напряжение на корпусе — ${fmt(Uc,0)} В: заземление его снизило, но в сети 380/220 В не до безопасного. Автомат 16 А при таком токе отключит не сразу. Поэтому в наших сетях заземление дополняют занулением и УЗО. Попробуйте Rз = 1 Ом.`;}
+ else{Ik=220/(2*ZL);Uc=Ik*ZL;Ih=Uc/RH*1000;trip=pm==='rcd'?'за 0,01–0,03 с':'за 0,01–0,02 с';tripS=0.02;pl='ОТКЛЮЧИЛОСЬ МГНОВЕННО';col=OK;
+  note=`Корпус соединён с защитным проводом PE. Пробой на корпус превращается в короткое замыкание «фаза — PE»: ток около ${fmt(Ik,0)} А. Автомат 16 А видит ток в ${fmt(Ik/16,0)} раз больше номинала и отключает мгновенно. Напряжение на корпусе успевает продержаться сотые доли секунды.`+(pm==='rcd'?' УЗО тоже сработало — оно подстраховывает, если PE оборван.':'');}
+ return{Uc,Ih,Ik,trip,tripS,pl,col,note};}
+function updP(){$('#p-rz').hidden=pm!=='tt'||pf==='wire';const r=calcP();
+ if(!pState){$('#p-u').textContent='—';$('#p-i').textContent='—';$('#p-k').textContent='—';$('#p-t').textContent='—';$('#p-plq').textContent='ВСЁ ИСПРАВНО';$('#p-plq').style.background=INK;$('#p-note').textContent='Выберите защиту и что случилось, затем нажмите «Случилось!». Сопротивление человека — 1 кОм (по нормам для расчёта).';return;}
+ $('#p-u').textContent=fmt(r.Uc,0)+' В';$('#p-i').textContent=fmt(r.Ih,0)+' мА'+(r.tripS?' · '+fmt(r.tripS,2)+' с':'');$('#p-k').textContent=r.Ik>=1?fmt(r.Ik,r.Ik<100?1:0)+' А':fmt(r.Ik*1000,0)+' мА';$('#p-t').textContent=r.trip;
+ $('#p-plq').textContent=r.pl;$('#p-plq').style.background=r.col;$('#p-note').textContent=r.note;}
+function drawP(){const g=px,W=1000,H=600;g.clearRect(0,0,W,H);g.fillStyle=PAP;g.fillRect(0,0,W,H);const r=calcP();
+ const el=pState?(performance.now()-pT0)/1000:0;const off=pState&&r.tripS!==null&&el>r.tripS*8+0.4;
+ // substation
+ g.fillStyle='#d9d4c6';g.fillRect(30,90,130,170);g.strokeStyle=INK;g.lineWidth=3;g.strokeRect(30,90,130,170);T(g,'ПОДСТАНЦИЯ',95,80,18,INK,'center');
+ for(let i=0;i<4;i++){g.beginPath();g.arc(95,120+i*30,13,-Math.PI/2,Math.PI/2);g.stroke();}
+ L(g,95,260,95,470,3);L(g,75,470,115,470,4);L(g,82,480,108,480,4);L(g,89,490,101,490,4);S(g,'заземление N',110,500,18,MUT);
+ // breaker
+ g.fillStyle=off?'#d9d4c6':PAP;g.fillRect(230,100,70,40);g.strokeRect(230,100,70,40);T(g,off?'ОТКЛ':'16 А',265,128,18,off?RED:INK,'center');
+ if(pm==='rcd'){g.fillStyle=PAP;g.fillRect(320,90,80,60);g.strokeRect(320,90,80,60);T(g,'УЗО',360,127,20,INK,'center');}
+ const live=!off;
+ L(g,160,120,230,120,4,live?RED:MUT);L(g,300,120,pm==='rcd'?320:600,120,4,live?RED:MUT);if(pm==='rcd')L(g,400,120,600,120,4,live?RED:MUT);
+ T(g,'L',175,112,20,RED);L(g,160,170,600,170,4,'#4a73a8');T(g,'N',175,162,20,'#4a73a8');
+ if(pm==='tn'||pm==='rcd'){L(g,95,220,160,220,3,'#3d7a3a');L(g,160,220,640,220,4,'#3d7a3a',[12,6]);T(g,'PE',175,212,20,'#3d7a3a');}
+ // device
+ g.fillStyle='#e9e4d6';g.fillRect(600,90,200,180);g.lineWidth=4;g.strokeRect(600,90,200,180);T(g,'АППАРАТ',700,190,22,INK,'center');
+ if(pm==='tn'||pm==='rcd')L(g,640,220,640,270,4,'#3d7a3a');
+ if(pm==='tt'){L(g,700,270,700,470,4,'#3d7a3a');for(let i=0;i<3;i++)L(g,680-i*0+0,470+i*10,720,470+i*10,4,'#3d7a3a');S(g,'заземлитель '+$('#p-r').value+' Ом',730,480,18,MUT);}
+ if(pState&&pf==='case'){g.fillStyle=YEL;g.beginPath();for(let i=0;i<10;i++){const a=i*Math.PI/5,rr=i%2?8:22;g.lineTo(780+rr*Math.cos(a),110+rr*Math.sin(a));}g.fill();S(g,'пробой',800,90,18,RED);}
+ // person
+ const tx=pf==='wire'?470:860;person(g,tx,420,0.9,pState&&!off&&r.Ih>10?RED:INK);
+ if(pf==='case'){L(g,tx-63,384,800,250,5,INK);}else{L(g,tx-63,384,470,120,5,INK);g.fillStyle=RED;g.beginPath();g.arc(470,120,8,0,7);g.fill();}
+ L(g,0,525,W,525,3,MUT);for(let x=0;x<W;x+=30)L(g,x,525,x-15,545,2,MUT);
+ if(pState&&!off&&r.Ih>1){g.strokeStyle=RED;g.lineWidth=5;g.setLineDash([12,8]);g.lineDashOffset=-(performance.now()/30%20);g.beginPath();g.moveTo(tx,470);g.lineTo(tx,520);g.lineTo(95,520);g.lineTo(95,490);g.stroke();g.setLineDash([]);}
+ if(off){T(g,'ОТКЛЮЧЕНО '+r.trip.replace(/^УЗО, /,'за '),500,580,24,OK,'center');}}
+
+/* ---------- 3 breaker ---------- */
+const ck=$('#cv-k'),kx=ck.getContext('2d');const WIRE={1.5:16,2.5:25,4:32,6:40};const KMIN={B:3,C:5,D:10},KMAX={B:5,C:10,D:20};
+['k-d','k-n','k-c','k-w'].forEach(id=>seg(id,updK));press('k-d','25');press('k-n','25');press('k-c','B');press('k-w','2.5');
+function updK(){const Id=+val('k-d'),In=+val('k-n'),c=val('k-c'),w=val('k-w'),Iw=WIRE[w];const inr=Id*4;const lo=KMIN[c]*In,hi=KMAX[c]*In;
+ let pl,col=OK,n=[];
+ if(In>Iw){pl='КАБЕЛЬ ПЕРЕГРЕЕТСЯ';col=RED;n.push(`Кабель ${w.replace('.',',')} мм² рассчитан примерно на ${Iw} А, а автомат ${In} А пропустит больше — кабель будет греться, изоляция плавится. Автомат защищает прежде всего кабель: его номинал не больше допустимого тока кабеля.`);}
+ if(Id>In){pl=pl||'АВТОМАТ БУДЕТ ВЫБИВАТЬ';col=RED;n.push(`Аппарат берёт ${Id} А, автомат ${In} А — перегрузка: через несколько минут сварки он отключится.`);}
+ if(inr>=lo){pl=pl||'ЛОЖНЫЕ СРАБАТЫВАНИЯ';col=RED;n.push(`При включении аппарат на мгновение берёт около ${inr} А (заряжает конденсаторы). Автомат ${c}${In} мгновенно срабатывает уже от ${lo} А — будет выбивать при включении. Возьмите характеристику C или D.`);}
+ if(!pl){pl='ВЫБРАНО ВЕРНО';n.push(`Аппарат ${Id} А ≤ автомат ${In} А ≤ кабель ${Iw} А, бросок при включении ${inr} А меньше порога мгновенного срабатывания ${lo} А. Так и выбирают: по току из паспорта с небольшим запасом, кабель — не слабее автомата.`);}
+ $('#k-plq').textContent=pl;$('#k-plq').style.background=col;$('#k-note').textContent=n.join(' ');drawK(Id,In,c,Iw,inr,lo,hi);}
+function drawK(Id,In,c,Iw,inr,lo,hi){const g=kx,W=1000,H=560;g.clearRect(0,0,W,H);g.fillStyle=PAP;g.fillRect(0,0,W,H);
+ const x0=80,w=860,X=v=>x0+Math.log10(Math.max(1,v))/Math.log10(1200)*w;L(g,x0,300,x0+w,300,3);
+ [1,2,5,10,20,50,100,200,500,1000].forEach(v=>{L(g,X(v),292,X(v),308,2);T(g,String(v),X(v),334,18,MUT,'center','500');});T(g,'ток, А (шкала сжата)',x0+w,360,18,MUT,'right','500');
+ g.fillStyle='rgba(163,39,31,.15)';g.fillRect(X(lo),215,X(hi)-X(lo),85);g.strokeStyle=RED;g.lineWidth=2;g.strokeRect(X(lo),215,X(hi)-X(lo),85);
+ T(g,'мгновенное отключение '+c,(X(lo)+X(hi))/2,290,18,RED,'center');
+ const mk=(v,lab,col,y)=>{L(g,X(v),y,X(v),300,4,col);g.fillStyle=col;g.beginPath();g.arc(X(v),y,8,0,7);g.fill();T(g,lab,X(v),y-14,20,col,'center');};
+ mk(inr,'бросок '+inr+' А',RED,60);mk(In,'автомат '+In+' А',OK,110);mk(Id,'аппарат '+Id+' А',INK,160);mk(Iw,'кабель '+Iw+' А','#4a73a8',210);
+ S(g,'Правило: ток аппарата ≤ номинал автомата ≤ допустимый ток кабеля;',x0,420,20,INK);S(g,'бросок при включении — левее красной зоны.',x0,447,20,INK);
+ S(g,'Допустимые токи кабеля условные (медь, в трубе): 1,5 — 16 А, 2,5 — 25 А, 4 — 32 А, 6 — 40 А.',x0,475,18,MUT);
+ S(g,'Ток аппарата смотрят в паспорте («потребляемый ток» или I1max), а не сварочный ток!',x0,510,18,MUT);}
+
+/* ---------- quiz ---------- */
+const Q=[{q:'Какой ток уже считается неотпускающим?',o:['10–15 мА','0,1 мА','1 А'],e:'Мышцы сводит судорогой, руку с проводом не разжать.'},
+ {q:'Какой путь тока самый опасный?',o:['через сердце: рука — рука, рука — ноги','нога — нога','через палец одной руки'],e:'Ток через сердце может вызвать фибрилляцию.'},
+ {q:'Какое сопротивление тела берут для расчётов по нормам?',o:['1 кОм','1 Ом','1 МОм'],e:'Реальное сильно меняется; мокрая кожа — ещё меньше.'},
+ {q:'Первое действие, если человека «держит» ток:',o:['обесточить: выключить автомат или отбросить провод сухой палкой','взять за руку и потянуть','полить водой'],e:'Голыми руками трогать нельзя — ток пойдёт через вас.'},
+ {q:'Какое напряжение переносной лампы допустимо внутри металлической ёмкости?',o:['не выше 12 В','220 В','не выше 50 В'],e:'В особо опасных условиях — только 12 В.'},
+ {q:'Как работает зануление (PE)?',o:['пробой на корпус становится КЗ, автомат мгновенно отключает','ток уходит в небо','корпус изолируют резиной'],e:'Ток КЗ в десятки раз больше номинала — электромагнитный расцепитель отключает мгновенно.'},
+ {q:'От чего защищает УЗО, чего не умеет автомат?',o:['от утечки тока через человека (10–30 мА)','от перегрузки','от короткого замыкания'],e:'Автомату 30 мА — ничто, а УЗО сравнивает токи в фазе и нуле.'},
+ {q:'Защитит ли УЗО от короткого замыкания?',o:['нет, для этого нужен автомат или дифавтомат','да, всегда','только ночью'],e:'Дифавтомат = автомат + УЗО в одном корпусе.'},
+ {q:'Что нельзя использовать как обратный провод сварки?',o:['трубы водопровода, газопровода, конструкции здания, заземление','отдельный изолированный кабель','кабель «массы»'],e:'Ток пойдёт по чужим конструкциям: пожар, поражение людей, разрушение труб.'},
+ {q:'Аппарат по паспорту берёт из сети 25 А. Какой автомат поставить?',o:['32 А, характеристика C или D','10 А, B','100 А'],e:'С небольшим запасом и с характеристикой, которая терпит бросок при включении.'},
+ {q:'Зачем ЛЭП работают на 110–500 кВ?',o:['ток меньше — потери на нагрев проводов меньше','так безопаснее для птиц','так требуют счётчики'],e:'Потери ΔP = I²·R: уменьшили ток в 10 раз — потери в 100 раз меньше.'},
+ {q:'Какой номинал автомата допустим для медного кабеля 2,5 мм²?',o:['не больше 25 А','63 А','любой'],e:'Автомат защищает кабель: его номинал не больше допустимого тока кабеля.'}];
+let qi=0,score=0,ord=[];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderQ(){const box=$('#quiz-box');
+  if(qi>=Q.length){const m=score>=11?'Отлично!':score>=9?'Хорошо! Повторите ошибки.':'Повторите опыты 1–3 и попробуйте ещё раз.';
+    box.innerHTML='<div class="qcard"><p class="score">'+score+' из '+Q.length+'</p><p class="qtext">'+m+'</p><div class="seg"><button class="big" type="button" id="qr">Пройти ещё раз</button></div></div>';$('#qr').onclick=()=>{qi=0;score=0;renderQ();};return;}
+  const q=Q[qi];ord=shuffle(q.o.map((t,i)=>({t,i})));
+  box.innerHTML='<div class="qcard"><p class="qtop"><span>Вопрос '+(qi+1)+' из '+Q.length+'</span><span>Верно: '+score+'</span></p><p class="qtext">'+q.q+'</p><div class="opts">'+ord.map((o,k)=>'<button class="opt" type="button" data-k="'+k+'">'+o.t+'</button>').join('')+'</div><p class="feedback" id="qfb" aria-live="polite"></p><p id="qex" style="margin:0"></p><div class="seg"><button class="big" type="button" id="qn" hidden>Дальше</button></div></div>';
+  $$('#quiz-box .opt').forEach(b=>b.onclick=()=>{const ok=ord[+b.dataset.k].i===0;if(ok)score++;$$('#quiz-box .opt').forEach(o=>{o.disabled=true;if(ord[+o.dataset.k].i===0)o.classList.add('right');});if(!ok)b.classList.add('wrong');
+    const f=$('#qfb');f.className='feedback '+(ok?'good':'bad');f.textContent=ok?'Верно!':'Не совсем.';$('#qex').textContent=q.e;const n=$('#qn');n.hidden=false;n.textContent=qi===Q.length-1?'Узнать результат':'Дальше';n.focus();});
+  $('#qn').onclick=()=>{qi++;renderQ();};}
+
+updB();updP();updK();renderQ();
+const tabs=['body','pe','brk','quiz'];let cur='body';
+function show(){const h=location.hash.replace('#','');cur=tabs.includes(h)?h:'body';$$('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==cur);$$('nav a').forEach(a=>a.setAttribute('aria-current',String(a.dataset.tab===cur)));}
+window.addEventListener('hashchange',show);show();
+function loop(){if(cur==='body')drawB(calcB());if(cur==='pe'){drawP();}requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
