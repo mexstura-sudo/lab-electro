@@ -16,7 +16,7 @@
 | 5 | Трёхфазный ток (ПР №7) | 1.6, пары 16–17 | [Генератор](https://mexstura-sudo.github.io/lab-electro/three-phase/#gen) · [Звезда](https://mexstura-sudo.github.io/lab-electro/three-phase/#star) · [Треугольник](https://mexstura-sudo.github.io/lab-electro/three-phase/#delta) · [Мощность](https://mexstura-sudo.github.io/lab-electro/three-phase/#power) · [Онлайн-тест](https://mexstura-sudo.github.io/lab-electro/three-phase/#quiz) |
 | 6 | Трансформатор (ПР №8) | 1.7, пары 18–19 | [Принцип](https://mexstura-sudo.github.io/lab-electro/transformer/#princ) · [Режимы](https://mexstura-sudo.github.io/lab-electro/transformer/#modes) · [Сварочный](https://mexstura-sudo.github.io/lab-electro/transformer/#weld) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/transformer/#quiz) |
 
-**Варианты.** В лабораториях 3, 4, 5 и 6 есть 30 вариантов (номер в журнале). Ссылку сразу на вариант можно дать так: `…/rl-circuit/?v=12#stand`, `…/measurements/?v=12#verify`, `…/three-phase/?v=12#star`.
+**Варианты.** В лабораториях 3, 4, 5 и 6 есть 30 вариантов (номер в журнале). Ссылку сразу на вариант можно дать так: `…/rl-circuit/?v=12#stand`, `…/measurements/?v=12#verify`, `…/three-phase/?v=12#star`, `…/transformer/?v=12#modes`.
 
 ### Что умеет каждая лаборатория
 
@@ -40,6 +40,7 @@
 | Пара 13 «ПР №4» | 16 | Измерение сдвига Δt курсорами в трёх опытах |
 | Пара 14 «Измерения» | 13 | Класс точности: одна ошибка — разные проценты |
 | Пара 16 «Трёхфазные цепи» | 7 | Три вращающихся вектора и три синусоиды, сумма = 0 |
+| Пара 18 «Трансформаторы» | 8 | Магнитный поток в сердечнике, ток i1 и ЭДС e2; переключение на постоянный ток — ЭДС пропадает |
 
 В PowerPoint-версиях анимации неподвижны; живые — в онлайн-презентациях и в лабораториях.
 

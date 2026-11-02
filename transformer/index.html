@@ -213,7 +213,7 @@ function T(){const N=VN,U1n=220,U20=24+N,S=100+10*N,I2n=S/U20,k=U1n/U20,Zk=0.08*
 let mode='xx',lat=220,beta=0.5,pts=[];
 function calc(){const t=T();let U1=lat,I2=0,U2,R=null;
   if(mode==='xx'){U2=U1/t.k;}else if(mode==='kz'){const E2=U1/t.k;I2=E2/t.Zk;U2=0;}else{U1=220;const E2=U1/t.k;if(beta<=0){U2=E2;I2=0;}else{R=t.U20/(beta*t.I2n);const zr=R+t.Rk;I2=E2/Math.hypot(zr,t.Xk);U2=I2*R;}}
-  const sv=U1/t.U1n;const P0=t.P0*sv*sv,Pcu=I2*I2*t.Rk,P2=U2*I2,P1=P0+Pcu+P2;const I0=t.I0*sv;const I1=Math.hypot(I0,(I2/t.k)*(1+0)+(P0+Pcu)/Math.max(U1,1));
+  const sv=U1/t.U1n;const P0=t.P0*sv*sv,Pcu=I2*I2*t.Rk,P2=U2*I2,P1=P0+Pcu+P2;const Q1=U1*t.I0*sv+I2*I2*t.Xk;const I1=U1>0.01?Math.hypot(P1,Q1)/U1:0;
   return{t,U1,U2,I1,I2,P0,Pcu,P1,P2,R,eta:P1>0?P2/P1*100:0};}
 function schem(r){const sh=mode==='kz',ld=mode==='ld';const m=(x,y,l,val)=>`<circle cx="${x}" cy="${y}" r="26" fill="${PAP}" stroke="${INK}" stroke-width="4"/><text x="${x}" y="${y+10}" text-anchor="middle" font-family="${SER}" font-weight="700" font-size="28">${l}</text><text x="${x}" y="${y-36}" text-anchor="middle" font-family="${LBL}" font-weight="700" font-size="22" fill="${RED}">${val}</text>`;
   let s=`<g fill="none" stroke="${INK}" stroke-width="4"><path d="M60 100 H 130 M190 100 H 250 M302 100 H 380 V 150 M380 330 V 380 H 60 V 280 M60 200 V 100"/>`;
