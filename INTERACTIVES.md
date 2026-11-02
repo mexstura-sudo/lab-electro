@@ -14,8 +14,9 @@
 | 3 | Цепь R и L (ПР №4) | 1.4, пара 13 | [Стенд](https://mexstura-sudo.github.io/lab-electro/rl-circuit/#stand) · [Осциллограф](https://mexstura-sudo.github.io/lab-electro/rl-circuit/#scope) · [Расчёт](https://mexstura-sudo.github.io/lab-electro/rl-circuit/#calc) · [Векторы](https://mexstura-sudo.github.io/lab-electro/rl-circuit/#vec) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/rl-circuit/#quiz) |
 | 4 | Электрические измерения (ПР №5, №6) | 1.5, пары 14–15 | [Шкала](https://mexstura-sudo.github.io/lab-electro/measurements/#scale) · [Включение](https://mexstura-sudo.github.io/lab-electro/measurements/#connect) · [Мультиметр](https://mexstura-sudo.github.io/lab-electro/measurements/#multi) · [Поверка](https://mexstura-sudo.github.io/lab-electro/measurements/#verify) · [Сопротивление](https://mexstura-sudo.github.io/lab-electro/measurements/#ohm) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/measurements/#quiz) |
 | 5 | Трёхфазный ток (ПР №7) | 1.6, пары 16–17 | [Генератор](https://mexstura-sudo.github.io/lab-electro/three-phase/#gen) · [Звезда](https://mexstura-sudo.github.io/lab-electro/three-phase/#star) · [Треугольник](https://mexstura-sudo.github.io/lab-electro/three-phase/#delta) · [Мощность](https://mexstura-sudo.github.io/lab-electro/three-phase/#power) · [Онлайн-тест](https://mexstura-sudo.github.io/lab-electro/three-phase/#quiz) |
+| 6 | Трансформатор (ПР №8) | 1.7, пары 18–19 | [Принцип](https://mexstura-sudo.github.io/lab-electro/transformer/#princ) · [Режимы](https://mexstura-sudo.github.io/lab-electro/transformer/#modes) · [Сварочный](https://mexstura-sudo.github.io/lab-electro/transformer/#weld) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/transformer/#quiz) |
 
-**Варианты.** В лабораториях 3, 4 и 5 есть 30 вариантов (номер в журнале). Ссылку сразу на вариант можно дать так: `…/rl-circuit/?v=12#stand`, `…/measurements/?v=12#verify`, `…/three-phase/?v=12#star`.
+**Варианты.** В лабораториях 3, 4, 5 и 6 есть 30 вариантов (номер в журнале). Ссылку сразу на вариант можно дать так: `…/rl-circuit/?v=12#stand`, `…/measurements/?v=12#verify`, `…/three-phase/?v=12#star`.
 
 ### Что умеет каждая лаборатория
 
@@ -24,6 +25,7 @@
 3. **Цепь R и L.** Стенд с приборами (три опыта: только R, R + L, двойная частота); осциллограф с перетаскиваемыми курсорами для Δt; проверка расчёта Z, XL, L, cos φ, φ, P, Q, S с допуском; векторная диаграмма в масштабе; режим «Свои значения» для реального стенда; 10 контрольных вопросов.
 4. **Электрические измерения.** Случайная шкала: цена деления, показание, ошибка по классу; включение амперметра и вольтметра (с КЗ при ошибке); виртуальный мультиметр с 6 заданиями и предупреждениями об опасных режимах; поверка амперметра (ПР №5) с проверкой таблицы и вывода; сопротивление (ПР №6): две схемы амперметра–вольтметра, омметр, мост с гальванометром; тест из 12 вопросов.
 5. **Трёхфазный ток.** Генератор с тремя обмотками и тремя синусоидами (пауза, замедление, сумма = 0); звезда с выключателем нуля, симметричной и несимметричной нагрузкой и векторной диаграммой смещения нейтрали; треугольник с обрывом провода L1 и проверкой Iл = 1,73·Iф; три ТЭНа звездой и треугольником, калькулятор мощности; онлайн-тест «Переменный и трёхфазный ток».
+6. **Трансформатор.** Сердечник с двумя обмотками: меняем витки и напряжение, переключаем на постоянный ток — трансформатор «молчит»; режимы ПР №8: холостой ход, короткое замыкание через ЛАТР, нагрузка с записью точек и графиками U2(I2) и КПД; сварочный трансформатор: падающая характеристика, прямая дуги, регулятор тока, касание электродом; тест из 12 вопросов.
 
 ## 2. Анимации внутри презентаций (идут сами, в режиме показа)
 
