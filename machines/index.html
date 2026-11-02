@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Лаборатория «Электрические машины»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+.lamp{display:inline-block;width:22px;height:22px;border-radius:50%;border:3px solid var(--ink);vertical-align:middle}
+.plate{background:#e9e4d6;border:4px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:18px 22px;font-family:var(--label);letter-spacing:1px}
+.plate .pt{display:flex;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:10px;font-weight:700;font-size:20px}
+.plate .pg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 16px}
+.plate .pg div{border-bottom:1px dashed var(--muted);padding:4px 0}
+.plate .pg span{display:block;font-size:13px;color:var(--muted);text-transform:uppercase}
+.plate .pg b{font-size:22px}
+@media (max-width:560px){.plate .pg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="hand">Лаборатория</div>
+  <h1>Электрические машины</h1>
+  <p>Темы 1.8–1.9. Как три фазы создают вращающееся поле, почему асинхронный двигатель отстаёт от поля, как его пускают и разворачивают, как работает коллектор машины постоянного тока и что написано на шильдике.</p>
+</header>
+
+<nav aria-label="Разделы">
+  <a href="#field" data-tab="field">1 · Вращающееся поле</a>
+  <a href="#async" data-tab="async">2 · Пуск двигателя</a>
+  <a href="#dc" data-tab="dc">3 · Постоянный ток</a>
+  <a href="#plate" data-tab="plate">4 · Шильдик</a>
+  <a href="#quiz" data-tab="quiz">5 · Проверь себя</a>
+</nav>
+
+<section class="panel" data-panel="field">
+  <p class="eyebrow">Опыт 1</p>
+  <h2>Три неподвижные обмотки — вращающееся поле</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-f" width="1000" height="600" aria-label="Статор с тремя парами обмоток, красная стрелка — суммарное магнитное поле, она вращается; внутри ротор-беличья клетка; справа три синусоиды токов фаз"></canvas></div>
+    <div class="side">
+      <div><span class="ctl-label">Скорость показа</span><div class="seg" id="f-spd"><button type="button" data-v="0">Пауза</button><button type="button" data-v="0.15">Медленно</button><button type="button" data-v="0.4">Быстрее</button></div></div>
+      <div><span class="ctl-label">Подключение фаз</span><div class="seg" id="f-dir"><button type="button" data-v="1">L1 · L2 · L3</button><button type="button" data-v="-1">L1 · L3 · L2 (поменяли две)</button></div></div>
+      <div><label class="ctl-label" for="f-s">Нагрузка на валу: скольжение s = <b id="f-sv">4</b> %</label><input type="range" id="f-s" min="0" max="20" step="1" value="4"></div>
+      <div><span class="ctl-label">Пар полюсов p</span><div class="seg" id="f-p"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button></div></div>
+      <div class="readouts">
+        <div class="ro"><span>Поле n1 = 60·f / p</span><b id="f-n1">—</b></div>
+        <div class="ro"><span>Ротор n2</span><b id="f-n2">—</b></div>
+      </div>
+      <p class="plaque" id="f-plq">—</p>
+      <p class="note" id="f-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="async" hidden>
+  <p class="eyebrow">Опыт 2</p>
+  <h2>Пуск асинхронного двигателя 4 кВт</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-a" width="1000" height="640" aria-label="Графики пуска: частота вращения и ток во времени; справа механическая характеристика и рабочая точка; лампа в сети тускнеет при большом токе"></canvas></div>
+    <div class="side">
+      <div><span class="ctl-label">Способ пуска</span><div class="seg" id="a-mode"><button type="button" data-v="dol">Прямой</button><button type="button" data-v="yd">Звезда → треугольник</button><button type="button" data-v="vfd">Частотник</button></div></div>
+      <div><span class="ctl-label">Механизм</span><div class="seg" id="a-load"><button type="button" data-v="fan">Вентилятор</button><button type="button" data-v="con">Конвейер, кран</button></div></div>
+      <div><label class="ctl-label" for="a-l">Нагрузка: <b id="a-lv">60</b> % от номинальной</label><input type="range" id="a-l" min="0" max="130" step="5" value="60"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="big" type="button" id="a-go">Пуск</button><button class="big alt" type="button" id="a-stop">Стоп</button></div>
+      <div class="readouts">
+        <div class="ro"><span>Частота вращения</span><b id="a-n">0</b></div>
+        <div class="ro"><span>Ток / номинальный</span><b id="a-i">0</b></div>
+        <div class="ro"><span>Напряжение сети</span><b id="a-u">380 В</b></div>
+        <div class="ro"><span>Скольжение</span><b id="a-s">—</b></div>
+      </div>
+      <p class="plaque" id="a-plq">ОСТАНОВЛЕН</p>
+      <p class="note" id="a-note">Нажмите «Пуск». Двигатель: 4 кВт, 380 В, 1500 об/мин (поле), номинальный ток 8,8 А.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="dc" hidden>
+  <p class="eyebrow">Опыт 3</p>
+  <h2>Машина постоянного тока: коллектор и щётки</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-d" width="1000" height="600" aria-label="Полюса N и S, якорь с двумя проводниками, коллектор из двух полуколец и щётки; справа график напряжения на щётках"></canvas></div>
+    <div class="side">
+      <div><span class="ctl-label">Режим</span><div class="seg" id="d-mode"><button type="button" data-v="mot">Двигатель</button><button type="button" data-v="gen">Генератор</button></div></div>
+      <div><span class="ctl-label">Чем снимаем ток</span><div class="seg" id="d-col"><button type="button" data-v="col">Коллектор</button><button type="button" data-v="ring">Два кольца</button></div></div>
+      <div id="d-ctl"></div>
+      <div class="readouts" id="d-ro"></div>
+      <p class="plaque" id="d-plq">—</p>
+      <p class="note" id="d-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="plate" hidden>
+  <p class="eyebrow">Опыт 4</p>
+  <h2>Читаем шильдик и выбираем автомат</h2>
+  <div class="row" style="align-items:end;margin-bottom:16px;max-width:520px">
+    <div><label class="ctl-label" for="p-var">Вариант (номер в журнале)</label><select id="p-var"></select></div>
+  </div>
+  <div class="bench">
+    <div class="side">
+      <div class="plate" id="p-plate"></div>
+      <p class="note">Учебный шильдик: числа близки к настоящим двигателям, но подобраны для расчёта. Сеть мастерской — 380 В, три фазы.</p>
+    </div>
+    <div class="side">
+      <div class="scroll"><table class="calc" id="p-tab"></table></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="big" type="button" id="p-chk">Проверить</button><button class="big alt" type="button" id="p-show">Показать решение</button></div>
+      <p class="feedback" id="p-fb" aria-live="polite"></p>
+      <p class="note" id="p-sol" hidden></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="quiz" hidden>
+  <p class="eyebrow">Контрольные вопросы</p>
+  <h2>Проверь себя</h2>
+  <div id="quiz-box"></div>
+</section>
+
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">все лаборатории</a></footer>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const INK='#1B1A17',RED='#A3271F',PAP='#FAF8F2',MUT='#6E685C',OK='#2F6B3A',GRID='#b9c6d2';
+const LBL="Oswald,'Arial Narrow',Arial,sans-serif",SER="'PT Serif',Georgia,serif";
+const fmt=(x,d)=>(Math.round(x*10**d)/10**d).toFixed(d).replace('.',',');
+function seg(id,cb){$$('#'+id+' button').forEach(b=>b.onclick=()=>{press(id,b.dataset.v);cb(b.dataset.v);});}
+function press(id,v){$$('#'+id+' button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===v)));}
+function arrow(g,x1,y1,x2,y2,c,w){g.strokeStyle=c;g.fillStyle=c;g.lineWidth=w;g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();const a=Math.atan2(y2-y1,x2-x1),h=10+w*2;g.beginPath();g.moveTo(x2+Math.cos(a)*h*0.3,y2+Math.sin(a)*h*0.3);g.lineTo(x2-h*Math.cos(a-0.45),y2-h*Math.sin(a-0.45));g.lineTo(x2-h*Math.cos(a+0.45),y2-h*Math.sin(a+0.45));g.closePath();g.fill();}
+function T(g,s,x,y,size,col,al,font){g.font=(font||'700 '+size+'px '+LBL);g.fillStyle=col||INK;g.textAlign=al||'left';g.fillText(s,x,y);}
+
+/* ---------- 1 rotating field ---------- */
+const cf=$('#cv-f'),fx=cf.getContext('2d');let fsp=0.15,fdir=1,fp=1,fph=0,rAng=0,rW=0;
+seg('f-spd',v=>{fsp=+v;});press('f-spd','0.15');
+seg('f-dir',v=>{fdir=+v;updF();});press('f-dir','1');
+seg('f-p',v=>{fp=+v;updF();});press('f-p','1');
+$('#f-s').oninput=updF;
+function updF(){const s=+$('#f-s').value/100;$('#f-sv').textContent=Math.round(s*100);const n1=3000/fp,n2=n1*(1-s);
+ $('#f-n1').textContent=Math.round(n1)+' об/мин';$('#f-n2').textContent=Math.round(n2)+' об/мин';
+ $('#f-plq').textContent=fdir>0?'ПОЛЕ ВРАЩАЕТСЯ ПО ЧАСОВОЙ':'ПОМЕНЯЛИ ДВЕ ФАЗЫ — РЕВЕРС';$('#f-plq').style.background=fdir>0?INK:RED;
+ $('#f-note').innerHTML=s===0?'Скольжение 0 — ротор крутится вместе с полем. Тогда поле <b>не пересекает</b> стержни, токов в роторе нет, силы нет. Без нагрузки ротор только приближается к полю, но не догоняет его.'
+  :`s = (n1 − n2) / n1 = (${Math.round(n1)} − ${Math.round(n2)}) / ${Math.round(n1)} = ${Math.round(s*100)} %. Ротор отстаёт от поля — поэтому двигатель <b>асинхронный</b> (несинхронный). Чем больше нагрузка, тем больше отставание. На рисунке — одна пара полюсов; при p = ${fp} поле делает один оборот за ${fp} период${fp>1?'а':''} сети.`;}
+function drawF(dt){const W=1000,H=600,g=fx;g.clearRect(0,0,W,H);g.fillStyle=PAP;g.fillRect(0,0,W,H);
+ fph+=dt*fsp*2*Math.PI;const s=+$('#f-s').value/100;const wF=fsp*2*Math.PI*fdir;rW+=((wF*(1-s))-rW)*Math.min(1,dt*1.5);rAng+=rW*dt;
+ const cx=290,cy=310,R=215;
+ g.fillStyle='#d9d4c6';g.beginPath();g.arc(cx,cy,R+30,0,2*Math.PI);g.moveTo(cx+R-40,cy);g.arc(cx,cy,R-40,0,2*Math.PI,true);g.fill('evenodd');g.strokeStyle=INK;g.lineWidth=4;g.beginPath();g.arc(cx,cy,R+30,0,7);g.stroke();g.beginPath();g.arc(cx,cy,R-40,0,7);g.stroke();
+ const names=['L1','L2','L3'],ord=fdir>0?[0,1,2]:[0,2,1];let Bx=0,By=0;
+ for(let k=0;k<3;k++){const ph=ord[k];const i=Math.cos(fph-ph*2*Math.PI/3);const a=-Math.PI/2+k*2*Math.PI/3;const ux=Math.cos(a),uy=Math.sin(a);Bx+=i*ux;By+=i*uy;
+  for(const sg of [1,-1]){const px=cx+sg*ux*(R-5),py=cy+sg*uy*(R-5);g.save();g.translate(px,py);g.rotate(a+Math.PI/2);
+   g.fillStyle=Math.abs(i)<0.15?PAP:(i*sg>0?RED:INK);g.globalAlpha=0.35+0.65*Math.abs(i);g.fillRect(-46,-20,92,40);g.globalAlpha=1;g.strokeStyle=INK;g.lineWidth=3;g.strokeRect(-46,-20,92,40);g.restore();}
+  const lx=cx+ux*(R+58),ly=cy+uy*(R+58);T(g,names[ph],lx,ly+9,26,INK,'center');}
+ // rotor cage
+ g.strokeStyle=INK;g.lineWidth=3;g.fillStyle='#ece7da';g.beginPath();g.arc(cx,cy,R-60,0,7);g.fill();g.stroke();
+ for(let j=0;j<16;j++){const a=rAng+j*Math.PI/8;C(g,cx+Math.cos(a)*(R-80),cy+Math.sin(a)*(R-80),9,'#b98a3a');}
+ g.beginPath();g.arc(cx,cy,R-80,0,7);g.strokeStyle='#b98a3a';g.lineWidth=2;g.stroke();
+ g.beginPath();g.arc(cx,cy,18,0,7);g.fillStyle=INK;g.fill();
+ const ba=Math.atan2(By,Bx),bm=Math.hypot(Bx,By)/1.5;arrow(g,cx-Math.cos(ba)*120*bm,cy-Math.sin(ba)*120*bm,cx+Math.cos(ba)*150*bm,cy+Math.sin(ba)*150*bm,RED,10);
+ T(g,'N',cx+Math.cos(ba)*185,cy+Math.sin(ba)*185+10,30,RED,'center');T(g,'S',cx-Math.cos(ba)*160,cy-Math.sin(ba)*160+10,30,RED,'center');
+ // phase currents
+ const x0=600,w=370,y0=300,A=110;g.strokeStyle=GRID;g.lineWidth=2;g.beginPath();g.moveTo(x0,y0);g.lineTo(x0+w,y0);g.stroke();
+ const dash=[[],[14,8],[3,7]];
+ for(let k=0;k<3;k++){g.setLineDash(dash[k]);g.strokeStyle=k===0?INK:k===1?MUT:RED;g.lineWidth=4;g.beginPath();for(let x=0;x<=w;x+=3){const ph=fph-(w-x)/w*4*Math.PI;const y=y0-A*Math.cos(ph-k*2*Math.PI/3);x?g.lineTo(x0+x,y):g.moveTo(x0+x,y);}g.stroke();}
+ g.setLineDash([]);for(let k=0;k<3;k++){const y=y0-A*Math.cos(fph-k*2*Math.PI/3);C(g,x0+w,y,7,k===0?INK:k===1?MUT:RED);}
+ T(g,'Токи фаз L1, L2, L3',x0,140,24);T(g,'сейчас',x0+w-10,y0+A+40,20,MUT,'right');
+ T(g,'Красная стрелка — поле.',x0,500,22,INK,'left','400 22px '+SER);T(g,'Ротор с медными стержнями',x0,530,22,INK,'left','400 22px '+SER);T(g,'догоняет его, но отстаёт.',x0,560,22,INK,'left','400 22px '+SER);}
+function C(g,x,y,r,f){g.beginPath();g.arc(x,y,r,0,7);g.fillStyle=f;g.fill();}
+
+/* ---------- 2 async start ---------- */
+const ca=$('#cv-a'),ax=ca.getContext('2d');let am='dol',al='fan',run=false,st=null,hist=[];
+const N1=1500,PN=4,IN=8.8,SK=0.3,MK=2.5,AA=1,KN=650;
+seg('a-mode',v=>{am=v;});press('a-mode','dol');seg('a-load',v=>{al=v;drawA();});press('a-load','fan');
+$('#a-l').oninput=()=>{$('#a-lv').textContent=$('#a-l').value;drawA();};
+function Mm(s){if(s<=0)return 2*MK*(1+AA)*s/SK*0.5;return 2*MK*(1+AA)/(s/SK+SK/s+2*AA);}
+function Ia(s){s=Math.abs(s);const ia=6.71*s/Math.sqrt(s*s+0.0681);return Math.sqrt(0.1225+ia*ia);}
+function Ml(n){const L=+$('#a-l').value/100;return al==='fan'?L*Math.pow(Math.max(0,n)/1440,2)+0.02:(n>1||L>0?L+0.03:0);}
+$('#a-go').onclick=()=>{st={t:0,n:0,u:am==='yd'?1/Math.sqrt(3):1,sw:false};hist=[];run=true;};
+$('#a-stop').onclick=()=>{run=false;st=null;hist=[];$('#a-plq').textContent='ОСТАНОВЛЕН';$('#a-plq').style.background=INK;drawA();};
+function stepA(dt){const S=st;S.t+=dt;let n1=N1,u=S.u;
+ if(am==='yd'&&!S.sw&&S.t>=2.5){S.sw=true;S.u=1;u=1;}
+ if(am==='vfd'){n1=N1*Math.min(1,S.t/5);u=1;}
+ const s=am==='vfd'?(n1-S.n)/N1:(N1-S.n)/N1;let M=Mm(s)*u*u,I=Ia(s)*u*(am==='yd'&&!S.sw?1/Math.sqrt(3):1);
+ if(am==='vfd'&&n1<1)M=0,I=0.35;
+ const ml=Ml(S.n);let dn=KN*(M-ml)*dt;if(S.n<=0&&M<ml)dn=Math.max(0,dn);S.n=Math.max(0,S.n+dn);
+ S.M=M;S.I=I;S.s=s;hist.push([S.t,S.n,I]);}
+function drawA(){const W=1000,H=640,g=ax;g.clearRect(0,0,W,H);g.fillStyle=PAP;g.fillRect(0,0,W,H);
+ // time graph
+ const x0=80,y0=560,w=560,h=470,TM=6;g.strokeStyle=INK;g.lineWidth=3;g.beginPath();g.moveTo(x0,y0-h);g.lineTo(x0,y0);g.lineTo(x0+w,y0);g.lineTo(x0+w,y0-h);g.stroke();
+ for(let i=1;i<=6;i++){g.strokeStyle=GRID;g.lineWidth=1;g.beginPath();g.moveTo(x0+i*w/TM,y0);g.lineTo(x0+i*w/TM,y0-h);g.stroke();T(g,String(i),x0+i*w/TM,y0+28,20,MUT,'center');}
+ for(let i=1;i<=4;i++){g.strokeStyle=GRID;g.beginPath();g.moveTo(x0,y0-i*h/4);g.lineTo(x0+w,y0-i*h/4);g.stroke();}
+ T(g,'n, об/мин',x0,y0-h-14,20,INK);T(g,'1500',x0-8,y0-h+6,18,INK,'right');T(g,'I / Iн',x0+w,y0-h-14,20,RED,'right');T(g,'8',x0+w+8,y0-h+6,18,RED,'left');T(g,'t, с',x0+w,y0+52,20,MUT,'right');
+ g.setLineDash([6,6]);g.strokeStyle=RED;g.lineWidth=1.5;g.beginPath();g.moveTo(x0,y0-h/8);g.lineTo(x0+w,y0-h/8);g.stroke();g.setLineDash([]);T(g,'Iн',x0+w+8,y0-h/8+6,18,RED);
+ if(hist.length>1){g.strokeStyle=INK;g.lineWidth=4;g.beginPath();hist.forEach((p,i)=>{const X=x0+p[0]/TM*w,Y=y0-p[1]/1500*h;i?g.lineTo(X,Y):g.moveTo(X,Y);});g.stroke();
+  g.strokeStyle=RED;g.lineWidth=4;g.beginPath();hist.forEach((p,i)=>{const X=x0+p[0]/TM*w,Y=y0-Math.min(8,p[2])/8*h;i?g.lineTo(X,Y):g.moveTo(X,Y);});g.stroke();}
+ // mech characteristic
+ const mx=720,my=470,mw=250,mh=360;g.strokeStyle=INK;g.lineWidth=3;g.beginPath();g.moveTo(mx,my-mh);g.lineTo(mx,my);g.lineTo(mx+mw,my);g.stroke();
+ T(g,'n',mx-8,my-mh+6,20,INK,'right');T(g,'M / Mн',mx+mw,my+28,18,INK,'right');T(g,'1',mx+mw/3,my+28,18,MUT,'center');T(g,'2',mx+2*mw/3,my+28,18,MUT,'center');
+ const Xm=M=>mx+M/3*mw,Yn=n=>my-n/1500*mh;g.strokeStyle=INK;g.lineWidth=4;g.beginPath();for(let i=0;i<=200;i++){const s=0.001+i/200*0.999;const n=N1*(1-s);const X=Xm(Mm(s)),Y=Yn(n);i?g.lineTo(X,Y):g.moveTo(X,Y);}g.stroke();
+ g.strokeStyle=RED;g.lineWidth=3;g.setLineDash([10,6]);g.beginPath();for(let i=0;i<=60;i++){const n=i/60*1500;const X=Xm(Ml(n)),Y=Yn(n);i?g.lineTo(X,Y):g.moveTo(X,Y);}g.stroke();g.setLineDash([]);
+ T(g,'двигатель',mx+mw*0.55,my-mh/2,18,INK);T(g,'механизм',mx+10,my-20,18,RED);
+ if(st){C(g,Xm(Math.max(0,st.M||0)),Yn(st.n),9,RED);}
+ // lamp
+ const U=st?380*(1-0.012*(st.I||0)):380,br=Math.max(0,Math.min(1,Math.pow(U/380,6)));
+ g.beginPath();g.arc(850,560,30,0,7);g.fillStyle=`rgba(232,180,40,${0.15+0.85*br})`;g.fill();g.strokeStyle=INK;g.lineWidth=3;g.stroke();T(g,'лампа в цехе',850,620,18,INK,'center');}
+function updA(){if(!st){$('#a-n').textContent='0';$('#a-i').textContent='0';$('#a-u').textContent='380 В';$('#a-s').textContent='—';return;}
+ const U=380*(1-0.012*st.I);$('#a-n').textContent=Math.round(st.n)+' об/мин';$('#a-i').textContent=fmt(st.I,1)+'×  ('+fmt(st.I*IN,0)+' А)';$('#a-u').textContent=Math.round(U)+' В';$('#a-s').textContent=fmt(Math.max(0,(N1-st.n)/N1*100),1)+' %';
+ const L=+$('#a-l').value;let pl,col=INK,note;
+ if(st.t<0.3)pl='ПУСК',note='В первый момент ротор стоит, поле режет стержни с полной скоростью — ток в 6–7 раз больше номинального. Лампа в цехе мигает.';
+ else if(st.n<200&&st.t>1.5)pl='НЕ ТЯНЕТ!',col=RED,note=am==='yd'&&!st.sw?'В звезде момент в 3 раза меньше. Под большой нагрузкой двигатель не может разогнаться, пока не переключат на треугольник.':'Момент нагрузки больше пускового момента двигателя — он гудит и греется. Отключите и уменьшите нагрузку.';
+ else if(st.I>1.25&&st.t>1)pl='ПЕРЕГРУЗКА',col=RED,note='Ток больше номинального: двигатель будет греться. Тепловая защита отключит его.';
+ else if(Math.abs(st.n-(hist.length>5?hist[hist.length-5][1]:0))<2&&st.t>1)pl='РАБОТАЕТ',note=`Установилось: n = ${Math.round(st.n)} об/мин, скольжение ${fmt((N1-st.n)/N1*100,1)} %, ток ${fmt(st.I*IN,1)} А. ${am==='dol'?'Попробуйте «Звезда → треугольник» и «Частотник» — посмотрите, где меньше бросок тока.':am==='yd'?'Через 2,5 с реле переключило на треугольник — виден второй бросок тока, но меньше первого.':'Частотник плавно поднимал частоту 5 секунд — ток лишь немного выходил за номинальный, свет не мигал.'}`;
+ else pl='РАЗГОН',note='Ротор набирает скорость, скольжение уменьшается, ток падает.';
+ $('#a-plq').textContent=pl;$('#a-plq').style.background=col;$('#a-note').textContent=note;}
+
+/* ---------- 3 DC machine ---------- */
+const cd=$('#cv-d'),dx=cd.getContext('2d');let dm='mot',dcol='col',dAng=0,dW=0,dh=[];
+const KF=0.008,RA=0.5;
+seg('d-mode',v=>{dm=v;dh=[];ctlD();});press('d-mode','mot');seg('d-col',v=>{dcol=v;dh=[];updD();});press('d-col','col');
+function ctlD(){$('#d-ctl').innerHTML=dm==='mot'?'<div><label class="ctl-label" for="d-u">Напряжение U = <b id="d-uv">24</b> В</label><input type="range" id="d-u" min="0" max="24" step="1" value="24"></div><div><label class="ctl-label" for="d-i">Нагрузка: ток якоря I = <b id="d-iv">4</b> А</label><input type="range" id="d-i" min="0" max="12" step="1" value="4"></div>'
+ :'<div><label class="ctl-label" for="d-n">Крутим вал (дизель): n = <b id="d-nv">2000</b> об/мин</label><input type="range" id="d-n" min="0" max="3000" step="100" value="2000"></div>';
+ $$('#d-ctl input').forEach(i=>i.oninput=updD);updD();}
+let dE=0,dN=0;
+function updD(){if(dm==='mot'){const U=+$('#d-u').value,I=+$('#d-i').value;$('#d-uv').textContent=U;$('#d-iv').textContent=I;dN=Math.max(0,(U-I*RA)/KF);dE=KF*dN;
+  $('#d-ro').innerHTML=`<div class="ro"><span>Частота вращения</span><b>${Math.round(dN)} об/мин</b></div><div class="ro"><span>ЭДС якоря E = U − I·R</span><b>${fmt(dE,1)} В</b></div>`;
+  $('#d-plq').textContent=dcol==='col'?'ДВИГАТЕЛЬ: КОЛЛЕКТОР ПЕРЕКЛЮЧАЕТ ТОК':'БЕЗ КОЛЛЕКТОРА — ДЁРГАЕТСЯ';$('#d-plq').style.background=dcol==='col'?INK:RED;
+  $('#d-note').innerHTML=dcol==='col'?`Ток в проводнике под полюсом N всегда «от нас», под S — «к нам»: коллектор переключает его каждые пол-оборота, и сила Ампера всё время крутит якорь в одну сторону. n = (U − I·R) / kФ: больше нагрузка — чуть меньше обороты. Меньше U — медленнее: так регулируют скорость.`:'С кольцами ток в рамке не переключается: пол-оборота сила толкает вперёд, пол-оборота — назад. Якорь качнётся и встанет. Поэтому двигателю постоянного тока нужен коллектор.';}
+ else{const n=+$('#d-n').value;$('#d-nv').textContent=n;dN=n;dE=KF*n;
+  $('#d-ro').innerHTML=`<div class="ro"><span>ЭДС E = kФ·n</span><b>${fmt(dE,1)} В</b></div><div class="ro"><span>На щётках</span><b>${dcol==='col'?'постоянное':'переменное'}</b></div>`;
+  $('#d-plq').textContent=dcol==='col'?'ГЕНЕРАТОР ПОСТОЯННОГО ТОКА':'ГЕНЕРАТОР ПЕРЕМЕННОГО ТОКА';$('#d-plq').style.background=INK;
+  $('#d-note').innerHTML=dcol==='col'?'Вращаем якорь — в проводниках наводится ЭДС (электромагнитная индукция). Коллектор «переворачивает» каждую вторую половину волны: на щётках напряжение одного знака. Так работает сварочный генератор с дизелем на трассе.':'С двумя кольцами на щётках переменное напряжение — синусоида. Так устроен генератор переменного тока.';}}
+function drawD(dt){const W=1000,H=600,g=dx;g.clearRect(0,0,W,H);g.fillStyle=PAP;g.fillRect(0,0,W,H);
+ let target=-dN/3000*2*Math.PI*0.6;if(dm==='mot'&&dcol==='ring'){target=0;}
+ if(dm==='mot'&&dcol==='ring'){const tq=Math.sin(dAng)*2;dW+=(tq-dW*1.5)*dt;dAng+=dW*dt;}else{dW+=(target-dW)*Math.min(1,dt*2);dAng+=dW*dt;}
+ const cx=280,cy=280;
+ // poles
+ g.fillStyle='#d9d4c6';g.strokeStyle=INK;g.lineWidth=4;g.fillRect(20,170,110,220);g.strokeRect(20,170,110,220);g.fillRect(430,170,110,220);g.strokeRect(430,170,110,220);
+ T(g,'N',75,295,48,RED,'center');T(g,'S',485,295,48,INK,'center');
+ for(let y=200;y<=360;y+=40)arrow(g,140,y,415,y,'#c9c2b0',2);
+ // armature
+ g.beginPath();g.arc(cx,cy,120,0,7);g.fillStyle='#ece7da';g.fill();g.strokeStyle=INK;g.lineWidth=3;g.stroke();
+ const pa=dAng,ca=[Math.cos(pa),Math.sin(pa)];
+ const c1=[cx+110*Math.cos(pa+Math.PI),cy+110*Math.sin(pa+Math.PI)],c2=[cx+110*Math.cos(pa),cy+110*Math.sin(pa)];
+ g.strokeStyle=MUT;g.lineWidth=3;g.setLineDash([8,6]);g.beginPath();g.moveTo(c1[0],c1[1]);g.lineTo(c2[0],c2[1]);g.stroke();g.setLineDash([]);
+ // current direction: conductor on left half (x<cx) under N
+ const dirOf=(c,idx)=>{if(dcol==='col')return c[0]<cx?1:-1;return (idx===0?1:-1)*(Math.cos(pa)<0?1:-1)*-1;};
+ [[c1,0],[c2,1]].forEach(([c,idx])=>{const d=dirOf(c,idx);const mag=Math.abs(c[1]-cy)/110;g.beginPath();g.arc(c[0],c[1],22,0,7);g.fillStyle=PAP;g.fill();g.strokeStyle=d>0?RED:INK;g.lineWidth=4;g.stroke();
+  if(d>0){g.beginPath();g.moveTo(c[0]-12,c[1]-12);g.lineTo(c[0]+12,c[1]+12);g.moveTo(c[0]+12,c[1]-12);g.lineTo(c[0]-12,c[1]+12);g.stroke();}else{C(g,c[0],c[1],6,INK);}
+  if(dm==='mot'&&mag>0.15){const fy=(c[0]<cx?-1:1)*(dcol==='col'?1:(d>0?1:-1)*(c[0]<cx?1:-1));arrow(g,c[0],c[1],c[0],c[1]+fy*55*-1,RED,4);}});
+ // commutator
+ const ky=500,kr=42;g.strokeStyle=INK;g.lineWidth=3;
+ if(dcol==='col'){for(let h=0;h<2;h++){g.beginPath();g.arc(cx,ky,kr,pa+h*Math.PI+0.12+Math.PI/2,pa+h*Math.PI+Math.PI-0.12+Math.PI/2);g.lineWidth=16;g.strokeStyle=h?'#b98a3a':'#8a6a2a';g.stroke();}
+  g.fillStyle=INK;g.fillRect(cx-kr-38,ky-12,26,24);g.fillRect(cx+kr+12,ky-12,26,24);T(g,'коллектор и щётки',cx,ky+80,20,INK,'center');}
+ else{g.lineWidth=12;g.strokeStyle='#8a6a2a';g.beginPath();g.ellipse(cx-30,ky,14,40,0,0,7);g.stroke();g.strokeStyle='#b98a3a';g.beginPath();g.ellipse(cx+30,ky,14,40,0,0,7);g.stroke();
+  g.fillStyle=INK;g.fillRect(cx-52,ky+44,20,26);g.fillRect(cx+20,ky+44,20,26);T(g,'два кольца и щётки',cx,ky+100,20,INK,'center');}
+ // output graph
+ const raw=Math.sin(pa+Math.PI/2);let out=dm==='gen'?(dcol==='col'?Math.abs(raw):raw)*(dN/3000):null;
+ if(dm==='gen'){dh.push(out);if(dh.length>300)dh.shift();}
+ const gx=600,gy=280,gw=370,gA=150;if(dm==='gen'){g.strokeStyle=GRID;g.lineWidth=2;g.beginPath();g.moveTo(gx,gy);g.lineTo(gx+gw,gy);g.moveTo(gx,gy-gA-10);g.lineTo(gx,gy+gA+10);g.stroke();}
+ if(dm==='gen'){g.strokeStyle=RED;g.lineWidth=4;g.beginPath();dh.forEach((v,i)=>{const X=gx+gw-(dh.length-1-i)*gw/300,Y=gy-v*gA;i?g.lineTo(X,Y):g.moveTo(X,Y);});g.stroke();T(g,'Напряжение на щётках',gx,90,22);}
+ else{T(g,'Двигатель:',gx,140,24);g.font='400 22px '+SER;g.fillStyle=INK;['ток в якоре + поле полюсов','= сила Ампера на проводники.','Красные стрелки — силы.','⊗ — ток от нас, ● — к нам.'].forEach((s,i)=>g.fillText(s,gx,185+i*34));}}
+
+/* ---------- 4 nameplate ---------- */
+const PL=[0.55,0.75,1.1,1.5,2.2,3,4,5.5,7.5,11],BR=[2,3,4,6,10,13,16,20,25,32,40,50,63];
+let PV=1;try{const v=+new URLSearchParams(location.search).get('v');if(v>=1&&v<=30)PV=v;}catch(e){}
+const sel=$('#p-var');for(let i=1;i<=30;i++){const o=document.createElement('option');o.value=i;o.textContent=i;sel.appendChild(o);}sel.value=PV;
+function plate(N){const P=PL[(N-1)%10],p=[1,2,3][Math.floor((N-1)/10)],n1=3000/p;const eta=Math.round((0.70+0.19*(1-Math.exp(-P/3)))*1000)/10;
+ const cos=Math.round(((p===1?0.83:p===2?0.78:0.72)+0.07*(1-Math.exp(-P/4)))*100)/100;const sn=0.075-0.045*(1-Math.exp(-P/4));const n2=Math.round(n1*(1-sn)/5)*5;
+ const hv=P>4;const P1=P/(eta/100);const I=Math.round(P1*1000/(Math.sqrt(3)*380*cos)*10)/10;const br=BR.find(b=>b>=I);
+ return{N,P,p,n1,n2,eta,cos,hv,P1,I,s:(n1-n2)/n1*100,br,Ip:6.5*I,conn:hv?'Δ':'Y'};}
+const rows=[['P1','Мощность из сети P1 = P2 / η, кВт','num'],['I','Ток при 380 В: I = P1 / (1,73·U·cos φ), А','num'],['n1','Частота вращения поля n1, об/мин','sel',['3000','1500','1000','750']],
+ ['s','Скольжение s = (n1 − n2) / n1, %','num'],['conn','Схема для сети 380 В','sel',['звезда Y','треугольник Δ']],['br','Автомат (характеристика D), А','sel',BR.map(String)],['Ip','Пусковой ток ≈ 6,5·I, А','num']];
+function renderPlate(){const t=plate(+sel.value);
+ $('#p-plate').innerHTML=`<div class="pt"><span>3~ ДВИГАТЕЛЬ АИР</span><span>№ ${String(t.N).padStart(3,'0')}</span></div><div class="pg">
+ <div><span>Мощность</span><b>${fmt(t.P,t.P<1?2:1)} кВт</b></div><div><span>Напряжение</span><b>${t.hv?'Δ/Y 380/660':'Δ/Y 220/380'} В</b></div><div><span>Ток</span><b>${t.hv?fmt(t.I,1)+' / '+fmt(t.I/1.73,1):fmt(t.I*1.73,1)+' / '+fmt(t.I,1)} А</b></div>
+ <div><span>Частота вращения</span><b>${t.n2} об/мин</b></div><div><span>cos φ</span><b>${fmt(t.cos,2)}</b></div><div><span>КПД</span><b>${fmt(t.eta,1)} %</b></div>
+ <div><span>Частота сети</span><b>50 Гц</b></div><div><span>Режим</span><b>S1</b></div><div><span>Защита</span><b>IP54</b></div></div>`;
+ $('#p-tab').innerHTML='<thead><tr><th>Что найти</th><th>Ответ</th><th></th></tr></thead><tbody>'+rows.map(r=>`<tr><td class="f">${r[1]}</td><td><small>${r[1]}</small>${r[2]==='num'?`<input type="text" inputmode="decimal" id="q-${r[0]}" aria-label="${r[1]}">`:`<select id="q-${r[0]}" aria-label="${r[1]}"><option value="">—</option>${r[3].map(o=>`<option>${o}</option>`).join('')}</select>`}</td><td class="mark" id="m-${r[0]}"></td></tr>`).join('')+'</tbody>';
+ $('#p-fb').textContent='';$('#p-sol').hidden=true;}
+function chk(){const t=plate(+sel.value);let ok=0;const want={P1:t.P1,I:t.I,s:t.s,Ip:t.Ip};
+ rows.forEach(r=>{const el=$('#q-'+r[0]),m=$('#m-'+r[0]);let good=false;
+  if(r[2]==='num'){const v=parseFloat(el.value.replace(',','.'));const w=want[r[0]];good=isFinite(v)&&Math.abs(v-w)<=Math.max(0.04*Math.abs(w),r[0]==='s'?0.3:0.06);}
+  else if(r[0]==='n1')good=el.value===String(t.n1);else if(r[0]==='conn')good=el.value===(t.conn==='Y'?'звезда Y':'треугольник Δ');else good=el.value===String(t.br);
+  m.textContent=good?'✓':'✗';m.className='mark '+(good?'good':'bad');if(good)ok++;});
+ const f=$('#p-fb');f.textContent=`Верно ${ok} из ${rows.length}`+(ok===rows.length?' — шильдик прочитан!':'');f.className='feedback '+(ok===rows.length?'good':'bad');}
+function sol(){const t=plate(+sel.value);const s=$('#p-sol');s.hidden=false;
+ s.innerHTML=`P1 = ${fmt(t.P,2)} / ${fmt(t.eta/100,3)} = <b>${fmt(t.P1,2)} кВт</b>. I = ${fmt(t.P1*1000,0)} / (1,73 · 380 · ${fmt(t.cos,2)}) = <b>${fmt(t.I,1)} А</b> — совпадает с шильдиком. n2 = ${t.n2} об/мин чуть меньше ближайшей скорости поля → <b>n1 = ${t.n1}</b> (p = ${t.p}). s = (${t.n1} − ${t.n2}) / ${t.n1} = <b>${fmt(t.s,1)} %</b>. ${t.hv?'Обмотка на 380 В (Δ/Y 380/660) → в сети 380 В <b>треугольник</b>.':'Обмотка на 220 В (Δ/Y 220/380) → в сети 380 В <b>звезда</b>.'} Автомат — ближайший больший номинал: <b>${t.br} А</b>, характеристика D (выдерживает пусковой ток). Пусковой ток ≈ 6,5 · ${fmt(t.I,1)} = <b>${fmt(t.Ip,0)} А</b>.`;}
+sel.onchange=renderPlate;$('#p-chk').onclick=chk;$('#p-show').onclick=sol;
+
+/* ---------- quiz ---------- */
+const Q=[{q:'Что создают три обмотки статора, подключённые к трём фазам?',o:['вращающееся магнитное поле','постоянное поле','переменное напряжение 12 В'],e:'Токи сдвинуты на 120°, и суммарное поле поворачивается — как бегущие огни.'},
+ {q:'Почему двигатель называется асинхронным?',o:['ротор вращается медленнее поля','у него нет обмоток','он работает от постоянного тока'],e:'Если ротор догонит поле, токи в стержнях пропадут. Он всегда чуть отстаёт.'},
+ {q:'Скорость поля при f = 50 Гц и p = 2:',o:['1500 об/мин','3000 об/мин','1000 об/мин'],e:'n1 = 60 · 50 / 2 = 1500 об/мин.'},
+ {q:'n1 = 1500, n2 = 1440 об/мин. Скольжение?',o:['4 %','60 %','0,4 %'],e:'s = (1500 − 1440) / 1500 = 0,04 = 4 %.'},
+ {q:'Как сделать реверс асинхронного двигателя?',o:['поменять местами две любые фазы','поменять все три фазы по кругу','поменять ноль и землю'],e:'Поле начинает вращаться в другую сторону.'},
+ {q:'Почему при пуске мощного двигателя мигает свет?',o:['пусковой ток в 5–7 раз больше номинального','двигатель отдаёт энергию в сеть','так работает ротор'],e:'Большой ток — большое падение напряжения в проводах сети.'},
+ {q:'Какой способ пуска даёт самый маленький бросок тока?',o:['частотный преобразователь','прямой пуск','пуск без нагрузки на 2 фазах'],e:'Частотник плавно поднимает частоту, ток почти не превышает номинальный.'},
+ {q:'Зачем машине постоянного тока коллектор?',o:['переключает ток в якоре каждые пол-оборота','охлаждает якорь','повышает напряжение'],e:'Без него сила Ампера меняла бы направление и якорь не вращался.'},
+ {q:'Шильдик «Δ/Y 220/380 В». Сеть 380 В. Как соединить обмотки?',o:['звездой','треугольником','как угодно'],e:'Обмотка рассчитана на 220 В; в звезде на ней 380 / 1,73 = 220 В.'},
+ {q:'Что такое кВт на шильдике двигателя?',o:['механическая мощность на валу','мощность из сети','мощность вентилятора'],e:'Из сети двигатель берёт больше: P1 = P2 / η.'},
+ {q:'«250 А при ПВ 60 %» на сварочном аппарате означает…',o:['из 10 мин цикла 6 мин варим, 4 отдыхаем','60 % тока от 250 А','КПД 60 %'],e:'ПВ — продолжительность включения при этом токе.'},
+ {q:'Режим работы крана и лифта:',o:['повторно-кратковременный S3','продолжительный S1','кратковременный S2'],e:'Работа — пауза — работа: двигатель не успевает ни нагреться, ни остыть полностью.'}];
+let qi=0,score=0,ord=[];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderQ(){const box=$('#quiz-box');
+  if(qi>=Q.length){const m=score>=11?'Отлично!':score>=9?'Хорошо! Повторите ошибки.':'Повторите опыты 1–4 и попробуйте ещё раз.';
+    box.innerHTML='<div class="qcard"><p class="score">'+score+' из '+Q.length+'</p><p class="qtext">'+m+'</p><div class="seg"><button class="big" type="button" id="qr">Пройти ещё раз</button></div></div>';$('#qr').onclick=()=>{qi=0;score=0;renderQ();};return;}
+  const q=Q[qi];ord=shuffle(q.o.map((t,i)=>({t,i})));
+  box.innerHTML='<div class="qcard"><p class="qtop"><span>Вопрос '+(qi+1)+' из '+Q.length+'</span><span>Верно: '+score+'</span></p><p class="qtext">'+q.q+'</p><div class="opts">'+ord.map((o,k)=>'<button class="opt" type="button" data-k="'+k+'">'+o.t+'</button>').join('')+'</div><p class="feedback" id="qfb" aria-live="polite"></p><p id="qex" style="margin:0"></p><div class="seg"><button class="big" type="button" id="qn" hidden>Дальше</button></div></div>';
+  $$('#quiz-box .opt').forEach(b=>b.onclick=()=>{const ok=ord[+b.dataset.k].i===0;if(ok)score++;$$('#quiz-box .opt').forEach(o=>{o.disabled=true;if(ord[+o.dataset.k].i===0)o.classList.add('right');});if(!ok)b.classList.add('wrong');
+    const f=$('#qfb');f.className='feedback '+(ok?'good':'bad');f.textContent=ok?'Верно!':'Не совсем.';$('#qex').textContent=q.e;const n=$('#qn');n.hidden=false;n.textContent=qi===Q.length-1?'Узнать результат':'Дальше';n.focus();});
+  $('#qn').onclick=()=>{qi++;renderQ();};}
+
+updF();ctlD();renderPlate();renderQ();drawA();
+const tabs=['field','async','dc','plate','quiz'];let cur='field';
+function show(){const h=location.hash.replace('#','');cur=tabs.includes(h)?h:'field';$$('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==cur);$$('nav a').forEach(a=>a.setAttribute('aria-current',String(a.dataset.tab===cur)));}
+window.addEventListener('hashchange',show);show();
+let last=performance.now(),acc=0;
+function loop(now){const dt=Math.min(0.05,(now-last)/1000);last=now;
+ if(cur==='field')drawF(dt);
+ if(cur==='dc')drawD(dt);
+ if(cur==='async'){if(run&&st){let sim=dt*0.5;while(sim>0){const h=Math.min(0.005,sim);stepA(h);sim-=h;}if(st.t>=6)run=false;updA();}drawA();}
+ requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
