@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Лаборатория «Трёхфазный ток»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="hand">Лаборатория</div>
+  <h1>Трёхфазный ток · ПР №7</h1>
+  <p>Тема 1.6. Три фазы со сдвигом 120°, звезда и треугольник, роль нулевого провода и что бывает при его обрыве, мощность. Вкладки «Звезда» и «Треугольник» — стенд для практической работы №7.</p>
+</header>
+
+<nav aria-label="Разделы">
+  <a href="#gen" data-tab="gen">1 · Генератор</a>
+  <a href="#star" data-tab="star">2 · Звезда</a>
+  <a href="#delta" data-tab="delta">3 · Треугольник</a>
+  <a href="#power" data-tab="power">4 · Мощность</a>
+  <a href="#quiz" data-tab="quiz">5 · Проверь себя</a>
+</nav>
+
+<section class="panel" data-panel="gen">
+  <p class="eyebrow">Опыт 1</p>
+  <h2>Три обмотки — три синусоиды через 120°</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-gen" width="1000" height="560" aria-label="Слева магнит вращается внутри трёх обмоток, справа три синусоиды, сдвинутые на треть периода; вертикальная линия — текущий момент"></canvas></div>
+    <div class="side">
+      <div class="readouts">
+        <div class="ro"><span>u1 · сплошная</span><b id="g-a">—</b></div>
+        <div class="ro"><span>u2 · штрих</span><b id="g-b">—</b></div>
+        <div class="ro"><span>u3 · точки</span><b id="g-c">—</b></div>
+        <div class="ro"><span>Сумма u1 + u2 + u3</span><b id="g-s">0 В</b></div>
+      </div>
+      <div class="seg"><button class="big" type="button" id="g-pause">Пауза</button><button class="big alt" type="button" id="g-slow">Медленнее</button></div>
+      <p class="note"><b>Смотрите:</b> в любой момент сумма трёх напряжений равна нулю. Поэтому при одинаковой нагрузке токи трёх фаз возвращаются друг через друга — обратный провод почти не нужен. Это экономия меди.</p>
+    </div>
+  </div>
+</section>
+
+<!-- shared variant row for star & delta -->
+<section class="panel" data-panel="star" hidden>
+  <p class="eyebrow">Опыт 2 · ПР №7, часть 1</p>
+  <h2>Звезда: нагрузка, нулевой провод и его обрыв</h2>
+  <div class="row" style="align-items:end;margin-bottom:12px">
+    <div><label class="ctl-label" for="s-var">Вариант (номер в журнале)</label><select id="s-var" class="var"></select></div>
+    <div><span class="ctl-label">Нагрузка</span><div class="seg" id="s-load"><button type="button" data-v="sym">Симметричная</button><button type="button" data-v="asym">Несимметричная</button></div></div>
+  </div>
+  <div class="bench">
+    <div class="side" style="gap:12px">
+      <div class="stage" id="s-schem"></div>
+      <div class="stage"><canvas id="s-vec" width="1000" height="520" aria-label="Векторная диаграмма: треугольник линейных напряжений и точка нейтрали нагрузки"></canvas></div>
+    </div>
+    <div class="side">
+      <div><span class="ctl-label">Нулевой провод</span><div class="seg" id="s-n"><button type="button" data-v="1">Подключён</button><button type="button" data-v="0">Обрыв нуля</button></div></div>
+      <p class="plaque" id="s-plq">—</p>
+      <div class="scroll"><table class="calc" id="s-tab"></table></div>
+      <p class="note" id="s-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="delta" hidden>
+  <p class="eyebrow">Опыт 3 · ПР №7, часть 2</p>
+  <h2>Треугольник: фазные и линейные токи</h2>
+  <div class="row" style="align-items:end;margin-bottom:12px">
+    <div><label class="ctl-label" for="d-var">Вариант (номер в журнале)</label><select id="d-var" class="var"></select></div>
+    <div><span class="ctl-label">Нагрузка</span><div class="seg" id="d-load"><button type="button" data-v="sym">Симметричная</button><button type="button" data-v="asym">Несимметричная</button></div></div>
+  </div>
+  <div class="bench">
+    <div class="stage" id="d-schem"></div>
+    <div class="side">
+      <div><span class="ctl-label">Линейный провод L1</span><div class="seg" id="d-l"><button type="button" data-v="1">Подключён</button><button type="button" data-v="0">Обрыв L1</button></div></div>
+      <p class="plaque" id="d-plq">—</p>
+      <div class="scroll"><table class="calc" id="d-tab"></table></div>
+      <p class="note" id="d-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="power" hidden>
+  <p class="eyebrow">Опыт 4</p>
+  <h2>Три одинаковых нагревателя: звезда или треугольник?</h2>
+  <div class="bench">
+    <div class="stage" id="p-schem"></div>
+    <div class="side">
+      <div><span class="ctl-label">Соединение</span><div class="seg" id="p-c"><button type="button" data-v="Y">Звезда</button><button type="button" data-v="D">Треугольник</button></div></div>
+      <div class="readouts">
+        <div class="ro"><span>Напряжение на нагревателе</span><b id="p-u">—</b></div>
+        <div class="ro"><span>Мощность одного</span><b id="p-p1">—</b></div>
+        <div class="ro"><span>Мощность всех трёх</span><b id="p-p">—</b></div>
+        <div class="ro"><span>Ток в линии</span><b id="p-i">—</b></div>
+      </div>
+      <p class="note">Нагреватель — ТЭН на 220 В, 1 кВт (R = 48,4 Ом). В звезде на нём 220 В, в треугольнике — 380 В: напряжение в 1,73 раза больше, мощность — в 3 раза. <b>ТЭН на 220 В в треугольник включать нельзя — сгорит!</b></p>
+      <h3 style="margin-top:8px">Калькулятор мощности</h3>
+      <div class="row">
+        <div><label class="ctl-label" for="pc-u">Uл, В</label><input type="number" id="pc-u" value="380"></div>
+        <div><label class="ctl-label" for="pc-i">Iл, А</label><input type="number" id="pc-i" value="10" step="any"></div>
+        <div><label class="ctl-label" for="pc-c">cos φ</label><input type="number" id="pc-c" value="0.85" step="0.01" min="0" max="1"></div>
+        <div class="ro"><span>P = 1,73 · Uл · Iл · cos φ</span><b id="pc-p">—</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="quiz" hidden>
+  <p class="eyebrow">Онлайн-тест</p>
+  <h2>«Переменный и трёхфазный ток»</h2>
+  <div id="quiz-box"></div>
+</section>
+
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">все лаборатории</a></footer>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const INK='#1B1A17',RED='#A3271F',PAP='#FAF8F2',MUT='#6E685C',OK='#2F6B3A',GRID='#b9c6d2',LAMP='#F6D77A';
+const LBL="Oswald,'Arial Narrow',Arial,sans-serif",SER="'PT Serif',Georgia,serif";
+const fmt=(x,d)=>(Math.round(x*10**d)/10**d).toFixed(d).replace('.',',');
+const nice=x=>{const a=Math.abs(x);return a>=100?fmt(x,0):a>=10?fmt(x,1):fmt(x,2);};
+function seg(id,cb){$$('#'+id+' button').forEach(b=>b.onclick=()=>{press(id,b.dataset.v);cb(b.dataset.v);});}
+function press(id,v){$$('#'+id+' button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===v)));}
+// complex
+const C=(re,im)=>({re,im}),add=(a,b)=>C(a.re+b.re,a.im+b.im),sub=(a,b)=>C(a.re-b.re,a.im-b.im),mul=(a,k)=>C(a.re*k,a.im*k),abs=a=>Math.hypot(a.re,a.im),
+ cdiv=(a,b)=>{const d=b.re*b.re+b.im*b.im;return C((a.re*b.re+a.im*b.im)/d,(a.im*b.re-a.re*b.im)/d);},pol=(m,deg)=>C(m*Math.cos(deg*Math.PI/180),m*Math.sin(deg*Math.PI/180));
+const UF=220,E=[pol(UF,90),pol(UF,-30),pol(UF,210)];// A up, B right-down, C left-down (clockwise sequence)
+
+/* ---------- variants ---------- */
+$$('select.var').forEach(s=>{for(let n=1;n<=30;n++){const o=document.createElement('option');o.value=n;o.textContent='Вариант '+n;s.appendChild(o);}});
+let VN=1;try{const v=+new URLSearchParams(location.search).get('v');if(v>=1&&v<=30)VN=v;}catch(e){}
+$$('select.var').forEach(s=>{s.value=VN;s.onchange=()=>{VN=+s.value;$$('select.var').forEach(x=>x.value=VN);drawStar();drawDelta();};});
+const R0=()=>100+10*VN;
+const loads=m=>m==='sym'?[R0(),R0(),R0()]:[R0(),2*R0(),3*R0()];
+
+/* ---------- 1 generator ---------- */
+const cg=$('#cv-gen'),gx=cg.getContext('2d');let gt=0,gpause=false,gspeed=0.25,glast=performance.now();
+$('#g-pause').onclick=()=>{gpause=!gpause;$('#g-pause').textContent=gpause?'Пуск':'Пауза';};
+$('#g-slow').onclick=()=>{gspeed=gspeed>0.1?0.06:0.25;$('#g-slow').textContent=gspeed>0.1?'Медленнее':'Быстрее';};
+const DASH=[[],[16,10],[3,9]];
+function drawGen(){const W=1000,H=560;gx.clearRect(0,0,W,H);gx.fillStyle=PAP;gx.fillRect(0,0,W,H);
+  const cx=210,cy=280,R=170,ang=gt*2*Math.PI;
+  gx.strokeStyle=INK;gx.lineWidth=5;gx.beginPath();gx.arc(cx,cy,R,0,7);gx.stroke();
+  for(let k=0;k<3;k++){const a=(-90+120*k)*Math.PI/180;const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);gx.save();gx.translate(x,y);gx.rotate(a+Math.PI/2);
+    gx.fillStyle=PAP;gx.strokeStyle=INK;gx.lineWidth=4;gx.fillRect(-46,-22,92,44);gx.strokeRect(-46,-22,92,44);gx.setLineDash(DASH[k]);for(let i=-36;i<=36;i+=12){gx.beginPath();gx.moveTo(i,-22);gx.lineTo(i+6,22);gx.stroke();}gx.setLineDash([]);gx.restore();
+    gx.font='700 30px '+LBL;gx.fillStyle=INK;gx.textAlign='center';gx.fillText(String(k+1),cx+(R+56)*Math.cos(a),cy+(R+56)*Math.sin(a)+10);}
+  gx.save();gx.translate(cx,cy);gx.rotate(ang);gx.fillStyle=INK;gx.fillRect(-26,-110,52,110);gx.fillStyle=PAP;gx.strokeStyle=INK;gx.lineWidth=4;gx.fillRect(-26,0,52,110);gx.strokeRect(-26,-110,52,220);
+  gx.font='700 34px '+LBL;gx.fillStyle=PAP;gx.textAlign='center';gx.fillText('N',0,-70);gx.fillStyle=INK;gx.fillText('S',0,96);gx.restore();
+  // waves
+  const x0=440,w=520,y0=280,A=170;gx.strokeStyle='#8a97a3';gx.lineWidth=2;gx.beginPath();gx.moveTo(x0,y0);gx.lineTo(x0+w,y0);gx.stroke();
+  for(let k=0;k<3;k++){gx.setLineDash(DASH[k]);gx.strokeStyle=k===0?INK:k===1?INK:RED;gx.lineWidth=k===2?6:5;gx.beginPath();for(let i=0;i<=w;i+=2){const t=i/w*2;const y=y0-A*Math.sin(2*Math.PI*t-k*2*Math.PI/3);i?gx.lineTo(x0+i,y):gx.moveTo(x0+i,y);}gx.stroke();}gx.setLineDash([]);
+  const tt=(gt%2),xc=x0+tt/2*w;gx.strokeStyle=RED;gx.lineWidth=3;gx.beginPath();gx.moveTo(xc,y0-A-20);gx.lineTo(xc,y0+A+20);gx.stroke();
+  const v=[0,1,2].map(k=>311*Math.sin(2*Math.PI*tt-k*2*Math.PI/3));['#g-a','#g-b','#g-c'].forEach((id,k)=>$(id).textContent=fmt(v[k],0)+' В');$('#g-s').textContent=fmt(Math.abs(v[0]+v[1]+v[2])<0.5?0:v[0]+v[1]+v[2],0)+' В';
+  gx.font='700 24px '+LBL;gx.fillStyle=INK;gx.textAlign='left';gx.fillText('120° = треть периода',x0+10,y0+A+50);}
+
+/* ---------- 2 star ---------- */
+let sLoad='sym',sN=true;
+function star(){const R=loads(sLoad);const Y=R.map(r=>1/r);let UN=C(0,0);
+  if(!sN){let num=C(0,0);E.forEach((e,k)=>num=add(num,mul(e,Y[k])));UN=mul(num,1/(Y[0]+Y[1]+Y[2]));}
+  const Uph=E.map(e=>sub(e,UN)),I=Uph.map((u,k)=>mul(u,Y[k]));const IN=sN?add(add(I[0],I[1]),I[2]):C(0,0);
+  return{R,UN,Uph,I,IN};}
+function lampSVG(x,y,U,label){const k=Math.min(1.6,U/220);const bad=U>250;const fill=bad?RED:U<5?PAP:`rgba(246,215,122,${Math.min(1,k*k)})`;
+  return `<circle cx="${x}" cy="${y}" r="34" fill="${fill}" stroke="${INK}" stroke-width="4"/><path d="M${x-24} ${y-24} L${x+24} ${y+24} M${x+24} ${y-24} L${x-24} ${y+24}" stroke="${INK}" stroke-width="3"/>`+
+   `<text x="${x+46}" y="${y+8}" font-family="${LBL}" font-weight="700" font-size="24" fill="${bad?RED:INK}">${label}</text>`;}
+function drawStar(){const s=star();const U=s.Uph.map(abs),Ia=s.I.map(abs);
+  const ys=[90,190,290];let w=`<g fill="none" stroke="${INK}" stroke-width="4">`;
+  ys.forEach((y,k)=>{w+=`<path d="M40 ${y} H 320"/><path d="M400 ${y} H 470"/>`;});
+  w+=`<path d="M40 390 H 470"/>`;// N line
+  // loads vertical from each phase line down to star point at (560, 330)
+  w+=`</g>`;let s2='';
+  ys.forEach((y,k)=>{s2+=`<text x="20" y="${y+8}" font-family="${LBL}" font-weight="700" font-size="26">L${k+1}</text>`+
+    `<circle cx="360" cy="${y}" r="24" fill="${PAP}" stroke="${INK}" stroke-width="4"/><text x="360" y="${y+9}" text-anchor="middle" font-family="${SER}" font-weight="700" font-size="26">A</text><text x="360" y="${y-32}" text-anchor="middle" font-family="${LBL}" font-weight="700" font-size="20" fill="${RED}">${nice(Ia[k])} А</text>`;
+    const lx=560+k*110;s2+=`<path d="M470 ${y} H ${lx} V ${400-56}" fill="none" stroke="${INK}" stroke-width="4"/>`;});
+  s2+=`<path d="M560 450 H 780" fill="none" stroke="${INK}" stroke-width="5"/>`;
+  [0,1,2].forEach(k=>{const lx=560+k*110;s2+=`<path d="M${lx} ${400+34-26} V 450" fill="none" stroke="${INK}" stroke-width="4"/>`+lampSVG(lx,400-22,U[k],'');});
+  s2+=`<circle cx="670" cy="450" r="8" fill="${INK}"/><text x="790" y="458" font-family="${LBL}" font-size="22">N′</text>`;
+  // neutral wire from N' (670,450) to N line (40,390)?? draw: N line at y=390 from 40 to 470, then to 470,500 to 670 500 to 670 450
+  s2+=`<text x="20" y="398" font-family="${LBL}" font-weight="700" font-size="26">N</text>`;
+  if(sN)s2+=`<path d="M470 390 V 500 H 670 V 450" fill="none" stroke="${INK}" stroke-width="4"/>`;else s2+=`<path d="M470 390 V 500 H 560 M600 500 H 670 V 450" fill="none" stroke="${INK}" stroke-width="4"/><path d="M560 500 L 580 480" stroke="${RED}" stroke-width="5"/><text x="580" y="540" text-anchor="middle" font-family="${LBL}" font-weight="700" font-size="22" fill="${RED}">ОБРЫВ</text>`;
+  s2+=[0,1,2].map(k=>`<text x="${545+k*110}" y="${400-70}" text-anchor="middle" font-family="${LBL}" font-weight="700" font-size="22" fill="${U[k]>250?RED:INK}">${fmt(U[k],0)} В</text>`).join('');
+  s2+=`<text x="300" y="540" text-anchor="end" font-family="${LBL}" font-weight="700" font-size="22" fill="${RED}">IN = ${sN?nice(abs(s.IN))+' А':'—'}</text>`;
+  $('#s-schem').innerHTML=`<svg viewBox="0 0 900 560" role="img" aria-label="Звезда: три лампы между фазами и общей точкой N′, нулевой провод ${sN?'подключён':'оборван'}">${w}${s2}</svg>`;
+  $('#s-tab').innerHTML='<thead><tr><th>Фаза</th><th>R, Ом</th><th>Uф, В</th><th>I, А</th><th>P, Вт</th></tr></thead><tbody>'+[0,1,2].map(k=>`<tr><td>L${k+1}</td><td>${s.R[k]}</td><td>${fmt(U[k],0)}</td><td>${fmt(Ia[k],2)}</td><td>${fmt(U[k]*Ia[k],0)}</td></tr>`).join('')+
+   `<tr><td colspan="2">Нуль</td><td>U<sub>NN′</sub> = ${fmt(abs(s.UN),0)}</td><td>I<sub>N</sub> = ${sN?fmt(abs(s.IN),2):'0'}</td><td>Σ ${fmt(U.reduce((a,u,k)=>a+u*Ia[k],0),0)}</td></tr></tbody>`;
+  const over=U.some(u=>u>250);const plq=$('#s-plq');
+  plq.textContent=sN?(sLoad==='sym'?'СИММЕТРИЯ: ТОК В НУЛЕ = 0':'НОЛЬ ВЫРАВНИВАЕТ: ВЕЗДЕ 220 В'):(sLoad==='sym'?'ОБРЫВ НУЛЯ ПРИ СИММЕТРИИ — НИЧЕГО':(over?'ОБРЫВ НУЛЯ: ПЕРЕНАПРЯЖЕНИЕ!':'ОБРЫВ НУЛЯ: ПЕРЕКОС'));plq.style.background=(!sN&&sLoad==='asym')?RED:(sN?OK:INK);
+  $('#s-note').innerHTML=sN?(sLoad==='sym'?'Одинаковые лампы: токи фаз равны и сдвинуты на 120°, в нуле они гасят друг друга — I<sub>N</sub> = 0. Линейное напряжение между фазами 380 В = 1,73 · 220 В.':'Разные нагрузки: токи разные, по нулю течёт их «несбалансированный остаток». Но напряжение на каждой лампе 220 В — ноль держит точку N′ на месте.')
+   :(sLoad==='sym'?'При одинаковой нагрузке ток в нуле и так был ноль — обрыв ничего не меняет. Поэтому двигатели (симметричная нагрузка) подключают без нуля.':'Без нуля точка N′ «уезжает» (см. диаграмму): там, где нагрузка меньше (сопротивление больше), напряжение растёт почти до 380 В, где больше — падает. В доме это сгоревшие телевизоры и холодильники. <b>Поэтому в нулевой провод не ставят предохранителей и выключателей.</b>');
+  drawStarVec(s);}
+function drawStarVec(s){const cv=$('#s-vec'),x=cv.getContext('2d'),W=1000,H=520;x.clearRect(0,0,W,H);x.fillStyle=PAP;x.fillRect(0,0,W,H);
+  const k=0.85,ox=560,oy=280;const P=e=>[ox+e.re*k,oy-e.im*k];const pts=E.map(P),n=P(s.UN);
+  x.strokeStyle=INK;x.lineWidth=3;x.beginPath();x.moveTo(...pts[0]);x.lineTo(...pts[1]);x.lineTo(...pts[2]);x.closePath();x.stroke();
+  x.setLineDash([10,8]);x.strokeStyle=MUT;pts.forEach(p=>{x.beginPath();x.moveTo(ox,oy);x.lineTo(...p);x.stroke();});x.setLineDash([]);
+  x.strokeStyle=RED;x.lineWidth=5;pts.forEach(p=>{x.beginPath();x.moveTo(...n);x.lineTo(...p);x.stroke();});
+  x.fillStyle=INK;x.beginPath();x.arc(ox,oy,8,0,7);x.fill();x.fillStyle=RED;x.beginPath();x.arc(...n,10,0,7);x.fill();
+  x.font='700 28px '+LBL;x.fillStyle=INK;['L1','L2','L3'].forEach((t,i)=>x.fillText(t,pts[i][0]+(i===0?-14:i===1?14:-50),pts[i][1]+(i===0?-14:30)));
+  x.fillText('N',ox-36,oy+8);x.fillStyle=RED;x.fillText('N′',n[0]+14,n[1]-12);
+  x.font='26px '+SER;x.fillStyle=INK;x.textAlign='left';x.fillText('стороны — 380 В (линейные)',20,40);x.fillStyle=RED;x.fillText('красные — U на лампах',20,76);
+  x.fillStyle=MUT;x.fillText('пунктир — 220 В от N',20,112);x.fillStyle=RED;x.fillText('смещение N′: '+fmt(abs(s.UN),0)+' В',680,480);x.textAlign='left';}
+seg('s-load',v=>{sLoad=v;drawStar();});seg('s-n',v=>{sN=v==='1';drawStar();});press('s-load','sym');press('s-n','1');
+
+/* ---------- 3 delta ---------- */
+let dLoad='sym',dL=true;
+function delta(){const R=loads(dLoad);// Rab,Rbc,Rca
+  const Ua=E[0],Ub=E[1],Uc=E[2];const Uab=sub(Ua,Ub),Ubc=sub(Ub,Uc),Uca=sub(Uc,Ua);
+  let Vab,Vbc,Vca;if(dL){Vab=Uab;Vbc=Ubc;Vca=Uca;}else{Vbc=Ubc;const Iser=cdiv(Ubc,C(R[0]+R[2],0));// path B->A->C: through Rab (B to A) then Rca (A to C)
+    Vab=mul(Iser,-R[0]);// Va - Vb = -I*Rab (current flows B->A)
+    Vca=mul(Iser,-R[2]);}// Vc - Va = -I*Rca
+  const Iab=mul(Vab,1/R[0]),Ibc=mul(Vbc,1/R[1]),Ica=mul(Vca,1/R[2]);
+  const IA=dL?sub(Iab,Ica):C(0,0),IB=sub(Ibc,Iab),IC=sub(Ica,Ibc);return{R,V:[Vab,Vbc,Vca],Iph:[Iab,Ibc,Ica],Il:[IA,IB,IC]};}
+function drawDelta(){const d=delta();const V=d.V.map(abs),Ip=d.Iph.map(abs),Il=d.Il.map(abs);
+  const A=[450,70],B=[680,450],Cc=[220,450];
+  let s=`<g fill="none" stroke="${INK}" stroke-width="4">`;
+  // line wires from left
+  s+=dL?`<path d="M30 70 H ${A[0]}"/>`:`<path d="M30 70 H 160 M200 70 H ${A[0]}"/><path d="M160 70 L 182 52" stroke="${RED}" stroke-width="5"/>`;
+  s+=`<path d="M30 520 H ${B[0]} V ${B[1]}"/><path d="M30 540 H ${Cc[0]-60} V ${Cc[1]} H ${Cc[0]}"/>`;
+  s+=`<path d="M${A[0]} ${A[1]} L ${B[0]} ${B[1]} L ${Cc[0]} ${Cc[1]} Z" stroke-width="3"/></g>`;
+  const box=(p,q,lab,u,i)=>{const mx=(p[0]+q[0])/2,my=(p[1]+q[1])/2,a=Math.atan2(q[1]-p[1],q[0]-p[0])*180/Math.PI;const bad=u>420;
+    return `<rect x="${mx-50}" y="${my-18}" width="100" height="36" transform="rotate(${a} ${mx} ${my})" fill="${u>5?`rgba(246,215,122,${Math.min(1,u/380)})`:PAP}" stroke="${INK}" stroke-width="4"/>`+
+    `<text x="${mx+(mx<450?-70:70)}" y="${my-6}" text-anchor="${mx<450?'end':'start'}" font-family="${LBL}" font-weight="700" font-size="22">${lab}: ${fmt(u,0)} В</text><text x="${mx+(mx<450?-70:70)}" y="${my+22}" text-anchor="${mx<450?'end':'start'}" font-family="${LBL}" font-size="22" fill="${RED}">${fmt(i,2)} А</text>`;};
+  s+=box(A,B,'R12',V[0],Ip[0])+box(B,Cc,'R23',V[1],Ip[1]).replace(/y="(\d+(\.\d+)?)" text-anchor="(end|start)"/g,(m,y,_,an)=>`y="${+y+50}" text-anchor="${an}"`)+box(Cc,A,'R31',V[2],Ip[2]);
+  [[A,'L1',Il[0]],[B,'L2',Il[1]],[Cc,'L3',Il[2]]].forEach(([p,t,i])=>{s+=`<circle cx="${p[0]}" cy="${p[1]}" r="8" fill="${INK}"/>`;});
+  s+=`<text x="20" y="60" font-family="${LBL}" font-weight="700" font-size="24">L1 · ${fmt(Il[0],2)} А</text><text x="20" y="512" font-family="${LBL}" font-weight="700" font-size="24">L2 · ${fmt(Il[1],2)} А</text><text x="20" y="575" font-family="${LBL}" font-weight="700" font-size="24">L3 · ${fmt(Il[2],2)} А</text>`;
+  if(!dL)s+=`<text x="180" y="110" text-anchor="middle" font-family="${LBL}" font-weight="700" font-size="22" fill="${RED}">ОБРЫВ</text>`;
+  $('#d-schem').innerHTML=`<svg viewBox="0 0 900 600" role="img" aria-label="Треугольник: три нагрузки между фазами L1, L2, L3">${s}</svg>`;
+  $('#d-tab').innerHTML='<thead><tr><th>Нагрузка</th><th>R, Ом</th><th>U, В</th><th>Iф, А</th><th>Линия</th><th>Iл, А</th></tr></thead><tbody>'+['12','23','31'].map((t,k)=>`<tr><td>R${t}</td><td>${d.R[k]}</td><td>${fmt(V[k],0)}</td><td>${fmt(Ip[k],2)}</td><td>L${k+1}</td><td>${fmt(Il[k],2)}</td></tr>`).join('')+'</tbody>';
+  const plq=$('#d-plq');plq.textContent=!dL?'ОБРЫВ L1: ДВЕ НАГРУЗКИ ПОСЛЕДОВАТЕЛЬНО':dLoad==='sym'?'Iл = 1,73 · Iф':'НЕСИММЕТРИЯ: ТОКИ РАЗНЫЕ';plq.style.background=!dL?RED:INK;
+  $('#d-note').innerHTML=!dL?'Провод L1 оборван: нагрузка R23 по-прежнему под 380 В, а R12 и R31 оказались соединены последовательно и делят 380 В между собой — горят вполнакала. Двигатель в таком режиме гудит и перегревается («работа на двух фазах»).'
+   :dLoad==='sym'?`На каждой нагрузке линейное напряжение 380 В. Линейный ток в 1,73 раза больше фазного: ${fmt(Il[0],2)} / ${fmt(Ip[0],2)} = ${fmt(Il[0]/Ip[0],2)}. Нулевой провод не нужен.`:'Нагрузки разные — фазные токи разные, а напряжение на каждой по-прежнему 380 В: в треугольнике перекоса напряжений нет. Правило 1,73 для токов работает только при одинаковой нагрузке.';}
+seg('d-load',v=>{dLoad=v;drawDelta();});seg('d-l',v=>{dL=v==='1';drawDelta();});press('d-load','sym');press('d-l','1');
+
+/* ---------- 4 power ---------- */
+let pc='Y';
+function drawPower(){const R=48.4,U=pc==='Y'?220:380,P1=U*U/R,I=pc==='Y'?U/R:1.732*U/R;
+  $('#p-u').textContent=U+' В';$('#p-p1').textContent=fmt(P1/1000,2)+' кВт';$('#p-p').textContent=fmt(3*P1/1000,2)+' кВт';$('#p-i').textContent=fmt(I,1)+' А';
+  const heater=(x,y,rot,hot)=>`<g transform="rotate(${rot} ${x} ${y})"><rect x="${x-70}" y="${y-22}" width="140" height="44" rx="22" fill="${hot?'#e8b0a8':LAMP}" stroke="${INK}" stroke-width="4"/><path d="M${x-50} ${y} q10 -16 20 0 t20 0 t20 0 t20 0 t20 0" fill="none" stroke="${INK}" stroke-width="3"/></g>`;
+  let s='';if(pc==='Y'){s+=`<g fill="none" stroke="${INK}" stroke-width="4"><path d="M40 80 H 300 V 150 M40 160 H 200 M40 240 H 120"/><path d="M300 230 V 330 M200 160 V 260 L 300 330 M120 240 V 330 L 300 330"/></g>`+heater(300,190,90)+heater(200,215,90)+heater(120,290,90)+`<circle cx="300" cy="330" r="8" fill="${INK}"/><text x="320" y="340" font-family="${LBL}" font-size="22">N′</text>`;}
+  else{s+=`<g fill="none" stroke="${INK}" stroke-width="4"><path d="M40 80 H 300 M40 160 H 160 M40 240 H 120 V 380 H 440"/><path d="M300 80 L 440 380 L 160 380 Z M160 160 V 380"/></g>`+heater(370,230,65,true)+heater(300,380,0,true)+heater(230,230,-65,true);}
+  s+=`<text x="10" y="88" font-family="${LBL}" font-weight="700" font-size="24">L1</text><text x="10" y="168" font-family="${LBL}" font-weight="700" font-size="24">L2</text><text x="10" y="248" font-family="${LBL}" font-weight="700" font-size="24">L3</text>`;
+  s+=`<text x="500" y="120" font-family="${LBL}" font-weight="700" font-size="34">${pc==='Y'?'Звезда':'Треугольник'}</text><text x="500" y="170" font-family="${SER}" font-size="26">на ТЭНе ${U} В</text><text x="500" y="215" font-family="${SER}" font-size="26">P = ${fmt(3*U*U/R/1000,1)} кВт</text>${pc==='D'?`<text x="500" y="270" font-family="${LBL}" font-weight="700" font-size="26" fill="${RED}">ТЭН на 220 В сгорит!</text>`:''}`;
+  $('#p-schem').innerHTML=`<svg viewBox="0 0 860 440" role="img" aria-label="Три нагревателя в соединении ${pc==='Y'?'звездой':'треугольником'}">${s}</svg>`;}
+seg('p-c',v=>{pc=v;drawPower();});press('p-c','Y');
+function calcP(){const u=+$('#pc-u').value,i=+$('#pc-i').value,c=+$('#pc-c').value;$('#pc-p').textContent=isFinite(u*i*c)?fmt(1.732*u*i*c/1000,2)+' кВт':'—';}
+['#pc-u','#pc-i','#pc-c'].forEach(id=>$(id).oninput=calcP);
+
+/* ---------- quiz ---------- */
+const Q=[{q:'На сколько градусов сдвинуты фазы трёхфазной системы?',o:['120°','90°','180°'],e:'Три фазы делят круг 360° на три части.'},
+ {q:'Как обозначают фазные провода?',o:['L1, L2, L3','N, PE, L','A, B, N'],e:'L1–L3 — фазы, N — ноль, PE — защитный провод.'},
+ {q:'Напряжение между фазой и нулём в нашей сети?',o:['220 В','380 В','127 В'],e:'Это фазное напряжение.'},
+ {q:'Напряжение между двумя фазами?',o:['380 В','220 В','440 В'],e:'Линейное: 1,73 · 220 ≈ 380 В.'},
+ {q:'В звезде линейный и фазный ток…',o:['равны','Iл = 1,73·Iф','Iл = 3·Iф'],e:'Ток проходит через провод и нагрузку последовательно.'},
+ {q:'В треугольнике линейное и фазное напряжение…',o:['равны','Uл = 1,73·Uф','Uл = 3·Uф'],e:'Каждая нагрузка — прямо между двумя фазами.'},
+ {q:'Что будет при обрыве нуля, если нагрузка фаз разная?',o:['на части нагрузок напряжение вырастет почти до 380 В','все лампы погаснут','ничего'],e:'Точка звезды смещается — перекос фазных напряжений.'},
+ {q:'Почему в нулевой провод не ставят предохранитель?',o:['чтобы не было обрыва нуля','чтобы сэкономить','он не нужен при 220 В'],e:'Сгоревший предохранитель в нуле = обрыв нуля.'},
+ {q:'Одинаковые ТЭНы переключили со звезды на треугольник. Мощность…',o:['вырастет в 3 раза','вырастет в 1,73 раза','не изменится'],e:'Напряжение ×1,73, мощность ∝ U² — ×3.'},
+ {q:'Формула мощности трёхфазной цепи',o:['P = 1,73·Uл·Iл·cos φ','P = U·I','P = 3·Uл·Iл'],e:'При одинаковой нагрузке фаз.'},
+ {q:'От какого напряжения работает бытовой сварочный инвертор?',o:['220 В (фаза и ноль)','380 В (три фазы)','12 В'],e:'Промышленные трансформаторы — 380 В, выпрямители — три фазы.'},
+ {q:'Как получают три фазы на электростанции?',o:['три обмотки генератора через 120°','три разных генератора','трансформатором'],e:'Вращающийся магнит наводит ЭДС в трёх обмотках по очереди.'}];
+let qi=0,score=0,ord=[];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderQ(){const box=$('#quiz-box');
+  if(qi>=Q.length){const m=score>=11?'Отлично!':score>=9?'Хорошо! Повторите ошибки.':'Повторите опыты 1–4 и попробуйте ещё раз.';
+    box.innerHTML='<div class="qcard"><p class="score">'+score+' из '+Q.length+'</p><p class="qtext">'+m+'</p><div class="seg"><button class="big" type="button" id="qr">Пройти ещё раз</button></div></div>';$('#qr').onclick=()=>{qi=0;score=0;renderQ();};return;}
+  const q=Q[qi];ord=shuffle(q.o.map((t,i)=>({t,i})));
+  box.innerHTML='<div class="qcard"><p class="qtop"><span>Вопрос '+(qi+1)+' из '+Q.length+'</span><span>Верно: '+score+'</span></p><p class="qtext">'+q.q+'</p><div class="opts">'+ord.map((o,k)=>'<button class="opt" type="button" data-k="'+k+'">'+o.t+'</button>').join('')+'</div><p class="feedback" id="qfb" aria-live="polite"></p><p id="qex" style="margin:0"></p><div class="seg"><button class="big" type="button" id="qn" hidden>Дальше</button></div></div>';
+  $$('#quiz-box .opt').forEach(b=>b.onclick=()=>{const ok=ord[+b.dataset.k].i===0;if(ok)score++;$$('#quiz-box .opt').forEach(o=>{o.disabled=true;if(ord[+o.dataset.k].i===0)o.classList.add('right');});if(!ok)b.classList.add('wrong');
+    const f=$('#qfb');f.className='feedback '+(ok?'good':'bad');f.textContent=ok?'Верно!':'Не совсем.';$('#qex').textContent=q.e;const n=$('#qn');n.hidden=false;n.textContent=qi===Q.length-1?'Узнать результат':'Дальше';n.focus();});
+  $('#qn').onclick=()=>{qi++;renderQ();};}
+
+drawStar();drawDelta();drawPower();calcP();renderQ();
+const tabs=['gen','star','delta','power','quiz'];let cur='gen';
+function show(){const h=location.hash.replace('#','');cur=tabs.includes(h)?h:'gen';$$('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==cur);$$('nav a').forEach(a=>a.setAttribute('aria-current',String(a.dataset.tab===cur)));}
+window.addEventListener('hashchange',show);show();
+function loop(now){const dt=Math.min(0.05,(now-glast)/1000);glast=now;if(!gpause)gt+=dt*gspeed;if(cur==='gen')drawGen();requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
