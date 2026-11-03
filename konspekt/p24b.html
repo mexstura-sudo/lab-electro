@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 24. ПР № 9. Реле — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+pre{background:#1B1A17;color:#F2EEE3;padding:14px 16px;overflow:auto;font-size:15px;line-height:1.4;border:3px solid var(--ink)}
+pre code{font-family:'Courier New',monospace}
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 24 · тема 2.4 (практическая работа)</p>
+<header class="hero">
+<div class="hand">Пара 24</div>
+<h1>ПР № 9. Реле</h1>
+<p class="lead">Ловим щелчок реле вольтметром, считаем коэффициент возврата и собираем простой автомат: датчик, Ардуино, реле, вентилятор.</p>
+<div class="meta"><span>Тема 2.4 (практическая работа)</span><span>Чтение: 30–40 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>как найти напряжения срабатывания и отпускания реле</li><li>как посчитать kв, ток и мощность срабатывания</li><li>как подключить модуль реле к Ардуино</li><li>как написать скетч с двумя порогами и зачем их два</li><li>как оформить выводы</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Цель и варианты</a><a href="#s2">2. Часть 1. Схема</a><a href="#s3">3. Часть 1. Порядок</a><a href="#s4">4. Часть 2. Автомат на Ардуино</a><a href="#s5">5. Скетч с двумя порогами</a><a href="#s6">6. Выводы — шаблон</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a><a href="#lab">Попробуйте в лаборатории</a></nav>
+<article>
+<h2 id="s1">1. Цель и варианты</h2>
+<p><strong>Цель:</strong> найти напряжения срабатывания и отпускания реле, коэффициент возврата и мощность срабатывания; собрать систему автоматики «датчик — Ардуино — реле — вентилятор».</p>
+<p>Вариант N — номер в журнале. В браузере он задаёт тип реле (5, 12 или 24 В) и его пороги, а во второй части — пороги вентилятора:</p>
+<div class="box formula">
+<p>T_ON = 40 + N      T_OFF = T_ON − (2 + остаток от N / 4)</p>
+</div>
+<p>Маршруты: часть 1 — <strong>вживую</strong> (нужен регулируемый блок питания 0–12 В) или <strong>в браузере</strong>; часть 2 — <strong>Proteus</strong>, <strong>Ардуино вживую</strong> или <strong>браузер</strong>.</p>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p>К контактам реле — только 12 В. Сеть 220 В к модулю не подключать. Блок питания включать с нуля, схему менять только без питания.</p>
+</div>
+<h2 id="s2">2. Часть 1. Схема</h2>
+<figure><img src="img/p24_r_pr9a.png" alt="Регулируемый источник, амперметр последовательно, вольтметр параллельно катушке реле; лампа через контакты показывает, сработало ли реле"><figcaption>Регулируемый источник, амперметр последовательно, вольтметр параллельно катушке реле; лампа через контакты показывает, сработало ли реле</figcaption></figure>
+<p>Источник питает катушку через амперметр, вольтметр стоит параллельно катушке. Лампа через контакты НР загорается, когда реле сработало.</p>
+<p>У модуля реле для Ардуино катушка спрятана за транзистором. Поэтому напряжение подают на <strong>VCC</strong> модуля, а вход <strong>IN</strong> соединяют с VCC.</p>
+<h2 id="s3">3. Часть 1. Порядок</h2>
+<ol>
+<li>Ручка источника — на ноль. Собрать схему, показать преподавателю.</li>
+<li>Плавно поднимать напряжение по 0,1 В. Щелчок, лампа загорелась — записать <strong>Uср</strong> и ток <strong>Iср</strong>.</li>
+<li>Поднять до номинала. Плавно опускать. Щелчок, лампа погасла — записать <strong>Uотп</strong> и <strong>Iотп</strong>.</li>
+<li>Повторить ещё два раза, найти средние.</li>
+<li>Посчитать kв и Pср, нарисовать график-петлю.</li>
+</ol>
+<div class="box formula">
+<p>kв = Uотп / Uср      Pср = Uср · Iср      I = U / Rк</p>
+</div>
+<div class="box example">
+<p><strong>Вариант 10:</strong> реле 5 В, катушка 70 Ом. Uср = 3,1 В, Uотп = 0,9 В.
+Iср = 3,1 / 70 = 0,0443 А = <strong>44,3 мА</strong>.
+kв = 0,9 / 3,1 = <strong>0,29</strong>. Pср = 3,1 · 0,0443 ≈ <strong>0,14 Вт</strong>.</p>
+</div>
+<figure><img src="img/p24_r_hyst.png" alt="График-петля: подъём до срабатывания, спуск до отпускания"><figcaption>График-петля: подъём до срабатывания, спуск до отпускания</figcaption></figure>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>kв всегда меньше 1. Если получилось больше — перепутали Uср и Uотп.</p>
+</div>
+<h2 id="s4">4. Часть 2. Автомат на Ардуино</h2>
+<figure><img src="img/p24_r_pr9b.png" alt="Потенциометр на A0, Ардуино, модуль реле на D7, вентилятор 12 В через контакты NO и COM"><figcaption>Потенциометр на A0, Ардуино, модуль реле на D7, вентилятор 12 В через контакты NO и COM</figcaption></figure>
+<p>Три звена автоматики:</p>
+<ul>
+<li><strong>датчик</strong> — потенциометр (крутим ручку — меняется «температура» t = A0 / 10);</li>
+<li><strong>управляющее устройство</strong> — Ардуино;</li>
+<li><strong>исполнительный элемент</strong> — реле с вентилятором.</li>
+</ul>
+<p>Подключение: потенциометр — крайние выводы на 5V и GND, средний на A0. Модуль: VCC — 5V, GND — GND, IN — D7. Вентилятор: плюс 12 В — на COM, NO — на вентилятор, вентилятор — на минус.</p>
+<h2 id="s5">5. Скетч с двумя порогами</h2>
+<pre><code>const int RELAY = 7;
+const float T_ON = 50;    // 40 + N
+const float T_OFF = 46;   // по варианту
+bool fanOn = false;
+
+void setup() {
+  pinMode(RELAY, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  float t = analogRead(A0) / 10.0;
+  if (!fanOn &amp;&amp; t &gt;= T_ON)  fanOn = true;
+  if ( fanOn &amp;&amp; t &lt;= T_OFF) fanOn = false;
+  digitalWrite(RELAY, fanOn ? HIGH : LOW);
+  Serial.println(t);
+  delay(200);
+}
+</code></pre>
+<p>Вентилятор включается, когда t дошла до T_ON, и выключается только когда t упала до T_OFF. Между порогами он «помнит» своё состояние. Это тот же «зазор», что у реле: без него вентилятор дёргался бы у порога.</p>
+<figure><img src="img/p24_r_proteus.png" alt="Proteus: ARDUINO UNO, POT-HG, резистор, транзистор 2N2222, реле с диодом, лампа 12 В"><figcaption>Proteus: ARDUINO UNO, POT-HG, резистор, транзистор 2N2222, реле с диодом, лампа 12 В</figcaption></figure>
+<p><strong>В Proteus</strong> модуля реле нет — его собирают сами: вывод D7 через резистор 1 кОм на базу транзистора, в коллекторе катушка реле, параллельно ей диод. Скетч в Arduino IDE экспортируют в .hex и указывают в свойствах ARDUINO UNO.</p>
+<h2 id="s6">6. Выводы — шаблон</h2>
+<ol>
+<li>Реле срабатывает при Uср = … В (Iср = … мА) и отпускает при Uотп = … В.</li>
+<li>Uотп меньше Uср, kв = … — потому что притянутый якорь держать легче, чем притянуть.</li>
+<li>Pср = … Вт — во много раз меньше мощности, которую переключают контакты (250 В · 10 А = 2500 Вт).</li>
+<li>Вентилятор включается при t = … °C и выключается при t = … °C; два порога нужны, чтобы реле не дребезжало.</li>
+</ol>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>Uср</strong> — напряжение срабатывания.</li>
+<li><strong>Uотп</strong> — напряжение отпускания.</li>
+<li><strong>kв</strong> — коэффициент возврата, Uотп / Uср.</li>
+<li><strong>Pср</strong> — мощность срабатывания.</li>
+<li><strong>VCC, GND, IN</strong> — питание, общий провод и вход сигнала модуля.</li>
+<li><strong>NO, NC, COM</strong> — нормально разомкнутый, нормально замкнутый и общий контакты.</li>
+<li><strong>analogRead</strong> — чтение аналогового входа Ардуино (0…1023).</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · Е6 · БИЛЕТ 17</span><h3>Автоматика и реле</h3><p class="q">Системы автоматики: датчик – управляющее устройство – исполнительный элемент. Датчики. Реле: срабатывание, отпускание, коэффициент возврата.</p><ol><li>Система автоматики: датчик (измеряет) → управляющее устройство (решает) → исполнительный элемент (делает). Пример: холодильник — датчик температуры → плата → компрессор. (Схема блоками.)</li><li>Датчики неэлектрических величин превращают их в электрический сигнал: температуры (термопара), давления, света, движения, положения (концевик).</li><li>Исполнительные элементы: реле, контактор, электромагнит, двигатель, клапан.</li><li>Реле: при токе в катушке притягивает якорь и переключает контакты. Срабатывание — наименьший ток (напряжение), при котором якорь притягивается. Отпускание — когда он возвращается (при меньшем токе). Коэффициент возврата kв = Uотп / Uср, всегда меньше 1.</li><li>В сварке: термореле отключает аппарат при перегреве; газовый клапан и контактор включаются кнопкой на горелке.</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>Как найти Uср?</summary><p>Плавно поднимать напряжение на катушке и записать его в момент щелчка.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>Uср = 8,4 В, Uотп = 3,6 В. Найдите kв.</summary><p>kв = 3,6 / 8,4 ≈ 0,43.</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>Катушка 400 Ом, Uср = 6,6 В. Найдите Iср.</summary><p>Iср = 6,6 / 400 = 0,0165 А = 16,5 мА.</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>Зачем у модуля реле соединять IN с VCC в части 1?</summary><p>Чтобы транзистор модуля был открыт, и напряжение VCC целиком попадало на катушку.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>Что будет, если в скетче оставить один порог?</summary><p>Вентилятор будет включаться и выключаться без конца, когда t дрожит около порога.</p></details>
+
+<details class="qa"><summary><span class="qn">6</span>Какие контакты модуля использовать, чтобы вентилятор включался при срабатывании реле?</summary><p>COM и NO.</p></details>
+<h2 id="lab">Попробуйте в лаборатории</h2><p>Откройте на телефоне или компьютере — ничего устанавливать не нужно.</p><div class="labs"><a href="https://mexstura-sudo.github.io/lab-electro/relay/#relay"><span>Лаборатория</span>Реле — срабатывание и отпускание по вашему варианту</a><a href="https://mexstura-sudo.github.io/lab-electro/relay/#ard"><span>Лаборатория</span>Ардуино и реле — скетч с порогами вашего варианта</a></div>
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>Плавно поднимать напряжение на катушке и записать его в момент щелчка.</li><li>kв = 3,6 / 8,4 ≈ 0,43.</li><li>Iср = 6,6 / 400 = 0,0165 А = 16,5 мА.</li><li>Чтобы транзистор модуля был открыт, и напряжение VCC целиком попадало на катушку.</li><li>Вентилятор будет включаться и выключаться без конца, когда t дрожит около порога.</li><li>COM и NO.</li></ol></section>
+</article>
+<nav class="pager"><a href="p24a.html">← Пара 24. Автоматика и реле</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

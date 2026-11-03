@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Цепи постоянного тока — лаборатория</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+.lamp{display:inline-block;width:22px;height:22px;border-radius:50%;border:3px solid var(--ink);vertical-align:middle}
+.plate{background:#e9e4d6;border:4px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:18px 22px;font-family:var(--label);letter-spacing:1px}
+.plate .pt{display:flex;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:10px;font-weight:700;font-size:20px}
+.plate .pg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 16px}
+.plate .pg div{border-bottom:1px dashed var(--muted);padding:4px 0}
+.plate .pg span{display:block;font-size:13px;color:var(--muted);text-transform:uppercase}
+.plate .pg b{font-size:22px}
+@media (max-width:560px){.plate .pg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="hand">Лаборатория</div>
+  <h1>Цепи постоянного тока</h1>
+  <p>Тема 1.2 и практические работы № 1–3. Закон Ома и режимы цепи, последовательное и параллельное соединение, смешанная цепь и потери в проводах. Номер варианта — ваш номер в журнале.</p>
+</header>
+
+<nav aria-label="Разделы">
+  <a href="#ohm" data-tab="ohm">1 · Закон Ома</a>
+  <a href="#series" data-tab="series">2 · Соединения (ПР 3)</a>
+  <a href="#mixed" data-tab="mixed">3 · Смешанная цепь (ПР 1)</a>
+  <a href="#cable" data-tab="cable">4 · Кабель и потери (ПР 2)</a>
+  <a href="#quiz" data-tab="quiz">5 · Проверь себя</a>
+</nav>
+
+<section class="panel" data-panel="ohm">
+  <p class="eyebrow">Опыт 1 · Т3, Т8</p>
+  <h2>Закон Ома и режимы цепи</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-o" width="1000" height="620" aria-label="Схема: источник с ЭДС E и внутренним сопротивлением r0, амперметр, нагрузка R и вольтметр; справа график тока от напряжения"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="o-e">ЭДС источника E = <b id="o-ev">12</b> В</label><input type="range" id="o-e" min="0" max="24" step="0.5" value="12"></div>
+      <div><label class="ctl-label" for="o-r">Нагрузка R = <b id="o-rv">10</b> Ом</label><input type="range" id="o-r" min="1" max="100" step="1" value="10"></div>
+      <div class="seg" role="group" aria-label="Режим цепи">
+        <button type="button" data-mode="load" aria-pressed="true">Нагрузка</button>
+        <button type="button" data-mode="open" aria-pressed="false">Холостой ход</button>
+        <button type="button" data-mode="short" aria-pressed="false">Короткое замыкание</button>
+      </div>
+      <label style="display:flex;gap:10px;align-items:center;font-size:18px"><input type="checkbox" id="o-r0" checked style="width:26px;height:26px"> учитывать внутреннее сопротивление r0 = 0,5 Ом</label>
+      <div class="readouts">
+        <div class="ro"><span>Ток I (амперметр)</span><b id="o-i">—</b></div>
+        <div class="ro"><span>Напряжение U (вольтметр)</span><b id="o-u">—</b></div>
+        <div class="ro"><span>Мощность нагрузки P = U·I</span><b id="o-p">—</b></div>
+        <div class="ro"><span>Потеря внутри источника</span><b id="o-du">—</b></div>
+      </div>
+      <p class="plaque" id="o-plq">—</p>
+      <p class="note" id="o-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="series" hidden>
+  <p class="eyebrow">Опыт 2 · ПР № 3, Т5, Т6</p>
+  <h2>Последовательное и параллельное соединение</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-s" width="1000" height="640" aria-label="Схема из трёх резисторов вашего варианта с амперметрами и вольтметрами; показания приборов на схеме"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="s-n">Вариант (номер в журнале)</label><input type="number" id="s-n" min="1" max="30" value="1" style="width:90px;font-size:20px;padding:4px"> <b id="s-data"></b></div>
+      <div class="seg" role="group" aria-label="Соединение">
+        <button type="button" data-sm="ser" aria-pressed="true">Последовательно</button>
+        <button type="button" data-sm="par" aria-pressed="false">Параллельно</button>
+        <button type="button" id="s-brk" aria-pressed="false">Обрыв R2</button>
+      </div>
+      <div class="scroll"><table class="calc" id="s-tab"></table></div>
+      <p class="plaque" id="s-plq">—</p>
+      <p class="note" id="s-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="mixed" hidden>
+  <p class="eyebrow">Опыт 3 · ПР № 1, Т7, Т8</p>
+  <h2>Смешанная цепь: проверьте свой расчёт</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-m" width="1000" height="600" aria-label="Смешанная цепь: источник U, резистор R1 и параллельные R2 и R3; амперметры A, A2, A3 и вольтметры V1, V23 с показаниями"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="m-n">Вариант (номер в журнале)</label><input type="number" id="m-n" min="1" max="30" value="1" style="width:90px;font-size:20px;padding:4px"> <b id="m-data"></b></div>
+      <div class="seg"><button type="button" class="big alt" id="m-show">Показать приборы</button></div>
+      <div class="scroll"><table class="calc" id="m-tab"></table></div>
+      <p class="note" id="m-note">Сначала посчитайте сами, потом нажмите «Показать приборы» и сравните. Расхождение в последней цифре — это округление.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="cable" hidden>
+  <p class="eyebrow">Опыт 4 · ПР № 2, Т2, Т4</p>
+  <h2>Кабель и потери: годятся ли сварочные кабели?</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-c" width="1000" height="600" aria-label="Сварочный пост: щиток, линия питания, аппарат, сварочные кабели и дуга; цвет кабеля показывает нагрев, внизу полоса доли потерь"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="c-n">Вариант (номер в журнале)</label><input type="number" id="c-n" min="1" max="30" value="1" style="width:90px;font-size:20px;padding:4px"> <b id="c-data"></b></div>
+      <div class="row">
+        <div><label class="ctl-label" for="c-s1">Сечение линии, мм²</label><select id="c-s1"></select></div>
+        <div><label class="ctl-label" for="c-s2">Сечение сварочных кабелей, мм²</label><select id="c-s2"></select></div>
+      </div>
+      <div class="readouts" id="c-ro"></div>
+      <p class="plaque" id="c-plq">—</p>
+      <p class="note" id="c-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="quiz" hidden>
+  <p class="eyebrow">Контрольные вопросы · Т1–Т9</p>
+  <h2>Проверь себя</h2>
+  <div id="quiz-box"></div>
+</section>
+
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">все лаборатории</a> · <a href="../konspekt/t12.html">текст к теме 1.2</a> · <a href="../konspekt/pr3.html">ПР № 3</a> · <a href="../konspekt/p10a.html">ПР № 1</a> · <a href="../konspekt/p10b.html">ПР № 2</a></footer>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const INK='#1B1A17',RED='#A3271F',PAP='#FAF8F2',MUT='#6E685C',OK='#2F6B3A',BLU='#4A6FA5',YEL='#E2B23A';
+const LBL="Oswald,'Arial Narrow',Arial,sans-serif",SER="'PT Serif',Georgia,serif";
+const fmt=(x,d)=>(Math.round(x*10**d)/10**d).toFixed(d).replace('.',',');
+const fmtT=(x,d)=>{let s=(Math.round(x*10**d)/10**d).toFixed(d);if(s.includes('.'))s=s.replace(/0+$/,'').replace(/\.$/,'');return s.replace('.',',');};
+function T(g,s,x,y,size,col,al,w){g.font=(w||'700')+' '+size+'px '+LBL;g.fillStyle=col||INK;g.textAlign=al||'left';g.fillText(s,x,y);}
+function S(g,s,x,y,size,col,al){g.font='400 '+size+'px '+SER;g.fillStyle=col||INK;g.textAlign=al||'left';g.fillText(s,x,y);}
+function L(g,x1,y1,x2,y2,w,c,d){g.strokeStyle=c||INK;g.lineWidth=w||3;g.setLineDash(d||[]);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.setLineDash([]);}
+function PL(g,pts,w,c){g.strokeStyle=c||INK;g.lineWidth=w||3;g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.stroke();}
+function R(g,x,y,w,h,fill,lw){g.fillStyle=fill||PAP;g.fillRect(x,y,w,h);g.strokeStyle=INK;g.lineWidth=lw||3;g.strokeRect(x,y,w,h);}
+function dot(g,x,y){g.fillStyle=INK;g.beginPath();g.arc(x,y,6,0,7);g.fill();}
+/* resistor centred at x,y; horizontal or vertical */
+function res(g,x,y,lab,vert,fill){if(vert)R(g,x-16,y-45,32,90,fill);else R(g,x-45,y-16,90,32,fill);if(lab)T(g,lab,vert?x+28:x,vert?y+8:y-26,24,INK,vert?'left':'center');}
+/* meter: circle with letter, reading underneath */
+function meter(g,x,y,ch,val,col){g.fillStyle=PAP;g.beginPath();g.arc(x,y,24,0,7);g.fill();g.strokeStyle=col||INK;g.lineWidth=3;g.stroke();T(g,ch,x,y+9,24,col||INK,'center');
+ if(val!==undefined&&val!==null){g.font='700 22px '+LBL;const w=g.measureText(val).width+14;g.fillStyle=col||INK;g.fillRect(x-w/2,y+30,w,30);T(g,val,x,y+53,22,PAP,'center');}}
+function batt(g,x,y,lab){g.fillStyle=PAP;g.fillRect(x-16,y-34,32,68);L(g,x-14,y-30,x-14,y+30,4);L(g,x+14,y-16,x+14,y+16,8);T(g,'+',x-30,y-26,22,RED,'center');if(lab){g.font='700 24px '+LBL;const w=g.measureText(lab).width;g.fillStyle=PAP;g.fillRect(x+26,y-16,w+8,30);T(g,lab,x+30,y+8,24,INK,'left');}}
+function lampC(g,x,y,on,r){r=r||26;g.fillStyle=on?'#F3D27A':PAP;g.beginPath();g.arc(x,y,r,0,7);g.fill();g.strokeStyle=INK;g.lineWidth=3;g.stroke();const k=r*0.7;L(g,x-k,y-k,x+k,y+k,3);L(g,x+k,y-k,x-k,y+k,3);}
+const q=new URLSearchParams(location.search).get('v');if(q){['#s-n','#m-n','#c-n'].forEach(s=>$(s).value=q);}
+const clampN=v=>Math.max(1,Math.min(30,(+v)|0||1));
+
+/* ---------- 1. Ohm ---------- */
+const ox=$('#cv-o').getContext('2d');let omode='load';
+$$('[data-mode]').forEach(b=>b.onclick=()=>{omode=b.dataset.mode;$$('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));updO();});
+['#o-e','#o-r','#o-r0'].forEach(s=>$(s).addEventListener('input',updO));
+let OS={};
+function updO(){const E=+$('#o-e').value,Rl=+$('#o-r').value,r0=$('#o-r0').checked?0.5:0;
+ let I,U;if(omode==='open'){I=0;U=E;}else if(omode==='short'){I=r0?E/r0:Infinity;U=0;}else{I=E/(Rl+r0);U=I*Rl;}
+ OS={E,Rl,r0,I,U};
+ $('#o-ev').textContent=fmtT(E,1);$('#o-rv').textContent=Rl;
+ $('#o-i').textContent=isFinite(I)?fmt(I,2)+' А':'∞ !';$('#o-u').textContent=fmt(U,2)+' В';
+ $('#o-p').textContent=isFinite(I)?fmt(U*I,1)+' Вт':'—';$('#o-du').textContent=isFinite(I)?fmt(I*r0,2)+' В':'—';
+ const pl=$('#o-plq'),n=$('#o-note');
+ if(omode==='open'){pl.textContent='ХОЛОСТОЙ ХОД';pl.style.background=INK;n.innerHTML='Цепь разомкнута: тока нет, вольтметр показывает <b>ЭДС</b> источника: U = E. Так зарядка висит в розетке без телефона.';}
+ else if(omode==='short'){pl.textContent='КОРОТКОЕ ЗАМЫКАНИЕ!';pl.style.background=RED;n.innerHTML=r0?`Нагрузки нет: ток ограничивает только r0. I = E / r0 = ${fmtT(E,1)} / 0,5 = <b>${fmt(I,0)} А</b>. Провода перегреваются — нужен автомат или предохранитель. Сварочный аппарат специально рассчитан на КЗ при касании электродом.`:'Без внутреннего сопротивления ток был бы бесконечным — в жизни так не бывает: у любого источника есть r0. Включите галочку.';}
+ else{pl.textContent='НАГРУЗКА: I = E / (R + r0)';pl.style.background=OK;n.innerHTML=`I = ${fmtT(E,1)} / (${Rl}${r0?' + 0,5':''}) = <b>${fmt(I,2)} А</b>. Увеличьте R — ток уменьшится; увеличьте E — вырастет. ${r0?'Чем больше ток, тем больше вольт теряется внутри источника: U = E − I·r0 (так тускнеют фары при пуске стартера).':''}`;}}
+function drawO(){const g=ox,{E,Rl,r0,I,U}=OS;g.fillStyle=PAP;g.fillRect(0,0,1000,620);
+ // source box
+ g.setLineDash([10,8]);g.strokeStyle=MUT;g.lineWidth=2;g.strokeRect(50,140,240,330);g.setLineDash([]);T(g,'источник',215,500,20,MUT,'center','500');
+ L(g,135,90,135,190);batt(g,135,220,'E = '+fmtT(E,1)+' В');L(g,135,250,135,310);
+ if(r0)res(g,135,360,'r0',true);else L(g,135,315,135,405);L(g,135,405,135,530);
+ // top wire to ammeter & load (load at x=540, voltmeter at x=440, graph from x=720)
+ const live=omode!=='open',XL=540,XV=440;
+ PL(g,[[135,90],[380,90]]);meter(g,290,90,'A',isFinite(I)?fmt(I,2)+' А':'∞');
+ if(omode==='open'){L(g,380,90,392,90);dot(g,392,90);L(g,392,90,440,60,4,RED);dot(g,450,90);PL(g,[[450,90],[XL,90],[XL,200]]);}
+ else PL(g,[[380,90],[XL,90],[XL,200]]);
+ if(omode==='short'){L(g,XL,200,XL,420,5,RED);T(g,'КЗ',XL+14,330,30,RED);res(g,640,310,'R',true,'#e9e4d6');PL(g,[[XL,200],[640,200],[640,265]]);PL(g,[[640,355],[640,420],[XL,420]]);}
+ else{res(g,XL,310,'R',true,omode==='load'?'#F3D27A':PAP);L(g,XL,200,XL,265);L(g,XL,355,XL,420);}
+ PL(g,[[XL,420],[XL,530],[135,530]]);
+ dot(g,XL,200);dot(g,XL,420);PL(g,[[XL,200],[XV,200],[XV,280]]);PL(g,[[XV,340],[XV,420],[XL,420]]);meter(g,XV,310,'V',fmt(U,2)+' В');
+ T(g,'R = '+Rl+' Ом',XL,585,24,INK,'center');
+ if(live&&isFinite(I)&&I>0){const t=(performance.now()/1000*Math.min(4,0.4+I/3))%1;const path=[[135,90],[XL,90],[XL,530],[135,530],[135,90]];let tot=0,seg=[];for(let i=1;i<path.length;i++){const d=Math.hypot(path[i][0]-path[i-1][0],path[i][1]-path[i-1][1]);seg.push(d);tot+=d;}
+  for(let k=0;k<10;k++){let s=((t+k/10)%1)*tot,i=0;while(s>seg[i]){s-=seg[i];i++;}const a=path[i],b=path[i+1],f=s/seg[i];const x=a[0]+(b[0]-a[0])*f,y=a[1]+(b[1]-a[1])*f;g.fillStyle=omode==='short'?RED:BLU;g.beginPath();g.arc(x,y,7,0,7);g.fill();}}
+ // graph I(U) for load
+ const gx=740,gy=500,gw=220,gh=400;R(g,gx-14,gy-gh-14,gw+28,gh+54,'#FAF8F2',2);
+ L(g,gx,gy,gx+gw,gy,2);L(g,gx,gy,gx,gy-gh+10,2);T(g,'U, В',gx+gw,gy+30,18,MUT,'right','500');T(g,'I, А',gx+8,gy-gh+28,18,MUT,'left','500');
+ const umax=24,imax=6,H=gh-20;const ex=umax/Rl<=imax?[gx+gw,gy-umax/Rl/imax*H]:[gx+imax*Rl/umax*gw,gy-H];PL(g,[[gx,gy],ex],3,BLU);
+ if(omode==='load'){const px=gx+U/umax*gw,py=gy-Math.min(1,I/imax)*H;g.fillStyle=RED;g.beginPath();g.arc(px,py,8,0,7);g.fill();}
+ T(g,'I = U / R',gx+gw-10,gy-gh+60,22,BLU,'right');}
+
+/* ---------- 2. Series / parallel (PR 3) ---------- */
+const RS=[1000,1500,2200,3300,4700,6800,10000],US=[5,9,12],CMB=[];
+for(let i=0;i<7;i++)for(let j=i+1;j<7;j++)for(let k=j+1;k<7;k++)CMB.push([RS[i],RS[j],RS[k]]);
+function V3(n){const cb=CMB[(11*n)%35],s=n%3;const Rr=[cb[s%3],cb[(1+s)%3],cb[(2+s)%3]];const U=US[(n-1)%3];return{n,U,R:Rr};}
+const kOm=r=>r>=1000?fmtT(r/1000,1)+' кОм':r+' Ом';
+let smode='ser',sbrk=false;
+$$('[data-sm]').forEach(b=>b.onclick=()=>{smode=b.dataset.sm;$$('[data-sm]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));updS();});
+$('#s-brk').onclick=()=>{sbrk=!sbrk;$('#s-brk').setAttribute('aria-pressed',String(sbrk));updS();};
+$('#s-n').addEventListener('input',updS);
+let SS={};
+function updS(){const v=V3(clampN($('#s-n').value));const U=v.U,Rr=v.R;
+ $('#s-data').textContent=` U = ${U} В; R1 = ${Rr[0]}, R2 = ${Rr[1]}, R3 = ${Rr[2]} Ом`;
+ let rows,I,Us=[0,0,0],Ik=[0,0,0],Rt;
+ if(smode==='ser'){if(sbrk){I=0;Us=[0,U,0];Rt=Infinity;}else{Rt=Rr[0]+Rr[1]+Rr[2];I=U/Rt*1000;Us=Rr.map(r=>I*r/1000);}Ik=[I,I,I];
+  rows=[['Прибор','Показание'],['A — ток цепи',fmt(I,2)+' мА'],['V1 — на R1',fmt(Us[0],2)+' В'],['V2 — на R2',fmt(Us[1],2)+' В'],['V3 — на R3',fmt(Us[2],2)+' В'],['R = U / I',sbrk?'∞ (обрыв)':Rt+' Ом']];}
+ else{Ik=Rr.map((r,i)=>sbrk&&i===1?0:U/r*1000);I=Ik[0]+Ik[1]+Ik[2];Us=[U,U,U];Rt=U/I*1000;
+  rows=[['Прибор','Показание'],['A — общий ток',fmt(I,2)+' мА'],['A1 — через R1',fmt(Ik[0],2)+' мА'],['A2 — через R2',fmt(Ik[1],2)+' мА'],['A3 — через R3',fmt(Ik[2],2)+' мА'],['V — на всех',fmt(U,2)+' В'],['R = U / I',fmt(Rt,0)+' Ом']];}
+ SS={U,Rr,I,Us,Ik,Rt};
+ $('#s-tab').innerHTML=rows.map((r,i)=>'<tr>'+r.map(c=>i?'<td>'+c+'</td>':'<th>'+c+'</th>').join('')+'</tr>').join('');
+ const pl=$('#s-plq'),n=$('#s-note');
+ if(smode==='ser'){if(sbrk){pl.textContent='ОБРЫВ: ГАСНЕТ ВСЁ';pl.style.background=RED;n.innerHTML='Путь у тока один — оборвался R2, ток остановился во всей цепи. Как старая гирлянда. А вольтметр на месте обрыва показывает всё напряжение источника.';}
+  else{pl.textContent='ТОК ОДИН, НАПРЯЖЕНИЯ СКЛАДЫВАЮТСЯ';pl.style.background=OK;n.innerHTML=`Проверка: U1 + U2 + U3 = ${fmt(Us[0],2)} + ${fmt(Us[1],2)} + ${fmt(Us[2],2)} = <b>${fmt(Us[0]+Us[1]+Us[2],2)} В</b> = U. На большем резисторе — большее напряжение.`;}}
+ else{if(sbrk){pl.textContent='ОБРЫВ R2: ОСТАЛЬНЫЕ РАБОТАЮТ';pl.style.background=INK;n.innerHTML='У каждой ветви свой путь — обрыв одной не мешает другим. Так работают розетки в квартире. Общий ток уменьшился.';}
+  else{pl.textContent='НАПРЯЖЕНИЕ ОДНО, ТОКИ СКЛАДЫВАЮТСЯ';pl.style.background=OK;n.innerHTML=`Проверка: I1 + I2 + I3 = ${fmt(Ik[0],2)} + ${fmt(Ik[1],2)} + ${fmt(Ik[2],2)} = <b>${fmt(I,2)} мА</b> = I. Общее R = ${fmt(Rt,0)} Ом — меньше самого маленького (${Math.min(...Rr)} Ом).`;}}}
+function drawS(){const g=$('#cv-s').getContext('2d'),{U,Rr,I,Us,Ik}=SS;g.fillStyle=PAP;g.fillRect(0,0,1000,640);
+ batt(g,90,330,'U = '+U+' В');L(g,90,70,90,300);L(g,90,360,90,590);
+ if(smode==='ser'){PL(g,[[90,70],[930,70],[930,590],[90,590]]);meter(g,200,70,'A',fmt(I,2)+' мА');
+  const xs=[360,560,760];xs.forEach((x,i)=>{const br=sbrk&&i===1;if(br){g.fillStyle=PAP;g.fillRect(x-60,60,120,22);res(g,x-0,70,'R'+(i+1)+' = '+kOm(Rr[i]),false,'#e9e4d6');L(g,x-14,50,x+14,92,5,RED);}else res(g,x,70,'R'+(i+1)+' = '+kOm(Rr[i]),false,'#F3D27A');
+   dot(g,x-70,70);dot(g,x+70,70);PL(g,[[x-70,70],[x-70,200],[x-30,200]]);PL(g,[[x+30,200],[x+70,200],[x+70,70]]);meter(g,x,200,'V'+(i+1),fmt(Us[i],2)+' В');});
+  T(g,'путь у тока один',510,420,30,MUT,'center','500');S(g,'U = U1 + U2 + U3      R = R1 + R2 + R3',510,470,28,INK,'center');}
+ else{PL(g,[[90,70],[860,70]]);PL(g,[[90,590],[860,590]]);meter(g,190,70,'A',fmt(I,2)+' мА');
+  const xs=[420,640,860];xs.forEach((x,i)=>{const br=sbrk&&i===1;dot(g,x,70);dot(g,x,590);L(g,x,70,x,370);meter(g,x,200,'A'+(i+1),fmt(Ik[i],2)+' мА');
+   if(br){L(g,x,370,x,395);L(g,x-20,380,x+20,410,5,RED);res(g,x,460,'R'+(i+1)+' = '+kOm(Rr[i]),true,'#e9e4d6');}else{L(g,x,370,x,415);res(g,x,460,'R'+(i+1)+' = '+kOm(Rr[i]),true,'#F3D27A');}L(g,x,505,x,590);});
+  dot(g,300,70);dot(g,300,590);PL(g,[[300,70],[300,300]]);PL(g,[[300,360],[300,590]]);meter(g,300,330,'V',fmt(U,2)+' В');
+  S(g,'I = I1 + I2 + I3',640,630,26,INK,'center');}}
+
+/* ---------- 3. Mixed (PR 1) ---------- */
+const P1=[[33,10,15,60],[48,6,12,60],[48,15,12,36],[96,20,5,20],[16,2,8,24],[90,40,30,60],[39,20,10,15],[64,8,10,40],[50,2,30,45],[48,12,6,12],[45,12,4,12],[48,8,40,60],[63,40,3,6],[50,10,24,40],[102,24,15,30],[60,15,20,60],[69,15,12,24],[33,10,18,36],[87,24,6,30],[108,15,15,60],[51,8,12,36],[48,6,30,45],[69,40,10,15],[120,30,12,60],[26,10,4,12],[30,6,5,20],[87,5,40,60],[80,12,10,40],[35,20,20,60],[18,2,15,30]];
+let mshow=false,MS={};
+$('#m-n').addEventListener('input',()=>{mshow=false;updM();});$('#m-show').onclick=()=>{mshow=!mshow;updM();};
+function updM(){const n=clampN($('#m-n').value),[U,R1,R2,R3]=P1[n-1];const R23=R2*R3/(R2+R3),Rt=R1+R23,I=U/Rt,U1=I*R1,U23=I*R23,I2=U23/R2,I3=U23/R3;
+ MS={U,R1,R2,R3,R23,Rt,I,U1,U23,I2,I3};$('#m-data').textContent=` U = ${U} В; R1 = ${R1}, R2 = ${R2}, R3 = ${R3} Ом`;$('#m-show').textContent=mshow?'Скрыть приборы':'Показать приборы';
+ const f=x=>fmtT(x,2);const rows=[['Величина','Значение']].concat(mshow?[['R23',f(R23)+' Ом'],['R',f(Rt)+' Ом'],['I',f(I)+' А'],['U1',f(U1)+' В'],['U23',f(U23)+' В'],['I2',f(I2)+' А'],['I3',f(I3)+' А'],['P = U·I',f(U*I)+' Вт'],
+  ['Проверка узла','I2 + I3 = '+f(I2+I3)+' А'],['Проверка контура','U1 + U23 = '+f(U1+U23)+' В'],['Баланс','I²R1 + U23²/R2 + U23²/R3 = '+f(I*I*R1+U23*U23/R2+U23*U23/R3)+' Вт']]:[['—','нажмите «Показать приборы»']]);
+ $('#m-tab').innerHTML=rows.map((r,i)=>'<tr>'+r.map(c=>i?'<td>'+c+'</td>':'<th>'+c+'</th>').join('')+'</tr>').join('');}
+function drawM(){const g=$('#cv-m').getContext('2d'),m=MS,sh=mshow,f=x=>fmtT(x,2);g.fillStyle=PAP;g.fillRect(0,0,1000,600);
+ batt(g,90,300,'U = '+m.U+' В');PL(g,[[90,270],[90,80],[600,80]]);PL(g,[[90,330],[90,520],[600,520]]);
+ meter(g,180,80,'A',sh?f(m.I)+' А':'?');res(g,370,80,'R1 = '+m.R1+' Ом',false,'#F3D27A');
+ dot(g,300,80);dot(g,440,80);PL(g,[[300,80],[300,190],[340,190]]);PL(g,[[400,190],[440,190],[440,80]]);meter(g,370,190,'V1',sh?f(m.U1)+' В':'?');
+ dot(g,600,80);dot(g,600,520);PL(g,[[600,80],[880,80],[880,140]]);PL(g,[[600,80],[680,80]]);L(g,680,80,680,140);
+ meter(g,680,170,'A2',sh?f(m.I2)+' А':'?');L(g,680,230,680,265);res(g,680,310,'R2 = '+m.R2,true,'#F3D27A');L(g,680,355,680,520);
+ meter(g,880,170,'A3',sh?f(m.I3)+' А':'?');L(g,880,230,880,265);res(g,880,310,'R3 = '+m.R3,true,'#F3D27A');L(g,880,355,880,520);PL(g,[[600,520],[880,520]]);
+ dot(g,680,80);dot(g,680,520);PL(g,[[600,80],[540,80]]);PL(g,[[540,80],[540,280]]);PL(g,[[540,340],[540,520]]);dot(g,540,80);dot(g,540,520);meter(g,540,310,'V23',sh?f(m.U23)+' В':'?');
+ T(g,'А',600,60,24,MUT,'center');T(g,'Б',600,560,24,MUT,'center');
+ S(g,sh?`R23 = ${f(m.R23)} Ом,  R = ${f(m.Rt)} Ом`:'R23 = R2·R3 / (R2 + R3)    R = R1 + R23',300,590-10,26,INK,'center');}
+
+/* ---------- 4. Cable (PR 2) ---------- */
+const P2=[["м",2.5,15,25,120,10,25],["а",4,30,16,180,10,50],["м",2.5,40,16,120,20,35],["м",4,15,32,180,25,25],["м",4,35,20,220,5,35],["м",4,20,25,220,12,25],["м",6,20,32,120,10,50],["а",4,40,20,160,12,16],["м",4,15,20,120,15,50],["м",2.5,20,25,160,12,16],["м",6,15,20,140,5,25],["а",4,40,20,250,5,16],["а",4,30,25,250,12,16],["м",6,10,25,140,8,50],["м",2.5,10,16,160,10,16],["м",6,20,32,140,8,16],["м",6,30,20,120,8,50],["а",6,15,20,140,10,16],["м",2.5,35,25,120,5,50],["м",6,20,16,250,20,16],["м",4,20,25,120,20,50],["м",4,20,20,200,25,50],["а",4,30,20,250,12,35],["м",4,35,20,150,5,16],["а",6,15,16,150,8,35],["м",6,20,16,140,15,16],["м",2.5,30,16,150,10,35],["м",4,30,25,200,20,16],["м",6,35,25,180,5,25],["м",2.5,10,25,180,5,35]];
+const S1L=[1.5,2.5,4,6,10],S2L=[16,25,35,50,70];
+$('#c-s1').innerHTML=S1L.map(s=>`<option value="${s}">${fmtT(s,1)}</option>`).join('');$('#c-s2').innerHTML=S2L.map(s=>`<option value="${s}">${s}</option>`).join('');
+let CS={};
+function setC(){const v=P2[clampN($('#c-n').value)-1];$('#c-s1').value=v[1];$('#c-s2').value=v[6];updC();}
+$('#c-n').addEventListener('input',setC);$('#c-s1').addEventListener('change',updC);$('#c-s2').addEventListener('change',updC);
+function updC(){const n=clampN($('#c-n').value),v=P2[n-1];const al=v[0]==='а',rho=al?0.028:0.0175,S1=+$('#c-s1').value,l1=v[2],I1=v[3],Iw=v[4],lw=v[5],S2=+$('#c-s2').value;
+ const R1=rho*2*l1/S1,dU1=I1*R1,Ua=220-dU1,dP1=I1*I1*R1,eta=Ua/220*100,R2=0.0175*2*lw/S2,dU2=Iw*R2,dP2=Iw*Iw*R2,Ud=20+0.04*Iw,pct=dU2/Ud*100;
+ CS={al,S1,l1,I1,Iw,lw,S2,R1,dU1,Ua,dP1,eta,R2,dU2,dP2,Ud,pct};
+ $('#c-data').textContent=` линия: ${al?'алюминий':'медь'}, ${l1} м, ${I1} А; сварка: ${Iw} А, кабели по ${lw} м`;
+ const ro=[['Rл линии',fmtT(R1,3)+' Ом'],['ΔU в линии',fmt(dU1,2)+' В'],['U на аппарате',fmt(Ua,1)+' В'],['ΔP в линии',fmt(dP1,0)+' Вт'],['КПД линии',fmt(eta,1)+' %'],['Rк кабелей',fmtT(R2,4)+' Ом'],['ΔUк',fmt(dU2,2)+' В'],['ΔPк',fmt(dP2,0)+' Вт'],['Uд = 20 + 0,04·I',fmt(Ud,1)+' В'],['Доля ΔUк / Uд',fmt(pct,1)+' %']];
+ $('#c-ro').innerHTML=ro.map(r=>`<div class="ro"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('');
+ const pl=$('#c-plq'),nt=$('#c-note');const ok=pct<=10+1e-9;pl.textContent=ok?'КАБЕЛИ ГОДЯТСЯ':'КАБЕЛИ НЕ ГОДЯТСЯ';pl.style.background=ok?OK:RED;
+ const Smin=0.0175*2*lw*Iw/(0.1*Ud);const best=S2L.find(s=>s>=Smin-1e-9);
+ nt.innerHTML=(S1!==v[1]||S2!==v[6])?`Вы поменяли сечение (в варианте: линия ${fmtT(v[1],1)} мм², кабели ${v[6]} мм²). Самое тонкое подходящее сечение кабелей: <b>${best?best+' мм²':'больше 70 мм²'}</b>.`:
+  `Длину удваиваем: ток идёт туда и обратно. Процент считаем от напряжения дуги ${fmt(Ud,1)} В, а не от 220 В. Поменяйте сечение кабелей и найдите самое тонкое, при котором потери не больше 10 %.`;}
+function drawC(){const g=$('#cv-c').getContext('2d'),c=CS;g.fillStyle=PAP;g.fillRect(0,0,1000,600);
+ R(g,40,120,120,170,'#e9e4d6');T(g,'ЩИТОК',100,110,22,INK,'center');T(g,'220 В',100,215,30,INK,'center');
+ const h1=Math.min(1,c.dP1/400);g.strokeStyle=`rgb(${Math.round(27+h1*136)},${Math.round(26+h1*13)},${Math.round(23+h1*8)})`;g.lineWidth=4+c.S1*1.6;g.beginPath();g.moveTo(160,170);g.lineTo(420,170);g.stroke();g.beginPath();g.moveTo(160,240);g.lineTo(420,240);g.stroke();
+ T(g,`${c.l1} м · ${fmtT(c.S1,1)} мм² · ${c.al?'Al':'Cu'}`,290,140,22,INK,'center');S(g,`I = ${c.I1} А`,290,290,24,INK,'center');
+ R(g,420,110,170,190,'#F3D27A');T(g,'АППАРАТ',505,100,22,INK,'center');T(g,fmt(c.Ua,1)+' В',505,215,30,INK,'center');
+ const h2=Math.min(1,c.dP2/800);const col=`rgb(${Math.round(27+h2*136)},${Math.round(26+h2*13)},${Math.round(23+h2*8)})`;g.strokeStyle=col;g.lineWidth=4+c.S2/4;g.lineCap='round';
+ g.beginPath();g.moveTo(590,170);g.bezierCurveTo(700,120,760,140,840,200);g.stroke();g.beginPath();g.moveTo(590,250);g.bezierCurveTo(700,330,780,330,880,300);g.stroke();g.lineCap='butt';
+ L(g,840,200,880,262,8);R(g,800,300,170,24,'#cfcabb',2);
+ const t=performance.now()/90;for(let k=0;k<7;k++){const a=k/7*6.28+t;L(g,884,268,884+18*Math.cos(a),282+10*Math.sin(a),3,YEL);}
+ T(g,`кабели ${c.lw} м · ${c.S2} мм² · ${c.Iw} А`,760,90,22,INK,'center');T(g,'дуга '+fmt(c.Ud,1)+' В',885,360,24,INK,'center');
+ // bar
+ const bx=60,by=470,bw=880;T(g,'Потери в сварочных кабелях от напряжения дуги',bx,by-20,22,INK);R(g,bx,by,bw,44,'#FAF8F2',3);
+ const fr=Math.min(1,c.pct/20);g.fillStyle=c.pct<=10?OK:RED;g.fillRect(bx+3,by+3,(bw-6)*fr,38);L(g,bx+bw/2,by-6,bx+bw/2,by+52,4,INK,[8,6]);
+ T(g,'10 %',bx+bw/2,by+80,22,INK,'center');T(g,'0',bx,by+80,22,MUT,'center');T(g,'20 %',bx+bw,by+80,22,MUT,'center');T(g,fmt(c.pct,1)+' %',bx+Math.max(60,Math.min(bw-60,(bw-6)*fr)),by+32,24,PAP,'right');}
+
+/* ---------- quiz ---------- */
+const Q=[{q:'В чём измеряют силу тока?',o:['в амперах','в вольтах','в омах'],e:'Сила тока I — в амперах [А], напряжение — в вольтах, сопротивление — в омах (Т1).'},
+ {q:'Как включают амперметр?',o:['последовательно с нагрузкой, в разрыв цепи','параллельно нагрузке','прямо в розетку'],e:'Через амперметр должен пройти тот же ток. Вольтметр — параллельно.'},
+ {q:'Какой провод имеет большее сопротивление?',o:['длинный и тонкий','короткий и толстый','у всех одинаковое'],e:'R = ρ·l / S: растёт с длиной, падает с сечением (Т2).'},
+ {q:'U = 12 В, R = 4 Ом. Чему равен ток?',o:['3 А','48 А','0,33 А'],e:'I = U / R = 12 / 4 = 3 А (Т3).'},
+ {q:'Почему тускнеют фары при пуске стартера?',o:['большой ток «сажает» напряжение на внутреннем сопротивлении аккумулятора','стартер забирает фары','фары перегорают'],e:'U = E − I·r0: при большом I падение внутри аккумулятора большое (Т3).'},
+ {q:'Чайник 2 кВт работал 30 минут. Сколько энергии?',o:['1 кВт·ч','60 кВт·ч','4 кВт·ч'],e:'A = P·t = 2 кВт · 0,5 ч = 1 кВт·ч (Т4).'},
+ {q:'Ток через провод вырос в 2 раза. Нагрев провода…',o:['вырос в 4 раза','вырос в 2 раза','не изменился'],e:'Q = I²·R·t — квадрат тока (Т4).'},
+ {q:'Резисторы 10, 20 и 30 Ом включены последовательно. Общее сопротивление?',o:['60 Ом','5,5 Ом','30 Ом'],e:'Последовательно сопротивления складываются (Т5).'},
+ {q:'Два резистора по 10 Ом параллельно. Общее сопротивление?',o:['5 Ом','20 Ом','10 Ом'],e:'R = 10·10 / (10 + 10) = 5 Ом — меньше самого маленького (Т6).'},
+ {q:'Почему все розетки в квартире включены параллельно?',o:['каждый прибор получает свои 220 В и работает независимо','так меньше проводов','так ток одинаковый'],e:'При параллельном соединении напряжение на всех ветвях одинаковое (Т6).'},
+ {q:'В узел втекает 5 А, в одну ветку уходит 3 А. В другую?',o:['2 А','8 А','5 А'],e:'Первый закон Кирхгофа: сколько втекло, столько вытекло (Т7).'},
+ {q:'Сварщик коснулся электродом детали. Какой это режим?',o:['короткое замыкание','холостой ход','номинальный'],e:'Электрод и деталь соединились напрямую — КЗ. Аппарат рассчитан на это (Т8).'},
+ {q:'Какое обозначение у амперметра на схеме?',o:['круг с буквой А','прямоугольник','две черты разной длины'],e:'Прямоугольник — резистор, две черты — батарея (Т9).'}];
+let qi=0,score=0,ord=[];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderQ(){const box=$('#quiz-box');
+  if(qi>=Q.length){const m=score>=12?'Отлично!':score>=10?'Хорошо! Повторите ошибки.':'Повторите опыты 1–4 и попробуйте ещё раз.';
+    box.innerHTML='<div class="qcard"><p class="score">'+score+' из '+Q.length+'</p><p class="qtext">'+m+'</p><div class="seg"><button class="big" type="button" id="qr">Пройти ещё раз</button></div></div>';$('#qr').onclick=()=>{qi=0;score=0;renderQ();};return;}
+  const q=Q[qi];ord=shuffle(q.o.map((t,i)=>({t,i})));
+  box.innerHTML='<div class="qcard"><p class="qtop"><span>Вопрос '+(qi+1)+' из '+Q.length+'</span><span>Верно: '+score+'</span></p><p class="qtext">'+q.q+'</p><div class="opts">'+ord.map((o,k)=>'<button class="opt" type="button" data-k="'+k+'">'+o.t+'</button>').join('')+'</div><p class="feedback" id="qfb" aria-live="polite"></p><p id="qex" style="margin:0"></p><div class="seg"><button class="big" type="button" id="qn" hidden>Дальше</button></div></div>';
+  $$('#quiz-box .opt').forEach(b=>b.onclick=()=>{const ok=ord[+b.dataset.k].i===0;if(ok)score++;$$('#quiz-box .opt').forEach(o=>{o.disabled=true;if(ord[+o.dataset.k].i===0)o.classList.add('right');});if(!ok)b.classList.add('wrong');
+    const f=$('#qfb');f.className='feedback '+(ok?'good':'bad');f.textContent=ok?'Верно!':'Не совсем.';$('#qex').textContent=q.e;const n=$('#qn');n.hidden=false;n.textContent=qi===Q.length-1?'Узнать результат':'Дальше';n.focus();});
+  $('#qn').onclick=()=>{qi++;renderQ();};}
+
+updO();updS();updM();setC();renderQ();
+const tabs=['ohm','series','mixed','cable','quiz'];let cur='ohm';
+function show(){const h=location.hash.replace('#','');cur=tabs.includes(h)?h:'ohm';$$('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==cur);$$('nav a').forEach(a=>a.setAttribute('aria-current',String(a.dataset.tab===cur)));}
+window.addEventListener('hashchange',show);show();
+function loop(){if(cur==='ohm')drawO();if(cur==='series')drawS();if(cur==='mixed')drawM();if(cur==='cable')drawC();requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

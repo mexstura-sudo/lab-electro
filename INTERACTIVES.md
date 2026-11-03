@@ -1,6 +1,6 @@
 # Интерактивы курса «Электротехника и электроника»
 
-Сидоров А.Ю., ИТМ им. Н.П. Трапезникова. Состояние на 2 ноября 2026 г.
+Сидоров А.Ю., ИТМ им. Н.П. Трапезникова. Состояние на 3 ноября 2026 г.
 
 Сайт со всеми лабораториями: **https://mexstura-sudo.github.io/lab-electro/**
 (работает после включения GitHub Pages: Settings → Pages → Branch `main`, папка `/ (root)`).
@@ -19,8 +19,9 @@
 | 8 | Электробезопасность | 1.10, пара 21 | [Ток через человека](https://mexstura-sudo.github.io/lab-electro/safety/#body) · [Что спасёт](https://mexstura-sudo.github.io/lab-electro/safety/#pe) · [Автомат и кабель](https://mexstura-sudo.github.io/lab-electro/safety/#brk) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/safety/#quiz) |
 | 9 | Транзистор и инвертор | 2.3, пара 23 | [Транзистор-ключ](https://mexstura-sudo.github.io/lab-electro/inverter/#key) · [Усилитель](https://mexstura-sudo.github.io/lab-electro/inverter/#amp) · [Сварочный инвертор](https://mexstura-sudo.github.io/lab-electro/inverter/#inv) · [Проверь себя (тест «Электроника»)](https://mexstura-sudo.github.io/lab-electro/inverter/#quiz) |
 | 10 | Реле и автоматика (ПР №9) | 2.4, пара 24 | [Реле: срабатывание и отпускание](https://mexstura-sudo.github.io/lab-electro/relay/#relay) · [Терморегулятор](https://mexstura-sudo.github.io/lab-electro/relay/#thermo) · [Ардуино и реле](https://mexstura-sudo.github.io/lab-electro/relay/#ard) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/relay/#quiz) |
+| 11 | Цепи постоянного тока (ПР №1–3) | 1.2, ПР №1–3 | [Закон Ома](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#ohm) · [Соединения (ПР №3)](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#series) · [Смешанная цепь (ПР №1)](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#mixed) · [Кабель и потери (ПР №2)](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#cable) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#quiz) |
 
-**Варианты.** В лабораториях 3, 4, 5, 6 и 7 (вкладка «Шильдик») есть 30 вариантов (номер в журнале). Ссылку сразу на вариант можно дать так: `…/rl-circuit/?v=12#stand`, `…/measurements/?v=12#verify`, `…/three-phase/?v=12#star`, `…/transformer/?v=12#modes`, `…/machines/?v=12#plate`, `…/relay/?v=12#relay`.
+**Варианты.** В лабораториях 3, 4, 5, 6, 7, 10 и 11 (вкладка «Шильдик») есть 30 вариантов (номер в журнале). Ссылку сразу на вариант можно дать так: `…/rl-circuit/?v=12#stand`, `…/measurements/?v=12#verify`, `…/three-phase/?v=12#star`, `…/transformer/?v=12#modes`, `…/machines/?v=12#plate`, `…/relay/?v=12#relay`, `…/dc-circuits/?v=12#series` (а также `#mixed`, `#cable`).
 
 ### Что умеет каждая лаборатория
 
@@ -69,8 +70,12 @@
 
 К каждой паре — страница простым языком: объяснение с рисунками, эталоны в тетрадь по билетам, словарик, «Проверь себя» с ответами по щелчку и ссылки на лабораторию. Кнопка «Печать / PDF» на странице сохраняет текст в PDF (ответы — в конце). Все тексты: https://mexstura-sudo.github.io/lab-electro/konspekt/
 
-- [Пара 9. Электрическое поле и магнетизм](https://mexstura-sudo.github.io/lab-electro/konspekt/p09.html)
-- [Пара 10. ПР № 1 и № 2. Расчёт цепи и потери в проводах](https://mexstura-sudo.github.io/lab-electro/konspekt/p10.html)
+- [Тема 1.2. Электрические цепи постоянного тока](https://mexstura-sudo.github.io/lab-electro/konspekt/t12.html)
+- [Тема 1.2. ПР № 3. Последовательное и параллельное соединение](https://mexstura-sudo.github.io/lab-electro/konspekt/pr3.html)
+- [Пара 9. Электрическое поле и конденсатор](https://mexstura-sudo.github.io/lab-electro/konspekt/p09a.html)
+- [Пара 9. Электромагнетизм](https://mexstura-sudo.github.io/lab-electro/konspekt/p09b.html)
+- [Пара 10. ПР № 1. Расчёт смешанной цепи](https://mexstura-sudo.github.io/lab-electro/konspekt/p10a.html)
+- [Пара 10. ПР № 2. Потери в проводах](https://mexstura-sudo.github.io/lab-electro/konspekt/p10b.html)
 - [Пара 11. Переменный ток](https://mexstura-sudo.github.io/lab-electro/konspekt/p11.html)
 - [Пара 12. Цепь R и L, мощность и резонанс](https://mexstura-sudo.github.io/lab-electro/konspekt/p12.html)
 - [Пара 13. ПР № 4. Цепь с резистором и катушкой](https://mexstura-sudo.github.io/lab-electro/konspekt/p13.html)
@@ -83,5 +88,8 @@
 - [Пара 19. ПР № 8. Режимы трансформатора](https://mexstura-sudo.github.io/lab-electro/konspekt/p19.html)
 - [Пара 20. Электрические машины и электропривод](https://mexstura-sudo.github.io/lab-electro/konspekt/p20.html)
 - [Пара 21. Электроснабжение и безопасность](https://mexstura-sudo.github.io/lab-electro/konspekt/p21.html)
-- [Пара 22. Полупроводники, диоды и выпрямители](https://mexstura-sudo.github.io/lab-electro/konspekt/p22.html)
+- [Пара 22. Полупроводники и диоды](https://mexstura-sudo.github.io/lab-electro/konspekt/p22a.html)
+- [Пара 22. Выпрямители и стабилизаторы](https://mexstura-sudo.github.io/lab-electro/konspekt/p22b.html)
 - [Пара 23. Транзисторы и сварочный инвертор](https://mexstura-sudo.github.io/lab-electro/konspekt/p23.html)
+- [Пара 24. Автоматика и реле](https://mexstura-sudo.github.io/lab-electro/konspekt/p24a.html)
+- [Пара 24. ПР № 9. Реле](https://mexstura-sudo.github.io/lab-electro/konspekt/p24b.html)
