@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Бортовая сеть автомобиля — лаборатория</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+.lamp{display:inline-block;width:22px;height:22px;border-radius:50%;border:3px solid var(--ink);vertical-align:middle}
+.plate{background:#e9e4d6;border:4px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:18px 22px;font-family:var(--label);letter-spacing:1px}
+.plate .pt{display:flex;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:10px;font-weight:700;font-size:20px}
+.plate .pg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 16px}
+.plate .pg div{border-bottom:1px dashed var(--muted);padding:4px 0}
+.plate .pg span{display:block;font-size:13px;color:var(--muted);text-transform:uppercase}
+.plate .pg b{font-size:22px}
+@media (max-width:560px){.plate .pg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="hand">Лаборатория</div>
+  <h1>Бортовая сеть автомобиля</h1>
+  <p>Темы 1.1 и 1.2 для автомехаников: аккумулятор, генератор и потребители, предохранители, закон Ома, мощность и КПД, поиск «плохой массы». Лабораторные № 1–4 и практическое занятие № 1. Номер варианта — ваш номер в журнале.</p>
+</header>
+
+<nav aria-label="Разделы">
+  <a href="#net" data-tab="net">1 · Бортсеть</a>
+  <a href="#ohm" data-tab="ohm">2 · Закон Ома (ЛР 1)</a>
+  <a href="#mixed" data-tab="mixed">3 · Смешанная (ЛР 2)</a>
+  <a href="#power" data-tab="power">4 · Мощность (ЛР 3)</a>
+  <a href="#eta" data-tab="eta">5 · КПД (ЛР 4)</a>
+  <a href="#ground" data-tab="ground">6 · Плохая масса (ПЗ 1)</a>
+  <a href="#quiz" data-tab="quiz">7 · Проверь себя</a>
+</nav>
+
+<section class="panel" data-panel="net">
+  <p class="eyebrow">Опыт 1 · В1, В3, Т5, Т7</p>
+  <h2>Аккумулятор, генератор, предохранители и потребители</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-n" width="1000" height="660" aria-label="Схема бортовой сети: аккумулятор, генератор, стартер и пять цепей потребителей с предохранителями и выключателями; все потребители включены параллельно между шиной плюс 30 и массой"></canvas></div>
+    <div class="side">
+      <div><span class="ctl-label">Двигатель</span>
+      <div class="seg" role="group" aria-label="Двигатель">
+        <button type="button" data-eng="off" aria-pressed="true">Заглушен</button>
+        <button type="button" data-eng="on" aria-pressed="false">Работает</button>
+        <button type="button" id="n-start" aria-pressed="false">Пуск (держать)</button>
+      </div></div>
+      <div><span class="ctl-label">Потребители</span>
+      <div class="seg" role="group" aria-label="Потребители">
+        <button type="button" data-ld="park" aria-pressed="false">Габариты</button>
+        <button type="button" data-ld="low" aria-pressed="false">Ближний свет</button>
+        <button type="button" data-ld="rear" aria-pressed="false">Обогрев стекла</button>
+        <button type="button" data-ld="radio" aria-pressed="false">Магнитола</button>
+      </div></div>
+      <div class="row">
+        <div><label class="ctl-label" for="n-fan">Вентилятор отопителя</label><select id="n-fan"><option value="0">выключен</option><option value="1">1-я скорость</option><option value="2">2-я скорость</option><option value="3">3-я скорость</option></select></div>
+        <div><label class="ctl-label" for="n-bat">Аккумулятор</label><select id="n-bat"><option value="0">заряжен, новый</option><option value="1">разряжен наполовину</option><option value="2">старый (r0 большое)</option></select></div>
+        <div><label class="ctl-label" for="n-sock">В розетке 12 В</label><select id="n-sock"><option value="0">ничего</option><option value="10">зарядка телефона 10 Вт</option><option value="120">автокомпрессор 120 Вт</option><option value="300">компрессор + холодильник 300 Вт</option></select></div>
+        <div><label class="ctl-label" for="n-fuse">Предохранитель розетки</label><select id="n-fuse"><option value="15">15 А (по схеме)</option><option value="25">25 А</option><option value="0">«жучок» (гвоздь)</option></select></div>
+      </div>
+      <div class="seg"><button type="button" id="n-kz" aria-pressed="false">Провод розетки перетёрся о кузов</button><button type="button" class="big alt" id="n-reset">Заменить предохранитель</button></div>
+      <div class="readouts">
+        <div class="ro"><span>Напряжение бортсети</span><b id="n-u">—</b></div>
+        <div class="ro"><span>Ток всех потребителей</span><b id="n-i">—</b></div>
+        <div class="ro"><span>Аккумулятор</span><b id="n-b">—</b></div>
+        <div class="ro"><span>Мощность потребителей</span><b id="n-p">—</b></div>
+      </div>
+      <p class="plaque" id="n-plq">—</p>
+      <p class="note" id="n-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="ohm" hidden>
+  <p class="eyebrow">Лабораторная работа № 1 · Т1, Т3</p>
+  <h2>Опытное подтверждение закона Ома</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-o" width="1000" height="620" aria-label="Схема: блок питания, ключ, амперметр последовательно с резистором или лампой, вольтметр параллельно; справа график тока от напряжения с записанными точками"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="o-n">Вариант (номер в журнале)</label><input type="number" id="o-n" min="1" max="30" value="1" style="width:90px;font-size:20px;padding:4px"> <b id="o-data"></b></div>
+      <div class="seg" role="group" aria-label="Что включено">
+        <button type="button" data-oel="0" aria-pressed="true">R1</button>
+        <button type="button" data-oel="1" aria-pressed="false">R2</button>
+        <button type="button" data-oel="2" aria-pressed="false">Лампа 12 В 5 Вт</button>
+        <button type="button" id="o-ohm" aria-pressed="false">Омметр</button>
+      </div>
+      <div><label class="ctl-label" for="o-u">Блок питания Uист = <b id="o-uv">5</b> В</label><input type="range" id="o-u" min="0" max="15" step="0.5" value="5"></div>
+      <div class="readouts">
+        <div class="ro"><span>Вольтметр</span><b id="o-ru">—</b></div>
+        <div class="ro"><span>Амперметр</span><b id="o-ri">—</b></div>
+      </div>
+      <div class="seg"><button type="button" class="big alt" id="o-add">Записать точку на график</button><button type="button" class="big alt" id="o-clr">Очистить</button></div>
+      <p class="note" id="o-note"></p>
+    </div>
+  </div>
+  <h3 style="margin-top:28px">Проверьте расчёт (таблица 2 отчёта)</h3>
+  <div class="scroll"><table class="calc" id="o-tab"></table></div>
+  <p class="feedback" id="o-fb" aria-live="polite"></p>
+</section>
+
+<section class="panel" data-panel="mixed" hidden>
+  <p class="eyebrow">Лабораторная работа № 2 · Т6, Т9</p>
+  <h2>Смешанное соединение резисторов</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-m" width="1000" height="600" aria-label="Схема: источник 12 В, амперметр, R1 последовательно с параллельными R2 и R3; амперметры в ветвях и вольтметры на участках"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="m-n">Вариант (номер в журнале)</label><input type="number" id="m-n" min="1" max="30" value="1" style="width:90px;font-size:20px;padding:4px"> <b id="m-data"></b></div>
+      <div class="seg"><button type="button" class="big alt" id="m-show">Показать приборы</button></div>
+      <div class="scroll"><table class="calc" id="m-tab"></table></div>
+      <p class="feedback" id="m-fb" aria-live="polite"></p>
+    </div>
+  </div>
+  <h3 style="margin-top:28px">В машине: резисторный блок вентилятора отопителя</h3>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-f" width="1000" height="380" aria-label="Схема отопителя: 12 В, переключатель скоростей, резисторы 1,2 и 0,6 Ом последовательно с мотором 1,2 Ом"></canvas></div>
+    <div class="side">
+      <div class="seg" role="group" aria-label="Скорость">
+        <button type="button" data-fs="1" aria-pressed="true">1-я</button><button type="button" data-fs="2" aria-pressed="false">2-я</button><button type="button" data-fs="3" aria-pressed="false">3-я</button>
+        <button type="button" id="f-brk" aria-pressed="false">Обрыв резистора 1,2 Ом</button>
+      </div>
+      <div class="readouts">
+        <div class="ro"><span>Ток мотора</span><b id="f-i">—</b></div>
+        <div class="ro"><span>Напряжение на моторе</span><b id="f-u">—</b></div>
+        <div class="ro"><span>Тепло в резисторах</span><b id="f-p">—</b></div>
+        <div class="ro"><span>Общее сопротивление</span><b id="f-r">—</b></div>
+      </div>
+      <p class="note" id="f-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="power" hidden>
+  <p class="eyebrow">Лабораторная работа № 3 · Т7</p>
+  <h2>Мощность и работа электрического тока</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-p" width="1000" height="620" aria-label="Схема: блок питания, ключ, амперметр, мощный резистор и вольтметр; резистор краснеет при нагреве; справа график мощности от напряжения"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="p-n">Вариант (номер в журнале)</label><input type="number" id="p-n" min="1" max="30" value="1" style="width:90px;font-size:20px;padding:4px"> <b id="p-data"></b></div>
+      <div><label class="ctl-label" for="p-u">Блок питания U = <b id="p-uv">6</b> В</label><input type="range" id="p-u" min="0" max="12" step="2" value="6"></div>
+      <div class="readouts">
+        <div class="ro"><span>Вольтметр</span><b id="p-ru">—</b></div>
+        <div class="ro"><span>Амперметр</span><b id="p-ri">—</b></div>
+        <div class="ro"><span>P = U·I</span><b id="p-rp">—</b></div>
+        <div class="ro"><span>Секундомер · работа A</span><b id="p-ra">—</b></div>
+      </div>
+      <div class="seg"><button type="button" class="big alt" id="p-add">Записать точку</button><button type="button" class="big" id="p-run">Включить на 60 с</button></div>
+      <p class="note" id="p-note"></p>
+    </div>
+  </div>
+  <h3 style="margin-top:28px">Проверьте расчёт</h3>
+  <div class="scroll"><table class="calc" id="p-tab"></table></div>
+  <p class="feedback" id="p-fb" aria-live="polite"></p>
+</section>
+
+<section class="panel" data-panel="eta" hidden>
+  <p class="eyebrow">Лабораторная работа № 4 · Т8</p>
+  <h2>КПД источника и мощность в нагрузке</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-e" width="1000" height="620" aria-label="Схема: источник с ЭДС E и внутренним сопротивлением r в пунктирной рамке, ключ, амперметр, магазин сопротивлений Rн, вольтметр на нагрузке; справа графики мощности и КПД от сопротивления нагрузки"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="e-n">Вариант (номер в журнале)</label><input type="number" id="e-n" min="1" max="30" value="1" style="width:90px;font-size:20px;padding:4px"> <b id="e-data"></b></div>
+      <div><span class="ctl-label">Магазин сопротивлений Rн, Ом</span><div class="seg" role="group" aria-label="Сопротивление нагрузки" id="e-rn"></div></div>
+      <div class="readouts">
+        <div class="ro"><span>Вольтметр Uн</span><b id="e-ru">—</b></div>
+        <div class="ro"><span>Амперметр I</span><b id="e-ri">—</b></div>
+        <div class="ro"><span>Pнагр = Uн·I</span><b id="e-rp">—</b></div>
+        <div class="ro"><span>КПД η = Uн / E</span><b id="e-re">—</b></div>
+      </div>
+      <p class="note" id="e-note"></p>
+    </div>
+  </div>
+  <h3 style="margin-top:28px">Проверьте расчёт</h3>
+  <div class="scroll"><table class="calc" id="e-tab"></table></div>
+  <p class="feedback" id="e-fb" aria-live="polite"></p>
+</section>
+
+<section class="panel" data-panel="ground" hidden>
+  <p class="eyebrow">Практическое занятие № 1 · Т9</p>
+  <h2>Поиск «плохой массы» по падению напряжения</h2>
+  <div class="bench">
+    <div class="stage"><canvas id="cv-g" width="1000" height="600" aria-label="Цепь фары: плюс аккумулятора, плюсовой провод, лампа, провод и болт массы, кузов, минус аккумулятора; точки A, B, C, D для щупов мультиметра"></canvas></div>
+    <div class="side">
+      <div><label class="ctl-label" for="g-n">Вариант (номер в журнале)</label><input type="number" id="g-n" min="1" max="30" value="1" style="width:90px;font-size:20px;padding:4px"></div>
+      <div class="row">
+        <div><label class="ctl-label" for="g-red">Красный щуп (V)</label><select id="g-red"><option value="A">A · «+» АКБ</option><option value="B" selected>B · «+» фары</option><option value="C">C · «−» фары</option><option value="D">D · «−» АКБ</option></select></div>
+        <div><label class="ctl-label" for="g-blk">Чёрный щуп (COM)</label><select id="g-blk"><option value="A">A · «+» АКБ</option><option value="B">B · «+» фары</option><option value="C" selected>C · «−» фары</option><option value="D">D · «−» АКБ</option></select></div>
+      </div>
+      <div class="seg"><button type="button" id="g-on" aria-pressed="true">Фара включена</button><button type="button" id="g-fix" aria-pressed="false">Почистить и затянуть массу</button></div>
+      <div class="readouts">
+        <div class="ro"><span>Мультиметр V⎓</span><b id="g-v">—</b></div>
+        <div class="ro"><span>Мощность фары</span><b id="g-p">—</b></div>
+      </div>
+      <div><label class="ctl-label" for="g-ans">Падение напряжения на массе C–D, В</label><input type="text" id="g-ans" inputmode="decimal" placeholder="например 0,25"></div>
+      <div class="seg"><button type="button" class="big" id="g-chk">Проверить</button></div>
+      <p class="feedback" id="g-fb" aria-live="polite"></p>
+      <p class="note" id="g-note"></p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" data-panel="quiz" hidden>
+  <p class="eyebrow">Темы 1.1–1.2</p>
+  <h2>Проверь себя: 12 вопросов</h2>
+  <div id="quiz-box"></div>
+</section>
+
+<footer>Иркутский техникум машиностроения им. Н.П. Трапезникова · Электротехника и электроника, группа ТОРА · <a href="../">Все лаборатории</a> · <a href="../konspekt/">Тексты для студентов</a></footer>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const INK='#1B1A17',RED='#A3271F',PAP='#FAF8F2',MUT='#6E685C',OK='#2F6B3A',BLU='#4A6FA5',YEL='#E2B23A',LMP='#F3D27A';
+const LBL="Oswald,'Arial Narrow',Arial,sans-serif",SER="'PT Serif',Georgia,serif";
+const fmt=(x,d)=>(Math.round(x*10**d)/10**d).toFixed(d).replace('.',',');
+const fmtT=(x,d)=>{let s=(Math.round(x*10**d)/10**d).toFixed(d);if(s.includes('.'))s=s.replace(/0+$/,'').replace(/\.$/,'');return s.replace('.',',');};
+const rnd=(x,d)=>Math.floor(x*10**d+0.5)/10**d;
+const num=s=>parseFloat(String(s).replace(',','.').replace(/\s/g,''));
+function T(g,s,x,y,size,col,al,w){g.font=(w||'700')+' '+size+'px '+LBL;g.fillStyle=col||INK;g.textAlign=al||'left';g.fillText(s,x,y);}
+function TB(g,s,x,y,size,col,al,w){g.font=(w||'700')+' '+size+'px '+LBL;const m=g.measureText(s).width;const x0=al==='center'?x-m/2:al==='right'?x-m:x;g.fillStyle=PAP;g.fillRect(x0-4,y-size+2,m+8,size+4);T(g,s,x,y,size,col,al,w);}
+function S(g,s,x,y,size,col,al){g.font='400 '+size+'px '+SER;g.fillStyle=col||INK;g.textAlign=al||'left';g.fillText(s,x,y);}
+function L(g,x1,y1,x2,y2,w,c,d){g.strokeStyle=c||INK;g.lineWidth=w||3;g.setLineDash(d||[]);g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();g.setLineDash([]);}
+function PL(g,pts,w,c){g.strokeStyle=c||INK;g.lineWidth=w||3;g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.stroke();}
+function R(g,x,y,w,h,fill,lw){g.fillStyle=fill||PAP;g.fillRect(x,y,w,h);g.strokeStyle=INK;g.lineWidth=lw||3;g.strokeRect(x,y,w,h);}
+function dot(g,x,y){g.fillStyle=INK;g.beginPath();g.arc(x,y,6,0,7);g.fill();}
+function res(g,x,y,lab,vert,fill){if(vert)R(g,x-16,y-45,32,90,fill);else R(g,x-45,y-16,90,32,fill);if(lab)T(g,lab,vert?x+28:x,vert?y+8:y-26,22,INK,vert?'left':'center');}
+function meter(g,x,y,ch,val,col){g.fillStyle=PAP;g.beginPath();g.arc(x,y,24,0,7);g.fill();g.strokeStyle=col||INK;g.lineWidth=3;g.stroke();T(g,ch,x,y+9,24,col||INK,'center');
+ if(val!==undefined&&val!==null){g.font='700 22px '+LBL;const w=g.measureText(val).width+14;g.fillStyle=col||INK;g.fillRect(x-w/2,y+30,w,30);T(g,val,x,y+53,22,PAP,'center');}}
+function batt(g,x,y,lab){g.fillStyle=PAP;g.fillRect(x-16,y-34,32,68);L(g,x-14,y-30,x-14,y+30,4);L(g,x+14,y-16,x+14,y+16,8);T(g,'+',x-30,y-26,22,RED,'center');if(lab){g.font='700 22px '+LBL;const w=g.measureText(lab).width;g.fillStyle=PAP;g.fillRect(x+26,y-16,w+8,30);T(g,lab,x+30,y+8,22,INK,'left');}}
+function battV(g,x,y){g.fillStyle=PAP;g.fillRect(x-34,y-16,68,32);L(g,x-30,y-12,x+30,y-12,4);L(g,x-16,y+12,x+16,y+12,8);T(g,'+',x+44,y-10,22,RED,'center');}
+function lampC(g,x,y,on,r,glow){r=r||26;g.fillStyle=on?LMP:PAP;g.beginPath();g.arc(x,y,r,0,7);g.fill();g.strokeStyle=INK;g.lineWidth=3;g.stroke();const k=r*0.7;L(g,x-k,y-k,x+k,y+k,3);L(g,x+k,y-k,x-k,y+k,3);
+ if(on&&glow)for(let a=0;a<8;a++){const c=Math.cos(a*Math.PI/4),s=Math.sin(a*Math.PI/4),l=6+18*glow;L(g,x+(r+8)*c,y+(r+8)*s,x+(r+8+l)*c,y+(r+8+l)*s,3,RED);}}
+function motor(g,x,y,on,t){g.fillStyle=PAP;g.beginPath();g.arc(x,y,26,0,7);g.fill();g.strokeStyle=INK;g.lineWidth=3;g.stroke();T(g,'M',x,y+9,24,INK,'center');if(on){const a=t*6;L(g,x+34*Math.cos(a),y+34*Math.sin(a),x+40*Math.cos(a),y+40*Math.sin(a),5,RED);}}
+function fuse(g,x,y,lab,blown){R(g,x-14,y-32,28,64,blown?'#e9e4d6':PAP);if(!blown)L(g,x,y-32,x,y+32,3);else{L(g,x,y-32,x,y-8,3);L(g,x,y+8,x,y+32,3);L(g,x-10,y-6,x+10,y+6,3,RED);}if(lab)T(g,lab,x+22,y+8,20,blown?RED:INK,'left');}
+function sw(g,x,y,on){dot(g,x,y-24);dot(g,x,y+24);if(on)L(g,x,y-24,x,y+24,4);else L(g,x,y+24,x+22,y-16,4);}
+function gnd(g,x,y){L(g,x-18,y,x+18,y,3);L(g,x-11,y+7,x+11,y+7,3);L(g,x-4,y+14,x+4,y+14,3);}
+function dots(g,path,speed,col,n){if(!(speed>0))return;let tot=0,seg=[];for(let i=1;i<path.length;i++){const d=Math.hypot(path[i][0]-path[i-1][0],path[i][1]-path[i-1][1]);seg.push(d);tot+=d;}
+ const t=(performance.now()/1000*speed)%1;n=n||8;for(let k=0;k<n;k++){let s=((t+k/n)%1)*tot,i=0;while(s>seg[i]&&i<seg.length-1){s-=seg[i];i++;}const a=path[i],b=path[i+1],f=s/seg[i];g.fillStyle=col||BLU;g.beginPath();g.arc(a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,6,0,7);g.fill();}}
+function plot(g,x,y,w,h,xs,ys,xl,yl){R(g,x-14,y-h-14,w+28,h+56,PAP,2);L(g,x,y,x+w,y,2);L(g,x,y,x,y-h,2);T(g,xl,x+w,y+30,18,MUT,'right','500');T(g,yl,x+8,y-h+20,18,MUT,'left','500');}
+const q=new URLSearchParams(location.search).get('v');if(q){['#o-n','#m-n','#p-n','#e-n','#g-n'].forEach(s=>$(s).value=q);}
+const clampN=v=>Math.max(1,Math.min(30,(+v)|0||1));
+function mark(el,ok){el.textContent=ok?'✓':'✗';el.className='mark '+(ok?'good':'bad');}
+const near=(a,b,tol)=>isFinite(a)&&Math.abs(a-b)<=Math.max(tol*Math.abs(b),1e-9);
+
+/* ---------- 1. Car network ---------- */
+const LD={park:{n:'Габариты',p:20,f:10,x:440,kind:'lamp'},low:{n:'Ближний',p:110,f:15,x:550,kind:'lamp'},rear:{n:'Обогрев',p:150,f:20,x:660,kind:'res'},fan:{n:'Отопитель',f:15,x:770,kind:'mot'},sock:{n:'Розетка',f:15,x:880,kind:'sock'}};
+const BAT=[{E:12.6,r0:0.01,n:'заряжен'},{E:12.2,r0:0.02,n:'разряжен'},{E:12.5,r0:0.05,n:'старый'}];
+let eng='off',start=false,on={park:false,low:false,rear:false,radio:false},kz=false,blown=false,heatT=0,NS={};
+$$('[data-eng]').forEach(b=>b.onclick=()=>{eng=b.dataset.eng;$$('[data-eng]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));updN();});
+$$('[data-ld]').forEach(b=>b.onclick=()=>{on[b.dataset.ld]=!on[b.dataset.ld];b.setAttribute('aria-pressed',String(on[b.dataset.ld]));updN();});
+const st=$('#n-start');const sOn=e=>{e.preventDefault();start=true;st.setAttribute('aria-pressed','true');updN();},sOff=()=>{if(!start)return;start=false;st.setAttribute('aria-pressed','false');if(eng==='off'&&NS.U>9){eng='on';$$('[data-eng]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.eng==='on')));}updN();};
+st.addEventListener('pointerdown',sOn);['pointerup','pointerleave','pointercancel'].forEach(ev=>st.addEventListener(ev,sOff));st.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter')sOn(e);});st.addEventListener('keyup',sOff);
+['#n-fan','#n-bat','#n-sock','#n-fuse'].forEach(s=>$(s).addEventListener('change',()=>{if(s==='#n-fuse'||s==='#n-sock')heatT=0;updN();}));
+$('#n-kz').onclick=()=>{kz=!kz;$('#n-kz').setAttribute('aria-pressed',String(kz));heatT=0;updN();};
+$('#n-reset').onclick=()=>{blown=false;heatT=0;updN();};
+function updN(){const B=BAT[+$('#n-bat').value],fan=+$('#n-fan').value,sp=+$('#n-sock').value,F=+$('#n-fuse').value;
+ const G={park:on.park?20/144:0,low:on.low?110/144:0,rear:on.rear?150/144:0,radio:on.radio?20/144:0,fan:fan?1/(1.2+[0,1.8,0.6,0][fan]):0,sock:blown?0:(sp/144+(kz?100:0)),leak:0.04/12.6};
+ const cranking=start&&eng==='off',Gst=cranking?1/0.05:0;
+ let Gs=0;for(const k in G)Gs+=G[k];const Gt=Gs+Gst;
+ let U,Ib,mode;if(eng==='on'&&!start){if(Gs*14.2<=90){U=14.2;Ib=-Math.min(8,Math.max(1,(14.2-B.E)*4));mode='gen';}else{U=(90+B.E/B.r0)/(Gs+1/B.r0);Ib=(B.E-U)/B.r0;mode='over';}}
+ else{U=B.E/(1+B.r0*Gt);Ib=U*Gt;mode=cranking?'crank':'bat';}
+ const I=U*Gs,Ist=U*Gst,Isock=U*G.sock;
+ NS={B,fan,sp,F,G,U,Ib,I,Ist,Isock,mode,cranking};
+ $('#n-u').textContent=fmt(U,1)+' В';$('#n-i').textContent=fmt(I,1)+' А';$('#n-p').textContent=fmt(U*I,0)+' Вт';
+ $('#n-b').textContent=Ib<0?'заряд '+fmt(-Ib,1)+' А':'разряд '+fmt(Ib,Ib>100?0:Ib<1?2:1)+' А';
+ const pl=$('#n-plq'),nt=$('#n-note');let msg,col;
+ const wireMax=16;
+ if(!blown&&Isock>0&&((F&&Isock>F*1.05)||(kz&&F))){blown=true;return updN();}
+ if(!F&&kz){msg='ПОЖАР: ПРОВОД ГОРИТ';col=RED;nt.innerHTML=`Вместо предохранителя «жучок» — защиты нет. Ток короткого замыкания ≈ <b>${fmt(Isock,0)} А</b> идёт через провод сечением 1 мм², изоляция плавится за секунды. Предохранитель ставят ради провода, а не ради потребителя.`;}
+ else if(!blown&&Isock>wireMax){msg='ПРОВОД РОЗЕТКИ ПЕРЕГРЕВАЕТСЯ';col=RED;nt.innerHTML=`Ток розетки ${fmt(Isock,1)} А, а провод 1 мм² рассчитан примерно на ${wireMax} А. Предохранитель ${F?F+' А':'«жучок»'} не сгорает, и провод греется: Q = I²·R·t. По схеме здесь 15 А — он бы сгорел и спас проводку.`;}
+ else if(blown){msg='ПРЕДОХРАНИТЕЛЬ РОЗЕТКИ СГОРЕЛ';col=INK;nt.innerHTML=kz?'Провод замкнул на кузов — ток в сотни ампер, предохранитель перегорел за доли секунды, проводка цела. Сначала найдите и заизолируйте место замыкания, потом меняйте предохранитель такого же номинала.':`Нагрузка ${sp} Вт / 12 В ≈ ${fmt(sp/12,1)} А больше номинала ${F} А — предохранитель сделал свою работу. Не ставьте больший: провод не выдержит.`;}
+ else if(mode==='crank'){msg=U<9.6?'СТАРТЕР НЕ КРУТИТ':'ПУСК: НАПРЯЖЕНИЕ ПРОСЕЛО';col=U<9.6?RED:INK;nt.innerHTML=`Стартер берёт ≈ <b>${fmt(Ist,0)} А</b>. Внутри аккумулятора теряется I·r0 = ${fmt(Ib,0)} · ${fmtT(B.r0,2)} ≈ ${fmt(Ib*B.r0,1)} В, на клеммах ${fmt(U,1)} В. ${U<9.6?'Ниже 9,6 В — разряженный или старый аккумулятор: стартер вялый, ЭБУ перезагружается.':'Фары в этот момент тускнеют — закон Ома для полной цепи: U = E − I·r0. Отпустите кнопку — двигатель заведётся.'}`;}
+ else if(mode==='over'){msg='ГЕНЕРАТОР НЕ ВЫТЯГИВАЕТ';col=RED;nt.innerHTML=`Потребителям нужно ${fmt(I,0)} А, а генератор даёт не больше 90 А — недостающее берётся из аккумулятора (${fmt(Ib,1)} А), напряжение упало до ${fmt(U,1)} В.`;}
+ else if(mode==='gen'){msg='ГЕНЕРАТОР ПИТАЕТ И ЗАРЯЖАЕТ';col=OK;nt.innerHTML=`Двигатель работает: генератор держит 14,2 В, питает потребителей (${fmt(I,1)} А) и заряжает аккумулятор. Включите всё — ток вырастет, а напряжение останется 14,2 В: потребители включены <b>параллельно</b>, токи складываются.`;}
+ else{msg='СТОЯНКА: ВСЁ ОТ АККУМУЛЯТОРА';col=INK;const h=30/Math.max(I,0.001);nt.innerHTML=`Двигатель заглушен, всё питается от аккумулятора 60 А·ч. При токе ${fmt(I,I<1?2:1)} А половина ёмкости (30 А·ч) уйдёт за <b>${h>48?fmt(h/24,0)+' сут.':fmt(h,1)+' ч'}</b>. ${I<0.1?'Даже выключенная машина берёт 30–50 мА: сигнализация, часы, память ЭБУ.':'Оставили свет на ночь — утром не заведётесь.'}`;}
+ pl.textContent=msg;pl.style.background=col;}
+function drawN(){const g=$('#cv-n').getContext('2d'),s=NS,t=performance.now()/1000;g.fillStyle=PAP;g.fillRect(0,0,1000,660);
+ const YT=80,YG=590;
+ L(g,90,YT,940,YT,6,RED);T(g,'+30',946,YT+8,22,RED,'left');R(g,40,YG,920,16,'#cfcabb',2);for(let x=50;x<950;x+=20)L(g,x,YG+16,x+12,YG+2,2,MUT);T(g,'«МАССА» — КУЗОВ (31)',500,YG+50,22,INK,'center');
+ // battery
+ L(g,100,YT,100,260);battV(g,100,290);L(g,100,306,100,YG);TB(g,'АКБ',100,370,24,INK,'center');TB(g,fmtT(s.B.E,1)+' В',100,400,20,MUT,'center','500');TB(g,'r0 = '+fmtT(s.B.r0,2),100,425,20,MUT,'center','500');
+ // generator
+ const gen=eng==='on'&&!start;L(g,210,YT,210,240);g.fillStyle=gen?LMP:PAP;g.beginPath();g.arc(210,290,30,0,7);g.fill();g.strokeStyle=INK;g.lineWidth=3;g.stroke();T(g,'G',210,300,26,INK,'center');L(g,210,320,210,YG);TB(g,'генератор',210,370,20,INK,'center');TB(g,gen?'14,2 В':'стоит',210,398,20,gen?OK:MUT,'center','500');
+ // starter
+ L(g,320,YT,320,200);sw(g,320,230,s.cranking);T(g,'50',338,236,18,MUT,'left');L(g,320,254,320,300);motor(g,320,330,s.cranking,t);L(g,320,356,320,YG);TB(g,'стартер',320,400,20,INK,'center');if(s.cranking)TB(g,fmt(s.Ist,0)+' А',320,428,22,RED,'center');
+ // branches
+ const br=[['park',on.park,s.G.park],['low',on.low,s.G.low],['rear',on.rear,s.G.rear],['fan',s.fan>0,s.G.fan],['sock',s.sp>0||kz,s.G.sock]];
+ br.forEach(([k,isOn,Gk])=>{const d=LD[k],x=d.x,bl=k==='sock'&&blown,flab=k==='sock'?(s.F?s.F+' А':'жучок'):d.f+' А';L(g,x,YT,x,128);
+  fuse(g,x,160,flab,bl);if(k==='sock'&&!s.F){L(g,x-14,128,x+14,192,4,RED);}L(g,x,192,x,226);sw(g,x,250,isOn);L(g,x,274,x,320);
+  const Ik=s.U*Gk,lit=isOn&&!bl&&Ik>0.05;
+  if(lit)dots(g,[[x,YT+4],[x,YG-4]],Math.min(3,0.3+Ik/6),BLU,5);
+  if(d.kind==='lamp')lampC(g,x,350,lit,24,lit?Math.min(0.45,(s.U/12)**3*0.35):0);else if(d.kind==='res')res(g,x,350,'',true,lit?'#e9b48f':PAP);else if(d.kind==='mot')motor(g,x,350,lit,t*[0,0.4,0.7,1][s.fan]);
+  else{R(g,x-26,326,52,48,PAP);g.fillStyle=INK;g.beginPath();g.arc(x,350,9,0,7);g.fill();if(kz&&!bl){L(g,x+24,300,x+60,YG-4,4,RED,[6,5]);T(g,'КЗ',x+40,470,24,RED,'center');}}
+  L(g,x,d.kind==='res'?395:378,x,YG);TB(g,d.n,x,445,20,INK,'center');TB(g,lit?fmt(Ik,Ik>=10?0:1)+' А':'—',x,474,22,lit?BLU:MUT,'center');
+  if(k==='sock'&&lit&&Ik>16){const hot=Math.min(1,0.4+0.3*Math.sin(t*6));L(g,x,192,x,226,8,`rgba(163,39,31,${hot})`);L(g,x,274,x,320,8,`rgba(163,39,31,${hot})`);}
+});
+ dot(g,100,YT);dot(g,210,YT);dot(g,320,YT);Object.values(LD).forEach(d=>dot(g,d.x,YT));
+ if(s.cranking)dots(g,[[100,YT],[320,YT],[320,YG],[100,YG]],2.5,RED,12);
+ T(g,'U = '+fmt(s.U,1)+' В',560,40,30,s.U<10?RED:INK,'center');}
+
+/* ---------- 2. Ohm (LR 1) ---------- */
+const RL1=[100,120,150,180,220,270,330],PR1=[];for(let i=0;i<7;i++)for(let j=0;j<7;j++)if(j!==i)PR1.push([RL1[i],RL1[j]]);
+const US1=[[5,7,9],[4,6,8],[6,8,10]];
+const dev=(n,k)=>(((n*37+k*23)%9)-4)/100,odev=(n,k)=>(((n*11+k*7)%5)-2)/200;
+function L1(n){const R=PR1[(11*n)%42],Us=US1[n%3],Rm=R.map((r,i)=>rnd(r*(1+dev(n,i)),1)),Rom=Rm.map((r,i)=>rnd(r*(1+odev(n,i)),1));
+ const rows=[];for(let i=0;i<2;i++)for(const U of Us){const I=rnd(U/Rm[i]*1000,1),Rc=U/I*1000;rows.push({r:i+1,U,I,Rc,d:Math.abs(Rc-Rom[i])/Rom[i]*100});}return{n,R,Rm,Rom,Us,rows};}
+const lampR=U=>U<=0?2.6:2.6+(28.8-2.6)*Math.pow(U/12,0.55);
+let oel=0,oOhm=false,opts=[],OS={};
+$$('[data-oel]').forEach(b=>b.onclick=()=>{oel=+b.dataset.oel;$$('[data-oel]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));updO();});
+$('#o-ohm').onclick=()=>{oOhm=!oOhm;$('#o-ohm').setAttribute('aria-pressed',String(oOhm));updO();};
+$('#o-u').addEventListener('input',updO);$('#o-n').addEventListener('input',()=>{opts=[];buildO();updO();});
+$('#o-add').onclick=()=>{if(!oOhm&&OS.I>0){opts.push({U:OS.U,I:OS.I,el:oel});}};$('#o-clr').onclick=()=>{opts=[];};
+function buildO(){const v=L1(clampN($('#o-n').value));
+ $('#o-data').textContent=` R1 = ${v.R[0]} Ом, R2 = ${v.R[1]} Ом; Uист = ${v.Us.join(', ')} В`;
+ $('#o-tab').innerHTML='<tr><th>Резистор</th><th>Uист, В</th><th class="f">Показания</th><th>Rрасч = U / I, Ом</th><th>δ, %</th><th></th></tr>'+v.rows.map((r,k)=>`<tr><td>R${r.r}</td><td>${r.U}</td><td class="f">возьмите с приборов</td><td><input data-k="${k}" data-c="R" inputmode="decimal"><small>Rрасч</small></td><td><input data-k="${k}" data-c="d" inputmode="decimal"><small>δ</small></td><td class="mark" id="om${k}"></td></tr>`).join('')+
+ `<tr><td colspan="6"><button type="button" class="big" id="o-chk">Проверить</button></td></tr>`;
+ $('#o-chk').onclick=()=>{let ok=0;v.rows.forEach((r,k)=>{const a=num($(`#o-tab [data-k="${k}"][data-c="R"]`).value),b=num($(`#o-tab [data-k="${k}"][data-c="d"]`).value);const g=near(a,r.Rc,0.01)&&isFinite(b)&&Math.abs(b-r.d)<=0.3;mark($('#om'+k),g);if(g)ok++;});
+  const f=$('#o-fb');f.className='feedback '+(ok===6?'good':'bad');f.textContent=ok===6?'Все шесть строк верны. В выводе: R не зависит от напряжения — закон Ома выполняется.':`Верно ${ok} из 6. Rрасч = U / I (ток переведите в амперы), δ = |Rрасч − Rизм| / Rизм · 100 %, Rизм — с омметра.`;};}
+function updO(){const v=L1(clampN($('#o-n').value)),Us=+$('#o-u').value;$('#o-uv').textContent=fmtT(Us,1);
+ let U,I,txt;if(oOhm){U=0;I=0;}else if(oel<2){U=Us;I=rnd(Us/v.Rm[oel]*1000,1);}else{U=Us;I=rnd(Us/lampR(Us)*1000,1);}
+ OS={v,U,I};
+ if(oOhm){const r=oel<2?v.Rom[oel]:2.6;$('#o-ru').textContent='Ω: '+fmtT(r,1)+' Ом';$('#o-ri').textContent='питание выкл.';txt=`Омметр меряет только <b>обесточенную</b> деталь. ${oel<2?`R${oel+1}: на корпусе ${v.R[oel]} Ом, омметр показал ${fmtT(v.Rom[oel],1)} Ом — это Rизм для таблицы 1. Допуск резистора ±5 %.`:'Холодная нить лампы — всего ≈ 2,6 Ом, а горячая при 12 В — 28,8 Ом. Вот почему лампа перегорает в момент включения.'}`;}
+ else{$('#o-ru').textContent=fmt(U,2)+' В';$('#o-ri').textContent=fmtT(I,1)+' мА';
+  txt=oel<2?(I>0?`R = U / I = ${fmtT(U,1)} / ${fmtT(I/1000,4)} = <b>${fmt(U/I*1000,1)} Ом</b>. Поменяйте напряжение — ток изменится во столько же раз, а R останется тем же. Это и есть закон Ома.`:'Поставьте напряжение блока питания.'):
+  (I>0?`Лампа: R = ${fmt(U/I*1000,1)} Ом. Запишите 4–5 точек — график изогнётся: чем ярче нить, тем она горячее и тем больше её сопротивление. Для лампы закон Ома выполняется в каждой точке, но R не постоянно.`:'Поставьте напряжение блока питания.');}
+ $('#o-note').innerHTML=txt;}
+function drawO(){const g=$('#cv-o').getContext('2d'),{v,U,I}=OS,live=!oOhm&&I>0;g.fillStyle=PAP;g.fillRect(0,0,1000,620);
+ R(g,40,190,150,170,'#e9e4d6');T(g,'БЛОК ПИТАНИЯ',115,180,18,INK,'center');T(g,oOhm?'выкл.':fmtT(+$('#o-u').value,1)+' В',115,285,32,oOhm?MUT:INK,'center');T(g,'+',178,225,24,RED,'center');T(g,'−',178,345,24,INK,'center');
+ PL(g,[[190,220],[230,220],[230,90],[300,90]]);dot(g,300,90);if(oOhm)L(g,300,90,350,58,4);else L(g,300,90,360,90,4);dot(g,360,90);PL(g,[[360,90],[560,90],[560,200]]);meter(g,460,90,'A',oOhm?null:fmtT(I,1)+' мА');
+ const lab=oel<2?'R'+(oel+1)+' = '+v.R[oel]+' Ом':'12 В 5 Вт';if(oel<2)res(g,560,290,lab,true,live?LMP:PAP);else{L(g,560,200,560,262);lampC(g,560,290,live,28,live?Math.min(1,U/12):0);L(g,560,318,560,380);T(g,lab,600,298,22,INK,'left');}
+ if(oel<2){L(g,560,200,560,245);L(g,560,335,560,380);}PL(g,[[560,380],[560,520],[230,520],[230,330],[190,330]]);
+ dot(g,560,200);dot(g,560,380);PL(g,[[560,200],[440,200],[440,262]]);PL(g,[[440,318],[440,380],[560,380]]);meter(g,440,290,oOhm?'Ω':'V',oOhm?fmtT(oel<2?v.Rom[oel]:2.6,1)+' Ом':fmt(U,2)+' В');
+ if(live)dots(g,[[230,220],[230,90],[560,90],[560,520],[230,520],[230,330]],0.3+I/80,BLU,9);
+ const gx=760,gy=540,gw=210,gh=430,umax=15,imax=Math.max(60,...opts.map(p=>p.I),I)*1.1;plot(g,gx,gy,gw,gh,0,0,'U, В','I, мА');
+ for(let k=0;k<=3;k++){const y=gy-gh*k/3;T(g,fmt(imax*k/3,0),gx-6,y+6,14,MUT,'right','500');}for(let u=0;u<=15;u+=5)T(g,String(u),gx+u/umax*gw,gy+20,14,MUT,'center','500');
+ const cols=[BLU,OK,RED];[0,1,2].forEach(e=>{const pts=opts.filter(p=>p.el===e).sort((a,b)=>a.U-b.U);if(pts.length>1)PL(g,[[gx,gy]].concat(pts.map(p=>[gx+p.U/umax*gw,gy-p.I/imax*gh])),2,cols[e]);pts.forEach(p=>{g.fillStyle=cols[e];g.beginPath();g.arc(gx+p.U/umax*gw,gy-p.I/imax*gh,7,0,7);g.fill();});});
+ if(live){g.strokeStyle=RED;g.lineWidth=3;g.beginPath();g.arc(gx+U/umax*gw,gy-I/imax*gh,11,0,7);g.stroke();}
+ T(g,'R1',gx+20,gy-gh+50,20,BLU);T(g,'R2',gx+60,gy-gh+50,20,OK);T(g,'лампа',gx+100,gy-gh+50,20,RED);}
+
+/* ---------- 3. Mixed (LR 2) + heater fan ---------- */
+const RL2=[47,68,100,150,220,330,470],CMB2=[];for(let i=0;i<7;i++)for(let j=i+1;j<7;j++)for(let k=j+1;k<7;k++)CMB2.push([RL2[i],RL2[j],RL2[k]]);
+function L2(n){const cb=CMB2[(13*n)%35],s=n%3;const R1=cb[s%3],R2=cb[(s+1)%3],R3=cb[(s+2)%3],U=12,R23=R2*R3/(R2+R3),Re=R1+R23,I=U/Re,U1=I*R1,U23=I*R23;return{n,U,R1,R2,R3,R23,Re,I:I*1000,U1,U23,I2:U23/R2*1000,I3:U23/R3*1000};}
+let mshow=false,MS={};
+$('#m-n').addEventListener('input',()=>{mshow=false;updM();});$('#m-show').onclick=()=>{mshow=!mshow;updM();};
+function updM(){const m=L2(clampN($('#m-n').value));MS=m;$('#m-data').textContent=` U = 12 В; R1 = ${m.R1}, R2 = ${m.R2}, R3 = ${m.R3} Ом`;$('#m-show').textContent=mshow?'Скрыть приборы':'Показать приборы';
+ const rows=[['Rэкв теор = R1 + R2·R3/(R2+R3), Ом','Re'],['Rэкв эксп = Uист / I, Ом','Re'],['I2 + I3, мА (1-й закон)','I'],['U1 + U23, В (2-й закон)','U']];
+ $('#m-tab').innerHTML='<tr><th>Величина</th><th>Ваш ответ</th><th></th></tr>'+rows.map((r,k)=>`<tr><td>${r[0]}</td><td><input data-k="${k}" inputmode="decimal"></td><td class="mark" id="mm${k}"></td></tr>`).join('')+'<tr><td colspan="3"><button type="button" class="big" id="m-chk">Проверить</button></td></tr>';
+ $('#m-chk').onclick=()=>{const want=[m.Re,m.Re,m.I,m.U];let ok=0;want.forEach((w,k)=>{const a=num($(`#m-tab [data-k="${k}"]`).value);const g=near(a,w,0.015);mark($('#mm'+k),g);if(g)ok++;});
+  const f=$('#m-fb');f.className='feedback '+(ok===4?'good':'bad');f.textContent=ok===4?'Верно: оба закона Кирхгофа выполняются, Rэкв по расчёту и по опыту совпали.':`Верно ${ok} из 4. Сначала R23 = R2·R3 / (R2 + R3), потом прибавьте R1.`;};}
+function drawM(){const g=$('#cv-m').getContext('2d'),m=MS,sh=mshow,f=x=>fmtT(x,2);g.fillStyle=PAP;g.fillRect(0,0,1000,600);
+ batt(g,90,300,'12 В');PL(g,[[90,270],[90,80],[600,80]]);PL(g,[[90,330],[90,520],[600,520]]);
+ meter(g,180,80,'A',sh?fmtT(m.I,1)+' мА':'?');res(g,370,80,'R1 = '+m.R1+' Ом',false,LMP);
+ dot(g,300,80);dot(g,440,80);PL(g,[[300,80],[300,190],[340,190]]);PL(g,[[400,190],[440,190],[440,80]]);meter(g,370,190,'V1',sh?f(m.U1)+' В':'?');
+ dot(g,600,80);dot(g,600,520);PL(g,[[600,80],[880,80],[880,140]]);L(g,680,80,680,140);
+ meter(g,680,170,'A2',sh?fmtT(m.I2,1)+' мА':'?');L(g,680,230,680,265);res(g,680,310,'R2 = '+m.R2,true,LMP);L(g,680,355,680,520);
+ meter(g,880,170,'A3',sh?fmtT(m.I3,1)+' мА':'?');L(g,880,230,880,265);res(g,880,310,'R3 = '+m.R3,true,LMP);L(g,880,355,880,520);PL(g,[[600,520],[880,520]]);
+ dot(g,680,80);dot(g,680,520);PL(g,[[540,80],[540,280]]);PL(g,[[540,340],[540,520]]);dot(g,540,80);dot(g,540,520);meter(g,540,310,'V23',sh?f(m.U23)+' В':'?');
+ dots(g,[[90,270],[90,80],[600,80],[680,80],[680,520],[90,520],[90,330]],0.6,BLU,9);
+ S(g,'R23 = R2·R3 / (R2 + R3)     Rэкв = R1 + R23',490,575,26,INK,'center');}
+let fsp=1,fbrk=false,FS={};
+$$('[data-fs]').forEach(b=>b.onclick=()=>{fsp=+b.dataset.fs;$$('[data-fs]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));updF();});
+$('#f-brk').onclick=()=>{fbrk=!fbrk;$('#f-brk').setAttribute('aria-pressed',String(fbrk));updF();};
+function updF(){const Rm=1.2,Ra=1.2,Rb=0.6;let Rs=fsp===1?Ra+Rb:fsp===2?Rb:0;let broken=fbrk&&fsp===1;const Rt=Rm+Rs,I=broken?0:12/Rt,Um=I*Rm,P=I*I*Rs;FS={I,Um,Rs,broken};
+ $('#f-i').textContent=fmt(I,1)+' А';$('#f-u').textContent=fmt(Um,1)+' В';$('#f-p').textContent=fmt(P,0)+' Вт';$('#f-r').textContent=broken?'∞ (обрыв)':fmtT(Rt,1)+' Ом';
+ $('#f-note').innerHTML=broken?'Резистор 1,2 Ом стоит только в цепи 1-й скорости — при его обрыве вентилятор не работает на 1-й, но работает на 2-й и 3-й. Классическая неисправность: резистор перегорает от тепла.':
+ `Сопротивления складываются последовательно: ${fsp<3?fmtT(Rm,1)+' + '+fmtT(Rs,1)+' = ':''}${fmtT(Rt,1)} Ом; I = 12 / ${fmtT(Rt,1)} = <b>${fmt(I,1)} А</b>. ${fsp<3?`На резисторах теряется ${fmt(P,0)} Вт — блок ставят в поток воздуха, чтобы не сгорел.`:'На 3-й скорости резисторы обойдены — мотор получает все 12 В.'}`;}
+function drawF(){const g=$('#cv-f').getContext('2d'),s=FS,t=performance.now()/1000;g.fillStyle=PAP;g.fillRect(0,0,1000,380);
+ batt(g,70,190,'12 В');PL(g,[[70,160],[70,60],[170,60]]);fuse(g,200,60,'',false);g.save();g.translate(200,60);g.restore();
+ PL(g,[[232,60],[300,60]]);dot(g,300,60);T(g,'переключатель',300,30,18,MUT,'center','500');
+ const ys={1:60,2:150,3:240};[1,2,3].forEach(k=>{dot(g,400,ys[k]);T(g,k+'',380,ys[k]-12,20,MUT,'right');});L(g,300,60,400,ys[fsp],5,RED);
+ // 1: through Ra then Rb ; 2: through Rb ; 3: direct
+ PL(g,[[400,60],[450,60]]);res(g,500,60,'1,2 Ом',false,s.broken?'#e9e4d6':(fsp===1?'#e9b48f':PAP));if(s.broken)L(g,485,40,515,80,5,RED);PL(g,[[545,60],[600,60],[600,150]]);
+ PL(g,[[400,150],[600,150]]);dot(g,600,150);PL(g,[[600,150],[640,150]]);res(g,690,150,'0,6 Ом',false,fsp<3&&!s.broken?'#e9b48f':PAP);PL(g,[[735,150],[800,150],[800,240]]);
+ PL(g,[[400,240],[800,240]]);dot(g,800,240);PL(g,[[800,240],[880,240],[880,265]]);motor(g,880,292,s.I>0,t*s.I/6);T(g,'мотор 1,2 Ом',880,350,18,INK,'center');
+ PL(g,[[880,318],[880,340],[940,340],[940,365],[70,365],[70,220]]);gnd(g,500,365);
+ T(g,'резисторный блок',640,110,18,MUT,'center','500');if(s.I>0)T(g,fmt(s.I,1)+' А',940,250,24,BLU,'right');}
+
+/* ---------- 4. Power (LR 3) ---------- */
+const RL3=[33,39,47,51,56,68,75,82,100,120],UW3=[6,8,10];
+const L3=n=>({n,R:RL3[(7*n)%10],Uw:UW3[n%3]});
+let ppts=[],prun=0,pAcc=0,pLast=0,PS={};
+$('#p-n').addEventListener('input',()=>{ppts=[];prun=0;pAcc=0;buildP();updP();});$('#p-u').addEventListener('input',updP);
+$('#p-add').onclick=()=>{if(PS.U>0&&!ppts.some(p=>p.U===PS.U))ppts.push({U:PS.U,P:PS.P});};
+$('#p-run').onclick=()=>{if(PS.U<=0)return;prun=performance.now();pAcc=0;pLast=prun;};
+function buildP(){const v=L3(clampN($('#p-n').value));$('#p-data').textContent=` R = ${v.R} Ом (не менее 5 Вт); работа — при ${v.Uw} В`;
+ $('#p-tab').innerHTML='<tr><th>U, В</th><th class="f">I = U / R</th><th>P = U·I, Вт</th><th></th></tr>'+[2,4,6,8,10,12].map((U,k)=>`<tr><td>${U}</td><td class="f">${fmtT(U/v.R*1000,1)} мА</td><td><input data-k="${k}" inputmode="decimal"><small>P</small></td><td class="mark" id="pm${k}"></td></tr>`).join('')+
+ `<tr><td>A при ${v.Uw} В за 60 с, Дж</td><td class="f">A = P·t</td><td><input data-k="6" inputmode="decimal"></td><td class="mark" id="pm6"></td></tr><tr><td colspan="4"><button type="button" class="big" id="p-chk">Проверить</button></td></tr>`;
+ $('#p-chk').onclick=()=>{const want=[2,4,6,8,10,12].map(U=>U*U/v.R).concat([v.Uw*v.Uw/v.R*60]);let ok=0;want.forEach((w,k)=>{const a=num($(`#p-tab [data-k="${k}"]`).value);const g=near(a,w,0.02);mark($('#pm'+k),g);if(g)ok++;});
+  const f=$('#p-fb');f.className='feedback '+(ok===7?'good':'bad');f.textContent=ok===7?'Верно. Напряжение выросло вдвое — мощность вчетверо: P = U² / R.':`Верно ${ok} из 7. P = U·I = U² / R; A = P·t, t = 60 с.`;};}
+function updP(){const v=L3(clampN($('#p-n').value)),U=+$('#p-u').value,I=U/v.R,P=U*I;PS={v,U,I,P};$('#p-uv').textContent=U;
+ $('#p-ru').textContent=fmt(U,2)+' В';$('#p-ri').textContent=fmtT(I*1000,1)+' мА';$('#p-rp').textContent=fmt(P,2)+' Вт';
+ $('#p-note').innerHTML=U>0?`P = U·I = ${U} · ${fmtT(I,3)} = <b>${fmt(P,2)} Вт</b>. Запишите точки для 2, 4 … 12 В — график P(U) получится параболой: мощность растёт как квадрат напряжения. Поэтому лампа на 14,2 В при работающем двигателе светит заметно ярче, чем на 12 В.`:'Поставьте напряжение.';}
+function drawP(){const g=$('#cv-p').getContext('2d'),{v,U,I,P}=PS,now=performance.now();g.fillStyle=PAP;g.fillRect(0,0,1000,620);
+ let el=0;if(prun){el=Math.min(60,(now-prun)/1000*10);pAcc=P*el;if(el>=60)prun=0;}$('#p-ra').textContent=(prun?fmt(el,0)+' с · ':'')+(pAcc?fmt(pAcc,1)+' Дж':'—');
+ R(g,40,190,150,170,'#e9e4d6');T(g,'БЛОК ПИТАНИЯ',115,180,18,INK,'center');T(g,U+' В',115,285,32,INK,'center');
+ PL(g,[[190,220],[230,220],[230,90],[560,90],[560,215]]);meter(g,400,90,'A',fmtT(I*1000,1)+' мА');
+ const heat=Math.min(1,P/(144/v.R)*0.9);R(g,532,215,56,150,`rgb(${Math.round(250-30*heat)},${Math.round(248-120*heat)},${Math.round(242-140*heat)})`);for(let k=0;k<6;k++)L(g,532,235+k*22,588,235+k*22,2,MUT);T(g,'R = '+v.R+' Ом',600,280,22,INK,'left');T(g,'5 Вт',600,308,18,MUT,'left','500');
+ if(heat>0.3)for(let k=0;k<3;k++){const y=200-((now/40+k*20)%40);L(g,545+k*16,y,550+k*16,y-14,3,`rgba(163,39,31,${heat})`);}
+ PL(g,[[560,365],[560,520],[230,520],[230,330],[190,330]]);dot(g,560,215);dot(g,560,365);PL(g,[[560,215],[440,215],[440,262]]);PL(g,[[440,318],[440,365],[560,365]]);meter(g,440,290,'V',fmt(U,2)+' В');
+ if(U>0)dots(g,[[230,220],[230,90],[560,90],[560,520],[230,520],[230,330]],0.3+I*3,BLU,9);
+ const gx=770,gy=540,gw=200,gh=430,pmax=144/v.R*1.1;plot(g,gx,gy,gw,gh,0,0,'U, В','P, Вт');
+ for(let k=0;k<=4;k++)T(g,fmt(pmax*k/4,1),gx-6,gy-gh*k/4+6,14,MUT,'right','500');for(let u=0;u<=12;u+=4)T(g,String(u),gx+u/12*gw,gy+20,14,MUT,'center','500');
+ const pts=ppts.slice().sort((a,b)=>a.U-b.U);if(pts.length>1)PL(g,[[gx,gy]].concat(pts.map(p=>[gx+p.U/12*gw,gy-p.P/pmax*gh])),2,BLU);pts.forEach(p=>{g.fillStyle=BLU;g.beginPath();g.arc(gx+p.U/12*gw,gy-p.P/pmax*gh,7,0,7);g.fill();});
+ g.strokeStyle=RED;g.lineWidth=3;g.beginPath();g.arc(gx+U/12*gw,gy-P/pmax*gh,11,0,7);g.stroke();}
+
+/* ---------- 5. Efficiency (LR 4) ---------- */
+const RL4=[20,33,47,56,68,82,100,120,150,200],EL4=[6,9,12],RN4=[10,20,50,100,150,200,300];
+const L4=n=>({n,r:RL4[(7*n)%10],E:EL4[n%3]});
+let ern=0,ES={};
+$('#e-rn').innerHTML='<button type="button" data-rn="0" aria-pressed="true">разомкнуто</button>'+RN4.map(r=>`<button type="button" data-rn="${r}" aria-pressed="false">${r}</button>`).join('');
+$$('[data-rn]').forEach(b=>b.onclick=()=>{ern=+b.dataset.rn;$$('[data-rn]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));updE();});
+$('#e-n').addEventListener('input',()=>{buildE();updE();});
+function buildE(){const v=L4(clampN($('#e-n').value));$('#e-data').textContent=` E = ${v.E} В; r = ${v.r} Ом (резистор внутри рамки)`;
+ $('#e-tab').innerHTML='<tr><th>Rн, Ом</th><th>Pнагр, Вт</th><th>η, %</th><th></th></tr>'+RN4.map((r,k)=>`<tr><td>${r}</td><td><input data-k="${k}" data-c="p" inputmode="decimal"><small>Pнагр</small></td><td><input data-k="${k}" data-c="e" inputmode="decimal"><small>η</small></td><td class="mark" id="em${k}"></td></tr>`).join('')+
+ '<tr><td>R при η = 50 %</td><td colspan="2"><input data-k="7" data-c="r" inputmode="decimal"></td><td class="mark" id="em7"></td></tr><tr><td colspan="4"><button type="button" class="big" id="e-chk">Проверить</button></td></tr>';
+ $('#e-chk').onclick=()=>{let ok=0;RN4.forEach((Rn,k)=>{const I=v.E/(Rn+v.r),U=I*Rn,a=num($(`#e-tab [data-k="${k}"][data-c="p"]`).value),b=num($(`#e-tab [data-k="${k}"][data-c="e"]`).value);const gd=near(a,U*I,0.03)&&near(b,U/v.E*100,0.02);mark($('#em'+k),gd);if(gd)ok++;});
+  const a=num($('#e-tab [data-k="7"]').value),gd=near(a,v.r,0.1);mark($('#em7'),gd);if(gd)ok++;
+  const f=$('#e-fb');f.className='feedback '+(ok===8?'good':'bad');f.textContent=ok===8?`Верно: наибольшая мощность и КПД 50 % — при Rн = r = ${v.r} Ом. Чем больше Rн, тем выше КПД.`:`Верно ${ok} из 8. Pнагр = Uн·I, η = Uн / E · 100 %. КПД 50 % — там, где Uн = E / 2.`;};}
+function updE(){const v=L4(clampN($('#e-n').value)),Rn=ern;let I,U;if(!Rn){I=0;U=v.E;}else{I=v.E/(Rn+v.r);U=I*Rn;}ES={v,Rn,I,U};
+ $('#e-ru').textContent=fmt(U,2)+' В';$('#e-ri').textContent=fmtT(I*1000,1)+' мА';$('#e-rp').textContent=Rn?fmt(U*I,3)+' Вт':'—';$('#e-re').textContent=Rn?fmt(U/v.E*100,1)+' %':'—';
+ $('#e-note').innerHTML=!Rn?`Нагрузка отключена — тока нет, вольтметр показывает ЭДС: <b>E = ${v.E} В</b>. Запишите её — она нужна для КПД.`:`Pполн = E·I = ${fmt(v.E*I,3)} Вт, из них в нагрузку ${fmt(U*I,3)} Вт, остальное греет r. ${Rn<v.r?'Rн меньше r: ток большой, но почти всё тепло — внутри источника.':Rn===v.r?'Rн = r: мощность в нагрузке наибольшая, но КПД всего 50 %.':'Rн больше r: мощность падает, а КПД растёт. Так работает автомобиль: r0 аккумулятора — сотые доли ома, потребители — единицы ом, КПД близок к 100 %.'}`;}
+function drawE(){const g=$('#cv-e').getContext('2d'),{v,Rn,I,U}=ES;g.fillStyle=PAP;g.fillRect(0,0,1000,620);
+ g.setLineDash([10,8]);g.strokeStyle=MUT;g.lineWidth=2;g.strokeRect(50,130,200,360);g.setLineDash([]);T(g,'источник',150,520,20,MUT,'center','500');
+ L(g,135,90,135,190);batt(g,135,220,'E = '+v.E+' В');L(g,135,250,135,310);res(g,135,360,'r = '+v.r,true,I>0?'#e9b48f':PAP);L(g,135,405,135,530);
+ PL(g,[[135,90],[300,90]]);dot(g,300,90);if(!Rn)L(g,300,90,350,58,4);else L(g,300,90,360,90,4);dot(g,360,90);PL(g,[[360,90],[540,90],[540,245]]);meter(g,450,90,'A',fmtT(I*1000,1)+' мА');
+ R(g,505,245,70,100,Rn?LMP:PAP);T(g,'Rн',540,290,22,INK,'center');T(g,Rn?Rn+' Ом':'—',540,320,20,INK,'center');L(g,540,345,540,530);PL(g,[[540,530],[135,530]]);
+ dot(g,540,200);dot(g,540,420);PL(g,[[540,200],[420,200],[420,265]]);PL(g,[[420,325],[420,420],[540,420]]);meter(g,420,295,'V',fmt(U,2)+' В');
+ if(I>0)dots(g,[[135,90],[540,90],[540,530],[135,530],[135,90]],0.3+I*4,BLU,9);
+ const gx=680,gy=560,gw=280,gh=220,Rmax=300,pm=v.E*v.E/(4*v.r)*1.15;
+ const curve=(fn,ymax,yb,col)=>{const p=[];for(let r=5;r<=Rmax;r+=5)p.push([gx+r/Rmax*gw,yb-fn(r)/ymax*gh]);PL(g,p,2,col);};
+ plot(g,gx,gy-260,gw,gh-20,0,0,'Rн, Ом','P, Вт');curve(r=>{const i=v.E/(r+v.r);return i*i*r;},pm,gy-260,BLU);
+ plot(g,gx,gy,gw,gh-40,0,0,'Rн, Ом','η, %');curve(r=>r/(r+v.r)*100,100,gy,OK);L(g,gx,gy-(gh-40)/2,gx+gw,gy-(gh-40)/2,1,MUT,[5,5]);T(g,'50 %',gx+gw-4,gy-(gh-40)/2-6,14,MUT,'right','500');
+ const xr=gx+v.r/Rmax*gw;L(g,xr,gy,xr,gy-gh-250,1,RED,[5,5]);T(g,'r',xr+4,gy-gh-236,16,RED,'left');
+ if(Rn){const i=I,x=gx+Rn/Rmax*gw;g.fillStyle=RED;g.beginPath();g.arc(x,gy-260-(i*i*Rn)/pm*(gh-20),7,0,7);g.fill();g.beginPath();g.arc(x,gy-(U/v.E*100)/100*(gh-40),7,0,7);g.fill();}}
+
+/* ---------- 6. Bad ground (PZ 1) ---------- */
+const RM4=[0.02,0.05,0.1,0.15,0.2,0.3];
+let gon=true,gfix=false,GS={};
+$('#g-on').onclick=()=>{gon=!gon;$('#g-on').setAttribute('aria-pressed',String(gon));updG();};
+$('#g-fix').onclick=()=>{gfix=!gfix;$('#g-fix').setAttribute('aria-pressed',String(gfix));updG();};
+['#g-red','#g-blk'].forEach(s=>$(s).addEventListener('change',updG));$('#g-n').addEventListener('input',()=>{gfix=false;$('#g-fix').setAttribute('aria-pressed','false');$('#g-fb').textContent='';updG();});
+$('#g-chk').onclick=()=>{const n=clampN($('#g-n').value),Rm=RM4[n%6],I=12.6/(0.05+2.6+Rm),w=I*Rm,a=num($('#g-ans').value),ok=near(a,w,0.05);const f=$('#g-fb');f.className='feedback '+(ok?'good':'bad');
+ f.textContent=ok?`Верно: ${fmt(w,2)} В. ${w>0.3?'Больше 0,3 В — масса плохая, контакт надо чистить.':'Меньше 0,3 В — масса в порядке.'}`:'Не совсем. Поставьте щупы на C и D при включённой фаре (с исходной, непочищенной массой).';};
+function updG(){const n=clampN($('#g-n').value),E=12.6,Rp=0.05,RL=2.6,Rm=gfix?0.01:RM4[n%6],I=gon?E/(Rp+RL+Rm):0;
+ const ph={A:E,B:E-I*Rp,C:I*Rm,D:0};const r=$('#g-red').value,b=$('#g-blk').value,V=ph[r]-ph[b];GS={E,Rp,RL,Rm,I,ph};
+ $('#g-v').textContent=fmt(V,2)+' В';const P=I*I*RL;$('#g-p').textContent=fmt(P,1)+' Вт';
+ let t;if(!gon)t='Фара выключена — тока нет, падений нет: вольтметр между любыми точками провода показывает 0, а «+» и «−» АКБ — 12,6 В. Плохую массу ищут только <b>под нагрузкой</b>.';
+ else if(r===b)t='Щупы в одной точке — 0 В.';
+ else{const pair=[r,b].sort().join('');const name={AB:'плюсовом проводе',BC:'лампе',CD:'массе (провод, болт, кузов)',AD:'аккумуляторе — всё напряжение цепи',AC:'проводе и лампе',BD:'лампе и массе'}[pair];
+  t=`Вольтметр показывает падение напряжения на ${name}. Второй закон Кирхгофа: U(AB) + U(BC) + U(CD) = ${fmt(ph.A-ph.B,2)} + ${fmt(ph.B-ph.C,2)} + ${fmt(ph.C,2)} = <b>${fmt(E,2)} В</b> = ЭДС. ${gfix?'После чистки масса почти ничего не «съедает» — фара светит ярче.':''}`;}
+ $('#g-note').innerHTML=t;}
+function drawG(){const g=$('#cv-g').getContext('2d'),s=GS,bad=s.Rm>0.1&&!gfix;g.fillStyle=PAP;g.fillRect(0,0,1000,600);
+ battV(g,120,300);L(g,120,284,120,110);L(g,120,316,120,500);T(g,'АКБ 12,6 В',150,306,22,INK,'left');
+ PL(g,[[120,110],[760,110],[760,230]],5,RED);T(g,'плюсовой провод · 0,05 Ом',440,96,20,INK,'center');
+ lampC(g,760,270,gon,40,gon?Math.min(1,s.I*s.I*s.RL/55):0);T(g,'фара 55 Вт',820,276,22,INK,'left');
+ PL(g,[[760,310],[760,410]],4);R(g,730,410,60,34,bad?'#b5652e':'#cfcabb',3);T(g,bad?'ржавый болт':'болт массы',800,436,20,bad?RED:INK,'left');L(g,760,444,760,500,4);
+ R(g,80,500,880,22,'#cfcabb',2);for(let x=90;x<950;x+=20)L(g,x,522,x+12,506,2,MUT);T(g,'кузов («масса»)',520,560,22,INK,'center');L(g,120,500,120,470,6);
+ const P={A:[120,110],B:[760,180],C:[760,380],D:[120,480]};const red=$('#g-red').value,blk=$('#g-blk').value;
+ Object.entries(P).forEach(([k,[x,y]])=>{g.fillStyle=k===red?RED:k===blk?INK:PAP;g.beginPath();g.arc(x,y,13,0,7);g.fill();g.strokeStyle=INK;g.lineWidth=3;g.stroke();T(g,k,x+(x<400?-30:24),y+8,26,INK,x<400?'right':'left');});
+ // multimeter
+ R(g,340,200,220,190,'#2E2B26',3);R(g,358,218,184,60,'#c8d2b4',2);T(g,fmt(s.ph[red]-s.ph[blk],2),530,262,40,INK,'right');T(g,'V⎓',380,320,26,PAP,'left');
+ g.strokeStyle=RED;g.lineWidth=3;g.beginPath();g.moveTo(520,390);g.quadraticCurveTo(600,460,P[red][0],P[red][1]);g.stroke();
+ g.strokeStyle=INK;g.beginPath();g.moveTo(380,390);g.quadraticCurveTo(300,470,P[blk][0],P[blk][1]);g.stroke();
+ if(gon)dots(g,[[120,110],[760,110],[760,500],[120,500],[120,110]],0.6,BLU,10);}
+
+/* ---------- 7. Quiz ---------- */
+const Q=[{q:'Какое напряжение у бортовой сети легкового автомобиля при работающем двигателе?',o:['13,8–14,5 В','12,0 В ровно','24 В'],e:'Генератор держит 13,8–14,5 В, чтобы заряжать аккумулятор; на стоянке заряженный аккумулятор — 12,5–12,7 В (В1).'},
+ {q:'Что такое «масса» в автомобиле?',o:['кузов и двигатель, по которым идёт «минус»','толстый плюсовой провод','вес аккумулятора'],e:'Однопроводная схема: «плюс» по проводам, «минус» — через кузов (В1).'},
+ {q:'Какой ток через тело уже не даёт разжать руку?',o:['10–15 мА','1 мА','100 А'],e:'1 мА ощутим, 10–15 мА — неотпускающий, 50–100 мА — фибрилляция сердца (В2).'},
+ {q:'Какого цвета провода высоковольтной системы гибрида и электромобиля?',o:['оранжевые','красные','синие'],e:'Оранжевый — знак опасного напряжения 200–800 В. Работают с ними только обученные (В2).'},
+ {q:'Какую клемму аккумулятора снимают первой?',o:['«минус»','«плюс»','любую'],e:'Сначала «минус»: тогда ключ на «плюсе» не замкнёт его на кузов. Подключают в обратном порядке (В3).'},
+ {q:'Предохранитель 15 А сгорел. Что ставить?',o:['такой же 15 А, найдя причину','30 А, чтобы не горел','проволочку'],e:'Предохранитель защищает провод. Больший номинал или «жучок» — пожар (В3).'},
+ {q:'Лампа 55 Вт на 12 В. Какой ток?',o:['≈ 4,6 А','660 А','0,22 А'],e:'I = P / U = 55 / 12 ≈ 4,6 А (Т7).'},
+ {q:'ЭДС 12,6 В, r0 = 0,01 Ом, стартер берёт 200 А. Напряжение на клеммах?',o:['10,6 В','12,6 В','2 В'],e:'U = E − I·r0 = 12,6 − 2 = 10,6 В — поэтому фары тускнеют при пуске (Т3).'},
+ {q:'Как меняется сопротивление нити лампы при нагреве?',o:['растёт','падает','не меняется'],e:'У металлов R растёт с температурой; у датчика температуры ОЖ (NTC) — наоборот, падает (Т2).'},
+ {q:'Почему потребители автомобиля включены параллельно?',o:['у каждого свои 12 В и он работает независимо','так ток одинаковый','так меньше ламп'],e:'Параллельно — одно напряжение на всех ветвях, токи складываются (Т5).'},
+ {q:'Окисленная клемма — это…',o:['лишний резистор последовательно с нагрузкой','лишний источник','параллельный провод'],e:'Последовательно с нагрузкой — на клемме теряется часть напряжения и выделяется тепло (Т4).'},
+ {q:'Фара включена, вольтметр между корпусом фары и «минусом» АКБ показывает 1,2 В. Что делать?',o:['чистить и затягивать массу','менять лампу','ничего, это норма'],e:'Больше 0,2–0,3 В на массе — плохой контакт. Второй закон Кирхгофа: эти вольты отняты у лампы (Т9).'}];
+let qi=0,score=0,ord=[];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderQ(){const box=$('#quiz-box');
+  if(qi>=Q.length){const m=score>=11?'Отлично!':score>=9?'Хорошо! Повторите ошибки.':'Повторите опыты 1–6 и попробуйте ещё раз.';
+    box.innerHTML='<div class="qcard"><p class="score">'+score+' из '+Q.length+'</p><p class="qtext">'+m+'</p><div class="seg"><button class="big" type="button" id="qr">Пройти ещё раз</button></div></div>';$('#qr').onclick=()=>{qi=0;score=0;renderQ();};return;}
+  const qq=Q[qi];ord=shuffle(qq.o.map((t,i)=>({t,i})));
+  box.innerHTML='<div class="qcard"><p class="qtop"><span>Вопрос '+(qi+1)+' из '+Q.length+'</span><span>Верно: '+score+'</span></p><p class="qtext">'+qq.q+'</p><div class="opts">'+ord.map((o,k)=>'<button class="opt" type="button" data-k="'+k+'">'+o.t+'</button>').join('')+'</div><p class="feedback" id="qfb" aria-live="polite"></p><p id="qex" style="margin:0"></p><div class="seg"><button class="big" type="button" id="qn" hidden>Дальше</button></div></div>';
+  $$('#quiz-box .opt').forEach(b=>b.onclick=()=>{const ok=ord[+b.dataset.k].i===0;if(ok)score++;$$('#quiz-box .opt').forEach(o=>{o.disabled=true;if(ord[+o.dataset.k].i===0)o.classList.add('right');});if(!ok)b.classList.add('wrong');
+    const f=$('#qfb');f.className='feedback '+(ok?'good':'bad');f.textContent=ok?'Верно!':'Не совсем.';$('#qex').textContent=qq.e;const n=$('#qn');n.hidden=false;n.textContent=qi===Q.length-1?'Узнать результат':'Дальше';n.focus();});
+  $('#qn').onclick=()=>{qi++;renderQ();};}
+
+updN();buildO();updO();updM();updF();buildP();updP();buildE();updE();updG();renderQ();
+const tabs=['net','ohm','mixed','power','eta','ground','quiz'];let cur='net';
+function show(){const h=location.hash.replace('#','');cur=tabs.includes(h)?h:'net';$$('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==cur);$$('nav a').forEach(a=>a.setAttribute('aria-current',String(a.dataset.tab===cur)));}
+window.addEventListener('hashchange',show);show();
+function loop(){if(cur==='net')drawN();if(cur==='ohm')drawO();if(cur==='mixed'){drawM();drawF();}if(cur==='power')drawP();if(cur==='eta')drawE();if(cur==='ground')drawG();requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

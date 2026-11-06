@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 3. Тема 1.2. Последовательное и параллельное соединение — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+pre{background:#1B1A17;color:#F2EEE3;padding:14px 16px;overflow:auto;font-size:15px;line-height:1.4;border:3px solid var(--ink)}
+pre code{font-family:'Courier New',monospace}
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 3 · тема 1.2</p>
+<header class="hero">
+<div class="hand">Пара 3</div>
+<h1>Тема 1.2. Последовательное и параллельное соединение</h1>
+<p class="lead">Почему окисленная клемма «съедает» стартер, а перегоревшая лампа не гасит соседнюю.</p>
+<div class="meta"><span>Тема 1.2</span><span>Чтение: 25–30 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>правила последовательного соединения</li><li>почему окисленная клемма — это лишний резистор</li><li>как резисторы задают скорости отопителя</li><li>правила параллельного соединения</li><li>почему все потребители автомобиля включены параллельно</li><li>как сложить токи потребителей и выбрать предохранитель</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Последовательное соединение</a><a href="#s2">2. Параллельное соединение</a><a href="#s3">3. Итог: последовательно или параллельно</a><a href="#s4">4. Домашнее задание</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a><a href="#lab">Попробуйте в лаборатории</a></nav>
+<article>
+<h2 id="s1">1. Последовательное соединение</h2>
+<figure><img src="img/s_series.png" alt="Три резистора одной цепочкой: путь у тока один, I одинаковый, U = U1 + U2 + U3, R = R1 + R2 + R3"><figcaption>Три резистора одной цепочкой: путь у тока один, I одинаковый, U = U1 + U2 + U3, R = R1 + R2 + R3</figcaption></figure>
+<p><strong>Последовательно</strong> — элементы одной цепочкой, без разветвлений. Путь у тока один.</p>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>Ток одинаковый: I = I1 = I2 = I3.</p>
+<p>Напряжения складываются: U = U1 + U2 + U3.</p>
+<p>Сопротивления складываются: R = R1 + R2 + R3.</p>
+<p>Обрыв любого элемента — тока нет во всей цепи.</p>
+</div>
+<p>Напряжение делится <strong>пропорционально сопротивлениям</strong>: на большем резисторе — большее напряжение.</p>
+<div class="box example">
+<p>Лампа 2 Ом и провод 0,4 Ом последовательно, 12 В.</p>
+<ol>
+<li>R = 2 + 0,4 = <strong>2,4 Ом</strong>.</li>
+<li>I = 12 / 2,4 = <strong>5 А</strong>.</li>
+<li>На лампе U = 5 · 2 = <strong>10 В</strong>, на проводе 5 · 0,4 = <strong>2 В</strong>. Лампе досталось не 12, а 10 вольт — светит тусклее.</li>
+</ol>
+</div>
+<h3>Окисленная клемма — лишний резистор</h3>
+<figure><img src="img/s_clamp.png" alt="Окисленная клемма 0,02 Ом последовательно со стартером: при 150 А теряется 3 В, выделяется 450 Вт"><figcaption>Окисленная клемма 0,02 Ом последовательно со стартером: при 150 А теряется 3 В, выделяется 450 Вт</figcaption></figure>
+<p>Окисел на клемме — это сопротивление, которое стоит <strong>последовательно</strong> со стартером. Всего 0,02 Ом, но при токе стартера 150 А:</p>
+<ul>
+<li>на клемме теряется ΔU = 150 · 0,02 = <strong>3 В</strong>;</li>
+<li>выделяется P = 150² · 0,02 = <strong>450 Вт</strong> тепла.</li>
+</ul>
+<p>Стартер крутит вяло, клемма горячая. Лечится чисткой и затяжкой.</p>
+<h3>Скорости отопителя</h3>
+<figure><img src="img/s_fan.png" alt="Мотор отопителя 1,2 Ом и резисторы 1,2 и 0,6 Ом: 1-я скорость 4 А, 2-я 6,7 А, 3-я 10 А"><figcaption>Мотор отопителя 1,2 Ом и резисторы 1,2 и 0,6 Ом: 1-я скорость 4 А, 2-я 6,7 А, 3-я 10 А</figcaption></figure>
+<p>Резисторный блок отопителя включён последовательно с мотором (1,2 Ом), переключатель обходит его части:</p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Скорость</th>
+<th>Сопротивление цепи</th>
+<th>Ток</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-я</td>
+<td>1,2 + 1,2 + 0,6 = 3 Ом</td>
+<td>12 / 3 = 4 А</td>
+</tr>
+<tr>
+<td>2-я</td>
+<td>1,2 + 0,6 = 1,8 Ом</td>
+<td>12 / 1,8 ≈ 6,7 А</td>
+</tr>
+<tr>
+<td>3-я</td>
+<td>1,2 Ом</td>
+<td>12 / 1,2 = 10 А</td>
+</tr>
+</tbody>
+</table></div>
+<p>Больше сопротивление — меньше ток — медленнее мотор. Лишнее напряжение уходит в тепло резисторов, их охлаждает поток воздуха. Оборвался резистор 1,2 Ом — не работает первая скорость: такая неисправность встречается часто.</p>
+<h2 id="s2">2. Параллельное соединение</h2>
+<figure><img src="img/s_paral.png" alt="Три резистора между одними и теми же двумя точками: U одно, I = I1 + I2 + I3"><figcaption>Три резистора между одними и теми же двумя точками: U одно, I = I1 + I2 + I3</figcaption></figure>
+<p><strong>Параллельно</strong> — все элементы подключены к одним и тем же двум точкам.</p>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p>Напряжение одно: U = U1 = U2 = U3.</p>
+<p>Токи складываются: I = I1 + I2 + I3.</p>
+<p>1 / R = 1 / R1 + 1 / R2 + 1 / R3; для двух: R = R1 · R2 / (R1 + R2).</p>
+<p>Общее сопротивление <strong>меньше самого маленького</strong>.</p>
+</div>
+<h3>Почему в машине — параллельно</h3>
+<figure><img src="img/s_stop.png" alt="Если бы стоп-сигналы стояли последовательно, перегорела одна — погасли обе; параллельно — вторая горит"><figcaption>Если бы стоп-сигналы стояли последовательно, перегорела одна — погасли обе; параллельно — вторая горит</figcaption></figure>
+<p>Если бы стоп-сигналы стояли последовательно, обрыв одной лампы гасил бы обе. Параллельно у каждой свой путь и свои 12 вольт: одна перегорела — остальные работают. Поэтому <strong>все потребители автомобиля включены параллельно</strong>: каждый получает полное напряжение и включается отдельно.</p>
+<figure><img src="img/s_par.png" alt="Фары 9,2 А, обогрев 12,5 А, вентилятор 6,7 А, магнитола 1,7 А — общий ток 30,1 А"><figcaption>Фары 9,2 А, обогрев 12,5 А, вентилятор 6,7 А, магнитола 1,7 А — общий ток 30,1 А</figcaption></figure>
+<p>Чем больше включено, тем больше общий ток через аккумулятор, генератор и главный предохранитель:</p>
+<div class="box example">
+<p>Фары 9,2 + обогрев 12,5 + вентилятор 6,7 + магнитола 1,7 = <strong>30,1 А</strong>. Напряжение у всех одно — 12 В.</p>
+<p>Две фары по 2,6 Ом параллельно: ток одной 12 / 2,6 ≈ 4,6 А, общий 9,2 А, общее сопротивление 2,6 / 2 = 1,3 Ом.</p>
+</div>
+<h3>Как выбрать предохранитель</h3>
+<ol>
+<li>Сложите мощности потребителей на этой цепи: ΣP.</li>
+<li>Ток I = ΣP / 12.</li>
+<li>Номинал — ближайший из ряда 5; 7,5; 10; 15; 20; 25; 30; 40 А, не меньше 1,25 · I.</li>
+</ol>
+<div class="box example">
+<p>Фары 2 × 55 Вт = 110 Вт. I = 110 / 12 ≈ 9,2 А. 1,25 · 9,2 ≈ 11,5 А → предохранитель <strong>15 А</strong>.</p>
+</div>
+<h2 id="s3">3. Итог: последовательно или параллельно</h2>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>Последовательно</th>
+<th>Параллельно</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ток</td>
+<td>одинаковый во всех</td>
+<td>складывается</td>
+</tr>
+<tr>
+<td>Напряжение</td>
+<td>складывается</td>
+<td>одинаковое на всех</td>
+</tr>
+<tr>
+<td>Сопротивление</td>
+<td>R = R1 + R2, растёт</td>
+<td>1/R = 1/R1 + 1/R2, меньше меньшего</td>
+</tr>
+<tr>
+<td>Обрыв одного</td>
+<td>тока нет нигде</td>
+<td>остальные работают</td>
+</tr>
+<tr>
+<td>В машине</td>
+<td>клемма, контакт, провод, резисторы отопителя</td>
+<td>все потребители бортсети</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="s4">4. Домашнее задание</h2>
+<ol>
+<li>Перепишите в тетрадь Т4 и Т5 и таблицу «последовательно — параллельно».</li>
+<li>Две задачи своего варианта: клемма и стартер (I, ΔU, P); набор потребителей (I, R, предохранитель).</li>
+<li>Лаборатория, вкладка «Проверь себя» — вопросы 7–12.</li>
+</ol>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>Последовательно</strong> — одна цепочка: ток одинаковый, напряжения складываются.</li>
+<li><strong>Параллельно</strong> — общие две точки: напряжение одно, токи складываются.</li>
+<li><strong>Делитель напряжения</strong> — два последовательных резистора: напряжение делится пропорционально сопротивлениям.</li>
+<li><strong>Резисторный блок</strong> — резисторы последовательно с мотором отопителя для 1-й и 2-й скорости.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · Т4 · БИЛЕТ 7</span><h3>Последовательное соединение</h3><p class="q">Последовательное соединение резисторов: ток, напряжения, общее сопротивление. Окисленная клемма как лишний резистор.</p><ol><li>Последовательно — элементы одной цепочкой, без разветвлений. Ток один: I = I1 = I2 = I3.</li><li>Напряжения складываются: U = U1 + U2 + U3. Сопротивления складываются: R = R1 + R2 + R3.</li><li>Напряжение делится пропорционально сопротивлениям: на большем R — большее U. Обрыв любого элемента — тока нет во всей цепи.</li><li>Окисленная клемма — лишний резистор последовательно со стартером: 0,02 Ом при 150 А «съедают» 3 В, стартер крутит вяло, клемма греется (450 Вт).</li><li>Как проверить: вольтметр прямо на клемме и проводе под нагрузкой — на хорошем контакте падение меньше 0,1–0,2 В.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Т5 · БИЛЕТ 8</span><h3>Параллельное соединение</h3><p class="q">Параллельное соединение резисторов: токи, напряжение, общее сопротивление. Почему потребители автомобиля включены параллельно.</p><ol><li>Параллельно — элементы подключены к одним и тем же двум точкам. Напряжение одно: U = U1 = U2 = U3.</li><li>Токи складываются: I = I1 + I2 + I3.</li><li>1 / R = 1 / R1 + 1 / R2 + 1 / R3; для двух: R = R1·R2 / (R1 + R2). Общее сопротивление меньше самого маленького.</li><li>Все потребители автомобиля включены параллельно к бортсети: у каждого свои 12 В, перегоревшая лампа не гасит остальные, каждый включается своим выключателем.</li><li>Чем больше потребителей включено, тем больше общий ток через АКБ, генератор и главный предохранитель.</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>Резисторы 2, 3 и 5 Ом включены последовательно. Общее сопротивление?</summary><p>2 + 3 + 5 = 10 Ом.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>Резисторы 6 и 3 Ом включены параллельно. Общее сопротивление?</summary><p>6 · 3 / (6 + 3) = 2 Ом.</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>Три ветки: 2 А, 3 А и 5 А. Общий ток?</summary><p>10 А — токи складываются.</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>Почему стоп-сигналы включены параллельно?</summary><p>Обрыв одной лампы не гасит другую, у каждой полные 12 В.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>Окисленная клемма 0,02 Ом, ток стартера 150 А. Сколько вольт теряется на клемме?</summary><p>ΔU = 150 · 0,02 = 3 В.</p></details>
+
+<details class="qa"><summary><span class="qn">6</span>Обогрев стекла 150 Вт и вентилятор 80 Вт на одном предохранителе. Какой номинал?</summary><p>I = 230 / 12 ≈ 19,2 А, 1,25 · 19,2 = 24 А → 25 А.</p></details>
+<h2 id="lab">Попробуйте в лаборатории</h2><p>Откройте на телефоне или компьютере — ничего устанавливать не нужно.</p><div class="labs"><a href="https://mexstura-sudo.github.io/lab-electro/bortset/#mixed"><span>Лаборатория</span>Смешанная цепь и отопитель</a><a href="https://mexstura-sudo.github.io/lab-electro/bortset/#net"><span>Лаборатория</span>Бортовая сеть — включайте потребители по одному</a><a href="https://mexstura-sudo.github.io/lab-electro/bortset/#quiz"><span>Лаборатория</span>Проверь себя — онлайн-тест (вопросы 7–12)</a></div>
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>2 + 3 + 5 = 10 Ом.</li><li>6 · 3 / (6 + 3) = 2 Ом.</li><li>10 А — токи складываются.</li><li>Обрыв одной лампы не гасит другую, у каждой полные 12 В.</li><li>ΔU = 150 · 0,02 = 3 В.</li><li>I = 230 / 12 ≈ 19,2 А, 1,25 · 19,2 = 24 А → 25 А.</li></ol></section>
+</article>
+<nav class="pager"><a href="tora12a.html">← Тема 1.2. Ток, сопротивление, закон Ома</a><a href="toralr1.html">ЛР № 1. Опытное подтверждение закона Ома →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

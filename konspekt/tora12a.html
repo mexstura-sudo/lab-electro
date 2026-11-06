@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 2. Тема 1.2. Ток, сопротивление, закон Ома и схема автомобиля — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+pre{background:#1B1A17;color:#F2EEE3;padding:14px 16px;overflow:auto;font-size:15px;line-height:1.4;border:3px solid var(--ink)}
+pre code{font-family:'Courier New',monospace}
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 2 · тема 1.2</p>
+<header class="hero">
+<div class="hand">Пара 2</div>
+<h1>Тема 1.2. Ток, сопротивление, закон Ома и схема автомобиля</h1>
+<p class="lead">Почему тускнеют фары при пуске, почему лампа перегорает в момент включения и как читать электросхему машины.</p>
+<div class="meta"><span>Тема 1.2</span><span>Чтение: 30–40 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>из чего состоит цепь фары</li><li>что такое ток, напряжение и ЭДС</li><li>как устроен аккумулятор</li><li>как включают амперметр и вольтметр</li><li>от чего зависит сопротивление провода и нити лампы</li><li>как считать по закону Ома для участка и полной цепи</li><li>почему при пуске проседает напряжение</li><li>что значат номера клемм 30, 15, 31, 50 и 85–87</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Цепь, ток и напряжение</a><a href="#s2">2. Сопротивление и закон Ома</a><a href="#s3">3. Электрическая схема автомобиля</a><a href="#s4">4. Домашнее задание</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a><a href="#lab">Попробуйте в лаборатории</a></nav>
+<article>
+<h2 id="s1">1. Цепь, ток и напряжение</h2>
+<figure><img src="img/t_circ.png" alt="Цепь фары: АКБ, предохранитель, выключатель, фара и «масса» — ток идёт по замкнутому кругу"><figcaption>Цепь фары: АКБ, предохранитель, выключатель, фара и «масса» — ток идёт по замкнутому кругу</figcaption></figure>
+<p>Ток идёт только по <strong>замкнутой цепи</strong>. В цепи фары: аккумулятор — источник, предохранитель — защита, выключатель — управление, фара — потребитель, «масса» возвращает ток к аккумулятору. Разорвали цепь в любом месте — фара погасла.</p>
+<figure><img src="img/t12_c_water.png" alt="Ток — как поток воды, напряжение — как давление, сопротивление — узкое место трубы"><figcaption>Ток — как поток воды, напряжение — как давление, сопротивление — узкое место трубы</figcaption></figure>
+<ul>
+<li><strong>Ток I</strong> — сколько заряда проходит за секунду. Единица — ампер [А]. Габарит ≈ 0,4 А, фара ≈ 4,6 А, стартер 150–250 А.</li>
+<li><strong>Напряжение U</strong> — то, что толкает заряды по цепи. Единица — вольт [В]. Как давление воды в трубе.</li>
+<li><strong>Сопротивление R</strong> — насколько участок мешает току. Единица — ом [Ом].</li>
+</ul>
+<h3>Аккумулятор — источник ЭДС</h3>
+<figure><img src="img/t_akb.png" alt="Аккумулятор: шесть банок по 2,1 В последовательно — 12,6 В; 60 А·ч — ёмкость, 540 А — пусковой ток"><figcaption>Аккумулятор: шесть банок по 2,1 В последовательно — 12,6 В; 60 А·ч — ёмкость, 540 А — пусковой ток</figcaption></figure>
+<p><strong>ЭДС E</strong> — напряжение источника без нагрузки, в вольтах. В аккумуляторе шесть банок по 2,1 В соединены последовательно: 6 · 2,1 = <strong>12,6 В</strong>. На корпусе пишут ещё <strong>ёмкость</strong> (60 А·ч — сколько заряда отдаст) и <strong>пусковой ток</strong> (540 А — сколько выдержит при пуске).</p>
+<h3>Как мерить</h3>
+<figure><img src="img/t12_c_meters.png" alt="Амперметр — в разрыв цепи, вольтметр — параллельно к двум точкам"><figcaption>Амперметр — в разрыв цепи, вольтметр — параллельно к двум точкам</figcaption></figure>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p><strong>Амперметр</strong> — в разрыв цепи (последовательно), ток идёт через него. <strong>Вольтметр</strong> — параллельно, к двум точкам.</p>
+</div>
+<p>Мультиметр в режиме А щупами на клеммы аккумулятора — короткое замыкание. Большие токи (стартер) меряют <strong>токовыми клещами</strong> — без разрыва провода.</p>
+<h2 id="s2">2. Сопротивление и закон Ома</h2>
+<h3>Провод</h3>
+<p>Длинный и тонкий провод мешает току сильнее:</p>
+<div class="box formula">
+<p>R = ρ · l / S</p>
+</div>
+<p>ρ — удельное сопротивление, у меди <strong>0,0175 Ом·мм²/м</strong>; l — длина, м; S — сечение, мм².</p>
+<div class="box example">
+<p>Провод фары: 4 м, 1 мм². R = 0,0175 · 4 / 1 = <strong>0,07 Ом</strong>. Провод стартера сечением 25 мм² — в 25 раз меньше сопротивление на метр. Поэтому он такой толстый.</p>
+</div>
+<h3>Температура</h3>
+<figure><img src="img/t_temp.png" alt="Нить фары холодная 0,2 Ом, горячая 2,6 Ом; датчик ОЖ: при нагреве сопротивление падает"><figcaption>Нить фары холодная 0,2 Ом, горячая 2,6 Ом; датчик ОЖ: при нагреве сопротивление падает</figcaption></figure>
+<p>У металлов сопротивление <strong>растёт</strong> при нагреве. Холодная нить фары 55 Вт — около 0,2 Ом, горячая — около 2,6 Ом, в 13 раз больше. В момент включения через холодную нить идёт бросок тока — поэтому лампы чаще всего перегорают при включении.</p>
+<p>У <strong>датчика температуры охлаждающей жидкости</strong> наоборот: это полупроводниковый терморезистор (NTC). При 20 °C — около 2500 Ом, при 90 °C — около 250 Ом. По этому сопротивлению ЭБУ узнаёт температуру двигателя.</p>
+<h3>Закон Ома для участка цепи</h3>
+<figure><img src="img/t12_c_ohm.png" alt="Треугольник закона Ома: U сверху, I и R снизу"><figcaption>Треугольник закона Ома: U сверху, I и R снизу</figcaption></figure>
+<div class="box formula">
+<p>I = U / R</p>
+</div>
+<p>Больше напряжение — больше ток. Больше сопротивление — меньше ток. Закройте пальцем в треугольнике то, что ищете, — останется формула: U = I · R, R = U / I.</p>
+<div class="box example">
+<ol>
+<li>Фара: U = 12 В, R = 2,6 Ом. I = 12 / 2,6 ≈ <strong>4,6 А</strong>.</li>
+<li>Обмотка реле 80 Ом, ток 0,15 А. U = 0,15 · 80 = <strong>12 В</strong>.</li>
+<li>Габарит: 12 В, 0,42 А. R = 12 / 0,42 ≈ <strong>29 Ом</strong>.</li>
+</ol>
+</div>
+<h3>Полная цепь: почему тускнеют фары при пуске</h3>
+<figure><img src="img/t12_c_emf.png" alt="Источник с внутренним сопротивлением r0 и нагрузка R: часть напряжения теряется внутри источника"><figcaption>Источник с внутренним сопротивлением r0 и нагрузка R: часть напряжения теряется внутри источника</figcaption></figure>
+<p>Внутри аккумулятора есть своё сопротивление <strong>r0</strong> — у исправной АКБ 0,005–0,02 Ом. Закон Ома для полной цепи:</p>
+<div class="box formula">
+<p>I = E / (R + r0),  U = E − I · r0</p>
+</div>
+<div class="box example">
+<p>Пуск: стартер берёт 200 А, r0 = 0,01 Ом. Внутри аккумулятора теряется 200 · 0,01 = 2 В, на клеммах остаётся 12,6 − 2 = <strong>10,6 В</strong> — фары тускнеют. У старой или разряженной батареи r0 больше: напряжение падает ниже 9,6 В, стартер не крутит, ЭБУ перезагружается.</p>
+</div>
+<h2 id="s3">3. Электрическая схема автомобиля</h2>
+<figure><img src="img/t_sym.png" alt="Условные обозначения: АКБ, предохранитель, лампа, выключатель, реле, электродвигатель, «масса», разъём"><figcaption>Условные обозначения: АКБ, предохранитель, лампа, выключатель, реле, электродвигатель, «масса», разъём</figcaption></figure>
+<p>Схему рисуют условными знаками: АКБ — длинная и короткая черта; предохранитель — прямоугольник с линией; лампа — круг с крестом; реле — катушка и контакт; «масса» — три черты. Любая цепь читается одинаково: <strong>источник → защита → управление → потребитель → «масса»</strong>.</p>
+<h3>Номера клемм</h3>
+<figure><img src="img/t_terms.png" alt="Замок зажигания: 30 — всегда, 15 — после зажигания, 50 — стартер; реле: 85–86 катушка, 30 → 87 контакт"><figcaption>Замок зажигания: 30 — всегда, 15 — после зажигания, 50 — стартер; реле: 85–86 катушка, 30 → 87 контакт</figcaption></figure>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Клемма</th>
+<th>Что это</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>30</td>
+<td>«Плюс» АКБ — есть всегда</td>
+</tr>
+<tr>
+<td>15</td>
+<td>«Плюс» после замка зажигания</td>
+</tr>
+<tr>
+<td>31</td>
+<td>«Масса»</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Управление стартером</td>
+</tr>
+<tr>
+<td>85–86</td>
+<td>Обмотка реле</td>
+</tr>
+<tr>
+<td>30 → 87</td>
+<td>Силовой контакт реле</td>
+</tr>
+</tbody>
+</table></div>
+<p>Зачем реле? Через кнопку идёт малый ток катушки, а большой ток фар — коротким толстым проводом через контакт реле. Кнопка не горит, потерь меньше.</p>
+<h3>Читаем схему фар</h3>
+<figure><img src="img/t_scheme.png" alt="Схема фар: шина 30, предохранитель F5 15 А, провод Кч, выключатель S1, провод Ж, лампы EL1 и EL2, «масса»"><figcaption>Схема фар: шина 30, предохранитель F5 15 А, провод Кч, выключатель S1, провод Ж, лампы EL1 и EL2, «масса»</figcaption></figure>
+<p>От шины 30 через предохранитель F5 15 А по красно-чёрному проводу (Кч) — на выключатель S1, дальше по жёлтому (Ж) — к лампам EL1 и EL2, они — на «массу». Цвет провода пишут буквами: К — красный, Ж — жёлтый, Ч — чёрный. Если EL1 горит, а EL2 нет — виновата сама EL2, её провод или её масса: общая часть цепи исправна.</p>
+<h2 id="s4">4. Домашнее задание</h2>
+<ol>
+<li>Перепишите в тетрадь Т1, Т2, Т3, Т10.</li>
+<li>Три задачи своего варианта (номер в журнале): лампа (I, R), аккумулятор при пуске (U, Pпот), провод (R, ΔU).</li>
+<li>Найдите в руководстве по ремонту любой машины схему фар и выпишите номер предохранителя, цвета проводов и клеммы.</li>
+</ol>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>ЭДС</strong> — напряжение источника без нагрузки, В.</li>
+<li><strong>r0</strong> — внутреннее сопротивление источника; у АКБ — сотые доли ома.</li>
+<li><strong>ρ</strong> — удельное сопротивление: медь 0,0175 Ом·мм²/м.</li>
+<li><strong>NTC</strong> — терморезистор, сопротивление которого при нагреве падает (датчик ОЖ).</li>
+<li><strong>Клемма 15</strong> — «плюс» после замка зажигания.</li>
+<li><strong>Клемма 50</strong> — управление стартером.</li>
+<li><strong>Реле</strong> — выключатель, которым управляет малый ток катушки (85–86), а большой ток идёт через контакт 30 → 87.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · Т1 · БИЛЕТ 4</span><h3>Ток, напряжение, ЭДС</h3><p class="q">Электрический ток, сила тока, напряжение, ЭДС: определения, обозначения, единицы. Аккумуляторная батарея как источник ЭДС.</p><ol><li>Электрический ток — направленное движение заряженных частиц, в проводах — электронов. Ток идёт только по замкнутой цепи.</li><li>Сила тока I = q / t — заряд за 1 секунду, ампер [А]. Габарит ≈ 0,4 А, фара ≈ 4,6 А, стартер 150–250 А.</li><li>Напряжение U — то, что толкает заряды по цепи, вольт [В]. Как давление воды в трубе.</li><li>ЭДС E — напряжение источника без нагрузки, вольт [В]. АКБ 12 В — шесть банок по ≈ 2,1 В: E ≈ 12,6 В у заряженной.</li><li>Как проверить: вольтметр — параллельно (щупы на клеммы), амперметр — в разрыв цепи; токовые клещи меряют ток без разрыва.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Т2 · БИЛЕТ 5</span><h3>Сопротивление и температура</h3><p class="q">Электрическое сопротивление и проводимость: от чего зависят, зависимость сопротивления от температуры. Нить лампы и датчик температуры охлаждающей жидкости.</p><ol><li>Сопротивление R — насколько проводник мешает току, ом [Ом]. Проводимость G = 1 / R, сименс [См].</li><li>R = ρ·l / S: больше у длинного и тонкого провода. Медь ρ = 0,0175 Ом·мм²/м: 4 м провода 1 мм² — 0,07 Ом.</li><li>У металлов при нагреве R растёт: горячая нить фары 55 Вт ≈ 2,6 Ом, холодная ≈ 0,2 Ом — поэтому при включении бросок тока и лампы перегорают в момент включения.</li><li>Датчик температуры охлаждающей жидкости — терморезистор NTC: при нагреве R падает (≈ 2,5 кОм при 20 °C, ≈ 250 Ом при 90 °C). ЭБУ узнаёт температуру по сопротивлению.</li><li>Как проверить: омметром на отключённой детали и сравнить с таблицей из руководства по ремонту.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Т3 · БИЛЕТ 6</span><h3>Закон Ома</h3><p class="q">Закон Ома для участка и для полной цепи. Внутреннее сопротивление АКБ: почему напряжение падает при пуске стартера.</p><ol><li>Для участка цепи: I = U / R. Треугольник: U сверху, I и R снизу — закрыть то, что ищем.</li><li>Для полной цепи: I = E / (R + r0), на клеммах источника U = E − I·r0.</li><li>У исправной АКБ r0 ≈ 0,005–0,02 Ом. Пуск: 200 А · 0,01 Ом = 2 В теряется внутри, на клеммах 10,6 В — фары тускнеют.</li><li>У разряженной или старой АКБ r0 большое: при пуске напряжение падает ниже 9 В, стартер не крутит, ЭБУ перезагружается.</li><li>Как проверить: вольтметр на клеммах при прокрутке стартером или нагрузочная вилка — исправная заряженная АКБ держит не меньше 9,6–10 В.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · Т10 · БИЛЕТ 13</span><h3>Электрическая схема автомобиля</h3><p class="q">Электрическая схема автомобиля: элементы цепи и условные обозначения, номера клемм (30, 15, 31, 50, 85–87), цвета проводов.</p><ol><li>Любая цепь автомобиля: источник (АКБ, генератор) → защита (предохранитель) → управление (выключатель, реле) → потребитель → «масса».</li><li>Обозначения на схеме: АКБ, предохранитель, лампа, выключатель, реле, электродвигатель, «масса» — условные знаки по ЕСКД.</li><li>Номера клемм: 30 — «плюс» АКБ напрямую; 15 — «плюс» после замка зажигания; 31 — «масса»; 50 — управление стартером; 85 и 86 — обмотка реле; 30 → 87 — силовой контакт реле.</li><li>Цвета проводов на схеме пишут буквами: К — красный, Ч — чёрный, Кч — красный с чёрной полосой. «Плюс» 30 часто красный, «масса» — чёрная или коричневая.</li><li>Как читать схему: от клеммы 30 через предохранитель и выключатель (реле) к потребителю и на «массу» 31.</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>В чём измеряют ЭДС аккумулятора?</summary><p>В вольтах [В].</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>Что значит клемма 15?</summary><p>«Плюс» после замка зажигания: появляется, когда зажигание включено.</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>Медный провод 2 м, сечение 1 мм². Какое сопротивление?</summary><p>R = 0,0175 · 2 / 1 = 0,035 Ом.</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>E = 12,6 В, r0 = 0,02 Ом, ток стартера 150 А. Какое напряжение на клеммах?</summary><p>U = 12,6 − 150 · 0,02 = 12,6 − 3 = 9,6 В — на пределе нормы.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>Почему лампы чаще перегорают при включении?</summary><p>Холодная нить имеет сопротивление в 10–13 раз меньше горячей — в момент включения бросок тока.</p></details>
+
+<details class="qa"><summary><span class="qn">6</span>Как включить амперметр, чтобы измерить ток фары?</summary><p>В разрыв цепи, последовательно с фарой.</p></details>
+<h2 id="lab">Попробуйте в лаборатории</h2><p>Откройте на телефоне или компьютере — ничего устанавливать не нужно.</p><div class="labs"><a href="https://mexstura-sudo.github.io/lab-electro/bortset/#ohm"><span>Лаборатория</span>Закон Ома — холодная и горячая лампа</a><a href="https://mexstura-sudo.github.io/lab-electro/bortset/#net"><span>Лаборатория</span>Бортовая сеть — пуск двигателя</a></div>
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>В вольтах [В].</li><li>«Плюс» после замка зажигания: появляется, когда зажигание включено.</li><li>R = 0,0175 · 2 / 1 = 0,035 Ом.</li><li>U = 12,6 − 150 · 0,02 = 12,6 − 3 = 9,6 В — на пределе нормы.</li><li>Холодная нить имеет сопротивление в 10–13 раз меньше горячей — в момент включения бросок тока.</li><li>В разрыв цепи, последовательно с фарой.</li></ol></section>
+</article>
+<nav class="pager"><a href="tora11.html">← Тема 1.1. Электрика автомобиля и ТБ</a><a href="tora12b.html">Тема 1.2. Последовательное и параллельное соединение →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

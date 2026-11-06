@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 5. ЛР № 2. Смешанное соединение резисторов — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+pre{background:#1B1A17;color:#F2EEE3;padding:14px 16px;overflow:auto;font-size:15px;line-height:1.4;border:3px solid var(--ink)}
+pre code{font-family:'Courier New',monospace}
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 5 · тема 1.2 (лабораторная работа)</p>
+<header class="hero">
+<div class="hand">Пара 5</div>
+<h1>ЛР № 2. Смешанное соединение резисторов</h1>
+<p class="lead">Один резистор последовательно, два — параллельно. Меряем все токи и напряжения и проверяем оба закона Кирхгофа.</p>
+<div class="meta"><span>Тема 1.2 (лабораторная работа)</span><span>Чтение: 20–25 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>как рассчитать смешанную цепь до опыта</li><li>как измерить шесть величин одним мультиметром</li><li>как проверить первый и второй законы Кирхгофа</li><li>где в машине смешанные цепи</li><li>что записать в выводы</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Цель и вариант</a><a href="#s2">2. Расчёт до опыта</a><a href="#s3">3. Измерения</a><a href="#s4">4. Законы Кирхгофа</a><a href="#s5">5. Маршруты А и В</a><a href="#s6">6. Выводы и защита</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a><a href="#lab">Попробуйте в лаборатории</a></nav>
+<article>
+<h2 id="s1">1. Цель и вариант</h2>
+<p><strong>Цель:</strong> рассчитать смешанную цепь R1 + (R2 ∥ R3), измерить все токи и напряжения, проверить законы Кирхгофа.</p>
+<p>Вариант — номер в журнале: R1, R2, R3 при напряжении 12 В. Маршруты: <strong>А</strong> — Proteus, <strong>Б</strong> — вживую, <strong>В</strong> — браузер, вкладка «Смешанная».</p>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p>Каждый перенос амперметра — при <strong>выключенном</strong> блоке питания. Ток до 150 мА: предел 200 мА, щуп в гнезде mA. Резисторы малых номиналов при 12 В греются — не трогать под напряжением.</p>
+</div>
+<h2 id="s2">2. Расчёт до опыта</h2>
+<figure><img src="img/l2_scheme.png" alt="Схема: амперметр A и R1 последовательно, дальше R2 и R3 параллельно с амперметрами A2 и A3; вольтметры V1 и V23"><figcaption>Схема: амперметр A и R1 последовательно, дальше R2 и R3 параллельно с амперметрами A2 и A3; вольтметры V1 и V23</figcaption></figure>
+<p>Сначала сворачиваем цепь, потом разворачиваем:</p>
+<ol>
+<li>R23 = R2 · R3 / (R2 + R3)</li>
+<li>Rэкв = R1 + R23</li>
+<li>I = U / Rэкв</li>
+<li>U1 = I · R1, U23 = I · R23</li>
+<li>I2 = U23 / R2, I3 = U23 / R3</li>
+</ol>
+<div class="box example">
+<p><strong>Образец, вариант 4:</strong> R1 = 100, R2 = 330, R3 = 68 Ом, U = 12 В.</p>
+<p>R23 = 330 · 68 / 398 = <strong>56,4 Ом</strong>; Rэкв = 100 + 56,4 = <strong>156,4 Ом</strong>; I = 12 / 156,4 = <strong>76,7 мА</strong>.</p>
+<p>U1 = 0,0767 · 100 = <strong>7,67 В</strong>; U23 = 0,0767 · 56,4 = <strong>4,33 В</strong>.</p>
+<p>I2 = 4,33 / 330 = <strong>13,1 мА</strong>; I3 = 4,33 / 68 = <strong>63,6 мА</strong>.</p>
+</div>
+<h2 id="s3">3. Измерения</h2>
+<p>Соберите сначала токовую цепь: блок → амперметр → R1 → узел → R2 и R3 → узел → блок. Потом вольтметры: V1 на R1, V23 на параллельный участок.</p>
+<p>Запишите шесть величин: Uист, U1, U23 (вольтметром) и I, I2, I3 (амперметром в разрыве каждой ветви). Rэкв эксп = Uист / I — сравните с расчётным.</p>
+<h2 id="s4">4. Законы Кирхгофа</h2>
+<figure><img src="img/p10_s_node.png" alt="Узел: втекающий ток делится на токи ветвей"><figcaption>Узел: втекающий ток делится на токи ветвей</figcaption></figure>
+<p><strong>Первый закон:</strong> сколько тока втекло в узел, столько и вытекло: I = I2 + I3. Больший ток — в ветви с меньшим сопротивлением.</p>
+<figure><img src="img/p10_s_loop.png" alt="Контур: напряжения на участках вместе дают напряжение источника"><figcaption>Контур: напряжения на участках вместе дают напряжение источника</figcaption></figure>
+<p><strong>Второй закон:</strong> в замкнутом контуре сумма падений напряжения равна ЭДС: U1 + U23 = Uист.</p>
+<p>Если I2 + I3 не совпало с I на 5–10 % — амперметр немного меняет цепь (у мультиметра на пределе 200 мА сопротивление шунта — единицы ом). Запишите это в выводы как причину расхождения.</p>
+<h3>В машине</h3>
+<p>Почти любая цепь в машине — смешанная: две фары параллельно, а последовательно с ними провод и контакты выключателя. Отопитель: резисторный блок последовательно с мотором, а переключатель закорачивает его части. В лаборатории под таблицей есть блок «Отопитель» — посмотрите токи на трёх скоростях.</p>
+<h2 id="s5">5. Маршруты А и В</h2>
+<p><strong>Proteus:</strong> RES ×3, BATTERY (Voltage = 12), DC AMMETER ×3 (Milliamps), DC VOLTMETER ×2. A — до R1, A2 и A3 — в ветвях. V1 — на R1, V23 — на параллельный участок. Запустить ▶, записать все шесть показаний.</p>
+<p><strong>Браузер:</strong> впишите номер варианта, «Показать приборы» — шесть показаний в таблицу. Рядом — проверка: Rэкв теор, Rэкв эксп, I2 + I3, U1 + U23.</p>
+<h2 id="s6">6. Выводы и защита</h2>
+<p><strong>Шаблон выводов:</strong></p>
+<ol>
+<li>Rэкв по расчёту … Ом, по опыту … Ом — расхождение … %.</li>
+<li>Первый закон Кирхгофа выполняется: I = … мА, I2 + I3 = … мА.</li>
+<li>Второй закон Кирхгофа выполняется: Uист = … В, U1 + U23 = … В.</li>
+<li>Больший ток — в ветви с меньшим сопротивлением (R… = … Ом).</li>
+</ol>
+<p><strong>В отчёт:</strong> схема, расчёт, таблица измерений, проверки законов Кирхгофа, выводы. К ЛР № 3 рассчитайте для своего R мощность P = U² / R при 2, 4 … 12 В.</p>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>Узел</strong> — точка, где соединяются три провода и больше.</li>
+<li><strong>Контур</strong> — замкнутый путь по цепи.</li>
+<li><strong>Rэкв</strong> — эквивалентное (общее) сопротивление цепи.</li>
+<li><strong>Смешанное соединение</strong> — часть элементов последовательно, часть параллельно.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · Т6 · БИЛЕТ 9</span><h3>Смешанное соединение</h3><p class="q">Смешанное соединение резисторов: порядок расчёта. Резисторный блок вентилятора отопителя.</p><ol><li>Смешанное соединение — часть элементов включена последовательно, часть параллельно.</li><li>Порядок: найти параллельные группы → заменить эквивалентом → сложить последовательные → Rэкв → общий ток I = U / Rэкв → напряжения участков → токи ветвей.</li><li>Пример: R1 + (R2 ∥ R3) = R1 + R2·R3 / (R2 + R3).</li><li>В машине: две фары параллельно, а последовательно с ними провод и контакты выключателя. Резисторный блок отопителя: на 1-й скорости последовательно с мотором два резистора, на 2-й — один, на 3-й — без резисторов.</li><li>Проверка расчёта: сумма токов ветвей равна общему току; сумма напряжений на участках равна напряжению источника.</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>Сформулируйте первый закон Кирхгофа.</summary><p>Сумма токов, втекающих в узел, равна сумме вытекающих.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>Сформулируйте второй закон Кирхгофа.</summary><p>В замкнутом контуре сумма ЭДС равна сумме падений напряжения: ΣE = ΣI·R.</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>Как рассчитать Rэкв цепи R1 + (R2 ∥ R3)?</summary><p>Rэкв = R1 + R2 · R3 / (R2 + R3).</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>В какой ветви ток больше — с 330 или с 68 Ом?</summary><p>С 68 Ом: напряжение на ветвях одно, ток больше там, где сопротивление меньше.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>Где в машине смешанное соединение?</summary><p>Отопитель (резисторы и мотор), фары с проводом и контактами выключателя.</p></details>
+<h2 id="lab">Попробуйте в лаборатории</h2><p>Откройте на телефоне или компьютере — ничего устанавливать не нужно.</p><div class="labs"><a href="https://mexstura-sudo.github.io/lab-electro/bortset/?v=N#mixed"><span>Лаборатория</span>Смешанная цепь — ваш вариант (впишите номер вместо N)</a></div>
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>Сумма токов, втекающих в узел, равна сумме вытекающих.</li><li>В замкнутом контуре сумма ЭДС равна сумме падений напряжения: ΣE = ΣI·R.</li><li>Rэкв = R1 + R2 · R3 / (R2 + R3).</li><li>С 68 Ом: напряжение на ветвях одно, ток больше там, где сопротивление меньше.</li><li>Отопитель (резисторы и мотор), фары с проводом и контактами выключателя.</li></ol></section>
+</article>
+<nav class="pager"><a href="toralr1.html">← ЛР № 1. Опытное подтверждение закона Ома</a><a href="toralr3.html">ЛР № 3. Мощность и работа тока →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

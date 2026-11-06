@@ -1,6 +1,6 @@
 # Интерактивы курса «Электротехника и электроника»
 
-Сидоров А.Ю., ИТМ им. Н.П. Трапезникова. Состояние на 3 ноября 2026 г.
+Сидоров А.Ю., ИТМ им. Н.П. Трапезникова. Состояние на 6 ноября 2026 г.
 
 Сайт со всеми лабораториями: **https://mexstura-sudo.github.io/lab-electro/**
 (работает после включения GitHub Pages: Settings → Pages → Branch `main`, папка `/ (root)`).
@@ -20,8 +20,9 @@
 | 9 | Транзистор и инвертор | 2.3, пара 23 | [Транзистор-ключ](https://mexstura-sudo.github.io/lab-electro/inverter/#key) · [Усилитель](https://mexstura-sudo.github.io/lab-electro/inverter/#amp) · [Сварочный инвертор](https://mexstura-sudo.github.io/lab-electro/inverter/#inv) · [Проверь себя (тест «Электроника»)](https://mexstura-sudo.github.io/lab-electro/inverter/#quiz) |
 | 10 | Реле и автоматика (ПР №9) | 2.4, пара 24 | [Реле: срабатывание и отпускание](https://mexstura-sudo.github.io/lab-electro/relay/#relay) · [Терморегулятор](https://mexstura-sudo.github.io/lab-electro/relay/#thermo) · [Ардуино и реле](https://mexstura-sudo.github.io/lab-electro/relay/#ard) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/relay/#quiz) |
 | 11 | Цепи постоянного тока (ПР №1–3) | 1.2, ПР №1–3 | [Закон Ома](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#ohm) · [Соединения (ПР №3)](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#series) · [Смешанная цепь (ПР №1)](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#mixed) · [Кабель и потери (ПР №2)](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#cable) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#quiz) |
+| 12 | Бортовая сеть автомобиля (группа ТОРА: ЛР №1–4, ПЗ №1) | ТОРА: 1.1–1.2, пары 1–8 | [Бортсеть](https://mexstura-sudo.github.io/lab-electro/bortset/#net) · [Закон Ома (ЛР 1)](https://mexstura-sudo.github.io/lab-electro/bortset/#ohm) · [Смешанная (ЛР 2)](https://mexstura-sudo.github.io/lab-electro/bortset/#mixed) · [Мощность (ЛР 3)](https://mexstura-sudo.github.io/lab-electro/bortset/#power) · [КПД (ЛР 4)](https://mexstura-sudo.github.io/lab-electro/bortset/#eta) · [Плохая масса (ПЗ 1)](https://mexstura-sudo.github.io/lab-electro/bortset/#ground) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/bortset/#quiz) |
 
-**Варианты.** В лабораториях 3, 4, 5, 6, 7, 10 и 11 (вкладка «Шильдик») есть 30 вариантов (номер в журнале). Ссылку сразу на вариант можно дать так: `…/rl-circuit/?v=12#stand`, `…/measurements/?v=12#verify`, `…/three-phase/?v=12#star`, `…/transformer/?v=12#modes`, `…/machines/?v=12#plate`, `…/relay/?v=12#relay`, `…/dc-circuits/?v=12#series` (а также `#mixed`, `#cable`).
+**Варианты.** В лабораториях 3, 4, 5, 6, 7, 10 и 11 (вкладка «Шильдик») есть 30 вариантов (номер в журнале). Ссылку сразу на вариант можно дать так: `…/rl-circuit/?v=12#stand`, `…/measurements/?v=12#verify`, `…/three-phase/?v=12#star`, `…/transformer/?v=12#modes`, `…/machines/?v=12#plate`, `…/relay/?v=12#relay`, `…/dc-circuits/?v=12#series` (а также `#mixed`, `#cable`), `…/bortset/?v=12#ohm` (а также `#mixed`, `#power`, `#eta`, `#ground`).
 
 ### Что умеет каждая лаборатория
 
@@ -35,6 +36,8 @@
 8. **Электробезопасность.** Ток через человека: напряжение 12–380 В, путь (рука — рука, рука — ноги, нога — нога), кожа и обувь → ток в мА и зона опасности; пробой на корпус: без защиты, заземление (ползунок Rз), зануление, PE + УЗО, касание голой фазы — напряжение на корпусе, ток через человека, время отключения; подбор автомата (номинал, B/C/D) и кабеля для болгарки, полуавтомата и инверторов с проверкой броска при включении; тест из 12 вопросов.
 9. **Транзистор и инвертор.** Ключ на транзисторе с лампой 12 В: ток базы, ток лампы, напряжение и нагрев транзистора (закрыт, приоткрыт, открыт); усилитель на осциллографе: Uвх, K и срезание при выходе за питание; сварочный инвертор: блоки с осциллограммами, частота 50 Гц…100 кГц и вес сердечника, ширина импульсов и сварочный ток; тест из 12 вопросов.
 10. **Реле и автоматика.** Реле с катушкой, якорем и контактами: плавно меняем напряжение, ловим щелчок срабатывания и отпускания, след рисует петлю на графике (30 вариантов реле 5/12/24 В); печь для сушки электродов с порогом и «зазором» — без зазора реле дребезжит; Ардуино читает потенциометр-датчик и включает вентилятор через модуль реле, монитор порта и скетч с порогами варианта; тест из 12 вопросов.
+11. **Цепи постоянного тока.** Закон Ома и режимы цепи, соединения, смешанная цепь (ПР №1), кабель и потери (ПР №2), тест — по 30 вариантам.
+12. **Бортовая сеть автомобиля (ТОРА).** Бортсеть: состояние АКБ, генератор 14,2 В, пуск (провал напряжения у нового и старого АКБ), потребители и скорости вентилятора, розетка 12 В с предохранителем 15/25 А и «жучком», короткое замыкание и пожар; ЛР №1 — омметр, лампа с нелинейной ВАХ, проверка таблицы; ЛР №2 — смешанная цепь с проверкой законов Кирхгофа и блок «Отопитель»; ЛР №3 — мощность и работа тока с таймером 60 с; ЛР №4 — КПД, графики Pнагр(Rн) и η(Rн); ПЗ №1 — поиск плохой массы щупами A–D; тест из 12 вопросов.
 
 ## 2. Анимации внутри презентаций (идут сами, в режиме показа)
 
@@ -69,6 +72,19 @@
 ## 5. Тексты для студентов (самостоятельная работа дома)
 
 К каждой паре — страница простым языком: объяснение с рисунками, эталоны в тетрадь по билетам, словарик, «Проверь себя» с ответами по щелчку и ссылки на лабораторию. Кнопка «Печать / PDF» на странице сохраняет текст в PDF (ответы — в конце). Все тексты: https://mexstura-sudo.github.io/lab-electro/konspekt/
+
+**Группа ТОРА (автомеханики), пары 1–8:**
+
+- [Тема 1.1. Электрика автомобиля и техника безопасности](https://mexstura-sudo.github.io/lab-electro/konspekt/tora11.html)
+- [Тема 1.2. Ток, сопротивление, закон Ома и схема автомобиля](https://mexstura-sudo.github.io/lab-electro/konspekt/tora12a.html)
+- [Тема 1.2. Последовательное и параллельное соединение](https://mexstura-sudo.github.io/lab-electro/konspekt/tora12b.html)
+- [ЛР № 1. Опытное подтверждение закона Ома](https://mexstura-sudo.github.io/lab-electro/konspekt/toralr1.html)
+- [ЛР № 2. Смешанное соединение резисторов](https://mexstura-sudo.github.io/lab-electro/konspekt/toralr2.html)
+- [ЛР № 3. Мощность и работа электрического тока](https://mexstura-sudo.github.io/lab-electro/konspekt/toralr3.html)
+- [ЛР № 4. КПД цепи постоянного тока](https://mexstura-sudo.github.io/lab-electro/konspekt/toralr4.html)
+- [ПЗ № 1. Расчёт цепей постоянного тока](https://mexstura-sudo.github.io/lab-electro/konspekt/torapz1.html)
+
+**Группа СП:**
 
 - [Тема 1.2. Электрические цепи постоянного тока](https://mexstura-sudo.github.io/lab-electro/konspekt/t12.html)
 - [Тема 1.2. ПР № 3. Последовательное и параллельное соединение](https://mexstura-sudo.github.io/lab-electro/konspekt/pr3.html)

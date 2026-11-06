@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 1. Тема 1.1. Электрика автомобиля и техника безопасности — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+pre{background:#1B1A17;color:#F2EEE3;padding:14px 16px;overflow:auto;font-size:15px;line-height:1.4;border:3px solid var(--ink)}
+pre code{font-family:'Courier New',monospace}
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 1 · тема 1.1</p>
+<header class="hero">
+<div class="hand">Пара 1</div>
+<h1>Тема 1.1. Электрика автомобиля и техника безопасности</h1>
+<p class="lead">Откуда в машине ток, куда он идёт и как не получить удар, ожог или пожар в автосервисе.</p>
+<div class="meta"><span>Тема 1.1</span><span>Чтение: 25–30 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>из чего состоит бортовая сеть автомобиля</li><li>что такое «масса» и почему схема однопроводная</li><li>три напряжения, которые автомеханик знает наизусть</li><li>какой ток опасен для человека и где в автосервисе опасное напряжение</li><li>что такое заземление и зануление</li><li>зачем нужен предохранитель и почему нельзя ставить «жучок»</li><li>в каком порядке снимают клеммы аккумулятора</li><li>что делать, если человека ударило током</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Электрика автомобиля</a><a href="#s2">2. Ток и человек</a><a href="#s3">3. Короткое замыкание и первая помощь</a><a href="#s4">4. Тетрадь по билетам</a><a href="#s5">5. Домашнее задание</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a><a href="#lab">Попробуйте в лаборатории</a></nav>
+<article>
+<h2 id="s1">1. Электрика автомобиля</h2>
+<figure><img src="img/k_cover.png" alt="Автомобиль: аккумулятор, генератор, блок управления и фары соединены проводами"><figcaption>Автомобиль: аккумулятор, генератор, блок управления и фары соединены проводами</figcaption></figure>
+<p>В современном автомобиле электрика делает почти всё: крутит стартер, поджигает смесь в цилиндрах, включает фары, управляет двигателем через блок управления (ЭБУ). <strong>Электротехника</strong> — наука о получении, передаче и использовании электрической энергии. Автомеханику она нужна каждый день.</p>
+<p><strong>Бортовая сеть</strong> — вся электрика машины. В ней есть:</p>
+<ul>
+<li><strong>источники</strong> — аккумуляторная батарея (АКБ) и генератор;</li>
+<li><strong>защита</strong> — предохранители;</li>
+<li><strong>управление</strong> — выключатели и реле;</li>
+<li><strong>потребители</strong> — стартер, зажигание, фары, обогревы, вентиляторы, ЭБУ, магнитола.</li>
+</ul>
+<figure><img src="img/k_net.png" alt="Бортсеть: АКБ и генератор, от «плюса» через предохранители — к фарам, обогреву, вентилятору, ЭБУ и стартеру"><figcaption>Бортсеть: АКБ и генератор, от «плюса» через предохранители — к фарам, обогреву, вентилятору, ЭБУ и стартеру</figcaption></figure>
+<p>Аккумулятор работает, когда двигатель заглушен, и при пуске. Генератор — когда двигатель работает: он питает всё и заодно заряжает аккумулятор. Все потребители включены <strong>параллельно</strong>: каждый получает свои 12 вольт и включается отдельно.</p>
+<h3>12 вольт и 24 вольта</h3>
+<figure><img src="img/k_volt.png" alt="Легковой автомобиль — одна АКБ 12 В; грузовик и автобус — две АКБ последовательно, 24 В"><figcaption>Легковой автомобиль — одна АКБ 12 В; грузовик и автобус — две АКБ последовательно, 24 В</figcaption></figure>
+<p>У легковых машин бортсеть <strong>12 В</strong>, у грузовиков и автобусов — <strong>24 В</strong>: две батареи по 12 В соединены последовательно. При той же мощности ток меньше — провода тоньше.</p>
+<h3>«Масса»</h3>
+<figure><img src="img/k_mass.png" alt="Однопроводная схема: «плюс» идёт по проводу к лампе, назад ток возвращается по кузову"><figcaption>Однопроводная схема: «плюс» идёт по проводу к лампе, назад ток возвращается по кузову</figcaption></figure>
+<p>Если бы к каждой лампе тянули два провода, проводки было бы вдвое больше. Поэтому схема <strong>однопроводная</strong>: «плюс» идёт по проводу, а «минус» — по металлу кузова и двигателя. Это и называют <strong>«масса»</strong>. Минус аккумулятора толстым проводом прикручен к кузову и двигателю.</p>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p>Болт массы ржавеет и откручивается. Тогда лампа светит тускло, стартер крутит вяло, датчики врут. Искать такую неисправность будем на ПЗ № 1 — вольтметром.</p>
+</div>
+<h3>Три цифры на мультиметре</h3>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p><strong>12,6 В</strong> — заряженный аккумулятор, двигатель заглушен (12,2 В и меньше — пора заряжать).</p>
+<p><strong>14,2 В</strong> — работает генератор (норма 13,8–14,5 В).</p>
+<p><strong>9,6 В</strong> — меньше этого при пуске быть не должно: иначе аккумулятор разряжен или изношен.</p>
+</div>
+<p>Как мерить: режим V⎓, красный щуп — на «+», чёрный — на «−» аккумулятора.</p>
+<h2 id="s2">2. Ток и человек</h2>
+<figure><img src="img/k_body.png" alt="Путь тока через тело рука — рука; 1 мА ощутимый, 10–15 мА неотпускающий, 50–100 мА смертельный"><figcaption>Путь тока через тело рука — рука; 1 мА ощутимый, 10–15 мА неотпускающий, 50–100 мА смертельный</figcaption></figure>
+<p>Человека поражает <strong>ток, который идёт через тело</strong>, а не вольты на табличке. Действие тока: тепловое (ожоги), электролитическое (разложение крови), механическое (судороги мышц), биологическое (остановка дыхания и сердца).</p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Ток через тело</th>
+<th>Что происходит</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 мА</td>
+<td>Ощутимый: покалывание</td>
+</tr>
+<tr>
+<td>10–15 мА</td>
+<td>Неотпускающий: мышцы сводит, руку не разжать</td>
+</tr>
+<tr>
+<td>50–100 мА</td>
+<td>Фибрилляция: сердце перестаёт качать кровь</td>
+</tr>
+</tbody>
+</table></div>
+<p>Сухая кожа — десятки килоом, мокрая — около 1 кОм. В расчётах берут <strong>1 кОм</strong>. По закону Ома: 220 В / 1000 Ом = 0,22 А = <strong>220 мА</strong> — смертельно. А 12 вольт через сухую кожу — доли миллиампера, их почти не чувствуют.</p>
+<h3>Где опасно в автосервисе</h3>
+<figure><img src="img/k_danger.png" alt="Зажигание 20–40 кВ; гибриды и электромобили 200–800 В, оранжевые провода; сеть 220/380 В"><figcaption>Зажигание 20–40 кВ; гибриды и электромобили 200–800 В, оранжевые провода; сеть 220/380 В</figcaption></figure>
+<ol>
+<li><strong>Зажигание</strong> — катушка даёт 20–40 тысяч вольт. Удар резкий: рука дёргается, можно удариться о горячий двигатель или попасть в ремень. Не трогать провода и катушки на работающем двигателе.</li>
+<li><strong>Гибриды и электромобили</strong> — тяговая батарея 200–800 В постоянного тока. Это смертельно. Высоковольтные провода <strong>оранжевые</strong>, работать с ними может только обученный персонал после отключения сервисного разъёма.</li>
+<li><strong>Сеть 220/380 В</strong> — подъёмники, компрессоры, сварка, зарядные устройства.</li>
+</ol>
+<h3>Заземление и зануление</h3>
+<figure><img src="img/k_pe.png" alt="Заземление: корпус соединён с землёй. Зануление: корпус соединён с проводом PE, при пробое автомат отключает питание"><figcaption>Заземление: корпус соединён с землёй. Зануление: корпус соединён с проводом PE, при пробое автомат отключает питание</figcaption></figure>
+<p>Изоляция внутри компрессора может пробиться, и фаза окажется на корпусе. Чтобы человек не попал под напряжение, корпус соединяют проводом:</p>
+<ul>
+<li><strong>заземление</strong> — корпус соединён с землёй через заземлитель;</li>
+<li><strong>зануление</strong> — корпус соединён с защитным проводом <strong>PE</strong> (жёлто-зелёный). При пробое ток идёт по нему, становится большим, и автомат отключает питание за доли секунды.</li>
+</ul>
+<p>В розетке автосервиса три контакта: третий (металлические усики) — защитный. Удлинитель без него — опасен.</p>
+<h2 id="s3">3. Короткое замыкание и первая помощь</h2>
+<figure><img src="img/k_kz.png" alt="Ключ коснулся «плюса» АКБ и кузова: ток 12,6 / 0,01 ≈ 1260 А, ключ раскаляется"><figcaption>Ключ коснулся «плюса» АКБ и кузова: ток 12,6 / 0,01 ≈ 1260 А, ключ раскаляется</figcaption></figure>
+<p><strong>Короткое замыкание</strong> — «плюс» соединился с «массой» мимо нагрузки. Ток ограничивает только внутреннее сопротивление аккумулятора — сотые доли ома:</p>
+<div class="box formula">
+<p>I = 12,6 / 0,01 ≈ 1260 А</p>
+</div>
+<p>Ключ раскаляется за секунды, летят брызги металла, может взорваться водород над банками. В проводке то же самое бывает, когда провод перетёрся о кузов, — тогда горит провод.</p>
+<h3>Предохранитель</h3>
+<figure><img src="img/k_fuse.png" alt="Флажковые предохранители: 10 А красный, 15 А синий, 20 А жёлтый, 30 А зелёный"><figcaption>Флажковые предохранители: 10 А красный, 15 А синий, 20 А жёлтый, 30 А зелёный</figcaption></figure>
+<p><strong>Предохранитель</strong> — специально «слабое звено». Он сгорает раньше, чем перегреется провод. Номинал — по цифре и цвету: 10 А красный, 15 А синий, 20 А жёлтый, 30 А зелёный.</p>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p>Сгорел предохранитель — сначала найдите причину (замыкание, перегрузку), потом ставьте <strong>такой же</strong> номинал. Больший номинал или «жучок» из проволоки — защиты нет, при замыкании горит проводка.</p>
+</div>
+<h3>Порядок снятия клемм</h3>
+<figure><img src="img/k_order.png" alt="Отключить: 1 — «минус», 2 — «плюс». Подключить: 1 — «плюс», 2 — «минус»"><figcaption>Отключить: 1 — «минус», 2 — «плюс». Подключить: 1 — «плюс», 2 — «минус»</figcaption></figure>
+<div class="box rule">
+<p class="bl">Запомните</p>
+<p><strong>Отключаем:</strong> сначала «минус», потом «плюс». <strong>Подключаем:</strong> сначала «плюс», последним «минус».</p>
+</div>
+<p>Почему так? Кузов соединён с «минусом». Пока «минус» подключён, ключ на «плюсе», задевший кузов, — короткое замыкание. Сняли «минус» первым — кузов обесточен, и ключ ничего не замкнёт. Перед снятием клемм выключите зажигание и потребители. Инструмент на аккумулятор не кладите. При зарядке — проветривать, рядом не курить.</p>
+<h3>Если человека ударило током</h3>
+<figure><img src="img/k_help.png" alt="Обесточить — отделить сухим предметом — вызвать 112 — помочь"><figcaption>Обесточить — отделить сухим предметом — вызвать 112 — помочь</figcaption></figure>
+<ol>
+<li><strong>Обесточить</strong>: рубильник, вилка из розетки, на гибриде — сервисный разъём.</li>
+<li>Если быстро не получается — <strong>отделить</strong> пострадавшего сухой палкой или за сухую одежду, стоя на сухом. Голыми руками не трогать: ток пойдёт и через вас.</li>
+<li><strong>Вызвать 112</strong>: «удар током», адрес.</li>
+<li>Нет дыхания — сердечно-лёгочная реанимация до приезда скорой. Ожоги закрыть чистой повязкой, ничем не мазать.</li>
+</ol>
+<p>Даже если человек чувствует себя нормально — к врачу: нарушение ритма сердца может проявиться позже.</p>
+<h2 id="s4">4. Тетрадь по билетам</h2>
+<p>У каждого — отдельная тетрадь: 50 вопросов курса, 50 страниц. Дома подпишите все страницы по списку из карты курса (код вопроса и номер билета). На странице — пять строк: определение, формула в рамке, схема карандашом, где это в машине, как проверить. На дифзачёте билет — два вопроса и задача; тетрадь своей рукой — опора и допуск.</p>
+<h2 id="s5">5. Домашнее задание</h2>
+<ol>
+<li>Подпишите 50 страниц тетради, перепишите В1–В3.</li>
+<li>Сфотографируйте блок предохранителей любой машины и схему на его крышке. Расшифруйте 5 предохранителей: номинал, цвет, что защищает.</li>
+<li>Пройдите в лаборатории вкладку «Проверь себя» — вопросы 1–6.</li>
+</ol>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>Бортовая сеть</strong> — вся электрика автомобиля: источники, провода, защита, потребители.</li>
+<li><strong>«Масса»</strong> — кузов и двигатель, общий «минус» (клемма 31).</li>
+<li><strong>Генератор</strong> — источник тока при работающем двигателе, держит 13,8–14,5 В.</li>
+<li><strong>Неотпускающий ток</strong> — 10–15 мА: мышцы сводит, руку не разжать.</li>
+<li><strong>Зануление</strong> — соединение корпуса оборудования с защитным проводом PE.</li>
+<li><strong>Короткое замыкание</strong> — «плюс» соединился с «массой» мимо нагрузки.</li>
+<li><strong>Предохранитель</strong> — слабое звено цепи, сгорает раньше провода.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · В1 · БИЛЕТ 1</span><h3>Электрика автомобиля</h3><p class="q">Электротехника и её место в автомобиле: бортовая сеть 12 и 24 В, однопроводная схема и «масса», источники и потребители электроэнергии.</p><ol><li>Электротехника — наука о получении, передаче и использовании электрической энергии. В автомобиле электрика пускает двигатель, поджигает смесь, светит, управляет и следит за работой узлов.</li><li>Бортовая сеть: 12 В у легковых, 24 В у грузовиков и автобусов (две АКБ по 12 В последовательно). При работающем двигателе генератор держит 13,8–14,5 В (у 24-вольтовых — 27,5–28,5 В).</li><li>Источники: аккумуляторная батарея (стоянка и пуск) и генератор (работающий двигатель). Потребители: стартер, зажигание, фары, обогревы, вентиляторы, ЭБУ, магнитола.</li><li>Однопроводная схема: «плюс» идёт по проводам, «минус» — через кузов и двигатель, это «масса». Меньше меди, но окисленная «масса» — частая неисправность.</li><li>Как проверить: мультиметр V⎓ на клеммах АКБ — 12,5–12,7 В без нагрузки (батарея заряжена), 13,8–14,5 В при работающем двигателе (генератор заряжает).</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · В2 · БИЛЕТ 2</span><h3>Ток и человек</h3><p class="q">Действие электрического тока на организм человека. Опасные напряжения в автосервисе: зажигание, высоковольтная часть гибридов и электромобилей, сеть 220/380 В оборудования. Заземление и зануление.</p><ol><li>Действие тока: тепловое (ожоги), электролитическое (разложение крови), механическое (судорога мышц), биологическое (остановка дыхания и сердца).</li><li>Опасен ток через тело: 1 мА — ощутимый, 10–15 мА — неотпускающий (руку не разжать), 50–100 мА — фибрилляция сердца. Сухая кожа — десятки килоом, в расчётах берут 1 кОм (мокрая кожа): 220 В / 1 кОм = 220 мА — смертельно.</li><li>12 В бортсети через сухую кожу почти не ощущаются, но короткое замыкание АКБ даёт ожог и пожар. Опасны: зажигание 20–40 кВ, высоковольтная система гибрида и электромобиля 200–800 В (оранжевые провода), сеть 220/380 В подъёмников, компрессоров, сварки.</li><li>Заземление — соединение корпуса оборудования с землёй. Зануление — соединение корпуса с защитным проводником PE: при пробое на корпус срабатывает автомат.</li><li>Высоковольтную систему ремонтирует только обученный персонал: снять сервисный разъём, подождать 5–10 минут, проверить отсутствие напряжения, работать в диэлектрических перчатках.</li></ol></div><div class="et"><span class="plq">В ТЕТРАДЬ · В3 · БИЛЕТ 3</span><h3>Короткое замыкание и первая помощь</h3><p class="q">Защита от короткого замыкания и первая помощь: предохранители и плавкие вставки, порядок отключения АКБ, освобождение пострадавшего от действия тока.</p><ol><li>Короткое замыкание — соединение «плюса» с «массой» мимо нагрузки: ток в сотни ампер, провод плавится, загорается изоляция.</li><li>Предохранитель — «слабое звено»: сгорает раньше провода. Номинал — по цвету и цифре: 10 А красный, 15 А синий, 20 А жёлтый, 30 А зелёный. Нельзя ставить «жучок» или предохранитель большего номинала.</li><li>АКБ отключают так: сначала «минус», потом «плюс». Подключают наоборот: сначала «плюс», последним «минус». Тогда ключ на «плюсе» не замкнёт его на кузов.</li><li>Пострадавшего освобождают от тока: обесточить (рубильник, вилка, сервисный разъём), отодвинуть сухой палкой или за сухую одежду, не касаясь тела; стоять на сухом.</li><li>Затем вызвать 112, при отсутствии дыхания — сердечно-лёгочная реанимация до приезда скорой; ожог закрыть чистой повязкой.</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>Двигатель работает. Сколько вольт должно быть на клеммах АКБ?</summary><p>13,8–14,5 В — генератор питает сеть и заряжает аккумулятор.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>Какую клемму аккумулятора снимают первой и почему?</summary><p>«Минус»: после этого кузов обесточен, и ключ на «плюсе» не замкнёт его на кузов.</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>Какой ток через тело не даёт разжать руку?</summary><p>10–15 мА — неотпускающий ток.</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>Почему 12 вольт почти не чувствуются, а 220 смертельны?</summary><p>Ток через тело I = U / R: 220 В / 1 кОм = 220 мА, а 12 В через десятки килоом сухой кожи — доли миллиампера.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>Сгорел предохранитель 15 А. Что делать?</summary><p>Найти причину (замыкание, перегрузку) и поставить такой же, 15 А. Больший номинал или «жучок» — пожар.</p></details>
+
+<details class="qa"><summary><span class="qn">6</span>Какого цвета высоковольтные провода гибрида и сколько там вольт?</summary><p>Оранжевые, 200–800 В.</p></details>
+<h2 id="lab">Попробуйте в лаборатории</h2><p>Откройте на телефоне или компьютере — ничего устанавливать не нужно.</p><div class="labs"><a href="https://mexstura-sudo.github.io/lab-electro/bortset/#net"><span>Лаборатория</span>Бортовая сеть — включайте потребители, пуск, короткое замыкание</a><a href="https://mexstura-sudo.github.io/lab-electro/bortset/#quiz"><span>Лаборатория</span>Проверь себя — онлайн-тест (вопросы 1–6)</a></div>
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>13,8–14,5 В — генератор питает сеть и заряжает аккумулятор.</li><li>«Минус»: после этого кузов обесточен, и ключ на «плюсе» не замкнёт его на кузов.</li><li>10–15 мА — неотпускающий ток.</li><li>Ток через тело I = U / R: 220 В / 1 кОм = 220 мА, а 12 В через десятки килоом сухой кожи — доли миллиампера.</li><li>Найти причину (замыкание, перегрузку) и поставить такой же, 15 А. Больший номинал или «жучок» — пожар.</li><li>Оранжевые, 200–800 В.</li></ol></section>
+</article>
+<nav class="pager"><span></span><a href="tora12a.html">Тема 1.2. Ток, сопротивление, закон Ома →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

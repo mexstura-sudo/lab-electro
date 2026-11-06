@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Пара 7. ЛР № 4. КПД цепи постоянного тока — текст для студента</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=Caveat:wght@700&display=swap">
+<style>
+:root{--paper:#F2EEE3;--card:#FAF8F2;--ink:#1B1A17;--text:#2E2B26;--muted:#6E685C;--red:#A3271F;--on-red:#FBF6EC;--ok:#2F6B3A;--grid:#b9c6d2;
+  --serif:'PT Serif', Georgia, 'Times New Roman', serif;--label:'Oswald', 'Arial Narrow', Arial, sans-serif;--hand:'Caveat', 'Brush Script MT', cursive;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-bottom:48px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto}
+header{padding-block:28px 12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px}
+header .hand{font-family:var(--hand);font-size:clamp(44px,7vw,76px);line-height:.9;font-weight:700}
+header h1{font-size:clamp(24px,3.4vw,40px);line-height:1.1;text-transform:uppercase;margin:0}
+header p{margin:0;color:var(--text);flex-basis:100%;max-width:66ch}
+nav{position:sticky;top:0;z-index:5;background:var(--paper);padding-block:12px;border-bottom:3px solid var(--ink);display:flex;gap:10px;overflow-x:auto}
+nav a{flex:none;font-family:var(--label);font-weight:500;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);text-decoration:none;border:3px solid var(--ink);padding:8px 16px;background:var(--card)}
+nav a[aria-current="true"]{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--red);outline-offset:3px}
+section.panel{padding-block:28px 8px}
+.eyebrow{font-family:var(--label);font-weight:700;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px}
+h3{font-family:var(--label);font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+.bench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);position:relative}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.stage canvas{touch-action:none;cursor:ew-resize}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font-family:var(--label);font-weight:500;font-size:17px;letter-spacing:1px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;min-height:48px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctl-label{display:block;font-family:var(--label);font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+select,input[type=number],input[type=text]{font-family:var(--label);font-size:20px;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 10px;min-height:48px;width:100%}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note{background:var(--card);border-left:8px solid var(--ink);padding:14px 18px;margin:0;color:var(--text)}
+.note b{color:var(--ink)}
+.plaque{align-self:flex-start;font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:8px 16px;font-size:18px;margin:0}
+.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ro{background:var(--card);border:3px solid var(--ink);padding:12px 14px}
+.ro span{display:block;font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:var(--label);font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.big{font-family:var(--label);font-weight:700;font-size:20px;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--red);color:var(--on-red);padding:14px 20px;cursor:pointer;box-shadow:6px 6px 0 var(--ink)}
+.big.alt{background:var(--card);color:var(--ink)}
+.big:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+table.calc{width:100%;border-collapse:collapse;background:var(--card);border:3px solid var(--ink)}
+table.calc th,table.calc td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:middle}
+table.calc th{font-family:var(--label);font-weight:500;letter-spacing:1px;font-size:16px;text-transform:uppercase}
+table.calc td.f{font-size:16px;color:var(--text)}
+table.calc input{min-height:44px;font-size:18px}
+.mark{font-family:var(--label);font-weight:700;font-size:22px;width:2.2em;text-align:center}
+.mark.good{color:var(--ok)} .mark.bad{color:var(--red)}
+.scroll{overflow-x:auto}
+input[type=range]{width:100%;accent-color:var(--red);height:40px;margin:0}
+table.calc input{width:100%;min-width:3.5em}
+table.calc small{display:none;color:var(--muted);font-size:15px}
+@media (max-width:640px){table.calc .f{display:none}table.calc small{display:block}table.calc th,table.calc td{padding:8px 6px}table.calc td:nth-child(3){width:42%}}
+.feedback{min-height:1.4em;margin:0;font-weight:700}
+.feedback.good{color:var(--ok)} .feedback.bad{color:var(--red)}
+.qcard{background:var(--card);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:24px clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:16px;max-width:900px}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-family:var(--label);letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-size:16px}
+.qtext{font-size:clamp(22px,2.6vw,30px);line-height:1.25;font-weight:700;margin:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.opts,.readouts,.row{grid-template-columns:minmax(0,1fr)}}
+.opt{font-family:var(--serif);font-size:20px;text-align:left;border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:14px 16px;cursor:pointer;min-height:56px}
+.opt.right{background:var(--ok);color:var(--on-red);border-color:var(--ok)}
+.opt.wrong{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.score{font-family:var(--hand);font-size:64px;line-height:1;margin:0}
+footer{margin-top:40px;padding-top:14px;border-top:3px solid var(--ink);color:var(--muted);font-size:15px}
+footer a{color:inherit}
+
+pre{background:#1B1A17;color:#F2EEE3;padding:14px 16px;overflow:auto;font-size:15px;line-height:1.4;border:3px solid var(--ink)}
+pre code{font-family:'Courier New',monospace}
+main{max-width:820px;margin:0 auto}
+.crumbs{font-family:var(--label);letter-spacing:2px;text-transform:uppercase;font-size:15px;padding-top:20px}
+.crumbs a{color:var(--ink)}
+.hero{padding:16px 0 8px;border-bottom:3px solid var(--ink)}
+.hero .hand{font-family:var(--hand);font-size:clamp(44px,8vw,72px);line-height:.9;font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;text-transform:uppercase;margin:6px 0 10px}
+.hero .lead{font-size:20px;color:var(--text);margin:0 0 14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.meta span{font-family:var(--label);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--ink);padding:4px 10px}
+.learn{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:16px 22px;margin:22px 0 8px}
+.learn h3{margin:0 0 8px}
+.learn ul{margin:0;padding-left:1.2em}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-family:var(--label);font-size:15px;letter-spacing:1px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--red)}
+article{font-size:19px;line-height:1.6}
+article h2{font-size:clamp(24px,3.2vw,32px);margin:40px 0 12px;padding-top:12px;border-top:2px solid var(--ink)}
+article p,article li{max-width:70ch}
+article ul,article ol{padding-left:1.3em}
+article li{margin:4px 0}
+figure{margin:20px 0;background:var(--card);border:3px solid var(--ink);padding:10px}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:15px;color:var(--muted);padding:8px 4px 0;font-style:italic}
+.box{border:3px solid var(--ink);background:var(--card);padding:14px 20px;margin:20px 0}
+.box p{margin:6px 0}
+.box .bl{font-family:var(--label);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;margin:0 0 4px}
+.box.rule{border-left:12px solid var(--ink)}
+.box.danger{border-color:var(--red);border-left:12px solid var(--red)}
+.box.danger .bl{color:var(--red)}
+.box.example{border-style:dashed}
+.box.formula{text-align:center;font-family:var(--label);font-size:clamp(24px,4vw,34px);letter-spacing:1px;box-shadow:8px 8px 0 var(--ink)}
+.box.formula p{margin:0}
+.scroll table{border-collapse:collapse;width:100%;background:var(--card);border:3px solid var(--ink);font-size:17px;line-height:1.4}
+.scroll th,.scroll td{border-bottom:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
+.scroll th{font-family:var(--label);font-weight:500;letter-spacing:1px;text-transform:uppercase;font-size:15px}
+.emb{position:relative;width:100%;aspect-ratio:1664/540;background:var(--card);border:3px solid var(--ink);overflow:hidden;margin:20px 0}
+.emb iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0}
+ul.vocab{list-style:none;padding:0}
+ul.vocab li{border-bottom:1px dashed var(--muted);padding:6px 0;max-width:none}
+.et{margin:18px 0 26px}
+.et .plq{display:inline-block;font-family:var(--label);font-weight:700;letter-spacing:2px;color:var(--on-red);background:var(--red);padding:6px 14px;font-size:16px}
+.et h3{font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:22px;margin:10px 0 4px}
+.et .q{font-style:italic;color:var(--text);margin:0 0 8px}
+.et ol{background:var(--card);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 20px 14px 44px;margin:0}
+.hint{color:var(--muted);font-style:italic}
+details.qa{background:var(--card);border:3px solid var(--ink);margin:10px 0;padding:0}
+details.qa summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .qn{flex:none;font-family:var(--label);background:var(--ink);color:var(--paper);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:16px}
+details.qa[open] summary{border-bottom:2px dashed var(--ink)}
+details.qa p{margin:0;padding:12px 16px 14px 58px;color:var(--ink);background:#f3e7e4}
+.labs{display:grid;gap:12px;margin:12px 0}
+.labs a{display:block;background:var(--card);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 18px;color:var(--ink);text-decoration:none;font-weight:700}
+.labs a span{display:block;font-family:var(--label);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;font-size:14px;color:var(--red)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:40px 0 10px;border-top:3px solid var(--ink);padding-top:14px}
+.pager a{font-family:var(--label);letter-spacing:1px;color:var(--ink)}
+.printbtn{font-family:var(--label);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:3px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;font-size:15px}
+.answers{display:none}
+@media print{
+ body{background:#fff;padding:0;font-size:11pt}
+ .printbtn,.pager,.crumbs a.home,.toc{display:none}
+ .learn,.et ol,figure,.box.formula{box-shadow:none}
+ figure,details.qa,.box,.et{break-inside:avoid}
+ article{font-size:11.5pt;line-height:1.45}
+ article h2{break-after:avoid}
+ details.qa p{display:none}
+ .answers{display:block;break-before:page}
+ .answers li{margin:4px 0}
+ .emb{display:none}
+ figure{padding:4px;margin:10px 0}
+ figure img{max-height:55mm;width:auto;max-width:100%;margin:0 auto}
+ figcaption{font-size:8.5pt}
+ article h2{margin:18px 0 8px}
+ .learn{padding:8px 14px;margin:10px 0}
+ a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="crumbs"><a class="home" href="./">Тексты для студентов</a> · пара 7 · тема 1.2 (лабораторная работа)</p>
+<header class="hero">
+<div class="hand">Пара 7</div>
+<h1>ЛР № 4. КПД цепи постоянного тока</h1>
+<p class="lead">Когда нагрузке достаётся больше всего мощности и почему автомобилю нужен не максимум мощности, а высокий КПД.</p>
+<div class="meta"><span>Тема 1.2 (лабораторная работа)</span><span>Чтение: 20–25 минут</span><button class="printbtn" type="button" onclick="print()">Печать / PDF</button></div>
+</header>
+<section class="learn"><h3>Из этого текста вы узнаете</h3><ul><li>как измерить ЭДС в режиме холостого хода</li><li>как мощность нагрузки и КПД зависят от сопротивления нагрузки</li><li>почему наибольшая мощность — при Rн = r, а КПД там 50 %</li><li>какой КПД у лампы и стартера в машине</li><li>три режима цепи: холостой ход, номинальный, короткое замыкание</li></ul></section>
+<nav class="toc" aria-label="Содержание"><a href="#s1">1. Цель и вариант</a><a href="#s2">2. Ход работы</a><a href="#s3">3. Графики</a><a href="#s4">4. В машине</a><a href="#s5">5. Маршруты А и В</a><a href="#s6">6. Выводы и защита</a><a href="#slovar">Словарик</a><a href="#tetrad">Эталоны в тетрадь</a><a href="#check">Проверь себя</a><a href="#lab">Попробуйте в лаборатории</a></nav>
+<article>
+<h2 id="s1">1. Цель и вариант</h2>
+<p><strong>Цель:</strong> исследовать, как мощность нагрузки и КПД зависят от сопротивления нагрузки Rн, и найти условие наибольшей мощности.</p>
+<p>Вариант — номер в журнале: ЭДС E и сопротивление r, которое изображает внутреннее сопротивление источника. Нагрузка Rн = 10, 20, 50, 100, 150, 200, 300 Ом. Маршруты: <strong>А</strong> — Proteus, <strong>Б</strong> — вживую (блок питания, резистор r 2 Вт, магазин сопротивлений), <strong>В</strong> — браузер, вкладка «КПД».</p>
+<div class="box danger">
+<p class="bl">Осторожно</p>
+<p>Нагрузку 0 Ом не ставить: это короткое замыкание, весь ток — через r. При малых Rн резистор r греется сильнее всего. Магазин и резисторы переключать при разомкнутом ключе.</p>
+</div>
+<h2 id="s2">2. Ход работы</h2>
+<figure><img src="img/l4_scheme.png" alt="Источник E с резистором r в пунктирной рамке, ключ, амперметр и нагрузка Rн; вольтметр на нагрузке"><figcaption>Источник E с резистором r в пунктирной рамке, ключ, амперметр и нагрузка Rн; вольтметр на нагрузке</figcaption></figure>
+<ol>
+<li><strong>Холостой ход:</strong> ключ разомкнут, тока нет — вольтметр показывает ЭДС E. Запишите.</li>
+<li>Замкните ключ и по очереди ставьте Rн = 10 … 300 Ом. Для каждого записывайте Uн и I.</li>
+<li>Посчитайте: Pнагр = Uн · I, Pполн = E · I, η = Pнагр / Pполн · 100 % = Uн / E · 100 %.</li>
+</ol>
+<div class="box example">
+<p><strong>Образец, вариант 4:</strong> E = 9 В, r = 150 Ом.</p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Rн, Ом</th>
+<th>Uн, В</th>
+<th>I, мА</th>
+<th>Pнагр, Вт</th>
+<th>η, %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>0,56</td>
+<td>56,2</td>
+<td>0,032</td>
+<td>6,2</td>
+</tr>
+<tr>
+<td>50</td>
+<td>2,25</td>
+<td>45,0</td>
+<td>0,101</td>
+<td>25,0</td>
+</tr>
+<tr>
+<td>150</td>
+<td>4,50</td>
+<td>30,0</td>
+<td>0,135</td>
+<td>50,0</td>
+</tr>
+<tr>
+<td>300</td>
+<td>6,00</td>
+<td>20,0</td>
+<td>0,120</td>
+<td>66,7</td>
+</tr>
+</tbody>
+</table></div>
+<p>Наибольшая Pнагр = 0,135 Вт при Rн = r = 150 Ом, и там η = 50 %.</p>
+</div>
+<h2 id="s3">3. Графики</h2>
+<figure><img src="img/l4_graph.png" alt="Pнагр(Rн) — горб с вершиной при Rн = r; η(Rн) растёт и стремится к 100 %"><figcaption>Pнагр(Rн) — горб с вершиной при Rн = r; η(Rн) растёт и стремится к 100 %</figcaption></figure>
+<ul>
+<li><strong>Pнагр(Rн)</strong> — «горб» с вершиной при <strong>Rн = r</strong>. Наибольшая мощность Pmax = E² / (4r).</li>
+<li><strong>η(Rн)</strong> — растёт и стремится к 100 %. При Rн = r КПД ровно <strong>50 %</strong>: половина энергии греет сам источник.</li>
+</ul>
+<p>Постройте оба графика на одной оси Rн и отметьте Rн, при котором η = 50 %.</p>
+<h2 id="s4">4. В машине</h2>
+<p>Автомобилю не нужна «наибольшая мощность любой ценой» — ему нужен высокий КПД, чтобы энергия не грела аккумулятор и провода.</p>
+<div class="box example">
+<p>Лампа фары 2,6 Ом, r0 аккумулятора 0,01 Ом: η = 2,6 / 2,61 ≈ <strong>99,6 %</strong>.</p>
+<p>Стартер 0,05 Ом против 0,01 Ом: η = 0,05 / 0,06 ≈ <strong>83 %</strong> — заметная часть энергии теряется внутри батареи. У старой АКБ r0 больше — потери ещё больше, напряжение при пуске проваливается.</p>
+</div>
+<h3>Три режима цепи</h3>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Режим</th>
+<th>Что происходит</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Холостой ход</td>
+<td>Цепь разомкнута: I = 0, U = E</td>
+</tr>
+<tr>
+<td>Номинальный</td>
+<td>Ток и напряжение равны паспортным (лампа 12 В, 55 Вт)</td>
+</tr>
+<tr>
+<td>Короткое замыкание</td>
+<td>Rн ≈ 0: I = E / r — у АКБ тысячи ампер, КПД ноль</td>
+</tr>
+</tbody>
+</table></div>
+<p>Потери в проводе: ΔU = I · Rпр, ΔP = I² · Rпр. Поэтому провода стартера и АКБ толстые — 16–35 мм².</p>
+<h2 id="s5">5. Маршруты А и В</h2>
+<p><strong>Proteus:</strong> BATTERY (Voltage = E), рядом RES r последовательно — это внутреннее сопротивление; RES Rн — меняем 10 … 300. DC AMMETER (Milliamps) последовательно, DC VOLTMETER на Rн. Холостой ход: удалить провод к Rн.</p>
+<p><strong>Браузер:</strong> номер варианта, «Разомкнуто» — запишите E. Кнопки 10 … 300: Uн и I в таблицу, точки на графиках. Внизу проверьте Pнагр, η и Rн при η = 50 %.</p>
+<h2 id="s6">6. Выводы и защита</h2>
+<p><strong>Шаблон выводов:</strong></p>
+<ol>
+<li>ЭДС источника E = … В (холостой ход). С ростом Rн ток уменьшается, Uн растёт.</li>
+<li>Наибольшая Pнагр = … Вт при Rн = … Ом ≈ r; КПД при этом … % ≈ 50 %.</li>
+<li>С ростом Rн КПД растёт: при 300 Ом — … %.</li>
+<li>В автомобиле Rн ≫ r0 — КПД близок к 100 %; большое r0 старого АКБ — потери и провал напряжения при пуске.</li>
+</ol>
+<p><strong>В отчёт:</strong> таблица, два графика, Rн при η = 50 %, выводы, ответы на вопросы. К ПЗ № 1 повторите законы Кирхгофа и порядок расчёта смешанной цепи (Т6).</p>
+<h2 id="slovar">Словарик</h2>
+<ul class="vocab">
+<li><strong>КПД (η)</strong> — доля полезной мощности, %.</li>
+<li><strong>Согласование</strong> — Rн = r: наибольшая мощность в нагрузке, КПД 50 %.</li>
+<li><strong>Холостой ход</strong> — цепь разомкнута, I = 0, U = E.</li>
+<li><strong>Номинальный режим</strong> — работа при паспортных токе и напряжении.</li>
+</ul>
+<h2 id="tetrad">Эталоны в тетрадь</h2><p>Перепишите в тетрадь по билетам — каждый эталон на отдельную страницу, с рисунком и строкой «Мой пример».</p><div class="et"><span class="plq">В ТЕТРАДЬ · Т8 · БИЛЕТ 11</span><h3>КПД и режимы цепи</h3><p class="q">КПД цепи постоянного тока, потери в проводах. Режимы работы цепи: холостой ход, номинальный режим, короткое замыкание.</p><ol><li>КПД η = Pполезн / Pполн · 100 %; для источника η = U / E. Потери — нагрев внутреннего сопротивления и проводов.</li><li>Потери в проводе: ΔU = I·Rпр, ΔP = I²·Rпр. Поэтому провода стартера и АКБ толстые — 16–35 мм².</li><li>Холостой ход: цепь разомкнута, I = 0, U = E. Номинальный режим: ток и напряжение равны паспортным (лампа 12 В, 55 Вт).</li><li>Короткое замыкание: R ≈ 0, I = E / r0 — у АКБ тысячи ампер; плавит ключ, сжигает проводку.</li><li>Наибольшая мощность в нагрузке при Rн = r0, но КПД тогда 50 %. В автомобиле нужен высокий КПД: Rн намного больше r0.</li></ol></div><h2 id="check">Проверь себя</h2>
+<p class="hint">Сначала ответьте сами — в тетради или вслух. Потом нажмите на вопрос, чтобы увидеть ответ.</p>
+<details class="qa"><summary><span class="qn">1</span>Что такое КПД источника и как его рассчитать?</summary><p>Доля полезной мощности: η = Pнагр / Pполн = Uн / E.</p></details>
+
+<details class="qa"><summary><span class="qn">2</span>Когда в нагрузке наибольшая мощность и какой при этом КПД?</summary><p>При Rн = r, КПД 50 %.</p></details>
+
+<details class="qa"><summary><span class="qn">3</span>Почему в машине нужен высокий КПД, а не максимум мощности?</summary><p>Меньше потерь и нагрева аккумулятора и проводов.</p></details>
+
+<details class="qa"><summary><span class="qn">4</span>Как внутреннее сопротивление АКБ влияет на пуск?</summary><p>Большое r0 — больше потери внутри батареи, напряжение при пуске проседает, стартер крутит вяло.</p></details>
+
+<details class="qa"><summary><span class="qn">5</span>E = 12 В, r = 100 Ом. Какова наибольшая мощность в нагрузке?</summary><p>Pmax = E² / (4r) = 144 / 400 = 0,36 Вт при Rн = 100 Ом.</p></details>
+<h2 id="lab">Попробуйте в лаборатории</h2><p>Откройте на телефоне или компьютере — ничего устанавливать не нужно.</p><div class="labs"><a href="https://mexstura-sudo.github.io/lab-electro/bortset/?v=N#eta"><span>Лаборатория</span>КПД — ваш вариант (впишите номер вместо N)</a></div>
+<section class="answers"><h2>Ответы к «Проверь себя»</h2><ol><li>Доля полезной мощности: η = Pнагр / Pполн = Uн / E.</li><li>При Rн = r, КПД 50 %.</li><li>Меньше потерь и нагрева аккумулятора и проводов.</li><li>Большое r0 — больше потери внутри батареи, напряжение при пуске проседает, стартер крутит вяло.</li><li>Pmax = E² / (4r) = 144 / 400 = 0,36 Вт при Rн = 100 Ом.</li></ol></section>
+</article>
+<nav class="pager"><a href="toralr3.html">← ЛР № 3. Мощность и работа тока</a><a href="torapz1.html">ПЗ № 1. Расчёт цепей постоянного тока →</a></nav>
+<footer>Электротехника и электроника · ИТМ им. Н.П. Трапезникова · <a href="../">лаборатории</a> · <a href="./">все тексты</a></footer>
+</main>
+<script>
+function fit(){document.querySelectorAll('.emb').forEach(e=>{const f=e.querySelector('iframe');f.style.transform='scale('+(e.clientWidth/1664)+')';});}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>
