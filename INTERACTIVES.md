@@ -1,13 +1,13 @@
 # Интерактивы курса «Электротехника и электроника»
 
-Сидоров А.Ю., ИТМ им. Н.П. Трапезникова. Состояние на 6 ноября 2026 г.
+Сидоров А.Ю., ИТМ им. Н.П. Трапезникова. Состояние на 23 ноября 2026 г.
 
 Сайт со всеми лабораториями: **https://mexstura-sudo.github.io/lab-electro/**
 (работает после включения GitHub Pages: Settings → Pages → Branch `main`, папка `/ (root)`).
 
 ## 1. Лаборатории (открываются на телефоне и на доске, без установки)
 
-| № | Лаборатория | Тема / пара СП | Вкладки — прямые ссылки |
+| № | Лаборатория | Тема / пара, группа | Вкладки — прямые ссылки |
 |---|---|---|---|
 | 1 | Диод и выпрямитель | темы 21–22 (2.1, 2.2), все группы | [Диод и батарейка](https://mexstura-sudo.github.io/lab-electro/diode-rectifier/#pn) · [Прозвонка](https://mexstura-sudo.github.io/lab-electro/diode-rectifier/#meter) · [Выпрямитель](https://mexstura-sudo.github.io/lab-electro/diode-rectifier/#rect) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/diode-rectifier/#quiz) · [Видео](https://mexstura-sudo.github.io/lab-electro/diode-rectifier/#video) |
 | 2 | Переменный ток | 1.4, пары 11–12 | [Генератор](https://mexstura-sudo.github.io/lab-electro/ac-current/#gen) · [R, L, C](https://mexstura-sudo.github.io/lab-electro/ac-current/#rlc) · [Треугольник и мощность](https://mexstura-sudo.github.io/lab-electro/ac-current/#tri) · [Резонанс](https://mexstura-sudo.github.io/lab-electro/ac-current/#res) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/ac-current/#quiz) |
@@ -21,8 +21,9 @@
 | 10 | Реле и автоматика (ПР №9) | 2.4, пара 24 | [Реле: срабатывание и отпускание](https://mexstura-sudo.github.io/lab-electro/relay/#relay) · [Терморегулятор](https://mexstura-sudo.github.io/lab-electro/relay/#thermo) · [Ардуино и реле](https://mexstura-sudo.github.io/lab-electro/relay/#ard) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/relay/#quiz) |
 | 11 | Цепи постоянного тока (ПР №1–3) | 1.2, ПР №1–3 | [Закон Ома](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#ohm) · [Соединения (ПР №3)](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#series) · [Смешанная цепь (ПР №1)](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#mixed) · [Кабель и потери (ПР №2)](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#cable) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/dc-circuits/#quiz) |
 | 12 | Бортовая сеть автомобиля (группа ТОРА: ЛР №1–4, ПЗ №1) | ТОРА: 1.1–1.2, пары 1–8 | [Бортсеть](https://mexstura-sudo.github.io/lab-electro/bortset/#net) · [Закон Ома (ЛР 1)](https://mexstura-sudo.github.io/lab-electro/bortset/#ohm) · [Смешанная (ЛР 2)](https://mexstura-sudo.github.io/lab-electro/bortset/#mixed) · [Мощность (ЛР 3)](https://mexstura-sudo.github.io/lab-electro/bortset/#power) · [КПД (ЛР 4)](https://mexstura-sudo.github.io/lab-electro/bortset/#eta) · [Плохая масса (ПЗ 1)](https://mexstura-sudo.github.io/lab-electro/bortset/#ground) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/bortset/#quiz) |
+| 13 | Реле и стартер (ТОРА) | ТОРА: 1.3, пара 9, М1–М4 | [Поле катушки](https://mexstura-sudo.github.io/lab-electro/auto-magnetism/#field) · [Реле](https://mexstura-sudo.github.io/lab-electro/auto-magnetism/#relay) · [Стартер](https://mexstura-sudo.github.io/lab-electro/auto-magnetism/#starter) · [Проверка](https://mexstura-sudo.github.io/lab-electro/auto-magnetism/#diagnose) · [Проверь себя](https://mexstura-sudo.github.io/lab-electro/auto-magnetism/#quiz) |
 
-**Варианты.** В лабораториях 3, 4, 5, 6, 7, 10 и 11 (вкладка «Шильдик») есть 30 вариантов (номер в журнале). Ссылку сразу на вариант можно дать так: `…/rl-circuit/?v=12#stand`, `…/measurements/?v=12#verify`, `…/three-phase/?v=12#star`, `…/transformer/?v=12#modes`, `…/machines/?v=12#plate`, `…/relay/?v=12#relay`, `…/dc-circuits/?v=12#series` (а также `#mixed`, `#cable`), `…/bortset/?v=12#ohm` (а также `#mixed`, `#power`, `#eta`, `#ground`).
+**Варианты.** В лабораториях 3, 4, 5, 6, 7 (вкладка «Шильдик»), 10, 11, 12 и 13 есть 30 вариантов (номер в журнале). Ссылку сразу на вариант можно дать так: `…/rl-circuit/?v=12#stand`, `…/measurements/?v=12#verify`, `…/three-phase/?v=12#star`, `…/transformer/?v=12#modes`, `…/machines/?v=12#plate`, `…/relay/?v=12#relay`, `…/dc-circuits/?v=12#series` (а также `#mixed`, `#cable`), `…/bortset/?v=12#ohm` (а также `#mixed`, `#power`, `#eta`, `#ground`), `…/auto-magnetism/?v=12#diagnose` (а также `#relay`).
 
 ### Что умеет каждая лаборатория
 
@@ -38,6 +39,8 @@
 10. **Реле и автоматика.** Реле с катушкой, якорем и контактами: плавно меняем напряжение, ловим щелчок срабатывания и отпускания, след рисует петлю на графике (30 вариантов реле 5/12/24 В); печь для сушки электродов с порогом и «зазором» — без зазора реле дребезжит; Ардуино читает потенциометр-датчик и включает вентилятор через модуль реле, монитор порта и скетч с порогами варианта; тест из 12 вопросов.
 11. **Цепи постоянного тока.** Закон Ома и режимы цепи, соединения, смешанная цепь (ПР №1), кабель и потери (ПР №2), тест — по 30 вариантам.
 12. **Бортовая сеть автомобиля (ТОРА).** Бортсеть: состояние АКБ, генератор 14,2 В, пуск (провал напряжения у нового и старого АКБ), потребители и скорости вентилятора, розетка 12 В с предохранителем 15/25 А и «жучком», короткое замыкание и пожар; ЛР №1 — омметр, лампа с нелинейной ВАХ, проверка таблицы; ЛР №2 — смешанная цепь с проверкой законов Кирхгофа и блок «Отопитель»; ЛР №3 — мощность и работа тока с таймером 60 с; ЛР №4 — КПД, графики Pнагр(Rн) и η(Rн); ПЗ №1 — поиск плохой массы щупами A–D; тест из 12 вопросов.
+
+13. **Реле и стартер (ТОРА).** Поле воздушной катушки: число витков, ток и полярность; обмотка 85–86 и контакты 30–87, проверка расчёта тока и мощности; четыре этапа работы втягивающего; диагностика пяти состояний реле по измерениям в 30 вариантах; тест из 10 вопросов. Учебная модель внутри теоретической пары 9.
 
 ## 2. Анимации внутри презентаций (идут сами, в режиме показа)
 
@@ -62,6 +65,8 @@
 ## 3. Вопросы с ответом по щелчку
 
 В каждой презентации с пары 11: слайд 2 «Вспомним» (3 вопроса) и слайд «Проверь себя» (4 вопроса) — каждый щелчок открывает следующий ответ. В презентации тем 21–22 — слайды 23 и 37.
+
+Пара 9 ТОРА: ответы по щелчку на слайдах 2, 6, 15, 23, 25; поэтапная работа стартера — во вкладке «Стартер» новой лаборатории.
 
 ## 4. Как пользоваться на паре
 
@@ -109,3 +114,5 @@
 - [Пара 23. Транзисторы и сварочный инвертор](https://mexstura-sudo.github.io/lab-electro/konspekt/p23.html)
 - [Пара 24. Автоматика и реле](https://mexstura-sudo.github.io/lab-electro/konspekt/p24a.html)
 - [Пара 24. ПР № 9. Реле](https://mexstura-sudo.github.io/lab-electro/konspekt/p24b.html)
+
+Текст пары 9 ТОРА: [Магнитное поле и электромагниты](https://mexstura-sudo.github.io/lab-electro/konspekt/tora09.html) — М1–М4, самопроверка и печать с ответами в конце.
